@@ -41,7 +41,15 @@ yarn deploy
 
 ### Deploy Script
 
-Running `yarn deploy` will deploy
+Running `yarn deploy` will commit everything inside of `/dist` to the `gh-pages` branch of the repository set in `/deploy.js`. This lets you quickly deploy this project to GitHub Pages!
+
+---
+
+## The `Handsfree` Object
+
+```
+coming soon!
+```
 
 ---
 
