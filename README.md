@@ -25,3 +25,20 @@
 ## Local Development
 
 This project contains the Handsfree.js library (see `/src/handsfree`) and a development environment with sample code and demos. To run these, you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
+
+After downloading this project repo, you'll then need to install dependencies by running `yarn` in the project's root directory. Then you'll have the following commands available:
+
+```bash
+# Start a local dev environment on localhost:8080
+yarn start
+
+# Build for production into /dist/
+yarn build
+
+# Deploy to handsfree.js.org
+yarn deploy
+```
+
+### Deploy Script
+
+Running `yarn deploy` will deploy
