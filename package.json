@@ -11,6 +11,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "node deploy.js",
+    "bundle": "parcel build src/assets/js/handsfree/handsfree.js -d dist/handsfreejs",
     "start": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
@@ -38,6 +39,8 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "parcel-plugin-nuke-dist": "^1.0.1",
+    "parcel-plugin-static-files-copy": "^2.2.1",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass": "^1.19.0",
@@ -85,5 +88,13 @@
   ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest"
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "public/js",
+        "staticOutDir": "js"
+      }
+    ]
   }
 }

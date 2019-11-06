@@ -38,7 +38,8 @@ yarn build
 # Deploy to handsfree.js.org
 yarn deploy
 
-# Create handsfree.js in /dist/lib/
+# Create handsfree.js in /dist/handsfreejs/
+yarn bundle
 ```
 
 ### Deploy Script

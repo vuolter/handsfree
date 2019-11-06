@@ -5,8 +5,10 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
-import '@/assets/js/handsfree'
+import '@/assets/js/handsfree/handsfree.js'
 import '@/assets/sass/handsfree.sass'
+// We set this to the root because of the way we're including it in this project
+window.Handsfree.libSrc = '/'
 
 Vue.config.productionTip = false
 
