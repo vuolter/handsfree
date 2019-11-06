@@ -1,6 +1,10 @@
 {
   "name": "handsfree.js",
   "version": "0.1.0",
+  "deploy": {
+    "domain": "handsfree.js.org",
+    "repo": "https://github.com/handsfreejs/handsfree"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,6 +15,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
+  "author": "Oz Ramos <heyozramos@gmail.com>",
+  "license": "Apache",
   "dependencies": {
     "@mdi/font": "^3.6.95",
     "core-js": "^3.3.2",

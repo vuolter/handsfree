@@ -32,16 +32,24 @@ After downloading this project repo, you'll then need to install dependencies by
 # Start a local dev environment on localhost:8080
 yarn start
 
-# Build for production into /dist/
+# Build for production into /dist/sandbox/
 yarn build
 
 # Deploy to handsfree.js.org
 yarn deploy
+
+# Create handsfree.js in /dist/lib/
 ```
 
 ### Deploy Script
 
 Running `yarn deploy` will commit everything inside of `/dist` to the `gh-pages` branch of the repository set in `/deploy.js`. This lets you quickly deploy this project to GitHub Pages!
+
+### Creating the handsfree.js library
+
+When you run `yarn start`, `yarn build`, or `yarn deploy` what you're actually doing is running or building the development environment. To create a single `handsfree.js` script for use within your own projects, do the following:
+
+- Install [Parcel](https://parceljs.org/) on your system globally with: `yarn global add parcel-bundler`
 
 ---
 

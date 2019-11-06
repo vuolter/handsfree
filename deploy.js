@@ -1,28 +1,27 @@
 /**
  * Helper script for building and deploying
  * Deploys out of /dist/
+ *
+ * - Deploys to package.json.deploy.repo
+ * - Domain is set to package.json.deploy.url
  */
 
-// 👉🏻 CONFIG
-// Set this to the repo to deploy to
-const gitRepo = 'https://github.com/handsfreejs/handsfree'
-// Adds a CNAME record with this value if present, or ignores it
-const domainName = 'handsfree.js.org'
-
 // build
-const pckg = require('./package.json')
+const pkg = require('./package.json')
+const gitRepo = pkg.deploy.repo
+const domainName = pkg.deploy.domain
 const shell = require('shelljs')
 shell.exec('npm run build')
 
 // navigate into the build output directory
-shell.cd('dist')
+shell.cd('dist/sandbox')
 
 // if you are deploying to a custom domain
 shell.exec(`echo ${domainName} > CNAME`)
 
 shell.exec('git init')
 shell.exec('git add -A')
-shell.exec(`git commit -m "deploy docs for ${pckg.version}"`)
+shell.exec(`git commit -m "deploy docs for ${pkg.version}"`)
 
 // if you are deploying to https://<USERNAME>.github.io
 // git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master

@@ -1,5 +1,4 @@
 module.exports = {
-  "transpileDependencies": [
-    "vuetify"
-  ]
+  outputDir: 'dist/sandbox',
+  transpileDependencies: ['vuetify']
 }
