@@ -1,18 +1,20 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  v-container
+    v-layout(text-center wrap)
+      v-flex.xs12
+        TensorMonkey.my-5(style='height: 150px')
+
+      v-flex.xs12.md6.offset-md-3.mb-4
+        h1.display-2.font-weight-bold.mb-3 Handsfree.js
+        p
+          small With support from <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
+        p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox</b>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import TensorMonkey from '@/components/TensorMonkey'
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
+  components: { TensorMonkey }
 }
 </script>
