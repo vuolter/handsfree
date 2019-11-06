@@ -37,6 +37,7 @@ class Handsfree {
   start() {
     if (this.trackerSDK && !this.isStarted) {
       this.initSDK()
+      this.emit('started')
     } else if (!this.isStarted) {
       console.warn('Head tracking SDK not loaded yet')
     }
