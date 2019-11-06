@@ -42,3 +42,11 @@ yarn deploy
 ### Deploy Script
 
 Running `yarn deploy` will deploy
+
+---
+
+## License & Attributions
+
+Handsfree.js is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). The following models are distributed along with this repo:
+
+- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache License 2.0) - Face and head pose estimation
