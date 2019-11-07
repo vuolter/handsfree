@@ -2,7 +2,8 @@
   v-app
     v-app-bar(app)
       div.d-flex.align-center
-        TensorMonkey.mr-3(style='height: 40px')
+        div(style='width: 60px')
+          TensorMonkey.mr-3.ozramos-tensormonkey-mini(styles='height: 40px')
         h1.title Handsfree.js<small style='font-size: 16px'>.org</small>
       v-spacer
       v-btn(v-if='isTracking' color='error' @click='stopWebcam') Stop Webcam
