@@ -110,6 +110,9 @@ export default {
 
     /**
      * Animate fireworks
+     * - Adapted from: https://codepen.io/juliangarnier/pen/gmOwJX
+     *
+     * @FIXME HERE BE DRAGONS 🐲 let's clean this code up a bit
      */
     animateFireworks(x, y, ctx) {
       var circle = this.createCircle(x, y, ctx)

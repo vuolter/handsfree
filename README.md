@@ -1,23 +1,19 @@
 <div align="center">
-  <p>With support from <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!</p>
-  <img src="https://media.giphy.com/media/3Z15Ve7WEQGkLa1FwC/giphy.gif" alt="handsfree.js">
+  <p>~ Presenting ~</p>
+  <p>with support from <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!</p>
+  <br>
+  <p><img src="https://media.giphy.com/media/3Z15Ve7WEQGkLa1FwC/giphy.gif" alt="handsfree.js"></p>
+  <br>
   <h1>Handsfree.js</h1>
   <p>A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree</p>
+  <p>
+    <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
+    <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
+  </p>
+  <p>
+    <img class="mr-1" src="https://img.shields.io/github/issues-raw/handsfreejs/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/handsfreejs/handsfree.svg">
+  </p>
   <p>Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz Weboji</a></p>
-<p>
-  <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/commits-since/handsfreejs/handsfree/4.0.1.svg">
-  <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
-</p>
-<p>
-  <img class="mr-1" src="https://img.shields.io/github/issues-raw/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/issues/handsfreejs/handsfree/✨ enhancement.svg"> <img src="https://img.shields.io/github/issues-pr-raw/handsfreejs/handsfree.svg">
-</p>
-<p>
-  <img class="mr-1" src="https://img.shields.io/github/issues/handsfreejs/handsfree/🐞 bug.svg"> <img src="https://img.shields.io/github/issues/handsfreejs/handsfree/👷 help wanted.svg">
-</p>
-<p>
-  <img src="https://img.shields.io/circleci/project/github/handsfreejs/handsfree/master.svg">
-  <img src="https://img.shields.io/codecov/c/github/handsfreejs/handsfree/master.svg?style=flat">
-</p>
 </div>
 
 # Quickstart
