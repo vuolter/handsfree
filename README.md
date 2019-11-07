@@ -271,6 +271,12 @@ When you run `yarn start`, `yarn build`, or `yarn deploy` what you're actually d
 
 # License & Attributions
 
-Handsfree.js is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). The following models are distributed along with this repo:
+Handsfree.js is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+
+## Models
 
 - [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache License 2.0) - Face and head pose estimation
+
+## Attributions
+
+- Fireworks code adapted from [Julian Garnier's Anime Fireworks CodePen](https://codepen.io/juliangarnier/pen/gmOwJX)
