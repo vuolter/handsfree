@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import { random } from 'lodash'
+import { random, debounce } from 'lodash'
+import { mapState } from 'vuex'
 
 export default {
   filters: {
@@ -44,7 +45,9 @@ export default {
   computed: {
     backgroundColor() {
       return !this.score.current ? 'pink darken-3' : 'indigo'
-    }
+    },
+
+    ...mapState(['handsfree', 'isTracking'])
   },
 
   data: () => ({
@@ -67,14 +70,23 @@ export default {
   },
 
   methods: {
-    clickedTile(index) {
-      this.updateScore(index)
+    /**
+     * Handle clicks with a debounce for accidental clicks
+     */
+    clickedTile: debounce(
+      function(index) {
+        if (this.handsfree.pointer.state === 'mouseDown' || !this.isTracking) {
+          this.updateScore(index)
 
-      if (this.tiles[index] > 0) {
-        this.setRandomTile()
-        this.tiles[index] -= 1
-      }
-    },
+          if (this.tiles[index] > 0) {
+            this.setRandomTile()
+            this.tiles[index] -= 1
+          }
+        }
+      },
+      100,
+      { leading: true }
+    ),
 
     /**
      * Updates the score based on the type of the tile
