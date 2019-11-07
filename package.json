@@ -1,6 +1,6 @@
 {
   "name": "handsfree",
-  "version": "5.0.0",
+  "version": "5.0.2",
   "deploy": {
     "domain": "handsfree.js.org",
     "repo": "https://github.com/handsfreejs/handsfree"

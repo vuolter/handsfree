@@ -3,7 +3,20 @@
     v-layout(text-center wrap)
       v-row
         v-col(cols=12 md=6).mb-4
-          TensorMonkey.my-5(style='height: 150px')
+          TensorMonkey.my-5(v-if='!isTracking' style='height: 150px')
+          .my-5(v-else style='height: 150px; margin-left: -200px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
+            TensorMonkey.ozramos-tensormonkey-animated.my-5(style='height: 150px')
 
           h1.display-2.font-weight-bold.mb-3 Handsfree.js
           p
