@@ -5,7 +5,6 @@
         v-col(cols=12 md=6).mb-4
           div(style='width: 190px; height: 190px; margin: auto; position: relative').text-left
             TensorMonkey.my-5(styles='height: 150px')
-            canvas#tensormonkey-fireworks(ref='canvas' width=500 height=500)
 
           h1.display-2.font-weight-bold.mb-3 Handsfree.js
           p
@@ -71,7 +70,6 @@
 
 <script>
 import TensorMonkey from '@/components/TensorMonkey'
-import anime from 'animejs/lib/anime.es.js'
 import { mapState } from 'vuex'
 
 export default {
@@ -79,25 +77,8 @@ export default {
 
   computed: mapState(['isTracking']),
 
-  watch: {
-    isTracking() {
-      const ctx = this.$refs.canvas.getContext('2d')
-
-      this.animateFireworks(250, 250, ctx)
-      anime({ duration: 250 }).finished.then()
-    }
-  },
-
   mounted() {
     this.$store.dispatch('syntaxHighlight')
-
-    const ctx = this.$refs.canvas.getContext('2d')
-    anime({
-      duration: Infinity,
-      update: () => {
-        ctx.clearRect(0, 0, this.$refs.canvas.width, this.$refs.canvas.height)
-      }
-    })
   },
 
   methods: {
@@ -106,113 +87,7 @@ export default {
     },
     stopWebcam() {
       this.$store.dispatch('stopTracking')
-    },
-
-    /**
-     * Animate fireworks
-     * - Adapted from: https://codepen.io/juliangarnier/pen/gmOwJX
-     *
-     * @FIXME HERE BE DRAGONS 🐲 let's clean this code up a bit
-     */
-    animateFireworks(x, y, ctx) {
-      var circle = this.createCircle(x, y, ctx)
-      var particules = []
-      for (var i = 0; i < 500; i++) {
-        particules.push(this.createParticle(x, y, ctx))
-      }
-      anime
-        .timeline()
-        .add({
-          targets: particules,
-          x: function(p) {
-            return p.endPos.x
-          },
-          y: function(p) {
-            return p.endPos.y
-          },
-          radius: 0.1,
-          duration: anime.random(1200, 1800),
-          easing: 'easeOutExpo',
-          update: this.renderParticle
-        })
-        .add({
-          targets: circle,
-          radius: anime.random(80, 160),
-          lineWidth: 0,
-          alpha: {
-            value: 0,
-            easing: 'linear',
-            duration: anime.random(600, 800)
-          },
-          duration: anime.random(1200, 1800),
-          easing: 'easeOutExpo',
-          update: this.renderParticle,
-          offset: 0
-        })
-    },
-
-    createCircle(x, y, ctx) {
-      var p = {}
-      p.x = x
-      p.y = y
-      p.color = '#FFF'
-      p.radius = 0.1
-      p.alpha = 0.5
-      p.lineWidth = 6
-      p.draw = function() {
-        ctx.globalAlpha = p.alpha
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true)
-        ctx.lineWidth = p.lineWidth
-        ctx.strokeStyle = p.color
-        ctx.stroke()
-        ctx.globalAlpha = 1
-      }
-      return p
-    },
-
-    createParticle(x, y, ctx) {
-      const colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C']
-
-      var p = {}
-      p.x = x
-      p.y = y
-      p.color = colors[anime.random(0, colors.length - 1)]
-      p.radius = anime.random(16, 32)
-      p.endPos = this.setParticleDirection(p)
-      p.draw = function() {
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true)
-        ctx.fillStyle = p.color
-        ctx.fill()
-      }
-      return p
-    },
-
-    setParticleDirection(p) {
-      var angle = (anime.random(0, 360) * Math.PI) / 180
-      var value = anime.random(50, 180)
-      var radius = [-1, 1][anime.random(0, 1)] * value
-      return {
-        x: p.x + radius * Math.cos(angle),
-        y: p.y + radius * Math.sin(angle)
-      }
-    },
-
-    renderParticle(anim) {
-      for (var i = 0; i < anim.animatables.length; i++) {
-        anim.animatables[i].target.draw()
-      }
     }
   }
 }
 </script>
-
-<style lang="sass">
-#tensormonkey-fireworks
-  position: absolute
-  width: 500px
-  height: 500px
-  top: -150px
-  left: -150px
-</style>
