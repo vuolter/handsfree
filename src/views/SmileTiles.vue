@@ -12,7 +12,7 @@
                 v-card-title Score: {{score.current}}
             v-col.col-12.col-sm-4
               v-card
-                v-card-title Time
+                v-card-title Time: {{currentTime}}
 
         v-layout
           v-row
@@ -24,6 +24,14 @@
                 v-col.col-3(v-for='index in 16' :key='index')
                   v-card(style="height: 80px;" ref='tile' @click='clickedTile(index - 1)' :color='tiles[index - 1] | tileColor(index)')
                     v-card-title(v-if='tiles[index - 1] > 1' style='color: #fff; text-align: center') {{tiles[index - 1]}}
+
+    v-card
+      v-card-title How to play
+      v-card-text
+        ul
+          li Click on the black tiles to start or increase the timer
+          li Click on white tiles to restart
+          li Beat my high score of 80 😎
 </template>
 
 <script>
@@ -48,11 +56,25 @@ export default {
       return !this.score.current ? 'pink darken-3' : 'indigo'
     },
 
+    currentTime() {
+      return this.timer > 0 ? this.timer : 0
+    },
+
     ...mapState(['handsfree', 'isTracking'])
+  },
+
+  watch: {
+    timer() {
+      if (this.timer < 0) {
+        this.score.current = 0
+      }
+    }
   },
 
   data: () => ({
     tiles: Array.from({ length: 16 }, () => 0),
+    timerInterval: null,
+    timer: 0,
     score: {
       current: 0,
       best: 0
@@ -60,14 +82,25 @@ export default {
   }),
 
   /**
-   * Choose 3 items on random
+   * - Choose 3 items on random
+   * - Create the timer interval
    */
   mounted() {
     window.view = this
+    this.timerInterval = setInterval(() => {
+      this.timer -= 1
+    }, 100)
 
     for (let i = 0; i < 3; i++) {
       this.setRandomTile()
     }
+  },
+
+  /**
+   * Destroy the timer
+   */
+  beforeDestroy() {
+    clearInterval(this.timerInterval)
   },
 
   methods: {
@@ -81,7 +114,7 @@ export default {
 
           if (this.tiles[index] > 0) {
             this.$set(this.tiles, index, this.tiles[index] - 1)
-            if (this.tiles[index] === 0) this.setRandomTile()
+            if (this.tiles[index] === 0) this.setRandomTile(index)
           }
         }
       },
@@ -96,8 +129,15 @@ export default {
       // Update the score
       if (this.tiles[index] === 0) {
         this.score.current = 0
+        this.timer = 0
       } else if (this.tiles[index]) {
         this.score.current += 10
+
+        if (this.timer < 0) {
+          this.timer = 20
+        } else {
+          this.timer += 8
+        }
       }
 
       // Update best score
@@ -109,17 +149,17 @@ export default {
     /**
      * Sets a random white tile to a random grid type
      */
-    setRandomTile() {
+    setRandomTile(ignoreIndex = -1) {
       let index = random(0, 15)
 
       // Keep repeating until we have a valid tile
-      if (this.tiles[index]) {
-        return this.setRandomTile()
+      if (this.tiles[index] || ignoreIndex === index) {
+        return this.setRandomTile(ignoreIndex)
       }
 
       let tileType = Math.random() * 100
 
-      if (tileType < 80) {
+      if (tileType < 90) {
         this.$set(this.tiles, index, 1)
       } else {
         this.$set(this.tiles, index, 3)
