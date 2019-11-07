@@ -25,12 +25,21 @@
 ```html
 <!DOCTYPE html>
 <head>
+  <!-- Require dependencies -->
   <link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css">
   <script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">
 </head>
 <body>
   <script>
-    handsfree = new Handsfree()
+    // Create a new instance. Use one instance for each camera
+    const handsfree = new Handsfree({})
+
+    // Create a simple plugin that displays pointer values on every frame
+    Handsfree.use('consoleLogger', (pointer, context) => {
+      console.log(pointer)
+    })
+
+    // Start tracking
     handsfree.start()
   </script>
 </body>
