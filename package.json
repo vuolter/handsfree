@@ -22,6 +22,7 @@
     "@mdi/font": "^3.6.95",
     "core-js": "^3.3.2",
     "gsap": "^2.1.3",
+    "highlight.js": "^9.16.2",
     "lodash": "^4.17.15",
     "roboto-fontface": "*",
     "vue": "^2.6.10",

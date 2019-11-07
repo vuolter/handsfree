@@ -23,8 +23,9 @@ export default {
   data: () => ({}),
 
   mounted() {
-    window.App = this
     this.$store.commit('set', ['handsfree', new window.Handsfree()])
+    window.App = this
+    window.handsfree = this.handsfree
   },
 
   methods: {
