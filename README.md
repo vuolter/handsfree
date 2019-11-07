@@ -67,6 +67,11 @@ let config = {
   // Whether Handsfree should automatically start after instantiation
   autostart: false,
 
+  debugger: {
+    // Where to inject the debugger into
+    target: document.body
+  },
+
   sensitivity: {
     // A factor to adjust the cursors move speed by
     xy: 0.7,

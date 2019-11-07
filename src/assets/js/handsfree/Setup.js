@@ -21,6 +21,10 @@ Handsfree.prototype.cleanConfig = function(config) {
     {
       // Whether Handsfree should automatically start after instantiation
       autostart: false,
+      debugger: {
+        // Where to inject the debugger into
+        target: document.body
+      },
       sensitivity: {
         // A factor to adjust the cursors move speed by
         xy: 0.7,
@@ -108,7 +112,7 @@ Handsfree.prototype.createDebugger = function() {
   $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
   $wrap.appendChild($canvas)
 
-  document.body.appendChild($wrap)
+  this.config.debugger.target.appendChild($wrap)
 }
 
 /**

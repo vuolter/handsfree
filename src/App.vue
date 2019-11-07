@@ -14,6 +14,8 @@
               v-list-item-action
                 v-icon mdi-emoticon-excited-outline
               v-list-item-content Smile Tiles
+        v-spacer
+        div(ref='debuggerTarget')
 
     v-app-bar(app)
       div.d-flex.align-center
@@ -39,7 +41,14 @@ export default {
   data: () => ({}),
 
   mounted() {
-    this.$store.commit('set', ['handsfree', new window.Handsfree()])
+    this.$store.commit('set', [
+      'handsfree',
+      new window.Handsfree({
+        debugger: {
+          target: this.$refs.debuggerTarget
+        }
+      })
+    ])
     window.App = this
     window.handsfree = this.handsfree
   },
