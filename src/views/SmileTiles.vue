@@ -1,15 +1,15 @@
 <template lang="pug">
   v-container
-    v-card(color='indigo')
+    v-card(:color='backgroundColor')
       v-card-text
         v-layout(wrap)
           v-row
             v-col.col-12.col-sm-4
               v-card
-                v-card-title Best
+                v-card-title Best: {{score.best}}
             v-col.col-12.col-sm-4
               v-card
-                v-card-title Score
+                v-card-title Score: {{score.current}}
             v-col.col-12.col-sm-4
               v-card
                 v-card-title Time
@@ -17,7 +17,7 @@
         v-layout
           v-row
             v-col.md-6
-        v-card(color='indigo lighten-3' style='max-width: 500px; margin: auto')
+        v-card(color='indigo lighten-2' style='max-width: 500px; margin: auto')
           v-card-text
             v-layout
               v-row(dense)
@@ -41,8 +41,18 @@ export default {
     }
   },
 
+  computed: {
+    backgroundColor() {
+      return !this.score.current ? 'pink darken-3' : 'indigo'
+    }
+  },
+
   data: () => ({
-    tiles: Array.from({ length: 16 }, () => 0)
+    tiles: Array.from({ length: 16 }, () => 0),
+    score: {
+      current: 0,
+      best: 0
+    }
   }),
 
   /**
@@ -58,9 +68,28 @@ export default {
 
   methods: {
     clickedTile(index) {
+      this.updateScore(index)
+
       if (this.tiles[index] > 0) {
         this.setRandomTile()
         this.tiles[index] -= 1
+      }
+    },
+
+    /**
+     * Updates the score based on the type of the tile
+     */
+    updateScore(index) {
+      // Update the score
+      if (this.tiles[index] === 0) {
+        this.score.current = 0
+      } else if (this.tiles[index] === 1) {
+        this.score.current += 10
+      }
+
+      // Update best score
+      if (this.score.current > this.score.best) {
+        this.score.best = this.score.current
       }
     },
 
