@@ -9,8 +9,14 @@ export default new Vuex.Store({
   state: {
     isTracking: false,
 
+    // Replaced with new Handsfree
     handsfree: {
       isStarted: false
+    },
+
+    // Tracks the state of different sidebars
+    sidebar: {
+      main: true
     }
   },
 
