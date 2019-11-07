@@ -1,22 +1,49 @@
 <template lang="pug">
   v-container
     v-layout(text-center wrap)
-      v-flex.xs12
-        TensorMonkey.my-5(style='height: 150px')
+      v-row
+        v-col(cols=12 md=6).mb-4
+          TensorMonkey.my-5(style='height: 150px')
 
-      v-flex.xs12.md6.offset-md-3.mb-4
-        h1.display-2.font-weight-bold.mb-3 Handsfree.js
-        p
-          <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
-          <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
-        p
-          small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
-        p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox</b>
-        p.my-5
-          v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
-          v-btn(v-else color='primary' x-large @click='startWebcam') Start Webcam
-        p
-          small Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz Weboji</a>
+          h1.display-2.font-weight-bold.mb-3 Handsfree.js
+          p
+            <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
+            <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
+          p
+            small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
+          p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox</b>
+          p.my-5
+            v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
+            v-btn(v-else color='primary' x-large @click='startWebcam') Start Webcam
+          p
+            small Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz Weboji</a>
+
+        v-col(cols=12 md=6).mb-4
+          iframe(style='margin-top: 100px; max-width: 100%' width="560" height="315" src="https://www.youtube.com/embed/ty081LCcYpc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+
+    v-layout
+      v-row(style='margin-top: 100px; margin-bottom: 100px')
+        v-col.col-12.col-md-8.offset-md-2
+          v-card
+            v-card-title Quickstart
+            v-card-text
+              p By default, Handsfree.js is configured for browsing it's page (scrolling, clicking, etc). Here's how to get that going quickly:
+              pre
+                code.xml(style='width: 100%; background: #2d2b57').
+                 &lt;!DOCTYPE html&gt;
+                  &lt;head&gt;
+                    &lt;script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">&lt;/script&gt;
+                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css"&gt;
+                  &lt;/head&gt;
+                  &lt;body&gt;
+                    &lt;script&gt;
+                      const config = {}
+                      const handsfree = new Handsfree(config)
+                      handsfree.start()
+                    &lt;/script&gt;
+                  &lt;/body&gt;
+            v-card-actions
+              v-btn.primary(block href='https://www.notion.so/heyozramos/Handsfree-js-53625c4866564421918e4941d9f370dc') Explore the docs
 </template>
 
 <script>
@@ -27,6 +54,10 @@ export default {
   components: { TensorMonkey },
 
   computed: mapState(['isTracking']),
+
+  mounted() {
+    this.$store.dispatch('syntaxHighlight')
+  },
 
   methods: {
     startWebcam() {

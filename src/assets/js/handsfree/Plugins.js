@@ -8,3 +8,6 @@ const Handsfree = window.Handsfree
 Handsfree.use = function(name, callback) {
   Handsfree.plugins[name] = callback
 }
+
+require('./plugins/vertScroll')
+require('./plugins/click')

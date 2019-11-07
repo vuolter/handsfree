@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { set } from 'lodash'
+import hljs from 'highlight.js'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,9 @@ export default new Vuex.Store({
   },
 
   actions: {
+    /**
+     * Starts/stops Handsfree.js tracking
+     */
     startTracking({ state }) {
       state.handsfree.start()
       state.isTracking = true
@@ -32,6 +36,14 @@ export default new Vuex.Store({
     stopTracking({ state }) {
       state.handsfree.stop()
       state.isTracking = false
+    },
+
+    /**
+     * Syntax Highlight
+     */
+    syntaxHighlight() {
+      hljs.initHighlighting.called = false
+      hljs.initHighlighting()
     }
   },
 

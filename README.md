@@ -20,6 +20,22 @@
 </p>
 </div>
 
+# Quickstart
+
+```html
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css">
+  <script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">
+</head>
+<body>
+  <script>
+    handsfree = new Handsfree()
+    handsfree.start()
+  </script>
+</body>
+```
+
 # Usage
 
 Start by including Handsfree.js and it's stylesheet:

@@ -7,11 +7,22 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import '@/assets/js/handsfree/handsfree.js'
 import '@/assets/sass/handsfree.sass'
+
 // We set this to the root because of the way we're including it in this project
 window.Handsfree.libSrc = '/'
 
-Vue.config.productionTip = false
+// Highlight.js
+// @TODO only load on required pages
+import hljs from 'highlight.js'
+require('highlight.js/styles/shades-of-purple.css')
+hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'))
+hljs.registerLanguage('bash', require('highlight.js/lib/languages/bash'))
+hljs.registerLanguage(
+  'javascript',
+  require('highlight.js/lib/languages/javascript')
+)
 
+Vue.config.productionTip = false
 new Vue({
   router,
   store,
