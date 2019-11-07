@@ -23,6 +23,7 @@
               v-row(dense)
                 v-col.col-3(v-for='index in 16' :key='index')
                   v-card(style="height: 80px;" ref='tile' @click='clickedTile(index - 1)' :color='tiles[index - 1] | tileColor(index)')
+                    v-card-title(v-if='tiles[index - 1] > 1' style='color: #fff; text-align: center') {{tiles[index - 1]}}
 </template>
 
 <script>
@@ -79,8 +80,8 @@ export default {
           this.updateScore(index)
 
           if (this.tiles[index] > 0) {
-            this.setRandomTile()
-            this.tiles[index] -= 1
+            this.$set(this.tiles, index, this.tiles[index] - 1)
+            if (this.tiles[index] === 0) this.setRandomTile()
           }
         }
       },
@@ -95,7 +96,7 @@ export default {
       // Update the score
       if (this.tiles[index] === 0) {
         this.score.current = 0
-      } else if (this.tiles[index] === 1) {
+      } else if (this.tiles[index]) {
         this.score.current += 10
       }
 
@@ -111,11 +112,18 @@ export default {
     setRandomTile() {
       let index = random(0, 15)
 
+      // Keep repeating until we have a valid tile
       if (this.tiles[index]) {
         return this.setRandomTile()
       }
 
-      this.$set(this.tiles, index, 1)
+      let tileType = Math.random() * 100
+
+      if (tileType < 80) {
+        this.$set(this.tiles, index, 1)
+      } else {
+        this.$set(this.tiles, index, 3)
+      }
     }
   }
 }
