@@ -18,6 +18,7 @@
         div(ref='debuggerTarget')
 
     v-app-bar(app)
+      v-app-bar-nav-icon.mr-3.d-print-none(@click.stop="sidebar.main = !sidebar.main")
       div.d-flex.align-center
         div(style='width: 60px')
           TensorMonkey.mr-3.ozramos-tensormonkey-mini(styles='height: 40px')
