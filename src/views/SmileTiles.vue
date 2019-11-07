@@ -136,7 +136,7 @@ export default {
         if (this.timer < 0) {
           this.timer = 20
         } else {
-          this.timer += 8
+          this.timer += 9
         }
       }
 
