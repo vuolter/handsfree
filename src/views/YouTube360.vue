@@ -23,10 +23,32 @@ export default {
 
   methods: {
     /**
-     * Attempts to instantiate the video repeteadly until it works
+     * - Adds Youtube Iframe api if it hasn't been added yet
+     * @see https://developers.google.com/youtube/iframe_api_reference
      */
     maybeInitVideo() {
-      console.log('maybeInitVideo')
+      if (!this.$store.state.dependenciesLoaded.youtubeIframe) {
+        const $script = document.createElement('script')
+        $script.src = 'https://www.youtube.com/iframe_api'
+        document.body.appendChild($script)
+        this.$store.commit('set', ['dependenciesLoaded.youtubeIframe', true])
+      }
+
+      this.setupPlayer()
+    },
+
+    /**
+     * Recursively calls this method until the YouTube Iframe API is ready, then sets it up
+     */
+    setupPlayer() {
+      if (window.YT && window.YT.Player) {
+        console.log('READY')
+      } else {
+        console.log('retrying...')
+        setTimeout(() => {
+          this.setupPlayer()
+        }, 100)
+      }
     },
 
     /**
