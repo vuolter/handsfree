@@ -22,8 +22,11 @@
 <!DOCTYPE html>
 <head>
   <!-- Require dependencies -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css">
-  <script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css"
+  />
+  <script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js"></script>
 </head>
 <body>
   <script>
@@ -47,8 +50,11 @@ Start by including Handsfree.js and it's stylesheet:
 
 ```html
 <!-- Include with HTML -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css">
-<script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/handsfree@5.0.3/dist/handsfreejs/handsfree.css"
+/>
+<script src="https://unpkg.com/handsfree@5.0.3/dist/handsfreejs/handsfree.js"></script>
 ```
 
 ```js
@@ -277,7 +283,3 @@ Handsfree.js is available for free and commercial use under [Apache 2.0](http://
 ## Models
 
 - [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache License 2.0) - Face and head pose estimation
-
-## Attributions
-
-- Fireworks code adapted from [Julian Garnier's Anime Fireworks CodePen](https://codepen.io/juliangarnier/pen/gmOwJX)

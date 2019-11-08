@@ -14,6 +14,10 @@
               v-list-item-action
                 v-icon mdi-emoticon-excited-outline
               v-list-item-content Smile Tiles
+            v-list-item(:to='{name: "YouTube360"}')
+              v-list-item-action
+                v-icon mdi-youtube
+              v-list-item-content YouTube360
         v-spacer
         div(ref='debuggerTarget')
 
