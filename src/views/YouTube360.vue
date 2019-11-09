@@ -30,6 +30,7 @@ export default {
 
   beforeDestroy() {
     window.removeEventListener('resize', this.resizePlayer)
+    window.Handsfree.disable('youtube360')
   },
 
   methods: {
