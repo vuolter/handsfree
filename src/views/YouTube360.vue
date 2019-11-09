@@ -73,8 +73,6 @@ export default {
      */
     handleHandsfree() {
       window.Handsfree.use('youtube360', (pointer, instance) => {
-        console.log('TWEENT', this.tween, this.YTPlayer)
-
         if (!this.YTPlayer || !document.contains(this.YTPlayer.a)) return
         this.YTPlayer.getSphericalProperties &&
           this.YTPlayer.setSphericalProperties(this.tween)
