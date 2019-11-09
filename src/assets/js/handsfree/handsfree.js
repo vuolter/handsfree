@@ -60,7 +60,8 @@ class Handsfree {
     this.updatePointer()
 
     Object.keys(Handsfree.plugins).forEach((key) => {
-      Handsfree.plugins[key](this.pointer, this)
+      Handsfree.plugins[key].enabled &&
+        Handsfree.plugins[key].callback(this.pointer, this)
     })
 
     requestAnimationFrame(() => this.track())

@@ -5,12 +5,23 @@
         v-card
           v-card-title YouTube 360
           v-card-text
-            p After pressing Start Webcam, move your head around to "look" around in the video handsfree!
-            div(ref='youtubePlayer')
+            p After pressing Start Webcam, move your head around to "look" around in the video handsfree. <b>Try it full screen!</b>
+            div(ref='youtubePlayerWrap')
+              #youtube-player
 </template>
 
 <script>
+import { TweenMax } from 'gsap/all'
+
 export default {
+  data: () => ({
+    // The YouTube player object
+    YTPlayer: null,
+
+    // Contains the smoothened out POV values
+    tween: {}
+  }),
+
   mounted() {
     this.maybeInitVideo()
     this.resizePlayer()
@@ -42,9 +53,14 @@ export default {
      */
     setupPlayer() {
       if (window.YT && window.YT.Player) {
-        console.log('READY')
+        this.YTPlayer = new window.YT.Player('youtube-player', {
+          // Picked because of no ads
+          // @see https://www.youtube.com/watch?v=Crv1hbk9HuM&list=PLxf-CDjxvNVoxF27Pj3VV5pIy4SsqPNcI&index=5&t=0s
+          videoId: 'Crv1hbk9HuM',
+          playerVars: { autoplay: 1 }
+        })
+        this.handleHandsfree()
       } else {
-        console.log('retrying...')
         setTimeout(() => {
           this.setupPlayer()
         }, 100)
@@ -52,12 +68,49 @@ export default {
     },
 
     /**
+     * Setup the handsfree controls
+     */
+    handleHandsfree() {
+      window.Handsfree.use('youtube360', (pointer, instance) => {
+        console.log('TWEENT', this.tween, this.YTPlayer)
+
+        if (!this.YTPlayer || !document.contains(this.YTPlayer.a)) return
+        this.YTPlayer.getSphericalProperties &&
+          this.YTPlayer.setSphericalProperties(this.tween)
+
+        this.tweenPOV(instance)
+      })
+    },
+
+    /**
+     * Smoothens out the POV
+     */
+    tweenPOV(instance) {
+      TweenMax.to(this.tween, 500 / 1000, {
+        pitch: ((-instance.head.rotation[0] * 180) / Math.PI) * 8 + 90,
+        yaw: ((-instance.head.rotation[1] * 180) / Math.PI) * 10,
+        roll: ((instance.head.rotation[2] * 180) / Math.PI) * 2,
+        ease: 'Linear.easeNone',
+        overwrite: true,
+        immediate: true
+      })
+    },
+
+    /**
      * Resizes the player ot be as tall as the display
      */
     resizePlayer() {
-      const $player = this.$refs.youtubePlayer
+      const $player = this.$refs.youtubePlayerWrap
       if ($player) $player.style.height = `${window.innerHeight - 250}px`
     }
   }
 }
 </script>
+
+<style lang="sass">
+#youtube-player
+  width: 100%
+  height: 100%
+  position: relative
+  z-index: 9999999
+</style>

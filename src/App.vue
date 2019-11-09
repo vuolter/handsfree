@@ -46,6 +46,13 @@ export default {
   data: () => ({}),
 
   mounted() {
+    // Toggle sidebar (show on desktop, hide on mobile)
+    this.$store.commit('set', [
+      'sidebar.main',
+      this.$vuetify.breakpoint.lgAndUp
+    ])
+
+    // Setup handsfree
     this.$store.commit('set', [
       'handsfree',
       new window.Handsfree({
