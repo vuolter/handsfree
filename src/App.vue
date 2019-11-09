@@ -41,7 +41,7 @@ import { mapState } from 'vuex'
 export default {
   components: { TensorMonkey },
 
-  computed: mapState(['handsfree', 'isTracking', 'sidebar']),
+  computed: mapState(['isTracking', 'sidebar']),
 
   data: () => ({}),
 
@@ -62,7 +62,7 @@ export default {
       })
     ])
     window.App = this
-    window.handsfree = this.handsfree
+    window.handsfree = this.$store.state.handsfree
   },
 
   methods: {

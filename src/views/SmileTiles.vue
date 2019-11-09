@@ -60,7 +60,7 @@ export default {
       return this.timer > 0 ? this.timer : 0
     },
 
-    ...mapState(['handsfree', 'isTracking'])
+    ...mapState(['isTracking'])
   },
 
   watch: {
@@ -109,7 +109,10 @@ export default {
      */
     clickedTile: debounce(
       function(index) {
-        if (this.handsfree.pointer.state === 'mouseDown' || !this.isTracking) {
+        if (
+          this.$store.state.handsfree.pointer.state === 'mouseDown' ||
+          !this.isTracking
+        ) {
           this.updateScore(index)
 
           if (this.tiles[index] > 0) {

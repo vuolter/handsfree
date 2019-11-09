@@ -28,7 +28,7 @@ export default {
     window.addEventListener('resize', this.resizePlayer)
   },
 
-  destroyed() {
+  beforeDestroy() {
     window.removeEventListener('resize', this.resizePlayer)
   },
 
