@@ -200,7 +200,12 @@ Handsfree.use('verticalScroll', (pointer, handsfree) => {
 })
 ```
 
-Using `Handsfree.use()` with the same plugin name overwrites the existing one.
+Using `Handsfree.use()` with the same plugin name overwrites the existing one. Once a plugin is in use, you can disable and enable it with the following:
+
+```js
+Handsfree.disable(pluginName)
+Handsfree.enable(pluginName)
+```
 
 ## Events
 
