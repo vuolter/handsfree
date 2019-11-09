@@ -10,6 +10,7 @@
 const pkg = require('./package.json')
 const gitRepo = pkg.deploy.repo
 const domainName = pkg.deploy.domain
+const shell = require('shelljs')
 
 // navigate into the build output directory
 shell.cd('dist/sandbox')
