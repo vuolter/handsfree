@@ -168,7 +168,30 @@ handsfree.isStarted = false
 handsfree.plugins = []
 ```
 
-## Morphs
+## Head Properties
+
+### Rotation
+
+`handsfree.head.rotation` is an array containing the heads `[pitch, yaw, roll]` in radians:
+
+```js
+// Pitch
+handsfree.head.rotation[0]
+
+// Yaw
+handsfree.head.rotation[1]
+
+// Roll
+handsfree.head.rotation[2]
+```
+
+To convert from radians to degrees, use the following formula:
+
+```js
+degrees = (handsfree.head.rotation[0] * 180) / Math.PI
+```
+
+### Morphs
 
 The following morph values are available on `handsfree.head.morphs`
 
@@ -251,7 +274,16 @@ The following are some helpers you can add to your elements:
 
 # Local Development
 
-This project contains the Handsfree.js library (see `/src/handsfree`) and a development environment with sample code and demos. To run these, you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
+> ## A note about this codebase
+>
+> This codebase is currently broken into two parts:
+>
+> - The library itself, located in `/src/assets/handsfree/handsfree.js`
+> - Handsfree.js.org, which is everything else
+>
+> This really should be two separate repositories, but for now just know that the library itself starts in `/src/assets/handsfree/handsfree.js`
+
+To run this project locally you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
 
 After downloading this project repo, you'll then need to install dependencies by running `yarn` in the project's root directory. Then you'll have the following commands available:
 
