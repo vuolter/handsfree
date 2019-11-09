@@ -16,14 +16,23 @@
   <p>Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz Weboji</a></p>
 </div>
 
+<br>
+<br>
+<br>
+
 # Quickstart
+
+Run the following on Glitch 👉 https://glitch.com/edit/#!/handsfree-minimal
 
 ```html
 <!DOCTYPE html>
 <head>
-  <!-- Require dependencies -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css">
-  <script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">
+  <!-- Require dependencies, which adds Handsfree to global namespace -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.css"
+  />
+  <script src="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.js"></script>
 </head>
 <body>
   <script>
@@ -31,8 +40,9 @@
     const handsfree = new Handsfree({})
 
     // Create a simple plugin that displays pointer values on every frame
+    // When using only 1 instance, handsfree === context
     Handsfree.use('consoleLogger', (pointer, context) => {
-      console.log(pointer)
+      console.log(pointer, context.head.rotation, context.head.morphs)
     })
 
     // Start tracking
@@ -41,206 +51,40 @@
 </body>
 ```
 
-# Usage
+<br>
+<br>
+<br>
 
-Start by including Handsfree.js and it's stylesheet:
-
-```html
-<!-- Include with HTML -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css">
-<script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js">
-```
-
-```js
-// Or include with JavaScript
-import 'handsfree'
-```
-
-In both cases, you'll get a `window.Handsfree` which you'll then use to configure an instance with `const handsfree = new Handsfree(config)`. One instance will need to be created for each camera that you'd like to enable, but note that each instance can track multiple users.
-
-> From here on out, we'll refer to uppercase `Handsfree` as the class object and lowercase `handsfree` as an instance of that object
-
-## Config
-
-```js
-let config = {
-  // Whether Handsfree should automatically start after instantiation
-  autostart: false,
-
-  debugger: {
-    // Where to inject the debugger into
-    target: document.body
-  },
-
-  sensitivity: {
-    // A factor to adjust the cursors move speed by
-    xy: 0.7,
-    // How much wider (+) or narrower (-) a smile needs to be to click
-    click: 0
-  },
-
-  stabilizer: {
-    // How much stabilization to use: 0 = none, 3 = heavy
-    factor: 1,
-    // Number of frames to stabilizer over
-    buffer: 30
-  },
-
-  // Configs specific to plugins
-  plugin: {
-    click: {
-      // Morphs to watch for and their required confidences
-      morphs: {
-        0: 0.5,
-        1: 0.5
-      }
-    },
-
-    vertScroll: {
-      // The multiplier to scroll by. Lower numbers are slower
-      scrollSpeed: 0.15,
-      // How many pixels from the the edge to scroll
-      scrollZone: 100
-    }
-  }
-}
-
-const handsfree = new Handsfree(config)
-```
-
-## Methods
-
-```js
-// Start tracking
-handsfree.start()
-
-// Stop tracking
-handsfree.stop()
-
-// Emit an event to be listened to with handsfree.on
-handsfree.emit(eventName, ...args)
-
-// A callback to call when handsfree.emit(eventName) is called
-handsfree.on(eventName, cb)
-```
-
-## Properties
-
-The following properties are available:
-
-```js
-handsfree.pointer = {
-  // The inferred pointer position
-  x: 0,
-  y: 0,
-  // The pointer DIV element
-  $el: null,
-  // The pointer state ('mouseDown', 'mouseDrag', 'mouseUp', '')
-  state: ''
-}
-
-// The original config object passed during instantiation
-handsfree._config
-// The cleaned config object with their defaults
-handsfree.config
-
-// Number of instances
-Handsfree.numInstances = 0
-// Instance id (the first instance is 1, the second is 2, and so on)
-handsfree.id
-
-// document.currentScript as run from inside Handsfree (used for calling dependencies)
-Handsfree.libSrc
-
-// Contains the JEELIZ tracker library once it's been injected
-handsfree.trackerSDK = null
-
-// Whether we're tracking or not
-handsfree.isStarted = false
-
-// Contains a collection of callbacks to call on every frame
-handsfree.plugins = []
-```
-
-## Morphs
-
-The following morph values are available on `handsfree.head.morphs`
-
-```
-0: smileRight → closed mouth smile right
-1: smileLeft → closed mouth smile left
-2: eyeBrowLeftDown → eyebrow left frowned
-3: eyeBrowRightDown → eyebrow right frowned
-4: eyeBrowLeftUp → eyebrow left up (surprised)
-5: eyeBrowRightUp → eyebrow right up (surprised)
-6: mouthOpen → mouth open
-7: mouthRound → mouth round
-8: eyeRightClose → close right eye
-9: eyeLeftClose → close left eye
-10: mouthNasty → mouth nasty (upper lip raised)
-```
+<div align="center">
+  <img src="https://i.imgur.com/qkYyazG.gif" width=250>
+  <h1>Learn how to use Handsfree.js</h1>
+  <a href="https://github.com/handsfreejs/handsfree/wiki/Config">Config</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Methods">Methods</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Properties">Properties</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Head">The Head</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Plugins">Plugins</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Events">Events</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Classes">Classes</a>
+</div>
 
 ---
 
-# Adding Functionality
+> The rest of this document is for running Handsfree.js.org and the Handsfree.js library locally.
+>
+> **👆 See the above wiki links for how to actually use Handsfree.js in your own app 👆**
 
-Using `Handsfree.use(name, callback)` adds a `callback` to be called on every inference loop for every instance. We call these plugins. The plugin recieves `(pointer, handsfree)` - `pointer` is the pointers current `(x,y)` and `handsfree` is the Handsfree instance (use `handsfree.head` to get that instances head pose data, for example). Here's a basic example of scrolling the page:
+---
 
-```js
-Handsfree.use('verticalScroll', (pointer, handsfree) => {
-  if (pointer.y < 100) window.scrollTo(0, window.scrollY + pointer.y)
-  if (pointer.y > window.innerHeight)
-    window.scrollTo(0, window.scrollY + (pointer.y - window.innerHeight))
-})
-```
-
-Using `Handsfree.use()` with the same plugin name overwrites the existing one.
-
-## Events
-
-The following `handsfree.emit` are called:
-
-```js
-// Called when dependencies are ready and the handsfree.start() is runnable
-handsfree.on('dependenciesReady')
-
-// Called when .start()
-handsfree.on('started')
-```
-
-To listen to these events without the `handsfree` instance, use the `document` instead by prefacing the events with `handsfree-`:
-
-```js
-document.addEventListener(`handsfree-dependenciesReady`, callback)
-document.addEventListener(`handsfree-started`, callback)
-document.addEventListener(`handsfree-${eventName}`, callback)
-```
-
-## Classes
-
-The following classes are added to the `<body>` to help make styling your app easier:
-
-```css
-/* Added while handsfree is loading dependencies */
-.handsfree-loading
-
-/* Added when handsfree is tracking */
-.handsfree-started
-```
-
-The following are some helpers you can add to your elements:
-
-```css
-/* Hidden while loading */
-.handsfree-hide-when-loading
-
-/* Show while loading */
-.handsfree-show-when-loading
-```
+<br>
+<br>
+<br>
 
 # Local Development
 
-This project contains the Handsfree.js library (see `/src/handsfree`) and a development environment with sample code and demos. To run these, you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
+> ## A note about this codebase
+>
+> This codebase is currently broken into two parts:
+>
+> - The library itself, located in `/src/assets/handsfree/handsfree.js`
+> - Handsfree.js.org, which is everything else
+>
+> This really should be two separate repositories, but for now just know that the library itself starts in `/src/assets/handsfree/handsfree.js`
+
+To run this project locally you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
 
 After downloading this project repo, you'll then need to install dependencies by running `yarn` in the project's root directory. Then you'll have the following commands available:
 
@@ -278,6 +122,18 @@ Handsfree.js is available for free and commercial use under [Apache 2.0](http://
 
 - [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache License 2.0) - Face and head pose estimation
 
-## Attributions
+## Art
 
-- Fireworks code adapted from [Julian Garnier's Anime Fireworks CodePen](https://codepen.io/juliangarnier/pen/gmOwJX)
+- [Monkey logo adaption](https://www.designevo.com/apps/logo/?name=cute-monkey-and-interesting-gaming)
+
+<br>
+<br>
+<br>
+
+# Special Thanks
+
+A very special thanks goes out to [@Golan](https://twitter.com/golan) for inviting me out to his studio, [The STUDIO for Creative Inquiry at Carnegie Mellon](http://studioforcreativeinquiry.org/) during the [Spring of 2019](https://www.flickr.com/photos/creativeinquiry/albums/72157703188612302). It was during this residency that I was encouraged to begin integrating Handsfree.js into different libraries and where I had a chance to use Handsfree.js with a real UR5 robot!
+
+Another special thanks goes out to [@AnilDash](https://twitter.com/anildash) for sponsoring me during Winter 2018. Also a thank you to [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58). And a very special thanks to [Jess Holbrook](https://twitter.com/jessscon) from Google Pair for driving all the way (way) out to meet me and helping kickstart this all with a new computer!
+
+Thanks also to everyone who's supported me on Patreon, GoFundMe, and through Twitter over the months (and almost years!). And thanks everyone else for believing in this project 👋

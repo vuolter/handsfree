@@ -52,7 +52,7 @@
                     &lt;/script&gt;
                   &lt;/body&gt;
             v-card-actions
-              v-btn.primary(block href='https://www.notion.so/heyozramos/Handsfree-js-53625c4866564421918e4941d9f370dc') Explore the docs
+              v-btn.primary(block href='https://github.com/handsfreejs/handsfree/wiki') Explore the docs
 
     v-layout
       v-row(style='margin-top: 100px; margin-bottom: 100px')

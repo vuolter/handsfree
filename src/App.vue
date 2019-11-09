@@ -14,6 +14,10 @@
               v-list-item-action
                 v-icon mdi-emoticon-excited-outline
               v-list-item-content Smile Tiles
+            v-list-item(:to='{name: "YouTube360"}')
+              v-list-item-action
+                v-icon mdi-youtube
+              v-list-item-content YouTube360
         v-spacer
         div(ref='debuggerTarget')
 
@@ -37,11 +41,18 @@ import { mapState } from 'vuex'
 export default {
   components: { TensorMonkey },
 
-  computed: mapState(['handsfree', 'isTracking', 'sidebar']),
+  computed: mapState(['isTracking', 'sidebar']),
 
   data: () => ({}),
 
   mounted() {
+    // Toggle sidebar (show on desktop, hide on mobile)
+    this.$store.commit('set', [
+      'sidebar.main',
+      this.$vuetify.breakpoint.lgAndUp
+    ])
+
+    // Setup handsfree
     this.$store.commit('set', [
       'handsfree',
       new window.Handsfree({
@@ -51,7 +62,7 @@ export default {
       })
     ])
     window.App = this
-    window.handsfree = this.handsfree
+    window.handsfree = this.$store.state.handsfree
   },
 
   methods: {

@@ -17,6 +17,11 @@ export default new Vuex.Store({
     // Tracks the state of different sidebars
     sidebar: {
       main: true
+    },
+
+    // Determines which dependencies have been loaded
+    dependenciesLoaded: {
+      youtubeIframe: false
     }
   },
 
