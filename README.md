@@ -22,15 +22,17 @@
 
 # Quickstart
 
+Run the following on Glitch 👉 https://glitch.com/edit/#!/handsfree-minimal
+
 ```html
 <!DOCTYPE html>
 <head>
   <!-- Require dependencies, which adds Handsfree to global namespace -->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.css"
+    href="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.css"
   />
-  <script src="https://unpkg.com/handsfree@5.0.0/dist/handsfreejs/handsfree.js"></script>
+  <script src="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.js"></script>
 </head>
 <body>
   <script>
