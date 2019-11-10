@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import '@/assets/js/handsfree/handsfree.js'
-import '@/assets/sass/handsfree.sass'
+import '@/assets/sass/main.sass'
 
 // We set this to the root because of the way we're including it in this project
 window.Handsfree.libSrc = '/'
