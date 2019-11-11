@@ -7,17 +7,18 @@
             v-list-item-action
               v-icon mdi-home
             v-list-item-content Home
-          v-list-group(prepend-icon='mdi-gamepad-variant-outline')
-            template(v-slot:activator)
-              v-list-item-content Experiments
-            v-list-item(:to='{name: "SmileTiles"}')
-              v-list-item-action
-                v-icon mdi-emoticon-excited-outline
-              v-list-item-content Smile Tiles
-            v-list-item(:to='{name: "YouTube360"}')
-              v-list-item-action
-                v-icon mdi-youtube
-              v-list-item-content YouTube360
+          v-list-item(:to='{name: "SmileTiles"}')
+            v-list-item-action
+              v-icon mdi-emoticon-excited-outline
+            v-list-item-content Smile Tiles
+          v-list-item(:to='{name: "YouTube360"}')
+            v-list-item-action
+              v-icon mdi-youtube
+            v-list-item-content YouTube360
+          v-list-item(:to='{name: "Emojify"}')
+            v-list-item-action
+              v-icon mdi-face-recognition
+            v-list-item-content Emojify
         v-spacer
         div(ref='debuggerTarget')
 

@@ -1,11 +1,18 @@
 <template lang="pug">
   v-container
     v-row
-      v-col.col-12
+      v-col.col-12.col-lg-4
         v-card
           v-card-title YouTube 360
           v-card-text
+            p This demo explores the <code>handsfree.head.rotation</code> properties to control a 360 video's POV with your head.
+            h3.mb-3 How to use
             p After pressing Start Webcam, move your head around to "look" around in the video handsfree. <b>Try it full screen!</b>
+          v-card-action
+            v-btn(block color='primary' href="https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801") View the Tutorial
+      v-col.col-12.col-lg-8
+        v-card
+          v-card-text
             div(ref='youtubePlayerWrap')
               #youtube-player
 </template>

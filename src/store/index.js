@@ -55,6 +55,19 @@ export default new Vuex.Store({
     syntaxHighlight() {
       hljs.initHighlighting.called = false
       hljs.initHighlighting()
+    },
+
+    /**
+     * Loads scripts
+     * @param {Object} store A reference to this store
+     * @param {String/Array} scripts Either a script {STR} or list of scripts {ARR} to load
+     */
+    loadScripts(store, scripts) {
+      scripts.forEach((script) => {
+        const $script = document.createElement('script')
+        $script.src = script
+        document.body.appendChild($script)
+      })
     }
   },
 

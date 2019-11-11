@@ -22,8 +22,6 @@
 
 # Quickstart
 
-Run the following on Glitch 👉 https://glitch.com/edit/#!/handsfree-minimal
-
 ```html
 <!DOCTYPE html>
 <head>
@@ -59,7 +57,12 @@ Run the following on Glitch 👉 https://glitch.com/edit/#!/handsfree-minimal
   <img src="https://i.imgur.com/qkYyazG.gif" width=250>
   <h1>Learn how to use Handsfree.js</h1>
   <a href="https://github.com/handsfreejs/handsfree/wiki/Config">Config</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Methods">Methods</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Properties">Properties</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Head">The Head</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Plugins">Plugins</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Events">Events</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Classes">Classes</a>
+
+  <h1>Tutorials</h1>
 </div>
+
+- [Getting Started](https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1): Learn how to setup Handsfree.js and access the `handsfree.pointer` properties
+- [Controlling a YouTube 360 video](https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801): Learn how to access and use `handsfree.head.rotation` to control a 360 video
 
 ---
 
