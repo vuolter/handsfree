@@ -16,6 +16,7 @@ export default {
   }),
 
   mounted() {
+    window.Handsfree.disable('vertScroll')
     window.Handsfree.use('emojify', (pointer, instance) => {
       /*
         0: smileRight → closed mouth smile right
@@ -52,10 +53,10 @@ export default {
 
       if (isOppositeBrow && isMehLips && !isWinking) emoji = '🤨'
       if (isBothBrowsDown) emoji = '😡'
-      if (isWinking && (isHappyLips || isSmirkingLips)) emoji = '😉'
       if (morphs[6]) emoji = '😮'
       if (isBothBrowsUp && morphs[6]) emoji = '😲'
-      if (morphs[0] > thresholdLow && morphs[1] > thresholdLow) emoji = '🙂'
+      if (isHappyLips) emoji = '🙂'
+      if (isWinking && (isHappyLips || isSmirkingLips)) emoji = '😉'
 
       this.emoji = emoji
     })
@@ -63,6 +64,7 @@ export default {
 
   beforeDestroy() {
     window.Handsfree.disable('emojify')
+    window.Handsfree.enable('vertScroll')
   }
 }
 </script>
