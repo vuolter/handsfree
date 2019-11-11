@@ -72,8 +72,8 @@ export default {
 
       if (isOppositeBrow && isMehLips && !isWinking) emoji = '🤨'
       if (isBothBrowsDown) emoji = '😡'
-      if (morphs[6]) emoji = '😮'
-      if (isBothBrowsUp && morphs[6]) emoji = '😲'
+      if (morphs[6] > thresholdLow) emoji = '😮'
+      if (isBothBrowsUp && morphs[6] > thresholdLow) emoji = '😲'
       if (isHappyLips) emoji = '🙂'
       if (isHappyLips && isBothBrowsUp) emoji = '😀'
       if (isWinking && (isHappyLips || isSmirkingLips)) emoji = '😉'
