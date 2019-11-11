@@ -1,37 +1,43 @@
 <template lang="pug">
   v-container
-    v-card(:color='backgroundColor')
-      v-card-text
-        v-layout(wrap)
-          v-row
-            v-col.col-12.col-sm-4
-              v-card
-                v-card-title Best: {{score.best}}
-            v-col.col-12.col-sm-4
-              v-card
-                v-card-title Score: {{score.current}}
-            v-col.col-12.col-sm-4
-              v-card
-                v-card-title Time: {{currentTime}}
+    v-layout
+      v-row
+        v-col.col-12.col-lg-4
+          v-card
+            v-card-title Smile Tiles
+            v-card-text
+              p This demo explores the <code>handsfree.pointer.state</code> property to handle clicking on tiles.
 
-        v-layout
-          v-row
-            v-col.md-6
-        v-card(color='indigo lighten-2' style='max-width: 500px; margin: auto')
-          v-card-text
-            v-layout
-              v-row(dense)
-                v-col.col-3(v-for='index in 16' :key='index')
-                  v-card(style="height: 80px;" ref='tile' @click='clickedTile(index - 1)' :color='tiles[index - 1] | tileColor(index)')
-                    v-card-title(v-if='tiles[index - 1] > 1' style='color: #fff; text-align: center') {{tiles[index - 1]}}
+              h3.mb-3 How to Play
+              ul
+                li Click on the black tiles to start or increase the timer
+                li Click on white tiles to restart
+                li Beat my high score of 80 😎
+        v-col.col-12.col-lg-8
+          v-card(:color='backgroundColor')
+            v-card-text
+              v-layout(wrap)
+                v-row
+                  v-col.col-12.col-sm-4
+                    v-card
+                      v-card-title Best: {{score.best}}
+                  v-col.col-12.col-sm-4
+                    v-card
+                      v-card-title Score: {{score.current}}
+                  v-col.col-12.col-sm-4
+                    v-card
+                      v-card-title Time: {{currentTime}}
 
-    v-card
-      v-card-title How to play
-      v-card-text
-        ul
-          li Click on the black tiles to start or increase the timer
-          li Click on white tiles to restart
-          li Beat my high score of 80 😎
+              v-layout
+                v-row
+                  v-col.md-6
+              v-card(color='indigo lighten-2' style='max-width: 500px; margin: auto')
+                v-card-text
+                  v-layout
+                    v-row(dense)
+                      v-col.col-3(v-for='index in 16' :key='index')
+                        v-card(style="height: 80px;" ref='tile' @click='clickedTile(index - 1)' :color='tiles[index - 1] | tileColor(index)')
+                          v-card-title(v-if='tiles[index - 1] > 1' style='color: #fff; text-align: center') {{tiles[index - 1]}}
 </template>
 
 <script>

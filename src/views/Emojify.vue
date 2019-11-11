@@ -1,23 +1,42 @@
 <template lang="pug">
   v-container
     v-row
-      v-col.col-12
+      v-col.col-12.col-lg-4
         v-card
-          v-card-title Emojify
+          v-card-title YouTube 360
           v-card-text
-            p Create different emojis by making different faces. How many can you find?
-            h1(style='font-size: 256px; color: #000; text-align: center; margin-top: 150px; margin-bottom: 150px') {{emoji}}
+            p This demo explores the <code>handsfree.head.morphs</code> properties to match an emoji to your face!
+            h3.mb-3 How to use
+            p Create different emojis by making different faces: 😐 🙂 😮 😲 😉 😡 
+      v-col.col-12.col-lg-8
+        v-card
+          v-card-text
+            h1#emoji(:style='emojiStyles') {{emoji}}
 </template>
 
 <script>
 export default {
   data: () => ({
+    headPOV: [],
     emoji: '😀'
   }),
+
+  computed: {
+    emojiStyles() {
+      return `transform: perspective(1000px) rotateX(${
+        this.headPOV[0]
+      }rad) rotateY(${this.headPOV[1]}rad) rotateZ(${this.headPOV[2]}rad)`
+    }
+  },
 
   mounted() {
     window.Handsfree.disable('vertScroll')
     window.Handsfree.use('emojify', (pointer, instance) => {
+      // Map the head rotation
+      this.$set(this.headPOV, 0, -instance.head.rotation[0])
+      this.$set(this.headPOV, 1, instance.head.rotation[1])
+      this.$set(this.headPOV, 2, -instance.head.rotation[2])
+
       /*
         0: smileRight → closed mouth smile right
         1: smileLeft → closed mouth smile left
@@ -68,3 +87,12 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+#emoji
+  font-size: 256px
+  color: #000
+  text-align: center
+  margin-top: 150px
+  margin-bottom: 150px
+</style>
