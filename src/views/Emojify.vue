@@ -75,6 +75,7 @@ export default {
       if (morphs[6]) emoji = '😮'
       if (isBothBrowsUp && morphs[6]) emoji = '😲'
       if (isHappyLips) emoji = '🙂'
+      if (isHappyLips && isBothBrowsUp) emoji = '😀'
       if (isWinking && (isHappyLips || isSmirkingLips)) emoji = '😉'
 
       this.emoji = emoji
