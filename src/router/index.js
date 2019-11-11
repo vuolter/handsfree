@@ -21,6 +21,12 @@ const routes = [
     name: 'YouTube360',
     component: () =>
       import(/* webpackChunkName: "YouTube360" */ '../views/YouTube360.vue')
+  },
+  {
+    path: '/emojify',
+    name: 'Emojify',
+    component: () =>
+      import(/* webpackChunkName: "Emojify" */ '../views/Emojify.vue')
   }
 ]
 

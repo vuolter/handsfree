@@ -15,6 +15,10 @@
             v-list-item-action
               v-icon mdi-youtube
             v-list-item-content YouTube360
+          v-list-item(:to='{name: "Emojify"}')
+            v-list-item-action
+              v-icon mdi-face-recognition
+            v-list-item-content Emojify
         v-spacer
         div(ref='debuggerTarget')
 
