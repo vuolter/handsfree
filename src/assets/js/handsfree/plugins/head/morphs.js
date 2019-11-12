@@ -15,7 +15,8 @@ window.Handsfree.use('headMorphs', (pointer, instance) => {
   instance.head.state.smirk =
     (instance.head.state.smileRight && !instance.head.state.smileLeft) ||
     (!instance.head.state.smileRight && instance.head.state.smileLeft)
-  instance.head.state.pursed = !morphs[0] && !morphs[1]
+  instance.head.state.pursed =
+    instance.head.morphs[7] > instance.config.head.morphs.threshold.mouthRound
 
   // Eyebrows
   instance.head.state.eyebrowUpLeft =
@@ -48,4 +49,7 @@ window.Handsfree.use('headMorphs', (pointer, instance) => {
     instance.head.state.eyeClosedLeft && instance.head.state.eyeClosedRight
 
   // Mouth
+  instance.head.state.mouthClosed = morphs[6] === 0
+  instance.head.state.mouthOpen =
+    morphs[6] > instance.config.head.morphs.threshold.mouthOpen
 })

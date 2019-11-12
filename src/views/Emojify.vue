@@ -7,18 +7,63 @@
           v-card-text
             p This demo explores the <code>handsfree.head.morphs</code> properties to match an emoji to your face!
             h3.mb-3 How to use
-            p Create different emojis by making different faces: 😐 🙂 😮 😲 😉 😡 
+            p Create different emojis by making different faces: 😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
       v-col.col-12.col-lg-8
         v-card
           v-card-text
             h1#emoji(:style='emojiStyles') {{emoji}}
+          v-card-text
+            v-simple-table
+              template(dense v-slot:default)
+                tbody
+                  tr
+                    td Left Smile
+                    td {{morphs.lSmile}}
+                    td Right Smile
+                    td {{morphs.rSmile}}
+                  tr
+                    td Left Brow Down
+                    td {{morphs.lBrowDown}}
+                    td Right Brow Down
+                    td {{morphs.rBrowDown}}
+                  tr
+                    td Left Brow Up
+                    td {{morphs.lBrowUp}}
+                    td Right Brow Up
+                    td {{morphs.rBrowUp}}
+                  tr
+                    td Mouth open
+                    td {{morphs.mouthOpen}}
+                    td Mouth round
+                    td {{morphs.mouthRound}}
+                  tr
+                    td Left eye closed
+                    td {{morphs.lEyeClosed}}
+                    td Right eye closed
+                    td {{morphs.rEyeClosed}}
+                  tr
+                    td Upper lip
+                    td {{morphs.mouthNasty}}
 </template>
 
 <script>
 export default {
   data: () => ({
     headPOV: [],
-    emoji: '😀'
+    emoji: '😀',
+    morphs: {
+      lSmile: 0,
+      rSmile: 0,
+      lBrowDown: 0,
+      rBrowDown: 0,
+      lBrowUp: 0,
+      rBrowUp: 0,
+      mouthOpen: 0,
+      mouthRound: 0,
+      lEyeClosed: 0,
+      rEyeClosed: 0,
+      mouthNasty: 0
+    }
   }),
 
   computed: {
@@ -53,28 +98,49 @@ export default {
      */
       let emoji = '😐'
       let isFlipped = false
+      let state = instance.head.state
 
-      if (instance.head.state.pursed) emoji = '😗'
-      if (instance.head.state.smile) emoji = '🙂'
-      if (instance.head.state.eyebrowsHuh && !instance.head.state.pursed) {
-        if (instance.head.state.eyebrowUpRight) isFlipped = true
+      if (state.pursed && state.mouthClosed) emoji = '😗'
+      if (state.smile) emoji = '🙂'
+      if (state.eyebrowsHuh && !state.pursed) {
+        if (state.eyebrowUpRight) isFlipped = true
         emoji = '🤨'
       }
-      if (instance.head.state.smirk && instance.head.state.eyebrowsUp) {
-        if (instance.head.state.smileLeft) isFlipped = true
+      if (state.smirk && state.eyebrowsUp) {
+        if (state.smileLeft) isFlipped = true
         emoji = '😏'
       }
-      if (instance.head.state.eyebrowsDown) emoji = '😠'
-      if (instance.head.state.eyebrowsDown && instance.head.state.pursed)
-        emoji = '😡'
-      if (instance.head.state.eyesClosed) emoji = '😑'
-      if (instance.head.state.eyesClosed && instance.head.state.pursed)
-        emoji = '😙'
-      if (instance.head.state.eyesClosed && instance.head.state.smile)
-        emoji = '😊'
+      if (state.eyebrowsDown) emoji = '😠'
+      if (state.eyebrowsDown && state.pursed) emoji = '😡'
+      if (state.eyesClosed) emoji = '😑'
+      if (state.eyesClosed && state.pursed) emoji = '😙'
+      if (state.eyesClosed && state.pursed && !state.mouthClosed) emoji = '😴'
+      if (state.eyesClosed && state.smile) emoji = '😊'
+      if (state.mouthOpen) emoji = '😃'
+      if (state.mouthOpen && state.eyesClosed) emoji = '😂'
+      if (state.mouthOpen && state.eyesClosed) emoji = '😫'
+      if (state.eyesClosed && state.eyebrowsHuh) {
+        if (state.eyebrowLeftRight) isFlipped = true
+        emoji = '🤤'
+      }
+      if (!state.mouthClosed && state.pursed) emoji = '😮'
+      if (!state.mouthClosed && state.pursed && state.eyebrowsUp) emoji = '😲'
 
       this.emoji = emoji
       this.isFlipped = isFlipped
+      this.morphs = {
+        rSmile: instance.head.morphs[0].toFixed(5),
+        lSmile: instance.head.morphs[1].toFixed(5),
+        lBrowDown: instance.head.morphs[3].toFixed(5),
+        rBrowDown: instance.head.morphs[2].toFixed(5),
+        rBrowUp: instance.head.morphs[4].toFixed(5),
+        lBrowUp: instance.head.morphs[5].toFixed(5),
+        mouthOpen: instance.head.morphs[6].toFixed(5),
+        mouthRound: instance.head.morphs[7].toFixed(5),
+        rEyeClosed: instance.head.morphs[8].toFixed(5),
+        lEyeClosed: instance.head.morphs[9].toFixed(5),
+        mouthNasty: instance.head.morphs[10].toFixed(5)
+      }
     })
   },
 
@@ -87,9 +153,9 @@ export default {
 
 <style lang="sass" scoped>
 #emoji
-  font-size: 256px
+  font-size: 200px
   color: #000
   text-align: center
-  margin-top: 150px
-  margin-bottom: 150px
+  margin-top: 120px
+  margin-bottom: 120px
 </style>
