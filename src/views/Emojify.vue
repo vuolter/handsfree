@@ -25,7 +25,9 @@ export default {
     emojiStyles() {
       return `transform: perspective(1000px) rotateX(${
         this.headPOV[0]
-      }rad) rotateY(${this.headPOV[1]}rad) rotateZ(${this.headPOV[2]}rad)`
+      }rad) rotateY(${this.headPOV[1]}rad) rotateZ(${
+        this.headPOV[2]
+      }rad) scale(${this.isFlipped ? -1 : 1}, 1)`
     }
   },
 
@@ -50,17 +52,29 @@ export default {
       10: mouthNasty → mouth nasty (upper lip raised)
      */
       let emoji = '😐'
+      let isFlipped = false
 
       if (instance.head.state.pursed) emoji = '😗'
       if (instance.head.state.smile) emoji = '🙂'
-      if (instance.head.state.eyebrowsHuh) emoji = '🤨'
-      if (instance.head.state.smirk && instance.head.state.eyebrowsUp)
+      if (instance.head.state.eyebrowsHuh && !instance.head.state.pursed) {
+        if (instance.head.state.eyebrowUpRight) isFlipped = true
+        emoji = '🤨'
+      }
+      if (instance.head.state.smirk && instance.head.state.eyebrowsUp) {
+        if (instance.head.state.smileLeft) isFlipped = true
         emoji = '😏'
+      }
       if (instance.head.state.eyebrowsDown) emoji = '😠'
       if (instance.head.state.eyebrowsDown && instance.head.state.pursed)
         emoji = '😡'
+      if (instance.head.state.eyesClosed) emoji = '😑'
+      if (instance.head.state.eyesClosed && instance.head.state.pursed)
+        emoji = '😙'
+      if (instance.head.state.eyesClosed && instance.head.state.smile)
+        emoji = '😊'
 
       this.emoji = emoji
+      this.isFlipped = isFlipped
     })
   },
 

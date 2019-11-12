@@ -33,7 +33,9 @@ Handsfree.prototype.cleanConfig = function(config) {
             eyebrowDownLeft: 0.8,
             eyebrowDownRight: 0.8,
             eyebrowUpLeft: 0.8,
-            eyebrowUpRight: 0.8
+            eyebrowUpRight: 0.8,
+            eyeClosedLeft: 0.4,
+            eyeClosedRight: 0.4
           }
         }
       },
