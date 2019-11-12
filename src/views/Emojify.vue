@@ -36,47 +36,29 @@ export default {
       this.$set(this.headPOV, 0, -instance.head.rotation[0])
       this.$set(this.headPOV, 1, instance.head.rotation[1])
       this.$set(this.headPOV, 2, -instance.head.rotation[2])
-
       /*
-        0: smileRight → closed mouth smile right
-        1: smileLeft → closed mouth smile left
-        2: eyeBrowLeftDown → eyebrow left frowned
-        3: eyeBrowRightDown → eyebrow right frowned
-        4: eyeBrowLeftUp → eyebrow left up (surprised)
-        5: eyeBrowRightUp → eyebrow right up (surprised)
-        6: mouthOpen → mouth open
-        7: mouthRound → mouth round
-        8: eyeRightClose → close right eye
-        9: eyeLeftClose → close left eye
-        10: mouthNasty → mouth nasty (upper lip raised)
-       */
-      const morphs = instance.head.morphs
-      // 😀😂😉😥😮😯😒😔😲😧😊😚🤨😐😏😯😡🤢
+      0: smileRight → closed mouth smile right
+      1: smileLeft → closed mouth smile left
+      2: eyeBrowLeftDown → eyebrow left frowned
+      3: eyeBrowRightDown → eyebrow right frowned
+      4: eyeBrowLeftUp → eyebrow left up (surprised)
+      5: eyeBrowRightUp → eyebrow right up (surprised)
+      6: mouthOpen → mouth open
+      7: mouthRound → mouth round
+      8: eyeRightClose → close right eye
+      9: eyeLeftClose → close left eye
+      10: mouthNasty → mouth nasty (upper lip raised)
+     */
       let emoji = '😐'
-      let thresholdLow = 0.25
-      let threshold = 0.65
-      let thresholdHigh = 0.8
-      let isHappyLips = morphs[0] > threshold && morphs[1] > threshold
-      let isSmirkingLips =
-        (morphs[0] > thresholdHigh && morphs[1] < thresholdHigh) ||
-        (morphs[0] < thresholdHigh && morphs[1] > thresholdHigh)
-      let isMehLips = morphs[0] < threshold && morphs[0] < threshold
-      let isOppositeBrow =
-        (morphs[2] > thresholdHigh && morphs[5] > thresholdHigh) ||
-        (morphs[3] > thresholdHigh && morphs[4] > thresholdHigh)
-      let isBothBrowsDown = morphs[2] > thresholdLow && morphs[3] > thresholdLow
-      let isBothBrowsUp = morphs[4] > thresholdLow && morphs[5] > thresholdLow
-      let isWinking =
-        (morphs[8] > thresholdHigh && morphs[9] < thresholdHigh) ||
-        (morphs[8] < thresholdHigh && morphs[9] > thresholdHigh)
 
-      if (isOppositeBrow && isMehLips && !isWinking) emoji = '🤨'
-      if (isBothBrowsDown) emoji = '😡'
-      if (morphs[6] > thresholdLow) emoji = '😮'
-      if (isBothBrowsUp && morphs[6] > thresholdLow) emoji = '😲'
-      if (isHappyLips) emoji = '🙂'
-      if (isHappyLips && isBothBrowsUp) emoji = '😀'
-      if (isWinking && (isHappyLips || isSmirkingLips)) emoji = '😉'
+      if (instance.head.state.pursed) emoji = '😗'
+      if (instance.head.state.smile) emoji = '🙂'
+      if (instance.head.state.eyebrowsHuh) emoji = '🤨'
+      if (instance.head.state.smirk && instance.head.state.eyebrowsUp)
+        emoji = '😏'
+      if (instance.head.state.eyebrowsDown) emoji = '😠'
+      if (instance.head.state.eyebrowsDown && instance.head.state.pursed)
+        emoji = '😡'
 
       this.emoji = emoji
     })
