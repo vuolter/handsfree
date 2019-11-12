@@ -13,7 +13,8 @@
   <p>
     <img class="mr-1" src="https://img.shields.io/github/issues-raw/handsfreejs/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/handsfreejs/handsfree.svg">
   </p>
-  <p>Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz Weboji</a></p>
+  <p>Powered by:</p>
+  <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a></p>
 </div>
 
 <br>

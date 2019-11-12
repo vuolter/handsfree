@@ -13,6 +13,7 @@
                 li Click on the black tiles to start or increase the timer
                 li Click on white tiles to restart
                 li Beat my high score of 80 😎
+
         v-col.col-12.col-lg-8
           v-card(:color='backgroundColor')
             v-card-text
