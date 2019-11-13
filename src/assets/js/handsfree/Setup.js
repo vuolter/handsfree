@@ -30,12 +30,12 @@ Handsfree.prototype.cleanConfig = function(config) {
           threshold: {
             smileRight: 0.7,
             smileLeft: 0.7,
-            eyebrowDownLeft: 0.8,
-            eyebrowDownRight: 0.8,
-            eyebrowUpLeft: 0.8,
-            eyebrowUpRight: 0.8,
-            eyeClosedLeft: 0.4,
-            eyeClosedRight: 0.4,
+            browLeftDown: 0.8,
+            browRightDown: 0.8,
+            browLeftUp: 0.8,
+            browRightUp: 0.8,
+            eyeLeftClosed: 0.4,
+            eyeRightClosed: 0.4,
             mouthOpen: 0.3,
             mouthRound: 0.8,
             upperLip: 0.5

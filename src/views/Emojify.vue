@@ -89,31 +89,31 @@ export default {
       let state = instance.head.state
 
       if (state.pursed && state.mouthClosed) emoji = '😗'
-      if (state.eyebrowsUp) emoji = '🙄'
+      if (state.browsUp) emoji = '🙄'
       if (state.smile) emoji = '🙂'
-      if (state.eyebrowsHuh && !state.pursed) {
-        if (state.eyebrowUpRight) isFlipped = true
+      if (state.browsHuh && !state.pursed) {
+        if (state.browRightUp) isFlipped = true
         emoji = '🤨'
       }
-      if (state.smirk && state.eyebrowsUp) {
+      if (state.smirk && state.browsUp) {
         if (state.smileLeft) isFlipped = true
         emoji = '😏'
       }
-      if (state.eyebrowsDown) emoji = '😠'
-      if (state.eyebrowsDown && state.pursed) emoji = '😡'
+      if (state.browsDown) emoji = '😠'
+      if (state.browsDown && state.pursed) emoji = '😡'
       if (state.eyesClosed) emoji = '😑'
       if (state.eyesClosed && state.pursed) emoji = '😙'
       if (state.eyesClosed && state.pursed && !state.mouthClosed) emoji = '😴'
       if (state.eyesClosed && state.smile) emoji = '😊'
       if (state.mouthOpen) emoji = '😃'
       if (state.mouthOpen && state.eyesClosed) emoji = '😫'
-      if (state.mouthOpen && state.eyesClosed && state.eyebrowsUp) emoji = '😂'
-      if (state.eyesClosed && state.eyebrowsHuh) {
+      if (state.mouthOpen && state.eyesClosed && state.browsUp) emoji = '😂'
+      if (state.eyesClosed && state.browsHuh) {
         if (state.eyebrowLeftRight) isFlipped = true
         emoji = '🤤'
       }
       if (!state.mouthClosed && state.pursed) emoji = '😮'
-      if (!state.mouthClosed && state.pursed && state.eyebrowsUp) emoji = '😲'
+      if (!state.mouthClosed && state.pursed && state.browsUp) emoji = '😲'
 
       this.emoji = emoji
       this.isFlipped = isFlipped

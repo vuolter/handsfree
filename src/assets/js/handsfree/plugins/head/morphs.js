@@ -19,34 +19,33 @@ window.Handsfree.use('headMorphs', (pointer, instance) => {
     instance.head.morphs[7] > instance.config.head.morphs.threshold.mouthRound
 
   // Eyebrows
-  instance.head.state.eyebrowUpLeft =
-    morphs[4] > instance.config.head.morphs.threshold.eyebrowUpLeft
-  instance.head.state.eyebrowUpRight =
-    morphs[5] > instance.config.head.morphs.threshold.eyebrowUpRight
-  instance.head.state.eyebrowsUp =
-    morphs[4] > instance.config.head.morphs.threshold.eyebrowUpLeft &&
-    morphs[5] > instance.config.head.morphs.threshold.eyebrowUpLeft
+  instance.head.state.browLeftUp =
+    morphs[4] > instance.config.head.morphs.threshold.browLeftUp
+  instance.head.state.browRightUp =
+    morphs[5] > instance.config.head.morphs.threshold.browRightUp
+  instance.head.state.browsUp =
+    morphs[4] > instance.config.head.morphs.threshold.browLeftUp &&
+    morphs[5] > instance.config.head.morphs.threshold.browLeftUp
 
-  instance.head.state.eyebrowDownLeft =
-    morphs[2] > instance.config.head.morphs.threshold.eyebrowDownLeft
-  instance.head.state.eyebrowDownRight =
-    morphs[3] > instance.config.head.morphs.threshold.eyebrowDownRight
-  instance.head.state.eyebrowsDown =
-    morphs[2] > instance.config.head.morphs.threshold.eyebrowDownLeft &&
-    morphs[3] > instance.config.head.morphs.threshold.eyebrowDownLeft
+  instance.head.state.browLeftDown =
+    morphs[2] > instance.config.head.morphs.threshold.browLeftDown
+  instance.head.state.browRightDown =
+    morphs[3] > instance.config.head.morphs.threshold.browRightDown
+  instance.head.state.browsDown =
+    morphs[2] > instance.config.head.morphs.threshold.browLeftDown &&
+    morphs[3] > instance.config.head.morphs.threshold.browLeftDown
 
-  instance.head.state.eyebrowsHuh =
-    (instance.head.state.eyebrowDownLeft &&
-      instance.head.state.eyebrowUpRight) ||
-    (instance.head.state.eyebrowDownRight && instance.head.state.eyebrowUpLeft)
+  instance.head.state.browsHuh =
+    (instance.head.state.browLeftDown && instance.head.state.browRightUp) ||
+    (instance.head.state.browRightDown && instance.head.state.browLeftUp)
 
   // Eyes
-  instance.head.state.eyeClosedLeft =
-    morphs[8] > instance.config.head.morphs.threshold.eyeClosedLeft
-  instance.head.state.eyeClosedRight =
-    morphs[9] > instance.config.head.morphs.threshold.eyeClosedRight
+  instance.head.state.eyeLeftClosed =
+    morphs[8] > instance.config.head.morphs.threshold.eyeLeftClosed
+  instance.head.state.eyeRightClosed =
+    morphs[9] > instance.config.head.morphs.threshold.eyeRightClosed
   instance.head.state.eyesClosed =
-    instance.head.state.eyeClosedLeft && instance.head.state.eyeClosedRight
+    instance.head.state.eyeLeftClosed && instance.head.state.eyeRightClosed
 
   // Mouth
   instance.head.state.mouthClosed = morphs[6] === 0
