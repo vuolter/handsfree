@@ -29,9 +29,9 @@
   <!-- Require dependencies, which adds Handsfree to global namespace -->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.css"
+    href="https://unpkg.com/handsfree@5.0.5/dist/handsfreejs/handsfree.css"
   />
-  <script src="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.js"></script>
+  <script src="https://unpkg.com/handsfree@5.0.5/dist/handsfreejs/handsfree.js"></script>
 </head>
 <body>
   <script>
@@ -64,6 +64,7 @@
 
 - [Getting Started](https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1): Learn how to setup Handsfree.js and access the `handsfree.pointer` properties
 - [Controlling a YouTube 360 video](https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801): Learn how to access and use `handsfree.head.rotation` to control a 360 video
+- [Puppeteering Emojis with face morphs](https://dev.to/heyozramos/puppeteering-emojis-with-face-morphs-with-handsfree-js-55kp): Explores the face morph activation properties
 
 ---
 
