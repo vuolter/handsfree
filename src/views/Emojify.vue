@@ -3,11 +3,11 @@
     v-row
       v-col.col-12.col-lg-4
         v-card
-          v-card-title YouTube 360
+          v-card-title Emojify
           v-card-text
-            p This demo explores the <code>handsfree.head.morphs</code> properties to match an emoji to your face!
+            p This demo explores the <code>handsfree.head.morphs</code> and <code>handsfree.head.state</code> properties to match an emoji to your face!
             h3.mb-3 How to use
-            p Create different emojis by making different faces: 😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
+            p Create different emojis by making different faces:<br>😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
       v-col.col-12.col-lg-8
         v-card
           v-card-text
@@ -83,24 +83,13 @@ export default {
       this.$set(this.headPOV, 0, -instance.head.rotation[0])
       this.$set(this.headPOV, 1, instance.head.rotation[1])
       this.$set(this.headPOV, 2, -instance.head.rotation[2])
-      /*
-      0: smileRight → closed mouth smile right
-      1: smileLeft → closed mouth smile left
-      2: eyeBrowLeftDown → eyebrow left frowned
-      3: eyeBrowRightDown → eyebrow right frowned
-      4: eyeBrowLeftUp → eyebrow left up (surprised)
-      5: eyeBrowRightUp → eyebrow right up (surprised)
-      6: mouthOpen → mouth open
-      7: mouthRound → mouth round
-      8: eyeRightClose → close right eye
-      9: eyeLeftClose → close left eye
-      10: mouthNasty → mouth nasty (upper lip raised)
-     */
+
       let emoji = '😐'
       let isFlipped = false
       let state = instance.head.state
 
       if (state.pursed && state.mouthClosed) emoji = '😗'
+      if (state.eyebrowsUp) emoji = '🙄'
       if (state.smile) emoji = '🙂'
       if (state.eyebrowsHuh && !state.pursed) {
         if (state.eyebrowUpRight) isFlipped = true
@@ -117,8 +106,8 @@ export default {
       if (state.eyesClosed && state.pursed && !state.mouthClosed) emoji = '😴'
       if (state.eyesClosed && state.smile) emoji = '😊'
       if (state.mouthOpen) emoji = '😃'
-      if (state.mouthOpen && state.eyesClosed) emoji = '😂'
       if (state.mouthOpen && state.eyesClosed) emoji = '😫'
+      if (state.mouthOpen && state.eyesClosed && state.eyebrowsUp) emoji = '😂'
       if (state.eyesClosed && state.eyebrowsHuh) {
         if (state.eyebrowLeftRight) isFlipped = true
         emoji = '🤤'

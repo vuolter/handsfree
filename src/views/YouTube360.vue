@@ -5,10 +5,11 @@
         v-card
           v-card-title YouTube 360
           v-card-text
-            p This demo explores the <code>handsfree.head.rotation</code> properties to control a 360 video's POV with your head.
+            p This demo explores the <code>handsfree.head.rotation</code> properties to control a 360 video's POV with your head
+              <br>(I apologize for the ad)
             h3.mb-3 How to use
             p After pressing Start Webcam, move your head around to "look" around in the video handsfree. <b>Try it full screen!</b>
-          v-card-action
+          v-card-actions
             v-btn(block color='primary' href="https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801") View the Tutorial
       v-col.col-12.col-lg-8
         v-card
@@ -64,8 +65,10 @@ export default {
         this.YTPlayer = new window.YT.Player('youtube-player', {
           // Picked because of no ads
           // @see https://www.youtube.com/watch?v=Crv1hbk9HuM&list=PLxf-CDjxvNVoxF27Pj3VV5pIy4SsqPNcI&index=5&t=0s
-          videoId: 'Crv1hbk9HuM',
-          playerVars: { autoplay: 1 }
+          // videoId: 'Crv1hbk9HuM',
+
+          // Blue Angles (has ad)
+          videoId: 'H6SsB3JYqQg'
         })
         this.handleHandsfree()
       } else {
