@@ -25,6 +25,23 @@ Handsfree.prototype.cleanConfig = function(config) {
         // Where to inject the debugger into
         target: document.body
       },
+      head: {
+        morphs: {
+          threshold: {
+            smileRight: 0.7,
+            smileLeft: 0.7,
+            browLeftDown: 0.8,
+            browRightDown: 0.8,
+            browLeftUp: 0.8,
+            browRightUp: 0.8,
+            eyeLeftClosed: 0.4,
+            eyeRightClosed: 0.4,
+            mouthOpen: 0.3,
+            mouthRound: 0.8,
+            upperLip: 0.5
+          }
+        }
+      },
       sensitivity: {
         // A factor to adjust the cursors move speed by
         xy: 0.7,

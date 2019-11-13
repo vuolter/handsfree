@@ -6,19 +6,22 @@
           div(style='width: 190px; height: 190px; margin: auto; position: relative').text-left
             TensorMonkey.my-5(styles='height: 150px')
 
-          h1.display-2.font-weight-bold.mb-3 Handsfree.js
+          h1.display-2.font-weight-bold.mb-5 Handsfree.js
           p
             <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
             <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
             <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
           p
             small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
-          p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox</b>
+          p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox!</b>
           p.my-5
             v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
             v-btn(v-else color='primary' x-large @click='startWebcam') Start Webcam
           p
-            small Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz Weboji</a>
+            small Powered by:
+          p
+            a(href="https://github.com/jeeliz/jeelizWeboji")
+              img(src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png" height=30)
 
         v-col(cols=12 md=6).mb-4
           iframe(style='margin-top: 100px; max-width: 100%' width="560" height="315" src="https://www.youtube.com/embed/ty081LCcYpc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
