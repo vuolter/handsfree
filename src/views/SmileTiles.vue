@@ -13,6 +13,8 @@
                 li Click on the black tiles to start or increase the timer
                 li Click on white tiles to restart
                 li Beat my high score of 80 😎
+            v-card-actions
+              v-btn.primary(block href="https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1") View the overview tutorial
 
         v-col.col-12.col-lg-8
           v-card(:color='backgroundColor')

@@ -8,6 +8,8 @@
             p This demo explores the <code>handsfree.head.morphs</code> and <code>handsfree.head.state</code> properties to match an emoji to your face!
             h3.mb-3 How to use
             p Create different emojis by making different faces:<br>😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
+          v-card-actions
+            v-btn.primary(block href="https://dev.to/heyozramos/puppeteering-emojis-with-face-morphs-with-handsfree-js-55kp") View the tutorial
       v-col.col-12.col-lg-8
         v-card
           v-card-text
