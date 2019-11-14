@@ -14,11 +14,15 @@
           v-list-item(:to='{name: "YouTube360"}')
             v-list-item-action
               v-icon mdi-youtube
-            v-list-item-content YouTube360
+            v-list-item-content YouTube 360
           v-list-item(:to='{name: "Emojify"}')
             v-list-item-action
               v-icon mdi-face-recognition
             v-list-item-content Emojify
+          v-list-item(:to='{name: "1stPerson"}')
+            v-list-item-action
+              v-icon mdi-google-street-view
+            v-list-item-content 1st Person View
         v-spacer
         div(ref='debuggerTarget')
 
