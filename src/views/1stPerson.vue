@@ -1,6 +1,17 @@
 <template lang="pug">
   div
     #world
+    v-container
+      v-row
+        v-col.col-12.col-lg-4
+          v-card
+            v-card-title 1st Person View
+            v-card-text
+              p This experiment explores the <code>handsfree.head.translation</code> properties to move the camera based on the direction you lean in.
+              ul
+                li Lean in/back/left/right to move in that direction
+                li Turn head around to look around
+                li Raise both eyebrows to jump.
 </template>
 
 <script>
@@ -14,7 +25,7 @@ export default {
       backward: false,
       left: false,
       right: false,
-      jump: false
+      jump: true
     },
 
     velocity: {
@@ -22,14 +33,17 @@ export default {
     },
 
     rotation: {
+      x: 0,
       y: 0
     }
   }),
 
   mounted() {
-    this.$store.dispatch('loadScripts', [
-      'https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js'
-    ])
+    if (!window.THREE) {
+      this.$store.dispatch('loadScripts', [
+        'https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js'
+      ])
+    }
     this.initializeGame()
     this.setupHandsfree()
     window.Handsfree.disable('vertScroll')
@@ -87,7 +101,7 @@ export default {
      */
     tweenPOV(instance) {
       TweenMax.to(this.rotation, 500 / 1000, {
-        x: -instance.head.rotation[0] * 8,
+        x: -instance.head.rotation[0] * 8 + Math.PI / 2,
         y: -instance.head.rotation[1] * 10,
         z: instance.head.rotation[2] * 2,
         ease: 'Linear.easeNone',
@@ -113,3 +127,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+#world
+  width: 100%
+  position: absolute
+</style>

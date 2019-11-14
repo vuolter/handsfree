@@ -1,19 +1,19 @@
 const PointerLockControls = require('@/assets/js/lib/PointerLockControls')
   .PointerLockControls
 const THREE = window.THREE
-const $world = document.querySelector('#world')
 
+let $world
 let camera, scene, renderer, controls
-let objects = []
 let raycaster
-let prevTime = performance.now()
-let velocity = new THREE.Vector3()
-let direction = new THREE.Vector3()
-let vertex = new THREE.Vector3()
-let color = new THREE.Color()
+let objects
+let prevTime
+let velocity
+let direction
+let vertex
+let color
+let keepRunning
 let i
 let l
-let keepRunning = true
 
 /**
  * Initialize the world
@@ -21,6 +21,14 @@ let keepRunning = true
  */
 const initWorld = function(instance) {
   let light
+  objects = []
+  prevTime = performance.now()
+  velocity = new THREE.Vector3()
+  direction = new THREE.Vector3()
+  vertex = new THREE.Vector3()
+  color = new THREE.Color()
+  keepRunning = true
+  $world = document.querySelector('#world')
 
   // Create and position the camera
   camera = new THREE.PerspectiveCamera(
@@ -143,6 +151,7 @@ const onWindowResize = function() {
 const animate = (instance) => {
   keepRunning && requestAnimationFrame(animate.bind(instance, instance))
 
+  // Raycast and apply velocities
   raycaster.ray.origin.copy(controls.getObject().position)
   raycaster.ray.origin.y -= 10
   let intersections = raycaster.intersectObjects(objects)
@@ -151,11 +160,14 @@ const animate = (instance) => {
   let delta = (time - prevTime) / 1000
   velocity.x -= velocity.x * 10.0 * delta
   velocity.z -= velocity.z * 10.0 * delta
-
   instance.velocity.y -= 9.8 * 100.0 * delta // 100.0 = mass
+
+  // Strafe
   direction.z = Number(instance.move.forward) - Number(instance.move.backward)
   direction.x = Number(instance.move.right) - Number(instance.move.left)
   direction.normalize() // this ensures consistent movements in all directions
+
+  // Move
   if (instance.move.forward || instance.move.backward)
     velocity.z -= direction.z * 400.0 * delta
   if (instance.move.left || instance.move.right)
@@ -164,6 +176,8 @@ const animate = (instance) => {
     instance.velocity.y = Math.max(0, instance.velocity.y)
     instance.move.jump = true
   }
+
+  // Apply velocities
   controls.moveRight(-velocity.x * delta)
   controls.moveForward(-velocity.z * delta)
   controls.getObject().position.y += instance.velocity.y * delta // new behavior
@@ -173,7 +187,10 @@ const animate = (instance) => {
     instance.move.jump = true
   }
 
+  // Rotate
+  camera.rotation.order = 'YXZ'
   controls.getObject().rotation.y = instance.rotation.y
+  controls.getObject().rotation.x = instance.rotation.x
 
   prevTime = time
   renderer.render(scene, camera)
