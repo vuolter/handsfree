@@ -27,6 +27,12 @@ const routes = [
     name: 'Emojify',
     component: () =>
       import(/* webpackChunkName: "Emojify" */ '../views/Emojify.vue')
+  },
+  {
+    path: '/1st-person',
+    name: '1stPerson',
+    component: () =>
+      import(/* webpackChunkName: "1stPerson" */ '../views/1stPerson.vue')
   }
 ]
 
