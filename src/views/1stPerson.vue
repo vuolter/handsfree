@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { TweenMax } from 'gsap/all'
+
 export default {
   data: () => ({
     move: {
@@ -21,6 +23,10 @@ export default {
     },
 
     velocity: {
+      y: 0
+    },
+
+    rotation: {
       y: 0
     }
   }),
@@ -76,7 +82,18 @@ export default {
           this.move.jump = false
         }
 
-        console.log(instance.head.translation)
+        this.tweenPOV(instance)
+      })
+    },
+
+    tweenPOV(instance) {
+      TweenMax.to(this.rotation, 500 / 1000, {
+        x: -instance.head.rotation[0] * 8,
+        y: -instance.head.rotation[1] * 10,
+        z: instance.head.rotation[2] * 2,
+        ease: 'Linear.easeNone',
+        overwrite: true,
+        immediate: true
       })
     },
 
@@ -261,6 +278,9 @@ export default {
                 controls.getObject().position.y = 10
                 this.move.jump = true
               }
+
+              controls.getObject().rotation.y = this.rotation.y
+
               prevTime = time
             }
             renderer.render(scene, camera)
