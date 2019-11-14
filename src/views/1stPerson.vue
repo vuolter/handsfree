@@ -3,22 +3,59 @@
     #blocker
       #instructions
         p(style="font-size:36px") Click to play
-        p Move: WASD
-        p Jump: SPACE
-        p Look: MOUSE
+        p <b>Move:</b> Lean left, right, forward, and back
+        p <b>Jump:</b> Raise both eyebrows
+        p <b>Look:</b> Move head around
     #world
 </template>
 
 <script>
 export default {
+  data: () => ({
+    move: {
+      forward: false,
+      backward: false,
+      left: false,
+      right: false,
+      jump: false
+    }
+  }),
+
   mounted() {
     this.$store.dispatch('loadScripts', [
       'https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js'
     ])
     this.initializeGame()
+    this.setupHandsfree()
+    window.Handsfree.disable('vertScroll')
+  },
+
+  beforeDestroy() {
+    window.Handsfree.enable('vertScroll')
+    window.Handsfree.disable('threeCamera')
   },
 
   methods: {
+    /**
+     * Sets up handsfree
+     */
+    setupHandsfree() {
+      window.Handsfree.use('threeCamera', (pointer, instance) => {
+        // The normalized amount from center to lean before moving in that directon
+        let strafeBuffer = 0.15
+
+        // Move
+        if (instance.head.translation[0] > 0.5 + strafeBuffer)
+          this.move.right = true
+        else this.move.right = false
+        if (instance.head.translation[0] < 0.5 - strafeBuffer)
+          this.move.left = true
+        else this.move.left = false
+
+        console.log(instance.head.translation)
+      })
+    },
+
     /**
      * Load pointer lock controls
      */
@@ -37,8 +74,6 @@ export default {
           var raycaster
           var moveForward = false
           var moveBackward = false
-          var moveLeft = false
-          var moveRight = false
           var canJump = false
           var prevTime = performance.now()
           var velocity = new THREE.Vector3()
@@ -87,17 +122,9 @@ export default {
                 case 87: // w
                   moveForward = true
                   break
-                case 37: // left
-                case 65: // a
-                  moveLeft = true
-                  break
                 case 40: // down
                 case 83: // s
                   moveBackward = true
-                  break
-                case 39: // right
-                case 68: // d
-                  moveRight = true
                   break
                 case 32: // space
                   if (canJump === true) velocity.y += 350
@@ -111,17 +138,9 @@ export default {
                 case 87: // w
                   moveForward = false
                   break
-                case 37: // left
-                case 65: // a
-                  moveLeft = false
-                  break
                 case 40: // down
                 case 83: // s
                   moveBackward = false
-                  break
-                case 39: // right
-                case 68: // d
-                  moveRight = false
                   break
               }
             }
@@ -218,7 +237,7 @@ export default {
             camera.updateProjectionMatrix()
             renderer.setSize($world.clientWidth, window.innerHeight)
           }
-          const animate = function() {
+          const animate = () => {
             requestAnimationFrame(animate)
             if (controls.isLocked === true) {
               raycaster.ray.origin.copy(controls.getObject().position)
@@ -231,11 +250,11 @@ export default {
               velocity.z -= velocity.z * 10.0 * delta
               velocity.y -= 9.8 * 100.0 * delta // 100.0 = mass
               direction.z = Number(moveForward) - Number(moveBackward)
-              direction.x = Number(moveRight) - Number(moveLeft)
+              direction.x = Number(this.move.right) - Number(this.move.left)
               direction.normalize() // this ensures consistent movements in all directions
               if (moveForward || moveBackward)
                 velocity.z -= direction.z * 400.0 * delta
-              if (moveLeft || moveRight)
+              if (this.move.left || this.move.right)
                 velocity.x -= direction.x * 400.0 * delta
               if (onObject === true) {
                 velocity.y = Math.max(0, velocity.y)
