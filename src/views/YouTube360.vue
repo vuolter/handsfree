@@ -82,23 +82,23 @@ export default {
      * Setup the handsfree controls
      */
     handleHandsfree() {
-      window.Handsfree.use('youtube360', (pointer, instance) => {
+      window.Handsfree.use('youtube360', ({ pose }) => {
         if (!this.YTPlayer || !document.contains(this.YTPlayer.a)) return
         this.YTPlayer.getSphericalProperties &&
           this.YTPlayer.setSphericalProperties(this.tween)
 
-        this.tweenPOV(instance)
+        this.tweenPOV(pose)
       })
     },
 
     /**
      * Smoothens out the POV
      */
-    tweenPOV(instance) {
+    tweenPOV(pose) {
       TweenMax.to(this.tween, 500 / 1000, {
-        pitch: ((-instance.head.rotation[0] * 180) / Math.PI) * 8 + 90,
-        yaw: ((-instance.head.rotation[1] * 180) / Math.PI) * 10,
-        roll: ((instance.head.rotation[2] * 180) / Math.PI) * 2,
+        pitch: ((-pose.head.rotation[0] * 180) / Math.PI) * 8 + 90,
+        yaw: ((-pose.head.rotation[1] * 180) / Math.PI) * 10,
+        roll: ((pose.head.rotation[2] * 180) / Math.PI) * 2,
         ease: 'Linear.easeNone',
         overwrite: true,
         immediate: true
@@ -110,7 +110,7 @@ export default {
      */
     resizePlayer() {
       const $player = this.$refs.youtubePlayerWrap
-      if ($player) $player.style.height = `${window.innerHeight - 250}px`
+      if ($player) $player.style.height = `${window.innerHeight - 150}px`
     }
   }
 }
