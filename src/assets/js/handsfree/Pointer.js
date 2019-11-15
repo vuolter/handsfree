@@ -6,8 +6,8 @@ import { TweenMax } from 'gsap/all'
 
 Handsfree.prototype.updatePointer = function() {
   // Calculate X/Y
-  let rx = (this.head.rotation[0] * 180) / Math.PI
-  let ry = (this.head.rotation[1] * 180) / Math.PI
+  let rx = (this.pose.head.rotation[0] * 180) / Math.PI
+  let ry = (this.pose.head.rotation[1] * 180) / Math.PI
   // Compensation for edge cases
   rx -= 10
   // rx = rx + 1 - 4 * (Math.abs(ry) / 45)
@@ -96,7 +96,8 @@ Handsfree.prototype.updatePointer = function() {
     tweenFace.y = avgY / numPositions
   }
 
-  this.pointer.$el.style.left = `${tweenFace.x}px`
-  this.pointer.$el.style.top = `${tweenFace.y}px`
-  ;(this.pointer.x = tweenFace.x), (this.pointer.y = tweenFace.y)
+  this.pose.head.pointer.$el.style.left = `${tweenFace.x}px`
+  this.pose.head.pointer.$el.style.top = `${tweenFace.y}px`
+  this.pose.head.pointer.x = tweenFace.x
+  this.pose.head.pointer.y = tweenFace.y
 }

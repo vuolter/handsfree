@@ -11,12 +11,12 @@ let thresholdMet = false
 // eslint-disable-next-line no-unused-vars
 let mouseDrag = false
 
-window.Handsfree.use('click', (pointer, handsfree) => {
+window.Handsfree.use('click', ({ pose, config }) => {
   thresholdMet = false
 
-  Object.keys(handsfree.config.plugin.click.morphs).forEach((key) => {
-    const morph = handsfree.config.plugin.click.morphs[key]
-    if (handsfree.head.morphs[key] >= morph) thresholdMet = true
+  Object.keys(config.plugin.click.morphs).forEach((key) => {
+    const morph = config.plugin.click.morphs[key]
+    if (pose.head.morphs[key] >= morph) thresholdMet = true
   })
 
   if (thresholdMet) {
@@ -31,22 +31,25 @@ window.Handsfree.use('click', (pointer, handsfree) => {
 
   // Set the state
   if (mouseDowned > 0 && mouseDowned < maxMouseDownedFrames)
-    handsfree.pointer.state = 'mouseDown'
+    pose.head.pointer.state = 'mouseDown'
   else if (mouseDowned > maxMouseDownedFrames)
-    handsfree.pointer.state = 'mouseDrag'
-  else if (mouseUp) handsfree.pointer.state = 'mouseUp'
+    pose.head.pointer.state = 'mouseDrag'
+  else if (mouseUp) pose.head.pointer.state = 'mouseUp'
   else ''
 
   // Actually click something (or focus it)
-  if (handsfree.pointer.state === 'mouseDown') {
-    const $el = document.elementFromPoint(pointer.x, pointer.y)
+  if (pose.head.pointer.state === 'mouseDown') {
+    const $el = document.elementFromPoint(
+      pose.head.pointer.x,
+      pose.head.pointer.y
+    )
     if ($el) {
       $el.dispatchEvent(
         new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
-          clientX: pointer.x,
-          clientY: pointer.y
+          clientX: pose.head.pointer.x,
+          clientY: pose.head.pointer.y
         })
       )
 

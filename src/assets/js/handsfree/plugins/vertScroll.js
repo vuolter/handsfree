@@ -1,26 +1,26 @@
 /**
  * Scrolls the page vertically
  */
-window.Handsfree.use('vertScroll', (pointer, handsfree) => {
-  if (pointer.y < handsfree.config.plugin.vertScroll.scrollZone) {
+window.Handsfree.use('vertScroll', ({ pose, config }) => {
+  if (pose.head.pointer.y < config.plugin.vertScroll.scrollZone) {
     window.scrollTo(
       0,
       window.scrollY +
-        (pointer.y - handsfree.config.plugin.vertScroll.scrollZone) *
-          handsfree.config.plugin.vertScroll.scrollSpeed
+        (pose.head.pointer.y - config.plugin.vertScroll.scrollZone) *
+          config.plugin.vertScroll.scrollSpeed
     )
   }
   if (
-    pointer.y >
-    window.innerHeight - handsfree.config.plugin.vertScroll.scrollZone
+    pose.head.pointer.y >
+    window.innerHeight - config.plugin.vertScroll.scrollZone
   ) {
     window.scrollTo(
       0,
       window.scrollY +
-        (pointer.y -
+        (pose.head.pointer.y -
           window.innerHeight +
-          handsfree.config.plugin.vertScroll.scrollZone) *
-          handsfree.config.plugin.vertScroll.scrollSpeed
+          config.plugin.vertScroll.scrollZone) *
+          config.plugin.vertScroll.scrollSpeed
     )
   }
 })

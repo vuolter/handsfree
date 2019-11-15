@@ -1,54 +1,52 @@
 /**
  * Handles extra calculations for head morphs
  */
-window.Handsfree.use('headMorphs', (pointer, instance) => {
-  const morphs = instance.head.morphs
-  instance.head.state = instance.head.state || {}
+window.Handsfree.use('headMorphs', ({ pose, config }) => {
+  const morphs = pose.head.morphs
+  pose.head.state = pose.head.state || {}
 
   // Smiles
-  instance.head.state.smileRight =
-    morphs[0] > instance.config.head.morphs.threshold.smileRight
-  instance.head.state.smileLeft =
-    morphs[1] > instance.config.head.morphs.threshold.smileLeft
-  instance.head.state.smile =
-    instance.head.state.smileRight && instance.head.state.smileLeft
-  instance.head.state.smirk =
-    (instance.head.state.smileRight && !instance.head.state.smileLeft) ||
-    (!instance.head.state.smileRight && instance.head.state.smileLeft)
-  instance.head.state.pursed =
-    instance.head.morphs[7] > instance.config.head.morphs.threshold.mouthRound
+  pose.head.state.smileRight =
+    morphs[0] > config.head.morphs.threshold.smileRight
+  pose.head.state.smileLeft = morphs[1] > config.head.morphs.threshold.smileLeft
+  pose.head.state.smile =
+    pose.head.state.smileRight && pose.head.state.smileLeft
+  pose.head.state.smirk =
+    (pose.head.state.smileRight && !pose.head.state.smileLeft) ||
+    (!pose.head.state.smileRight && pose.head.state.smileLeft)
+  pose.head.state.pursed =
+    pose.head.morphs[7] > config.head.morphs.threshold.mouthRound
 
   // Eyebrows
-  instance.head.state.browLeftUp =
-    morphs[4] > instance.config.head.morphs.threshold.browLeftUp
-  instance.head.state.browRightUp =
-    morphs[5] > instance.config.head.morphs.threshold.browRightUp
-  instance.head.state.browsUp =
-    morphs[4] > instance.config.head.morphs.threshold.browLeftUp &&
-    morphs[5] > instance.config.head.morphs.threshold.browLeftUp
+  pose.head.state.browLeftUp =
+    morphs[4] > config.head.morphs.threshold.browLeftUp
+  pose.head.state.browRightUp =
+    morphs[5] > config.head.morphs.threshold.browRightUp
+  pose.head.state.browsUp =
+    morphs[4] > config.head.morphs.threshold.browLeftUp &&
+    morphs[5] > config.head.morphs.threshold.browLeftUp
 
-  instance.head.state.browLeftDown =
-    morphs[2] > instance.config.head.morphs.threshold.browLeftDown
-  instance.head.state.browRightDown =
-    morphs[3] > instance.config.head.morphs.threshold.browRightDown
-  instance.head.state.browsDown =
-    morphs[2] > instance.config.head.morphs.threshold.browLeftDown &&
-    morphs[3] > instance.config.head.morphs.threshold.browLeftDown
+  pose.head.state.browLeftDown =
+    morphs[2] > config.head.morphs.threshold.browLeftDown
+  pose.head.state.browRightDown =
+    morphs[3] > config.head.morphs.threshold.browRightDown
+  pose.head.state.browsDown =
+    morphs[2] > config.head.morphs.threshold.browLeftDown &&
+    morphs[3] > config.head.morphs.threshold.browLeftDown
 
-  instance.head.state.browsHuh =
-    (instance.head.state.browLeftDown && instance.head.state.browRightUp) ||
-    (instance.head.state.browRightDown && instance.head.state.browLeftUp)
+  pose.head.state.browsUpDown =
+    (pose.head.state.browLeftDown && pose.head.state.browRightUp) ||
+    (pose.head.state.browRightDown && pose.head.state.browLeftUp)
 
   // Eyes
-  instance.head.state.eyeLeftClosed =
-    morphs[8] > instance.config.head.morphs.threshold.eyeLeftClosed
-  instance.head.state.eyeRightClosed =
-    morphs[9] > instance.config.head.morphs.threshold.eyeRightClosed
-  instance.head.state.eyesClosed =
-    instance.head.state.eyeLeftClosed && instance.head.state.eyeRightClosed
+  pose.head.state.eyeLeftClosed =
+    morphs[8] > config.head.morphs.threshold.eyeLeftClosed
+  pose.head.state.eyeRightClosed =
+    morphs[9] > config.head.morphs.threshold.eyeRightClosed
+  pose.head.state.eyesClosed =
+    pose.head.state.eyeLeftClosed && pose.head.state.eyeRightClosed
 
   // Mouth
-  instance.head.state.mouthClosed = morphs[6] === 0
-  instance.head.state.mouthOpen =
-    morphs[6] > instance.config.head.morphs.threshold.mouthOpen
+  pose.head.state.mouthClosed = morphs[6] === 0
+  pose.head.state.mouthOpen = morphs[6] > config.head.morphs.threshold.mouthOpen
 })

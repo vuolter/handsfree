@@ -6,7 +6,7 @@
           v-card
             v-card-title Smile Tiles
             v-card-text
-              p This demo explores the <code>handsfree.pointer.state</code> property to handle clicking on tiles.
+              p This demo explores the <code>handsfree.pose.head.pointer.state</code> property to handle clicking on tiles.
 
               h3.mb-3 How to Play
               ul
@@ -119,7 +119,7 @@ export default {
     clickedTile: debounce(
       function(index) {
         if (
-          this.$store.state.handsfree.pointer.state === 'mouseDown' ||
+          this.$store.state.handsfree.pose.head.pointer.state === 'mouseDown' ||
           !this.isTracking
         ) {
           this.updateScore(index)

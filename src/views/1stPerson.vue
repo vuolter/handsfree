@@ -60,7 +60,7 @@ export default {
      * Sets up handsfree
      */
     setupHandsfree() {
-      window.Handsfree.use('threeCamera', (pointer, instance) => {
+      window.Handsfree.use('threeCamera', ({ pose }) => {
         // The normalized amount from center to lean before moving in that directon
         let strafeBuffer = 0.15
         let leanBuffer = {
@@ -69,41 +69,40 @@ export default {
         }
 
         // Strafe
-        if (instance.head.translation[0] > 0.5 + strafeBuffer)
+        if (pose.head.translation[0] > 0.5 + strafeBuffer)
           this.move.right = true
         else this.move.right = false
 
-        if (instance.head.translation[0] < 0.5 - strafeBuffer)
-          this.move.left = true
+        if (pose.head.translation[0] < 0.5 - strafeBuffer) this.move.left = true
         else this.move.left = false
 
         // Lean
-        if (instance.head.translation[2] > 0.25 + leanBuffer.out)
+        if (pose.head.translation[2] > 0.25 + leanBuffer.out)
           this.move.forward = true
         else this.move.forward = false
 
-        if (instance.head.translation[2] < 0.25 - leanBuffer.in)
+        if (pose.head.translation[2] < 0.25 - leanBuffer.in)
           this.move.backward = true
         else this.move.backward = false
 
         // Jump
-        if (instance.head.state.browsUp) {
+        if (pose.head.state.browsUp) {
           if (this.move.jump) this.velocity.y += 350
           this.move.jump = false
         }
 
-        this.tweenPOV(instance)
+        this.tweenPOV(pose)
       })
     },
 
     /**
      * Tweetn values
      */
-    tweenPOV(instance) {
+    tweenPOV(pose) {
       TweenMax.to(this.rotation, 500 / 1000, {
-        x: -instance.head.rotation[0] * 8 + Math.PI / 2,
-        y: -instance.head.rotation[1] * 10,
-        z: instance.head.rotation[2] * 2,
+        x: -pose.head.rotation[0] * 8 + Math.PI / 2,
+        y: -pose.head.rotation[1] * 10,
+        z: pose.head.rotation[2] * 2,
         ease: 'Linear.easeNone',
         overwrite: true,
         immediate: true

@@ -93,7 +93,7 @@ export default {
       if (state.pursed && state.mouthClosed) emoji = '😗'
       if (state.browsUp) emoji = '🙄'
       if (state.smile) emoji = '🙂'
-      if (state.browsHuh && !state.pursed) {
+      if (state.browsUpDown && !state.pursed) {
         if (state.browRightUp) isFlipped = true
         emoji = '🤨'
       }
@@ -110,7 +110,7 @@ export default {
       if (state.mouthOpen) emoji = '😃'
       if (state.mouthOpen && state.eyesClosed) emoji = '😫'
       if (state.mouthOpen && state.eyesClosed && state.browsUp) emoji = '😂'
-      if (state.eyesClosed && state.browsHuh) {
+      if (state.eyesClosed && state.browsUpDown) {
         if (state.eyebrowLeftRight) isFlipped = true
         emoji = '🤤'
       }

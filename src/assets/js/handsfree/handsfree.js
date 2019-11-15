@@ -52,18 +52,21 @@ class Handsfree {
    * - Also runs plugins
    */
   track() {
-    this.head = {
-      rotation: this.trackerSDK.get_rotationStabilized(),
-      translation: this.trackerSDK.get_positionScale(),
-      morphs: this.trackerSDK.get_morphTargetInfluencesStabilized()
-    }
+    // Head [yaw, pitch, roll]
+    this.pose.head.rotation = this.trackerSDK.get_rotationStabilized()
+    // Head [x, y, scale]
+    this.pose.head.translation = this.trackerSDK.get_positionScale()
+    // [0...10] Morphs between 0 - 1
+    this.pose.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
+
     this.updatePointer()
 
+    // Run plugins
     Object.keys(Handsfree.plugins).forEach((key) => {
-      Handsfree.plugins[key].enabled &&
-        Handsfree.plugins[key].callback(this.pointer, this)
+      Handsfree.plugins[key].enabled && Handsfree.plugins[key].callback(this)
     })
 
+    // Loop
     requestAnimationFrame(() => this.track())
   }
 }
