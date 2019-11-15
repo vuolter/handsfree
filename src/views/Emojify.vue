@@ -80,15 +80,15 @@ export default {
 
   mounted() {
     window.Handsfree.disable('vertScroll')
-    window.Handsfree.use('emojify', (pointer, instance) => {
+    window.Handsfree.use('emojify', ({ pose }) => {
       // Map the head rotation
-      this.$set(this.headPOV, 0, -instance.head.rotation[0])
-      this.$set(this.headPOV, 1, instance.head.rotation[1])
-      this.$set(this.headPOV, 2, -instance.head.rotation[2])
+      this.$set(this.headPOV, 0, -pose.head.rotation[0])
+      this.$set(this.headPOV, 1, pose.head.rotation[1])
+      this.$set(this.headPOV, 2, -pose.head.rotation[2])
 
       let emoji = '😐'
       let isFlipped = false
-      let state = instance.head.state
+      let state = pose.head.state
 
       if (state.pursed && state.mouthClosed) emoji = '😗'
       if (state.browsUp) emoji = '🙄'
@@ -120,17 +120,17 @@ export default {
       this.emoji = emoji
       this.isFlipped = isFlipped
       this.morphs = {
-        rSmile: instance.head.morphs[0].toFixed(5),
-        lSmile: instance.head.morphs[1].toFixed(5),
-        lBrowDown: instance.head.morphs[3].toFixed(5),
-        rBrowDown: instance.head.morphs[2].toFixed(5),
-        rBrowUp: instance.head.morphs[4].toFixed(5),
-        lBrowUp: instance.head.morphs[5].toFixed(5),
-        mouthOpen: instance.head.morphs[6].toFixed(5),
-        mouthRound: instance.head.morphs[7].toFixed(5),
-        rEyeClosed: instance.head.morphs[8].toFixed(5),
-        lEyeClosed: instance.head.morphs[9].toFixed(5),
-        mouthNasty: instance.head.morphs[10].toFixed(5)
+        rSmile: pose.head.morphs[0].toFixed(5),
+        lSmile: pose.head.morphs[1].toFixed(5),
+        lBrowDown: pose.head.morphs[3].toFixed(5),
+        rBrowDown: pose.head.morphs[2].toFixed(5),
+        rBrowUp: pose.head.morphs[4].toFixed(5),
+        lBrowUp: pose.head.morphs[5].toFixed(5),
+        mouthOpen: pose.head.morphs[6].toFixed(5),
+        mouthRound: pose.head.morphs[7].toFixed(5),
+        rEyeClosed: pose.head.morphs[8].toFixed(5),
+        lEyeClosed: pose.head.morphs[9].toFixed(5),
+        mouthNasty: pose.head.morphs[10].toFixed(5)
       }
     })
   },
