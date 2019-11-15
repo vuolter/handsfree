@@ -59,8 +59,6 @@ class Handsfree {
     // [0...10] Morphs between 0 - 1
     this.pose.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
 
-    this.updatePointer()
-
     // Run plugins
     Object.keys(Handsfree.plugins).forEach((key) => {
       Handsfree.plugins[key].enabled && Handsfree.plugins[key].callback(this)
@@ -85,7 +83,6 @@ Handsfree.instances = []
 window.Handsfree = Handsfree
 
 require('./Setup')
-require('./Pointer')
 require('./Listeners')
 require('./Plugins')
 

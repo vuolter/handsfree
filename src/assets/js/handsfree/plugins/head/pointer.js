@@ -1,13 +1,14 @@
-/**
- * Updates the pointer's position given it's head pose
- */
-const Handsfree = window.Handsfree
 import { TweenMax } from 'gsap/all'
+let tween = {
+  x: 0,
+  y: 0,
+  positionList: []
+}
 
-Handsfree.prototype.updatePointer = function() {
+window.Handsfree.use('headPointer', ({ pose, config }) => {
   // Calculate X/Y
-  let rx = (this.pose.head.rotation[0] * 180) / Math.PI
-  let ry = (this.pose.head.rotation[1] * 180) / Math.PI
+  let rx = (pose.head.rotation[0] * 180) / Math.PI
+  let ry = (pose.head.rotation[1] * 180) / Math.PI
   // Compensation for edge cases
   rx -= 10
   // rx = rx + 1 - 4 * (Math.abs(ry) / 45)
@@ -23,7 +24,7 @@ Handsfree.prototype.updatePointer = function() {
   // Remove some jittering by tweening the rotations values using TweenMax.
   // We could do it without TweenMax: 0.15 seconds is 15% of 1 second, so it tween over 4,5 frames (30 fps)
   // but TweenMax is so convenient for that purpose.
-  let tweenFace = this.tween // our helper for this face index
+  let tweenFace = tween // our helper for this face index
 
   // Stabilizer
   const stabilizer = [
@@ -33,9 +34,9 @@ Handsfree.prototype.updatePointer = function() {
     { jitter: 10, tween: 3 }
   ]
   // Number of degrees needed to change before forcing a position (vs tweening it eg stabilizing it)
-  const jitterFactor = stabilizer[this.config.stabilizer.factor].jitter
+  const jitterFactor = stabilizer[config.stabilizer.factor].jitter
   // How long to tween while stabilizing. Higher = slower, lower = faster
-  let tweenDuration = stabilizer[this.config.stabilizer.factor].tween
+  let tweenDuration = stabilizer[config.stabilizer.factor].tween
   if (Math.abs(tweenFace.rx - rx) > jitterFactor) {
     tweenDuration = 0.0
   }
@@ -58,8 +59,8 @@ Handsfree.prototype.updatePointer = function() {
   // Let's reduce the values by 40% to go only 10% over the edge...
   // ryp *= 0.60
   // rxp *= 0.60
-  rxp *= this.config.sensitivity.xy
-  ryp *= this.config.sensitivity.xy
+  rxp *= config.sensitivity.xy
+  ryp *= config.sensitivity.xy
 
   let _x = window.outerWidth * (ryp + 0.5)
   // let _y = window.outerHeight * (rxp + 0.5)
@@ -68,7 +69,7 @@ Handsfree.prototype.updatePointer = function() {
   // So at this stage it's a bit less jittering, but to improve the overall placement when the face stands
   // still, let's average out the position over 1 second (30 frames). This will lead to a bit of delay when
   // moving the head fast, but it will greatly improve slow movements.
-  if (tweenFace.positionList.length < this.config.stabilizer.buffer) {
+  if (tweenFace.positionList.length < config.stabilizer.buffer) {
     // add helper objects until the array is full
     tweenFace.positionList.push({ x: _x, y: _y })
 
@@ -96,8 +97,8 @@ Handsfree.prototype.updatePointer = function() {
     tweenFace.y = avgY / numPositions
   }
 
-  this.pose.head.pointer.$el.style.left = `${tweenFace.x}px`
-  this.pose.head.pointer.$el.style.top = `${tweenFace.y}px`
-  this.pose.head.pointer.x = tweenFace.x
-  this.pose.head.pointer.y = tweenFace.y
-}
+  pose.head.pointer.$el.style.left = `${tweenFace.x}px`
+  pose.head.pointer.$el.style.top = `${tweenFace.y}px`
+  pose.head.pointer.x = tweenFace.x
+  pose.head.pointer.y = tweenFace.y
+})

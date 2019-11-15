@@ -106,13 +106,6 @@ Handsfree.prototype.initProps = function() {
   Handsfree.instances.push(this)
   this.id = Handsfree.instances.length
   this.trackerSDK = null
-  this.tween = {
-    x: -1,
-    y: -1,
-    rx: 0,
-    ry: 0,
-    positionList: []
-  }
 }
 
 /**
