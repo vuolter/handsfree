@@ -5,7 +5,7 @@
         v-card
           v-card-title YouTube 360
           v-card-text
-            p This demo explores the <code>handsfree.head.rotation</code> properties to control a 360 video's POV with your head
+            p This demo explores the <code>handsfree.pose.head.rotation</code> properties to control a 360 video's POV with your head
               <br>(I apologize for the ad)
             h3.mb-3 How to use
             p After pressing Start Webcam, move your head around to "look" around in the video handsfree. <b>Try it full screen!</b>

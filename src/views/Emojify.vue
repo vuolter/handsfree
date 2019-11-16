@@ -5,7 +5,7 @@
         v-card
           v-card-title Emojify
           v-card-text
-            p This demo explores the <code>handsfree.head.morphs</code> and <code>handsfree.head.state</code> properties to match an emoji to your face!
+            p This demo explores the <code>handsfree.pose.head.morphs</code> and <code>handsfree.pose.head.state</code> properties to match an emoji to your face!
             h3.mb-3 How to use
             p Create different emojis by making different faces:<br>😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
           v-card-actions

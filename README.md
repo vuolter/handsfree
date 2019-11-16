@@ -40,8 +40,10 @@
 
     // Create a simple plugin that displays pointer values on every frame
     // When using only 1 instance, handsfree === context
-    Handsfree.use('consoleLogger', (pointer, context) => {
-      console.log(pointer, context.head.rotation, context.head.morphs)
+    Handsfree.use('consoleLogger', ({ pose }) => {
+      console.log('Morphs: ', pose.head.morphs)
+      console.log('Rotation: ', pose.head.rotation)
+      console.log('Translation: ', pose.head.translation)
     })
 
     // Start tracking
