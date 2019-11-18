@@ -1,7 +1,7 @@
 /**
  * Scrolls the page vertically
  */
-window.Handsfree.use('vertScroll', ({ pose, config }) => {
+window.Handsfree.use('head.vertScroll', ({ pose, config }) => {
   if (pose.head.pointer.y < config.plugin.vertScroll.scrollZone) {
     window.scrollTo(
       0,

@@ -22,8 +22,7 @@ Handsfree.disable = function(name) {
   Handsfree.plugins[name].enabled = false
 }
 
-require('./plugins/vertScroll')
-require('./plugins/click')
-
+require('./plugins/head/vertScroll')
+require('./plugins/head/click')
 require('./plugins/head/morphs')
 require('./plugins/head/pointer')

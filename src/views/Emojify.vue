@@ -79,8 +79,8 @@ export default {
   },
 
   mounted() {
-    window.Handsfree.disable('vertScroll')
-    window.Handsfree.use('emojify', ({ pose }) => {
+    window.Handsfree.disable('head.vertScroll')
+    window.Handsfree.use('head.emojify', ({ pose }) => {
       // Map the head rotation
       this.$set(this.headPOV, 0, -pose.head.rotation[0])
       this.$set(this.headPOV, 1, pose.head.rotation[1])
@@ -136,8 +136,8 @@ export default {
   },
 
   beforeDestroy() {
-    window.Handsfree.disable('emojify')
-    window.Handsfree.enable('vertScroll')
+    window.Handsfree.disable('head.emojify')
+    window.Handsfree.enable('head.vertScroll')
   }
 }
 </script>

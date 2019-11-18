@@ -5,7 +5,7 @@ let tween = {
   positionList: []
 }
 
-window.Handsfree.use('headPointer', ({ pose, config }) => {
+window.Handsfree.use('head.pointer', ({ pose, config }) => {
   // Calculate X/Y
   let rx = (pose.head.rotation[0] * 180) / Math.PI
   let ry = (pose.head.rotation[1] * 180) / Math.PI

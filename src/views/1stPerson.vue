@@ -46,12 +46,12 @@ export default {
     }
     this.initializeGame()
     this.setupHandsfree()
-    window.Handsfree.disable('vertScroll')
+    window.Handsfree.disable('head.vertScroll')
   },
 
   beforeDestroy() {
-    window.Handsfree.enable('vertScroll')
-    window.Handsfree.disable('threeCamera')
+    window.Handsfree.enable('head.vertScroll')
+    window.Handsfree.disable('head.threeCamera')
     endTheWorld()
   },
 
@@ -60,7 +60,7 @@ export default {
      * Sets up handsfree
      */
     setupHandsfree() {
-      window.Handsfree.use('threeCamera', ({ pose }) => {
+      window.Handsfree.use('head.threeCamera', ({ pose }) => {
         // The normalized amount from center to lean before moving in that directon
         let strafeBuffer = 0.15
         let leanBuffer = {

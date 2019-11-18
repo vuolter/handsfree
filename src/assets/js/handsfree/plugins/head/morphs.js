@@ -1,7 +1,7 @@
 /**
  * Handles extra calculations for head morphs
  */
-window.Handsfree.use('headMorphs', ({ pose, config }) => {
+window.Handsfree.use('head.morphs', ({ pose, config }) => {
   const morphs = pose.head.morphs
   pose.head.state = pose.head.state || {}
 

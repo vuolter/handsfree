@@ -11,7 +11,7 @@ let thresholdMet = false
 // eslint-disable-next-line no-unused-vars
 let mouseDrag = false
 
-window.Handsfree.use('click', ({ pose, config }) => {
+window.Handsfree.use('head.click', ({ pose, config }) => {
   thresholdMet = false
 
   Object.keys(config.plugin.click.morphs).forEach((key) => {
