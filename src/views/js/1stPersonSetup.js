@@ -37,7 +37,7 @@ const initWorld = function(instance) {
     1,
     1000
   )
-  camera.position.y = 10
+  camera.position.y = 30
 
   // Setup the scene
   scene = new THREE.Scene()
