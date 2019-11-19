@@ -11,7 +11,7 @@
               ul
                 li Smile to the right to paint with primary color
                 li Smile to the left to paint with secondary color
-                li Lean in/out to change brush size
+                li Raise both eyebrowse to clear canvas
 </template>
 
 <script>
@@ -69,11 +69,21 @@ export default {
 
         lastX = x
         lastY = y
-        x = pose.head.pointer.x
-        y = pose.head.pointer.y
+        x = pose.head.pointer.x + 4
+        y = pose.head.pointer.y + 4
 
-        if (pose.head.state.smirk) {
+        // Draw line
+        if (pose.head.state.smileLeft) this.p5.stroke(0, 255, 0)
+        if (pose.head.state.smileRight) this.p5.stroke(0, 0, 0)
+        if (pose.head.state.smile) this.p5.stroke(255, 0, 0)
+
+        if (pose.head.state.smirk || pose.head.state.smile) {
           this.p5.line(x, y, lastX, lastY)
+        }
+
+        // Clear canvas
+        if (pose.head.state.browsUp) {
+          this.p5.clear()
         }
       })
     }
