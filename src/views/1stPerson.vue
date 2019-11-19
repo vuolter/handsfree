@@ -7,7 +7,7 @@
           v-card
             v-card-title 1st Person View
             v-card-text
-              p This experiment explores the <code>handsfree.head.translation</code> properties to move the camera based on the direction you lean in.
+              p This experiment explores the <code>handsfree.pose.head.translation</code> properties to move the camera based on the direction you lean in.
               ul
                 li Lean in/back/left/right to move in that direction
                 li Turn head around to look around
