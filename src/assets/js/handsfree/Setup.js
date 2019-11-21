@@ -147,7 +147,7 @@ Handsfree.prototype.createDebugger = function() {
  */
 Handsfree.prototype.createPointer = function() {
   const $pointer = document.createElement('DIV')
-  $pointer.classList.add('handsfree-pointer')
+  $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-v1')
   this.pose.head.pointer.$el = $pointer
 
   document.body.appendChild($pointer)

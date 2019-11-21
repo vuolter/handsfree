@@ -5,10 +5,33 @@
  */
 const Handsfree = window.Handsfree
 
-Handsfree.use = function(name, callback) {
-  Handsfree.plugins[name] = {
-    callback,
-    enabled: true
+Handsfree.use = function(name, opts = {}) {
+  // Make sure we have an options object
+  if (typeof opts === 'function') {
+    opts = {
+      onFrame: opts
+    }
+  }
+
+  Handsfree.plugins[name] = Object.assign(
+    {
+      // Whether the plugin is enabled by default
+      enabled: true,
+      // (instance) => Called on every frame
+      onFrame: null,
+      // (instace) => Called when the plugin is first used.
+      onUse: null
+    },
+    opts
+  )
+
+  if (Handsfree.instances.length) {
+    Object.keys(Handsfree.instances).forEach((instance) => {
+      !Handsfree.plugins[name].wasOnUseCalled &&
+        Handsfree.plugins[name].onUse &&
+        Handsfree.plugins[name].onUse(instance)
+    })
+    Handsfree.plugins[name].wasOnUseCalled = true
   }
 }
 
@@ -25,4 +48,5 @@ Handsfree.disable = function(name) {
 require('./plugins/head/vertScroll')
 require('./plugins/head/click')
 require('./plugins/head/morphs')
-require('./plugins/head/pointer')
+require('./plugins/head/pointer1')
+require('./plugins/head/pointer2')

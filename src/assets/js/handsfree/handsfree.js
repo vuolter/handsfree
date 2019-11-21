@@ -11,6 +11,14 @@ class Handsfree {
    */
   constructor(config = {}) {
     this.setup(config)
+
+    // Run onUse methods
+    Object.keys(Handsfree.plugins).forEach((key) => {
+      !Handsfree.plugins[key].wasOnUseCalled &&
+        Handsfree.plugins[key].onUse &&
+        Handsfree.plugins[key].onUse(this)
+      Handsfree.plugins[key].wasOnUseCalled = true
+    })
   }
 
   /**
@@ -61,7 +69,9 @@ class Handsfree {
 
     // Run plugins
     Object.keys(Handsfree.plugins).forEach((key) => {
-      Handsfree.plugins[key].enabled && Handsfree.plugins[key].callback(this)
+      Handsfree.plugins[key].enabled &&
+        Handsfree.plugins[key].onFrame &&
+        Handsfree.plugins[key].onFrame(this)
     })
 
     // Loop

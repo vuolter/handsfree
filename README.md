@@ -39,7 +39,6 @@
     const handsfree = new Handsfree({})
 
     // Create a simple plugin that displays pointer values on every frame
-    // When using only 1 instance, handsfree === context
     Handsfree.use('consoleLogger', ({ pose }) => {
       console.log('Morphs: ', pose.head.morphs)
       console.log('Rotation: ', pose.head.rotation)
