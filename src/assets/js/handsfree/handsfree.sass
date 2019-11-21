@@ -1,3 +1,4 @@
+// Pointer
 .handsfree-pointer
   width: 15px
   height: 15px
@@ -13,6 +14,10 @@
   .handsfree-started &
     display: block
 
+.handsfree-hidden
+  display: none !important
+
+// Loading states
 .handsfree-show-when-loading
   display: none
 
@@ -27,6 +32,7 @@
   &span
     display: inline-block
 
+// Started/stop states
 .handsfree-stop
   display: none
 
@@ -41,6 +47,7 @@
   &span
     display: inline-block
 
+// Click animation
 body.handsfree-clicked .handsfree-pointer
   background: #ff0
   animation: shadow-pulse 0.15s 1

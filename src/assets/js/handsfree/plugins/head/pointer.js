@@ -122,5 +122,15 @@ window.Handsfree.use('head.pointer', {
     pose.head.pointer.$el.style.top = `${tweenFace.y}px`
     pose.head.pointer.x = tweenFace.x
     pose.head.pointer.y = tweenFace.y
+  },
+
+  /**
+   * Toggle pointer
+   */
+  onDisable({ pose }) {
+    pose.head.pointer.$el.classList.add('handsfree-hidden')
+  },
+  onEnable({ pose }) {
+    pose.head.pointer.$el.classList.remove('handsfree-hidden')
   }
 })

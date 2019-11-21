@@ -19,13 +19,17 @@ Handsfree.use = function(name, opts = {}) {
       enabled: true,
       // (instance) => Called on every frame
       onFrame: null,
-      // (instace) => Called when the plugin is first used.
-      onUse: null
+      // (instace) => Called when the plugin is first used
+      onUse: null,
+      // (instance) => Called when the plugin is enabled
+      onEnable: null,
+      // (instance) => Called when the plugin is disabled
+      onDisable: null
     },
     opts
   )
 
-  // Run onuse callbacks
+  // Run onUse callbacks
   if (Handsfree.instances.length) {
     Object.keys(Handsfree.instances).forEach((instance) => {
       !Handsfree.plugins[name].wasOnUseCalled &&
@@ -37,13 +41,29 @@ Handsfree.use = function(name, opts = {}) {
 }
 
 /**
- * Enable/disable plugins
+ * Enable plugins
+ * - Calls onEnable for each instance
  */
 Handsfree.enable = function(name) {
   Handsfree.plugins[name].enabled = true
+
+  Handsfree.instances.forEach((instance) => {
+    Handsfree.plugins[name].onEnable &&
+      Handsfree.plugins[name].onEnable(instance)
+  })
 }
+
+/**
+ * Disable plugins
+ * - Calls onDisable for each instance
+ */
 Handsfree.disable = function(name) {
   Handsfree.plugins[name].enabled = false
+
+  Handsfree.instances.forEach((instance) => {
+    Handsfree.plugins[name].onDisable &&
+      Handsfree.plugins[name].onDisable(instance)
+  })
 }
 
 require('./plugins/head/vertScroll')
