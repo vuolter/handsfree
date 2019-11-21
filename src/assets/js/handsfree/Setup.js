@@ -12,7 +12,6 @@ Handsfree.prototype.setup = function(config) {
   this.initProps()
   this.loadDependencies()
   this.createDebugger()
-  this.createPointer()
 }
 
 /**
@@ -140,17 +139,6 @@ Handsfree.prototype.createDebugger = function() {
   $wrap.appendChild($canvas)
 
   this.config.debugger.target.appendChild($wrap)
-}
-
-/**
- * Creates the cursor/pointer
- */
-Handsfree.prototype.createPointer = function() {
-  const $pointer = document.createElement('DIV')
-  $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-v1')
-  this.pose.head.pointer.$el = $pointer
-
-  document.body.appendChild($pointer)
 }
 
 /**
