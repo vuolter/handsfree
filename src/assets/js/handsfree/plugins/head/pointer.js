@@ -9,16 +9,16 @@ window.Handsfree.use('head.pointer', {
   /**
    * Create a pointer for each user
    */
-  onUse({ pose }) {
+  onUse({ head }) {
     // @FIXME make this a config
     const NUMUSERS = 1
 
-    if (!pose.head.pointer.$el) {
+    if (!head.pointer.$el) {
       for (let i = 0; i < NUMUSERS; i++) {
         const $pointer = document.createElement('div')
         $pointer.classList.add('handsfree-pointer')
         document.body.appendChild($pointer)
-        pose.head.pointer.$el = $pointer
+        head.pointer.$el = $pointer
       }
     }
   },
@@ -26,10 +26,10 @@ window.Handsfree.use('head.pointer', {
   /**
    * Position the pointer
    */
-  onFrame({ pose, config }) {
+  onFrame({ head, config }) {
     // Calculate X/Y
-    let rx = (pose.head.rotation[0] * 180) / Math.PI
-    let ry = (pose.head.rotation[1] * 180) / Math.PI
+    let rx = (head.rotation[0] * 180) / Math.PI
+    let ry = (head.rotation[1] * 180) / Math.PI
     // Compensation for edge cases
     rx -= 10
     // rx = rx + 1 - 4 * (Math.abs(ry) / 45)
@@ -118,19 +118,19 @@ window.Handsfree.use('head.pointer', {
       tweenFace.y = avgY / numPositions
     }
 
-    pose.head.pointer.$el.style.left = `${tweenFace.x}px`
-    pose.head.pointer.$el.style.top = `${tweenFace.y}px`
-    pose.head.pointer.x = tweenFace.x
-    pose.head.pointer.y = tweenFace.y
+    head.pointer.$el.style.left = `${tweenFace.x}px`
+    head.pointer.$el.style.top = `${tweenFace.y}px`
+    head.pointer.x = tweenFace.x
+    head.pointer.y = tweenFace.y
   },
 
   /**
    * Toggle pointer
    */
-  onDisable({ pose }) {
-    pose.head.pointer.$el.classList.add('handsfree-hidden')
+  onDisable({ head }) {
+    head.pointer.$el.classList.add('handsfree-hidden')
   },
-  onEnable({ pose }) {
-    pose.head.pointer.$el.classList.remove('handsfree-hidden')
+  onEnable({ head }) {
+    head.pointer.$el.classList.remove('handsfree-hidden')
   }
 })

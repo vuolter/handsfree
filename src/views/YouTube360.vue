@@ -5,7 +5,7 @@
         v-card
           v-card-title YouTube 360
           v-card-text
-            p This demo explores the <code>handsfree.pose.head.rotation</code> properties to control a 360 video's POV with your head
+            p This demo explores the <code>handsfree.head.rotation</code> properties to control a 360 video's POV with your head
               <br>(I apologize for the ad)
             h3.mb-3 How to use
             p After pressing Start Webcam, move your head around to "look" around in the video handsfree. <b>Try it full screen!</b>
@@ -82,23 +82,23 @@ export default {
      * Setup the handsfree controls
      */
     handleHandsfree() {
-      window.Handsfree.use('youtube360', ({ pose }) => {
+      window.Handsfree.use('youtube360', ({ head }) => {
         if (!this.YTPlayer || !document.contains(this.YTPlayer.a)) return
         this.YTPlayer.getSphericalProperties &&
           this.YTPlayer.setSphericalProperties(this.tween)
 
-        this.tweenPOV(pose)
+        this.tweenPOV(head)
       })
     },
 
     /**
      * Smoothens out the POV
      */
-    tweenPOV(pose) {
+    tweenPOV(head) {
       TweenMax.to(this.tween, 500 / 1000, {
-        pitch: ((-pose.head.rotation[0] * 180) / Math.PI) * 8 + 90,
-        yaw: ((-pose.head.rotation[1] * 180) / Math.PI) * 10,
-        roll: ((pose.head.rotation[2] * 180) / Math.PI) * 2,
+        pitch: ((-head.rotation[0] * 180) / Math.PI) * 8 + 90,
+        yaw: ((-head.rotation[1] * 180) / Math.PI) * 10,
+        roll: ((head.rotation[2] * 180) / Math.PI) * 2,
         ease: 'Linear.easeNone',
         overwrite: true,
         immediate: true

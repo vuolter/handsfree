@@ -61,11 +61,11 @@ class Handsfree {
    */
   track() {
     // Head [yaw, pitch, roll]
-    this.pose.head.rotation = this.trackerSDK.get_rotationStabilized()
+    this.head.rotation = this.trackerSDK.get_rotationStabilized()
     // Head [x, y, scale]
-    this.pose.head.translation = this.trackerSDK.get_positionScale()
+    this.head.translation = this.trackerSDK.get_positionScale()
     // [0...10] Morphs between 0 - 1
-    this.pose.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
+    this.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
 
     // Run plugins
     Object.keys(Handsfree.plugins).forEach((key) => {

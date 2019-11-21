@@ -18,18 +18,16 @@ Handsfree.prototype.setup = function(config) {
  * Sets up the pose default object
  */
 Handsfree.prototype.poseDefaults = function() {
-  this.pose = {
-    head: {
-      translation: [],
-      rotation: [],
-      morphs: [],
-      state: {},
-      pointer: {
-        x: 0,
-        y: 0,
-        $el: null,
-        state: ''
-      }
+  this.head = {
+    translation: [],
+    rotation: [],
+    morphs: [],
+    state: {},
+    pointer: {
+      x: 0,
+      y: 0,
+      $el: null,
+      state: ''
     }
   }
 }

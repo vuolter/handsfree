@@ -7,7 +7,7 @@
           v-card
             v-card-title Face Paint
             v-card-text
-              p This experiment explores the <code>handsfree.pose.head.state</code> properties to help you paint handsfree!
+              p This experiment explores the <code>handsfree.head.state</code> properties to help you paint handsfree!
               ul
                 li Smile to the right to paint with primary color
                 li Smile to the left to paint with secondary color
@@ -64,25 +64,25 @@ export default {
       let lastX = 0
       let lastY = 0
 
-      window.Handsfree.use('p5.facePaint', ({ pose }) => {
+      window.Handsfree.use('p5.facePaint', ({ head }) => {
         if (!this.p5) return
 
         lastX = x
         lastY = y
-        x = pose.head.pointer.x + 4
-        y = pose.head.pointer.y + 4
+        x = head.pointer.x + 4
+        y = head.pointer.y + 4
 
         // Draw line
-        if (pose.head.state.smileLeft) this.p5.stroke(0, 255, 0)
-        if (pose.head.state.smileRight) this.p5.stroke(0, 0, 0)
-        if (pose.head.state.smile) this.p5.stroke(255, 0, 0)
+        if (head.state.smileLeft) this.p5.stroke(0, 255, 0)
+        if (head.state.smileRight) this.p5.stroke(0, 0, 0)
+        if (head.state.smile) this.p5.stroke(255, 0, 0)
 
-        if (pose.head.state.smirk || pose.head.state.smile) {
+        if (head.state.smirk || head.state.smile) {
           this.p5.line(x, y, lastX, lastY)
         }
 
         // Clear canvas
-        if (pose.head.state.browsUp) {
+        if (head.state.browsUp) {
           this.p5.clear()
         }
       })

@@ -47,10 +47,10 @@
                       const handsfree = new Handsfree({})
 
                       // Create a simple plugin that displays pointer values on every frame
-                      Handsfree.use('consoleLogger', ({ pose }) => {
-                        console.log('Morphs: ', pose.head.morphs)
-                        console.log('Rotation: ', pose.head.rotation)
-                        console.log('Translation: ', pose.head.translation)
+                      Handsfree.use('consoleLogger', ({ head }) => {
+                        console.log('Morphs: ', head.morphs)
+                        console.log('Rotation: ', head.rotation)
+                        console.log('Translation: ', head.translation)
                       })
                       
                       // Start tracking
@@ -70,21 +70,21 @@
             v-card-text
               ul.mb-5
                 li Learn how to setup Handsfree.js
-                li Explore the <code>handsfree.pose.head.pointer</code> properties
+                li Explore the <code>handsfree.head.pointer</code> properties
               <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wrote an introduction post to Handsfree.js on <a href="https://twitter.com/ThePracticalDev?ref_src=twsrc%5Etfw">@ThePracticalDev</a> : <a href="https://t.co/V7ecyaBtIJ">https://t.co/V7ecyaBtIJ</a><br><br>It (hopefully 😅) has everything you need to get started on adding &quot;face pointers&quot; or face controlled interactions to your apps and web pages, plus a quick roadmap of what&#39;s to come!</p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1192666398868164608?ref_src=twsrc%5Etfw">November 8, 2019</a></blockquote>
         v-col.col-12.col-md-6.col-lg-4
           v-card
             v-card-title YouTube 360
             v-card-text
               ul.mb-5
-                li Explore the <code>handsfree.pose.head.rotation</code>
+                li Explore the <code>handsfree.head.rotation</code>
               <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Added a more exciting 360 video so that you can really check out the handsfree controls: <a href="https://t.co/Lmbv5sTIJl">https://t.co/Lmbv5sTIJl</a><br><br>Also wrote a step-by-step tutorial on how to set this demo up with Handsfree.js: <a href="https://t.co/SDXOrpuncb">https://t.co/SDXOrpuncb</a><br><br>Day 6 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/cJkAP0CtWd">pic.twitter.com/cJkAP0CtWd</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1193377112100503552?ref_src=twsrc%5Etfw">November 10, 2019</a></blockquote>
         v-col.col-12.col-md-6.col-lg-4
           v-card
             v-card-title Emojify
             v-card-text
               ul.mb-5
-                li Explore the <code>handsfree.pose.head.morphs</code>
+                li Explore the <code>handsfree.head.morphs</code>
                 li Explore <code>handsfree.head.state</code>
               <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Finished the Face Emoji tutorial! This tutorial explores face morphs and activations to puppeteer 17 different emojis.<br><br>Tutorial: <a href="https://t.co/00gWBwJxrC">https://t.co/00gWBwJxrC</a><br>Demo: <a href="https://t.co/FUiLX0igsp">https://t.co/FUiLX0igsp</a><br><br>Day 8 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/RmgoayXulB">pic.twitter.com/RmgoayXulB</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1194480061761519616?ref_src=twsrc%5Etfw">November 13, 2019</a></blockquote>
     v-layout

@@ -5,7 +5,7 @@
         v-card
           v-card-title Emojify
           v-card-text
-            p This demo explores the <code>handsfree.pose.head.morphs</code> and <code>handsfree.pose.head.state</code> properties to match an emoji to your face!
+            p This demo explores the <code>handsfree.head.morphs</code> and <code>handsfree.head.state</code> properties to match an emoji to your face!
             h3.mb-3 How to use
             p Create different emojis by making different faces:<br>😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
           v-card-actions
@@ -80,15 +80,15 @@ export default {
 
   mounted() {
     window.Handsfree.disable('head.vertScroll')
-    window.Handsfree.use('head.emojify', ({ pose }) => {
+    window.Handsfree.use('head.emojify', ({ head }) => {
       // Map the head rotation
-      this.$set(this.headPOV, 0, -pose.head.rotation[0])
-      this.$set(this.headPOV, 1, pose.head.rotation[1])
-      this.$set(this.headPOV, 2, -pose.head.rotation[2])
+      this.$set(this.headPOV, 0, -head.rotation[0])
+      this.$set(this.headPOV, 1, head.rotation[1])
+      this.$set(this.headPOV, 2, -head.rotation[2])
 
       let emoji = '😐'
       let isFlipped = false
-      let state = pose.head.state
+      let state = head.state
 
       if (state.pursed && state.mouthClosed) emoji = '😗'
       if (state.browsUp) emoji = '🙄'
@@ -120,17 +120,17 @@ export default {
       this.emoji = emoji
       this.isFlipped = isFlipped
       this.morphs = {
-        rSmile: pose.head.morphs[0].toFixed(5),
-        lSmile: pose.head.morphs[1].toFixed(5),
-        lBrowDown: pose.head.morphs[3].toFixed(5),
-        rBrowDown: pose.head.morphs[2].toFixed(5),
-        rBrowUp: pose.head.morphs[4].toFixed(5),
-        lBrowUp: pose.head.morphs[5].toFixed(5),
-        mouthOpen: pose.head.morphs[6].toFixed(5),
-        mouthRound: pose.head.morphs[7].toFixed(5),
-        rEyeClosed: pose.head.morphs[8].toFixed(5),
-        lEyeClosed: pose.head.morphs[9].toFixed(5),
-        mouthNasty: pose.head.morphs[10].toFixed(5)
+        rSmile: head.morphs[0].toFixed(5),
+        lSmile: head.morphs[1].toFixed(5),
+        lBrowDown: head.morphs[3].toFixed(5),
+        rBrowDown: head.morphs[2].toFixed(5),
+        rBrowUp: head.morphs[4].toFixed(5),
+        lBrowUp: head.morphs[5].toFixed(5),
+        mouthOpen: head.morphs[6].toFixed(5),
+        mouthRound: head.morphs[7].toFixed(5),
+        rEyeClosed: head.morphs[8].toFixed(5),
+        lEyeClosed: head.morphs[9].toFixed(5),
+        mouthNasty: head.morphs[10].toFixed(5)
       }
     })
   },
