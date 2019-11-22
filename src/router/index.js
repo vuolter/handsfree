@@ -39,6 +39,12 @@ const routes = [
     name: 'FacePaint',
     component: () =>
       import(/* webpackChunkName: "FacePaint" */ '../views/FacePaint.vue')
+  },
+  {
+    path: '/desktop',
+    name: 'Desktop',
+    component: () =>
+      import(/* webpackChunkName: "Desktop" */ '../views/Desktop.vue')
   }
 ]
 

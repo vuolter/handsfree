@@ -87,6 +87,26 @@
                 li Explore the <code>handsfree.head.morphs</code>
                 li Explore <code>handsfree.head.state</code>
               <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Finished the Face Emoji tutorial! This tutorial explores face morphs and activations to puppeteer 17 different emojis.<br><br>Tutorial: <a href="https://t.co/00gWBwJxrC">https://t.co/00gWBwJxrC</a><br>Demo: <a href="https://t.co/FUiLX0igsp">https://t.co/FUiLX0igsp</a><br><br>Day 8 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/RmgoayXulB">pic.twitter.com/RmgoayXulB</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1194480061761519616?ref_src=twsrc%5Etfw">November 13, 2019</a></blockquote>
+
+    v-layout(wrap)
+      v-row.my-spread
+        v-col.col-12
+          h1 Experiments
+        v-col.col-12.col-md-6.col-lg-4
+          v-card
+            v-card-title Desktop Control
+            v-card-text
+              ul.mb-5
+                li Explore how to use Handsfree.js outside the browser
+              <blockquote class="twitter-tweet"><p lang="en" dir="ltr">What if you could control your desktop with your face?<br><br>In this experiment I play Candy Crush handsfree by moving my mouse with my head and smirk to click. This uses Robot.js to control the desktop mouse. Code <br>+ tutorial soon!<br><br>Day 11 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/FVZ2IQRAwz">pic.twitter.com/FVZ2IQRAwz</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1197722565646540800?ref_src=twsrc%5Etfw">November 22, 2019</a></blockquote>
+        v-col.col-12.col-md-6.col-lg-4
+          v-card
+            v-card-title Accuracy
+            v-card-text
+              ul.mb-5
+                li Explore how to use Handsfree.js outside the browser
+              <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Made a game called &quot;Smile Tiles&quot; to test the accuracy of Handsfree.js over time: <a href="https://t.co/MaJAScHViH">https://t.co/MaJAScHViH</a><br><br>- Click Start Webcam on top right<br>- Smile/smirk to click<br>- Black tiles increase score/time<br>- White tiles resets everything<br><br>Day 4 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/4Q5Em2WoN4">pic.twitter.com/4Q5Em2WoN4</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1192585358506000385?ref_src=twsrc%5Etfw">November 7, 2019</a></blockquote>
+
     v-layout
       v-row.my-spread
         v-col.col-12.col-md-6.offset-md-3
