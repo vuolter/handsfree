@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/dist/sandbox/
+/dist/demos/
 .cache
 
 /tests/e2e/videos/

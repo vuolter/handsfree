@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  outputDir: 'dist/sandbox',
+  outputDir: 'dist/demos',
   transpileDependencies: ['vuetify'],
 
   chainWebpack: (config) => {

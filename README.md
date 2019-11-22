@@ -85,10 +85,8 @@
 >
 > This codebase is currently broken into two parts:
 >
-> - The library itself, located in `/src/assets/handsfree/handsfree.js`
-> - Handsfree.js.org, which is everything else
->
-> This really should be two separate repositories, but for now just know that the library itself starts in `/src/assets/handsfree/handsfree.js`
+> - The library itself, located in `/handsfree/`
+> - Demos (Handsfree.js.org), located in /demos/
 
 To run this project locally you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
 
@@ -98,7 +96,7 @@ After downloading this project repo, you'll then need to install dependencies by
 # Start a local dev environment on localhost:8080
 yarn start
 
-# Build for production into /dist/sandbox/
+# Build for production into /dist/demos/
 yarn build
 
 # Deploy to handsfree.js.org
