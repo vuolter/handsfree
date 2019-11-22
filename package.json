@@ -92,8 +92,8 @@
   "staticFiles": {
     "staticPath": [
       {
-        "staticPath": "public/js",
-        "staticOutDir": "js"
+        "staticPath": "public/models",
+        "staticOutDir": "models"
       }
     ]
   }

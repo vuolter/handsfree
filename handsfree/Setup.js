@@ -116,7 +116,10 @@ Handsfree.prototype.loadDependencies = function() {
       document.body.classList.remove('handsfree-loading')
       this.emit('dependenciesReady')
     }
-    $script.src = trimStart(Handsfree.libSrc + 'js/jeelizFaceTransfer.js', '/')
+    $script.src = trimStart(
+      Handsfree.libSrc + 'models/jeelizFaceTransfer.js',
+      '/'
+    )
     document.getElementsByTagName('head')[0].appendChild($script)
     document.body.classList.add('handsfree-loading')
   } else {
@@ -143,7 +146,10 @@ Handsfree.prototype.createDebugger = function() {
  * Initializes the head tracker SDK
  */
 Handsfree.prototype.initSDK = function() {
-  const url = trimStart(Handsfree.libSrc + 'js/jeelizFaceTransferNNC.json', '/')
+  const url = trimStart(
+    Handsfree.libSrc + 'models/jeelizFaceTransferNNC.json',
+    '/'
+  )
   document.body.classList.add('handsfree-loading')
   fetch(url)
     .then((model) => {
