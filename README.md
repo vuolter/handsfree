@@ -29,9 +29,9 @@
   <!-- Require dependencies, which adds Handsfree to global namespace -->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/handsfree@5.0.5/dist/handsfreejs/handsfree.css"
+    href="https://unpkg.com/handsfree@6.0.1/dist/handsfreejs/handsfree.css"
   />
-  <script src="https://unpkg.com/handsfree@5.0.5/dist/handsfreejs/handsfree.js"></script>
+  <script src="https://unpkg.com/handsfree@6.0.1/dist/handsfreejs/handsfree.js"></script>
 </head>
 <body>
   <script>
@@ -39,9 +39,10 @@
     const handsfree = new Handsfree({})
 
     // Create a simple plugin that displays pointer values on every frame
-    // When using only 1 instance, handsfree === context
-    Handsfree.use('consoleLogger', (pointer, context) => {
-      console.log(pointer, context.head.rotation, context.head.morphs)
+    Handsfree.use('consoleLogger', ({ head }) => {
+      console.log('Morphs: ', head.morphs)
+      console.log('Rotation: ', head.rotation)
+      console.log('Translation: ', head.translation)
     })
 
     // Start tracking

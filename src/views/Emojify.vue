@@ -8,6 +8,8 @@
             p This demo explores the <code>handsfree.head.morphs</code> and <code>handsfree.head.state</code> properties to match an emoji to your face!
             h3.mb-3 How to use
             p Create different emojis by making different faces:<br>😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
+          v-card-actions
+            v-btn.primary(block href="https://dev.to/heyozramos/puppeteering-emojis-with-face-morphs-with-handsfree-js-55kp") View the tutorial
       v-col.col-12.col-lg-8
         v-card
           v-card-text
@@ -77,21 +79,21 @@ export default {
   },
 
   mounted() {
-    window.Handsfree.disable('vertScroll')
-    window.Handsfree.use('emojify', (pointer, instance) => {
+    window.Handsfree.disable('head.vertScroll')
+    window.Handsfree.use('head.emojify', ({ head }) => {
       // Map the head rotation
-      this.$set(this.headPOV, 0, -instance.head.rotation[0])
-      this.$set(this.headPOV, 1, instance.head.rotation[1])
-      this.$set(this.headPOV, 2, -instance.head.rotation[2])
+      this.$set(this.headPOV, 0, -head.rotation[0])
+      this.$set(this.headPOV, 1, head.rotation[1])
+      this.$set(this.headPOV, 2, -head.rotation[2])
 
       let emoji = '😐'
       let isFlipped = false
-      let state = instance.head.state
+      let state = head.state
 
       if (state.pursed && state.mouthClosed) emoji = '😗'
       if (state.browsUp) emoji = '🙄'
       if (state.smile) emoji = '🙂'
-      if (state.browsHuh && !state.pursed) {
+      if (state.browsUpDown && !state.pursed) {
         if (state.browRightUp) isFlipped = true
         emoji = '🤨'
       }
@@ -108,7 +110,7 @@ export default {
       if (state.mouthOpen) emoji = '😃'
       if (state.mouthOpen && state.eyesClosed) emoji = '😫'
       if (state.mouthOpen && state.eyesClosed && state.browsUp) emoji = '😂'
-      if (state.eyesClosed && state.browsHuh) {
+      if (state.eyesClosed && state.browsUpDown) {
         if (state.eyebrowLeftRight) isFlipped = true
         emoji = '🤤'
       }
@@ -118,24 +120,24 @@ export default {
       this.emoji = emoji
       this.isFlipped = isFlipped
       this.morphs = {
-        rSmile: instance.head.morphs[0].toFixed(5),
-        lSmile: instance.head.morphs[1].toFixed(5),
-        lBrowDown: instance.head.morphs[3].toFixed(5),
-        rBrowDown: instance.head.morphs[2].toFixed(5),
-        rBrowUp: instance.head.morphs[4].toFixed(5),
-        lBrowUp: instance.head.morphs[5].toFixed(5),
-        mouthOpen: instance.head.morphs[6].toFixed(5),
-        mouthRound: instance.head.morphs[7].toFixed(5),
-        rEyeClosed: instance.head.morphs[8].toFixed(5),
-        lEyeClosed: instance.head.morphs[9].toFixed(5),
-        mouthNasty: instance.head.morphs[10].toFixed(5)
+        rSmile: head.morphs[0].toFixed(5),
+        lSmile: head.morphs[1].toFixed(5),
+        lBrowDown: head.morphs[3].toFixed(5),
+        rBrowDown: head.morphs[2].toFixed(5),
+        rBrowUp: head.morphs[4].toFixed(5),
+        lBrowUp: head.morphs[5].toFixed(5),
+        mouthOpen: head.morphs[6].toFixed(5),
+        mouthRound: head.morphs[7].toFixed(5),
+        rEyeClosed: head.morphs[8].toFixed(5),
+        lEyeClosed: head.morphs[9].toFixed(5),
+        mouthNasty: head.morphs[10].toFixed(5)
       }
     })
   },
 
   beforeDestroy() {
-    window.Handsfree.disable('emojify')
-    window.Handsfree.enable('vertScroll')
+    window.Handsfree.disable('head.emojify')
+    window.Handsfree.enable('head.vertScroll')
   }
 }
 </script>

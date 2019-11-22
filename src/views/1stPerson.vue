@@ -46,12 +46,12 @@ export default {
     }
     this.initializeGame()
     this.setupHandsfree()
-    window.Handsfree.disable('vertScroll')
+    window.Handsfree.disable('head.vertScroll')
   },
 
   beforeDestroy() {
-    window.Handsfree.enable('vertScroll')
-    window.Handsfree.disable('threeCamera')
+    window.Handsfree.enable('head.vertScroll')
+    window.Handsfree.disable('head.threeCamera')
     endTheWorld()
   },
 
@@ -60,7 +60,7 @@ export default {
      * Sets up handsfree
      */
     setupHandsfree() {
-      window.Handsfree.use('threeCamera', (pointer, instance) => {
+      window.Handsfree.use('head.threeCamera', ({ head }) => {
         // The normalized amount from center to lean before moving in that directon
         let strafeBuffer = 0.15
         let leanBuffer = {
@@ -69,41 +69,39 @@ export default {
         }
 
         // Strafe
-        if (instance.head.translation[0] > 0.5 + strafeBuffer)
-          this.move.right = true
+        if (head.translation[0] > 0.5 + strafeBuffer) this.move.right = true
         else this.move.right = false
 
-        if (instance.head.translation[0] < 0.5 - strafeBuffer)
-          this.move.left = true
+        if (head.translation[0] < 0.5 - strafeBuffer) this.move.left = true
         else this.move.left = false
 
         // Lean
-        if (instance.head.translation[2] > 0.25 + leanBuffer.out)
+        if (head.translation[2] > 0.25 + leanBuffer.out)
           this.move.forward = true
         else this.move.forward = false
 
-        if (instance.head.translation[2] < 0.25 - leanBuffer.in)
+        if (head.translation[2] < 0.25 - leanBuffer.in)
           this.move.backward = true
         else this.move.backward = false
 
         // Jump
-        if (instance.head.state.browsUp) {
+        if (head.state.browsUp) {
           if (this.move.jump) this.velocity.y += 350
           this.move.jump = false
         }
 
-        this.tweenPOV(instance)
+        this.tweenPOV(head)
       })
     },
 
     /**
      * Tweetn values
      */
-    tweenPOV(instance) {
+    tweenPOV(head) {
       TweenMax.to(this.rotation, 500 / 1000, {
-        x: -instance.head.rotation[0] * 8 + Math.PI / 2,
-        y: -instance.head.rotation[1] * 10,
-        z: instance.head.rotation[2] * 2,
+        x: -head.rotation[0] * 8 + Math.PI / 2,
+        y: -head.rotation[1] * 10,
+        z: head.rotation[2] * 2,
         ease: 'Linear.easeNone',
         overwrite: true,
         immediate: true

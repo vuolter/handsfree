@@ -32,14 +32,14 @@
           v-card
             v-card-title Quickstart
             v-card-text
-              p By default, Handsfree.js is configured for browsing it's page (scrolling, clicking, etc). Here's how to get that going quickly:
+              p By default, Handsfree.js is configured for browsing its page (scrolling, clicking, etc). Here's how to get that going quickly:
               pre
                 code.xml(style='width: 100%; background: #2d2b57').
                  &lt;!DOCTYPE html&gt;
                   &lt;head&gt;
                     &lt;!-- Require dependencies --&gt;
-                    &lt;script src="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.js">&lt;/script&gt;
-                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@5.0.4/dist/handsfreejs/handsfree.css"&gt;
+                    &lt;script src="https://unpkg.com/handsfree@6.0.1/dist/handsfreejs/handsfree.js">&lt;/script&gt;
+                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.1/dist/handsfreejs/handsfree.css"&gt;
                   &lt;/head&gt;
                   &lt;body&gt;
                     &lt;script&gt;
@@ -47,8 +47,10 @@
                       const handsfree = new Handsfree({})
 
                       // Create a simple plugin that displays pointer values on every frame
-                      Handsfree.use('consoleLogger', (pointer, context) =&gt; {
-                        console.log(pointer)
+                      Handsfree.use('consoleLogger', ({ head }) => {
+                        console.log('Morphs: ', head.morphs)
+                        console.log('Rotation: ', head.rotation)
+                        console.log('Translation: ', head.translation)
                       })
                       
                       // Start tracking
@@ -68,7 +70,7 @@
             v-card-text
               ul.mb-5
                 li Learn how to setup Handsfree.js
-                li Explore the <code>handsfree.pointer</code> properties
+                li Explore the <code>handsfree.head.pointer</code> properties
               <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wrote an introduction post to Handsfree.js on <a href="https://twitter.com/ThePracticalDev?ref_src=twsrc%5Etfw">@ThePracticalDev</a> : <a href="https://t.co/V7ecyaBtIJ">https://t.co/V7ecyaBtIJ</a><br><br>It (hopefully 😅) has everything you need to get started on adding &quot;face pointers&quot; or face controlled interactions to your apps and web pages, plus a quick roadmap of what&#39;s to come!</p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1192666398868164608?ref_src=twsrc%5Etfw">November 8, 2019</a></blockquote>
         v-col.col-12.col-md-6.col-lg-4
           v-card

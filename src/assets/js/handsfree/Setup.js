@@ -6,12 +6,30 @@ const Handsfree = window.Handsfree
  * Entry point to setting up this instance
  */
 Handsfree.prototype.setup = function(config) {
-  this.addListeners() // @see ./Listeners.js
+  this.poseDefaults()
+  this.addListeners()
   this.cleanConfig(config)
   this.initProps()
   this.loadDependencies()
   this.createDebugger()
-  this.createPointer()
+}
+
+/**
+ * Sets up the pose default object
+ */
+Handsfree.prototype.poseDefaults = function() {
+  this.head = {
+    translation: [],
+    rotation: [],
+    morphs: [],
+    state: {},
+    pointer: {
+      x: 0,
+      y: 0,
+      $el: null,
+      state: ''
+    }
+  }
 }
 
 /**
@@ -85,19 +103,6 @@ Handsfree.prototype.initProps = function() {
   Handsfree.instances.push(this)
   this.id = Handsfree.instances.length
   this.trackerSDK = null
-  this.pointer = {
-    x: 0,
-    y: 0,
-    $el: null,
-    state: ''
-  }
-  this.tween = {
-    x: -1,
-    y: -1,
-    rx: 0,
-    ry: 0,
-    positionList: []
-  }
 }
 
 /**
@@ -132,17 +137,6 @@ Handsfree.prototype.createDebugger = function() {
   $wrap.appendChild($canvas)
 
   this.config.debugger.target.appendChild($wrap)
-}
-
-/**
- * Creates the cursor/pointer
- */
-Handsfree.prototype.createPointer = function() {
-  const $pointer = document.createElement('DIV')
-  $pointer.classList.add('handsfree-pointer')
-  this.pointer.$el = $pointer
-
-  document.body.appendChild($pointer)
 }
 
 /**

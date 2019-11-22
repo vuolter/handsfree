@@ -6,13 +6,15 @@
           v-card
             v-card-title Smile Tiles
             v-card-text
-              p This demo explores the <code>handsfree.pointer.state</code> property to handle clicking on tiles.
+              p This demo explores the <code>handsfree.head.pointer.state</code> property to handle clicking on tiles.
 
               h3.mb-3 How to Play
               ul
                 li Click on the black tiles to start or increase the timer
                 li Click on white tiles to restart
                 li Beat my high score of 80 😎
+            v-card-actions
+              v-btn.primary(block href="https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1") View the overview tutorial
 
         v-col.col-12.col-lg-8
           v-card(:color='backgroundColor')
@@ -117,7 +119,7 @@ export default {
     clickedTile: debounce(
       function(index) {
         if (
-          this.$store.state.handsfree.pointer.state === 'mouseDown' ||
+          this.$store.state.handsfree.head.pointer.state === 'mouseDown' ||
           !this.isTracking
         ) {
           this.updateScore(index)

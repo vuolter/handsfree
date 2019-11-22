@@ -11,6 +11,14 @@ class Handsfree {
    */
   constructor(config = {}) {
     this.setup(config)
+
+    // Run onUse methods
+    Object.keys(Handsfree.plugins).forEach((key) => {
+      !Handsfree.plugins[key].wasOnUseCalled &&
+        Handsfree.plugins[key].onUse &&
+        Handsfree.plugins[key].onUse(this)
+      Handsfree.plugins[key].wasOnUseCalled = true
+    })
   }
 
   /**
@@ -52,18 +60,21 @@ class Handsfree {
    * - Also runs plugins
    */
   track() {
-    this.head = {
-      rotation: this.trackerSDK.get_rotationStabilized(),
-      translation: this.trackerSDK.get_positionScale(),
-      morphs: this.trackerSDK.get_morphTargetInfluencesStabilized()
-    }
-    this.updatePointer()
+    // Head [yaw, pitch, roll]
+    this.head.rotation = this.trackerSDK.get_rotationStabilized()
+    // Head [x, y, scale]
+    this.head.translation = this.trackerSDK.get_positionScale()
+    // [0...10] Morphs between 0 - 1
+    this.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
 
+    // Run plugins
     Object.keys(Handsfree.plugins).forEach((key) => {
       Handsfree.plugins[key].enabled &&
-        Handsfree.plugins[key].callback(this.pointer, this)
+        Handsfree.plugins[key].onFrame &&
+        Handsfree.plugins[key].onFrame(this)
     })
 
+    // Loop
     requestAnimationFrame(() => this.track())
   }
 }
@@ -82,7 +93,6 @@ Handsfree.instances = []
 window.Handsfree = Handsfree
 
 require('./Setup')
-require('./Pointer')
 require('./Listeners')
 require('./Plugins')
 
