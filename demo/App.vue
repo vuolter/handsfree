@@ -56,15 +56,7 @@ export default {
 
   computed: mapState(['isTracking', 'sidebar']),
 
-  data: () => ({}),
-
   mounted() {
-    // Toggle sidebar (show on desktop, hide on mobile)
-    this.$store.commit('set', [
-      'sidebar.main',
-      this.$vuetify.breakpoint.lgAndUp
-    ])
-
     // Setup handsfree
     this.$store.commit('set', [
       'handsfree',
@@ -76,6 +68,15 @@ export default {
     ])
     window.App = this
     window.handsfree = this.$store.state.handsfree
+
+    // Toggle sidebar (show on desktop, hide on mobile)
+    // @fixem this stopped working with $nextTick
+    setTimeout(() => {
+      this.$store.commit('set', [
+        'sidebar.main',
+        this.$vuetify.breakpoint.lgAndUp
+      ])
+    }, 10)
   },
 
   methods: {

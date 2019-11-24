@@ -25,12 +25,6 @@ export default {
   computed: {
     ...mapState(['isTracking']),
     computedStyles() {
-      console.log(
-        this.styles +
-          ';' +
-          `transform: perspective(1000px) rotateX(${this.pov.pitch}rad) rotateY(${this.pov.yaw}rad) rotateZ(${this.pov.roll}rad)`
-      )
-
       return (
         this.styles +
         ';' +
