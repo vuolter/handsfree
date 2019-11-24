@@ -5,7 +5,7 @@
         v-card
           v-card-title Desktop
           v-card-text
-            p This demo only works alongside the <a href="https://github.com/handsfreejs/handsfree-desktop">handsfree-desktop server</a>
+            v-alert(color='warning') This demo only works alongside the <a href="https://github.com/handsfreejs/handsfree-desktop">handsfree-desktop server</a>
             h3.mb-3 How to use
             p Once you have the handsfree-desktop server running:
             ul

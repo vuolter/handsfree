@@ -12,6 +12,10 @@
                 li Lean in/back/left/right to move in that direction
                 li Turn head around to look around
                 li Raise both eyebrows to jump.
+
+          v-card.mt-5
+            v-card-text
+              <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Started on last tutorial, which shows how to use head position to move around in 3D by leaning (and using eyebrows to jump)!<br><br>Day 9 of <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> and <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> <a href="https://t.co/4QRABhzFUn">pic.twitter.com/4QRABhzFUn</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1194866956991524864?ref_src=twsrc%5Etfw">November 14, 2019</a></blockquote>
 </template>
 
 <script>
@@ -39,6 +43,10 @@ export default {
   }),
 
   mounted() {
+    this.$store.dispatch('loadScripts', [
+      'https://platform.twitter.com/widgets.js'
+    ])
+
     if (!window.THREE) {
       this.$store.dispatch('loadScripts', [
         'https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js'

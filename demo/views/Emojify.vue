@@ -10,6 +10,11 @@
             p Create different emojis by making different faces:<br>😐 😗 🙂 🤨 😏 😠 😡 😑 😙 😴 😊 😃 😂 😫 🤤 😮 😲 
           v-card-actions
             v-btn.primary(block href="https://dev.to/heyozramos/puppeteering-emojis-with-face-morphs-with-handsfree-js-55kp") View the tutorial
+
+        v-card.mt-5
+          v-card-text
+            <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Finished the Face Emoji tutorial! This tutorial explores face morphs and activations to puppeteer 17 different emojis.<br><br>Tutorial: <a href="https://t.co/00gWBwJxrC">https://t.co/00gWBwJxrC</a><br>Demo: <a href="https://t.co/FUiLX0igsp">https://t.co/FUiLX0igsp</a><br><br>Day 8 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/RmgoayXulB">pic.twitter.com/RmgoayXulB</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1194480061761519616?ref_src=twsrc%5Etfw">November 13, 2019</a></blockquote>
+
       v-col.col-12.col-lg-8
         v-card
           v-card-text
@@ -79,6 +84,10 @@ export default {
   },
 
   mounted() {
+    this.$store.dispatch('loadScripts', [
+      'https://platform.twitter.com/widgets.js'
+    ])
+
     window.Handsfree.disable('head.vertScroll')
     window.Handsfree.use('head.emojify', ({ head }) => {
       // Map the head rotation
