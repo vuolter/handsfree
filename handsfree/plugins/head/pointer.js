@@ -1,3 +1,6 @@
+/**
+ * This is the old pointer
+ */
 import { TweenMax } from 'gsap/all'
 let tween = {
   x: 0,
