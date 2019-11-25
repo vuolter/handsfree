@@ -1,19 +1,19 @@
 <template lang="pug">
-  div
-    Logo.my-5(v-if='!isTracking' :style='computedStyles')
-    .my-5(v-else :style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
-      Logo.ozramos-tensormonkey-animated.my-5(:style='computedStyles')
+  div(:style='computedStyles')
+    Logo(v-if='!isTracking' :style='styles')
+    template(v-else)
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
+      Logo.ozramos-tensormonkey-animated.my-5(:style='styles')
 </template>
 
 <script>
@@ -21,15 +21,11 @@ import Logo from '@/components/Logo'
 import { mapState } from 'vuex'
 
 export default {
-  props: ['styles'],
+  props: ['styles', 'height', 'perspective'],
   computed: {
     ...mapState(['isTracking']),
     computedStyles() {
-      return (
-        this.styles +
-        ';' +
-        `transform: perspective(1000px) rotateX(${this.pov.pitch}rad) rotateY(${this.pov.yaw}rad) rotateZ(${this.pov.roll}rad)`
-      )
+      return `transform: rotateX(${this.pov.pitch}rad) rotateY(${this.pov.yaw}rad) rotateZ(${this.pov.roll}rad); transform-origin: center center; height: ${this.height}; perspective: ${this.perspective}; transform-style: preserve-3d`
     }
   },
   components: { Logo },

@@ -4,7 +4,7 @@
       v-row
         v-col(cols=12 md=6).mb-4
           div(style='width: 190px; height: 190px; margin: auto; position: relative').text-left
-            TensorMonkey.my-5(styles='height: 150px')
+            TensorMonkey(height='150px' perspective='400px')
 
           h1.display-2.font-weight-bold.mb-5 Handsfree.js
           p
