@@ -27,10 +27,6 @@
             v-list-item-action
               v-icon mdi-brush
             v-list-item-content Face Paint
-          //- v-list-item(:to='{name: "Desktop"}')
-          //-   v-list-item-action
-          //-     v-icon mdi-laptop
-          //-   v-list-item-content Desktop
         v-spacer
         div(ref='debuggerTarget')
 
