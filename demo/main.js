@@ -8,7 +8,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import '../handsfree/handsfree.js'
 import '@/assets/sass/main.sass'
 
-// We set this to the root because of the way we're including it in this project
+// We set this to the root because our models are in the public folder
 window.Handsfree.libSrc = '/'
 
 // Highlight.js
