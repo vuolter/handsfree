@@ -8,6 +8,9 @@
               v-card-title Virtual Keyboard 
               v-card-text
                 p This demo explores the idea of typing on a virtual keyboard with face gestures.
+                ul
+                  li Smile to click
+                  li Raise eyebrows to delete
           
           v-col.col-12.col-lg-8
             v-card
