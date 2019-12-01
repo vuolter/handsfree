@@ -4,7 +4,8 @@
 // Number of frames mouse has been downed
 let mouseDowned = 0
 // Max number of frames to keep down
-let maxMouseDownedFrames = 5
+// @TODO make this variable or adjustable
+let maxMouseDownedFrames = 1
 let mouseUp = false
 let thresholdMet = false
 // For some reason the linter isn't caching this
@@ -30,7 +31,7 @@ window.Handsfree.use('head.click', ({ head, config }) => {
   }
 
   // Set the state
-  if (mouseDowned > 0 && mouseDowned < maxMouseDownedFrames)
+  if (mouseDowned > 0 && mouseDowned <= maxMouseDownedFrames)
     head.pointer.state = 'mouseDown'
   else if (mouseDowned > maxMouseDownedFrames) head.pointer.state = 'mouseDrag'
   else if (mouseUp) head.pointer.state = 'mouseUp'

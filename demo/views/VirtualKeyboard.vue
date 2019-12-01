@@ -17,11 +17,12 @@
       v-layout
         v-row
           v-col.col-12
-            SimpleKeyboard(@onChange='onChange' :input='input')
+            SimpleKeyboard(@onChange='onChange' @onKeyPress='onChange' :input='input')
 </template>
 
 <script>
 import SimpleKeyboard from '@/components/SimpleKeyboard'
+import { throttle } from 'lodash'
 
 export default {
   components: { SimpleKeyboard },
@@ -30,9 +31,37 @@ export default {
     input: ''
   }),
 
+  /**
+   * Maps an eyebrow to backspace
+   */
+  mounted() {
+    let Component = this
+
+    window.Handsfree.use('demo.eyebrowBackspace', {
+      onFrame({ head }) {
+        if (head.state.browLeftUp || head.state.browRightUp) {
+          this.backSpace()
+        }
+      },
+
+      backSpace: throttle(
+        function() {
+          if (Component.input.length)
+            Component.input = Component.input.slice(0, -1)
+        },
+        500,
+        { trailing: false }
+      )
+    })
+  },
+
+  beforeDestroy() {
+    window.Handsfree.disable('demo.eyebrowBackspace')
+  },
+
   methods: {
     onInputChange(input) {
-      this.input = input.target.value
+      this.input = input
     },
 
     onChange(input) {
