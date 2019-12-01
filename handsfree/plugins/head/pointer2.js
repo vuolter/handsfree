@@ -35,7 +35,7 @@ window.Handsfree.use('head.pointer2', {
 
     // Add pitch/yaw
     x += z * Math.tan(head.rotation[1])
-    y += z * Math.tan(head.rotation[0]) - window.outerHeight / 2
+    y += z * Math.tan(head.rotation[0]) - window.outerHeight
 
     // @todo Make the sensetivity variable
     TweenMax.to(this.tween, 1, {
