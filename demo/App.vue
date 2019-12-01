@@ -27,6 +27,10 @@
             v-list-item-action
               v-icon mdi-brush
             v-list-item-content Face Paint
+          v-list-item(:to='{name: "VirtualKeyboard"}')
+            v-list-item-action
+              v-icon mdi-keyboard
+            v-list-item-content Virtual Keyboard
         v-spacer
         div(ref='debuggerTarget')
 

@@ -39,6 +39,14 @@ const routes = [
     name: 'FacePaint',
     component: () =>
       import(/* webpackChunkName: "FacePaint" */ '../views/FacePaint.vue')
+  },
+  {
+    path: '/keyboard',
+    name: 'VirtualKeyboard',
+    component: () =>
+      import(
+        /* webpackChunkName: "VirtualKeyboard" */ '../views/VirtualKeyboard.vue'
+      )
   }
 ]
 
