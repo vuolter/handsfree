@@ -23,6 +23,28 @@ export default {
     this.$store.dispatch('loadScripts', [
       'https://platform.twitter.com/widgets.js'
     ])
+
+    window.Handsfree.use('desktopClient', {
+      onUse() {
+        this.ws = new WebSocket('ws://localhost:8081')
+      },
+      onFrame({ head }) {
+        this.ws.send(
+          JSON.stringify({
+            status: 'moveMouse',
+            x: head.pointer.x,
+            y: head.pointer.y
+          })
+        )
+        if (head.pointer.state === 'mouseDown') {
+          this.ws.send(
+            JSON.stringify({
+              status: 'mouseClick'
+            })
+          )
+        }
+      }
+    })
   },
 
   beforeDestroy() {

@@ -47,6 +47,12 @@ const routes = [
       import(
         /* webpackChunkName: "VirtualKeyboard" */ '../views/VirtualKeyboard.vue'
       )
+  },
+  {
+    path: '/desktop',
+    name: 'Desktop',
+    component: () =>
+      import(/* webpackChunkName: "Desktop" */ '../views/Desktop.vue')
   }
 ]
 
