@@ -12,7 +12,7 @@
             <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
             <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
           p
-            small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
+            small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO for Creative Inquiry</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
           p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox!</b>
           p.my-5
             v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
@@ -38,8 +38,8 @@
                  &lt;!DOCTYPE html&gt;
                   &lt;head&gt;
                     &lt;!-- Require dependencies --&gt;
-                    &lt;script src="https://unpkg.com/handsfree@6.0.1/dist/handsfreejs/handsfree.js">&lt;/script&gt;
-                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.1/dist/handsfreejs/handsfree.css"&gt;
+                    &lt;script src="https://unpkg.com/handsfree@6.0.3/dist/handsfreejs/handsfree.js">&lt;/script&gt;
+                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.3/dist/handsfreejs/handsfree.css"&gt;
                   &lt;/head&gt;
                   &lt;body&gt;
                     &lt;script&gt;
