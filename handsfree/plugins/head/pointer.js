@@ -1,6 +1,6 @@
 import { TweenMax } from 'gsap/all'
 
-window.Handsfree.use('head.pointer2', {
+window.Handsfree.use('head.pointer', {
   // The pointer element
   $pointer: null,
   tween: {

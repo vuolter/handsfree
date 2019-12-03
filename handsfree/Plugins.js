@@ -1,3 +1,5 @@
+import { set, get } from 'lodash'
+
 /**
  * Adds a callback (we call it a plugin) to be called after every tracked frame
  * @param {String} name The plugin name
@@ -13,30 +15,35 @@ Handsfree.use = function(name, opts = {}) {
     }
   }
 
-  Handsfree.plugins[name] = Object.assign(
-    {
-      // Whether the plugin is enabled by default
-      enabled: true,
-      // (instance) => Called on every frame
-      onFrame: null,
-      // (instace) => Called when the plugin is first used
-      onUse: null,
-      // (instance) => Called when the plugin is enabled
-      onEnable: null,
-      // (instance) => Called when the plugin is disabled
-      onDisable: null
-    },
-    opts
+  set(
+    Handsfree.plugins,
+    name,
+    Object.assign(
+      {
+        // Whether the plugin is enabled by default
+        enabled: true,
+        // (instance) => Called on every frame
+        onFrame: null,
+        // (instace) => Called when the plugin is first used
+        onUse: null,
+        // (instance) => Called when the plugin is enabled
+        onEnable: null,
+        // (instance) => Called when the plugin is disabled
+        onDisable: null
+      },
+      opts
+    )
   )
 
   // Run onUse callbacks
   if (Handsfree.instances.length) {
+    const plugin = get(Handsfree.plugins, name)
+
     Object.keys(Handsfree.instances).forEach((instance) => {
-      !Handsfree.plugins[name].wasOnUseCalled &&
-        Handsfree.plugins[name].onUse &&
-        Handsfree.plugins[name].onUse(instance)
+      !plugin.wasOnUseCalled && plugin.onUse && plugin.onUse(instance)
     })
-    Handsfree.plugins[name].wasOnUseCalled = true
+
+    plugin.wasOnUseCalled = true
   }
 }
 
@@ -45,12 +52,45 @@ Handsfree.use = function(name, opts = {}) {
  * - Calls onEnable for each instance
  */
 Handsfree.enable = function(name) {
-  Handsfree.plugins[name].enabled = true
+  const plugin = get(Handsfree.plugins, name)
+  plugin.enabled = true
 
   Handsfree.instances.forEach((instance) => {
-    Handsfree.plugins[name].onEnable &&
-      Handsfree.plugins[name].onEnable(instance)
+    plugin.onEnable && plugin.onEnable(instance)
   })
+}
+
+/**
+ * Recurses through the plugins object, calling their onUse
+ */
+Handsfree.prototype.runOnUse = function(payload) {
+  // Plugins have .enabled, so lets run them
+  if (payload.hasOwnProperty('enabled')) {
+    !payload.wasOnUseCalled && payload.onUse && payload.onUse(this)
+    payload.wasOnUseCalled = true
+
+    // Otherwise loop through each property
+  } else {
+    Object.keys(payload).forEach((key) => {
+      this.runOnUse(payload[key])
+    })
+  }
+}
+
+/**
+ * Recurses through the plugins object, calling their onFrame
+ */
+Handsfree.prototype.runOnFrame = function(payload) {
+  // Plugins have .enabled, so lets run them
+  if (payload.hasOwnProperty('enabled')) {
+    payload.enabled && payload.onFrame && payload.onFrame(this)
+
+    // Otherwise loop through each property
+  } else {
+    Object.keys(payload).forEach((key) => {
+      this.runOnFrame(payload[key])
+    })
+  }
 }
 
 /**
@@ -58,11 +98,11 @@ Handsfree.enable = function(name) {
  * - Calls onDisable for each instance
  */
 Handsfree.disable = function(name) {
-  Handsfree.plugins[name].enabled = false
+  const plugin = get(Handsfree.plugins, name)
+  plugin.enabled = false
 
   Handsfree.instances.forEach((instance) => {
-    Handsfree.plugins[name].onDisable &&
-      Handsfree.plugins[name].onDisable(instance)
+    plugin.onDisable && plugin.onDisable(instance)
   })
 }
 
