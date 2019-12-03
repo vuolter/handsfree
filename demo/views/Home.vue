@@ -38,8 +38,8 @@
                  &lt;!DOCTYPE html&gt;
                   &lt;head&gt;
                     &lt;!-- Require dependencies --&gt;
-                    &lt;script src="https://unpkg.com/handsfree@6.0.4/dist/handsfreejs/handsfree.js">&lt;/script&gt;
-                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.4/dist/handsfreejs/handsfree.css"&gt;
+                    &lt;script src="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.js">&lt;/script&gt;
+                    &lt;link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.css"&gt;
                   &lt;/head&gt;
                   &lt;body&gt;
                     &lt;script&gt;
