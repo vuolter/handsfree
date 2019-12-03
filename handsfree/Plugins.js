@@ -69,5 +69,4 @@ Handsfree.disable = function(name) {
 require('./plugins/head/vertScroll')
 require('./plugins/head/click')
 require('./plugins/head/morphs')
-// require('./plugins/head/pointer')
-require('./plugins/head/pointer2')
+require('./plugins/head/pointer')
