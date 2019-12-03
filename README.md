@@ -23,30 +23,30 @@
 
 # Quickstart
 
+For more examples, see the `/examples/` folder:
+
 ```html
 <!DOCTYPE html>
 <head>
   <!-- Require dependencies, which adds Handsfree to global namespace -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.css"
-  />
+  <!-- prettier-ignore -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.css" />
   <script src="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.js"></script>
 </head>
 <body>
+  <button onclick="handsfree.start()">Start Webcam</button>
+
   <script>
     // Create a new instance. Use one instance for each camera
     const handsfree = new Handsfree({})
 
     // Create a simple plugin that displays pointer values on every frame
     Handsfree.use('consoleLogger', ({ head }) => {
-      console.log('Morphs: ', head.morphs)
-      console.log('Rotation: ', head.rotation)
-      console.log('Translation: ', head.translation)
+      console.log(`---
+      Pitch ${(head.rotation[0] * 180) / Math.PI}
+      Yaw ${(head.rotation[1] * 180) / Math.PI}
+      Roll ${(head.rotation[1] * 180) / Math.PI}`)
     })
-
-    // Start tracking
-    handsfree.start()
   </script>
 </body>
 ```
@@ -66,6 +66,7 @@
 - [Getting Started](https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1): Learn how to setup Handsfree.js and access the `handsfree.pointer` properties
 - [Controlling a YouTube 360 video](https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801): Learn how to access and use `handsfree.head.rotation` to control a 360 video
 - [Puppeteering Emojis with face morphs](https://dev.to/heyozramos/puppeteering-emojis-with-face-morphs-with-handsfree-js-55kp): Explores the face morph activation properties
+- [Face Painting with P5.js](https://dev.to/heyozramos/face-painting-with-p5-js-2b64): Integrate with P5.js to paint with your face
 
 ---
 
@@ -86,7 +87,8 @@
 > This codebase is currently broken into two parts:
 >
 > - The library itself, located in `/handsfree/`
-> - The demos (Handsfree.js.org), located in /demos/
+> - The demos (Handsfree.js.org), located in `/demos/`
+> - Ready to go examples with no server requirements, located in `/examples/`
 
 To run this project locally you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
 
