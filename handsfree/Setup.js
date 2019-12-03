@@ -63,23 +63,6 @@ Handsfree.prototype.cleanConfig = function(config) {
             upperLip: 0.5
           }
         }
-      },
-
-      // Configs specific to plugins
-      plugin: {
-        click: {
-          // Morphs to watch for and their required confidences
-          morphs: {
-            0: 0.25,
-            1: 0.25
-          }
-        },
-        vertScroll: {
-          // The multiplier to scroll by. Lower numbers are slower
-          scrollSpeed: 0.15,
-          // How many pixels from the the edge to scroll
-          scrollZone: 100
-        }
       }
     },
     config

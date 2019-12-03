@@ -12,47 +12,61 @@ let thresholdMet = false
 // eslint-disable-next-line no-unused-vars
 let mouseDrag = false
 
-window.Handsfree.use('head.click', ({ head, config }) => {
-  thresholdMet = false
+window.Handsfree.use('head.click', {
+  config: {
+    // Morphs to watch for and their required confidences
+    morphs: {
+      0: 0.25,
+      1: 0.25
+    }
+  },
 
-  Object.keys(config.plugin.click.morphs).forEach((key) => {
-    const morph = config.plugin.click.morphs[key]
-    if (head.morphs[key] >= morph) thresholdMet = true
-  })
+  /**
+   * Detect click state and trigger a real click event
+   */
+  onFrame({ head }) {
+    thresholdMet = false
 
-  if (thresholdMet) {
-    mouseDowned++
-    document.body.classList.add('handsfree-clicked')
-  } else {
-    mouseUp = mouseDowned
-    mouseDowned = 0
-    mouseDrag = false
-    document.body.classList.remove('handsfree-clicked')
-  }
+    Object.keys(this.config.morphs).forEach((key) => {
+      const morph = this.config.morphs[key]
+      if (head.morphs[key] >= morph) thresholdMet = true
+    })
 
-  // Set the state
-  if (mouseDowned > 0 && mouseDowned <= maxMouseDownedFrames)
-    head.pointer.state = 'mouseDown'
-  else if (mouseDowned > maxMouseDownedFrames) head.pointer.state = 'mouseDrag'
-  else if (mouseUp) head.pointer.state = 'mouseUp'
-  else ''
+    if (thresholdMet) {
+      mouseDowned++
+      document.body.classList.add('handsfree-clicked')
+    } else {
+      mouseUp = mouseDowned
+      mouseDowned = 0
+      mouseDrag = false
+      document.body.classList.remove('handsfree-clicked')
+    }
 
-  // Actually click something (or focus it)
-  if (head.pointer.state === 'mouseDown') {
-    const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
-    if ($el) {
-      $el.dispatchEvent(
-        new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          clientX: head.pointer.x,
-          clientY: head.pointer.y
-        })
-      )
+    // Set the state
+    if (mouseDowned > 0 && mouseDowned <= maxMouseDownedFrames)
+      head.pointer.state = 'mouseDown'
+    else if (mouseDowned > maxMouseDownedFrames)
+      head.pointer.state = 'mouseDrag'
+    else if (mouseUp) head.pointer.state = 'mouseUp'
+    else ''
 
-      // Focus
-      if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
-        $el.focus()
+    // Actually click something (or focus it)
+    if (head.pointer.state === 'mouseDown') {
+      const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
+      if ($el) {
+        $el.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            clientX: head.pointer.x,
+            clientY: head.pointer.y
+          })
+        )
+
+        // Focus
+        if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+          $el.focus()
+      }
     }
   }
 })
