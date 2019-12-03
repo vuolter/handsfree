@@ -9,6 +9,13 @@ window.Handsfree.use('head.pointer', {
     positionList: []
   },
 
+  config: {
+    offset: {
+      x: 0,
+      y: 0
+    }
+  },
+
   /**
    * Create a pointer for each user
    */
@@ -36,6 +43,10 @@ window.Handsfree.use('head.pointer', {
     // Add pitch/yaw
     x += z * Math.tan(head.rotation[1])
     y += z * Math.tan(head.rotation[0]) - window.outerHeight
+
+    // Add offsets
+    x += this.config.offset.x
+    y += this.config.offset.y
 
     // @todo Make the sensetivity variable
     TweenMax.to(this.tween, 1, {

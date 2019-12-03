@@ -15,6 +15,7 @@ Handsfree.use = function(name, opts = {}) {
     }
   }
 
+  // Assign defaults
   set(
     Handsfree.plugins,
     name,
@@ -22,9 +23,11 @@ Handsfree.use = function(name, opts = {}) {
       {
         // Whether the plugin is enabled by default
         enabled: true,
+        // A set of default config values the user can override during instanciation
+        config: {},
         // (instance) => Called on every frame
         onFrame: null,
-        // (instace) => Called when the plugin is first used
+        // (instance) => Called when the plugin is first used
         onUse: null,
         // (instance) => Called when the plugin is enabled
         onEnable: null,
@@ -34,13 +37,19 @@ Handsfree.use = function(name, opts = {}) {
       opts
     )
   )
+  const plugin = get(Handsfree.plugins, name)
 
-  // Run onUse callbacks
+  // Run onUse callbacks and apply config overrides
   if (Handsfree.instances.length) {
-    const plugin = get(Handsfree.plugins, name)
-
-    Object.keys(Handsfree.instances).forEach((instance) => {
+    Object.keys(Handsfree.instances).forEach((instanceId) => {
+      const instance = Handsfree.instances[instanceId]
       !plugin.wasOnUseCalled && plugin.onUse && plugin.onUse(instance)
+
+      // Assign config
+      const handsfreePluginConfig = get(instance.config.plugin, name)
+      if (typeof handsfreePluginConfig === 'object') {
+        Object.assign(plugin.config, handsfreePluginConfig)
+      }
     })
 
     plugin.wasOnUseCalled = true
