@@ -15,6 +15,10 @@
                 li Beat my high score of 80 😎
             v-card-actions
               v-btn.primary(block href="https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1") View the overview tutorial
+            
+          v-card.mt-5
+            v-card-text
+              <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Made a game called &quot;Smile Tiles&quot; to test the accuracy of Handsfree.js over time: <a href="https://t.co/MaJAScHViH">https://t.co/MaJAScHViH</a><br><br>- Click Start Webcam on top right<br>- Smile/smirk to click<br>- Black tiles increase score/time<br>- White tiles resets everything<br><br>Day 4 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/4Q5Em2WoN4">pic.twitter.com/4Q5Em2WoN4</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1192585358506000385?ref_src=twsrc%5Etfw">November 7, 2019</a></blockquote>
 
         v-col.col-12.col-lg-8
           v-card(:color='backgroundColor')
@@ -95,7 +99,10 @@ export default {
    * - Create the timer interval
    */
   mounted() {
-    window.view = this
+    this.$store.dispatch('loadScripts', [
+      'https://platform.twitter.com/widgets.js'
+    ])
+
     this.timerInterval = setInterval(() => {
       this.timer -= 1
     }, 100)

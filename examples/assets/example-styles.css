@@ -1,0 +1,18 @@
+.text-center {
+  text-align: center;
+}
+
+.handsfree-debugger {
+  display: none !important;
+}
+
+button {
+  font-size: 24px;
+  padding: 20px;
+}
+
+section {
+  width: 800px;
+  max-width: 100%;
+  margin: auto;
+}

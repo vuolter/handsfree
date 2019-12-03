@@ -12,6 +12,10 @@
                 li Smile to the right to paint with primary color
                 li Smile to the left to paint with secondary color
                 li Raise both eyebrowse to clear canvas
+
+          v-card.mt-5
+            v-card-text
+              <blockquote class="twitter-tweet"><p lang="en" dir="ltr">It&#39;s supposed to be a smiley face 😅<br><br>Goal is to improve the face pointer so that you can easily draw basic shapes. With TensorFlow.js these shapes can become gestures which you can then map to custom functions! <a href="https://t.co/NF7nCmEVtx">pic.twitter.com/NF7nCmEVtx</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1196632750071042048?ref_src=twsrc%5Etfw">November 19, 2019</a></blockquote>
 </template>
 
 <script>
@@ -22,6 +26,10 @@ export default {
   }),
 
   mounted() {
+    this.$store.dispatch('loadScripts', [
+      'https://platform.twitter.com/widgets.js'
+    ])
+
     if (!window.p5) {
       this.$store.dispatch('loadScripts', [
         'https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js'

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+  <!-- Require dependencies, this adds Handsfree to global namespace -->
+  <!-- prettier-ignore -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.js"></script>
+
+  <title>handsfree.js.org</title>
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="assets/example-styles.css" />
+</head>
+<body>
+  <div class="text-center">
+    <button onclick="handsfree.start()">Start Webcam</button>
+  </div>
+
+  <!-- Fields for adjusting speed -->
+  <section>
+    <h2>Adjust speed</h2>
+    <p>
+      Handsfree.plugins.head.pointer.config.speed.x:
+      <input id="speed-x" type="text" value="0.5" />
+    </p>
+    <p>
+      Handsfree.plugins.head.pointer.config.speed.y:
+      <input id="speed-y" type="text" value="0.5" />
+    </p>
+    <button onclick="updateSpeeds()">Update</button>
+  </section>
+
+  <script>
+    // Create a new instance. Use one instance for each camera
+    const handsfree = new Handsfree({
+      // Override the "head.pointer" plugin's default speed
+      plugin: {
+        head: {
+          pointer: {
+            speed: {
+              x: 0.5,
+              y: 0.5
+            }
+          }
+        }
+      }
+    })
+
+    /**
+     * Updates the speed
+     */
+    const $x = document.querySelector('#speed-x')
+    const $y = document.querySelector('#speed-y')
+    function updateSpeeds() {
+      Handsfree.plugins.head.pointer.config.speed.x = $x.value
+      Handsfree.plugins.head.pointer.config.speed.y = $y.value
+    }
+  </script>
+</body>

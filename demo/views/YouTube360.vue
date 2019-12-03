@@ -11,6 +11,11 @@
             p After pressing Start Webcam, move your head around to "look" around in the video handsfree. <b>Try it full screen!</b>
           v-card-actions
             v-btn(block color='primary' href="https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801") View the Tutorial
+
+        v-card.mt-5
+          v-card-text
+            <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Added a more exciting 360 video so that you can really check out the handsfree controls: <a href="https://t.co/Lmbv5sTIJl">https://t.co/Lmbv5sTIJl</a><br><br>Also wrote a step-by-step tutorial on how to set this demo up with Handsfree.js: <a href="https://t.co/SDXOrpuncb">https://t.co/SDXOrpuncb</a><br><br>Day 6 of <a href="https://twitter.com/hashtag/100DaysofMLCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofMLCode</a> and <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a> <a href="https://t.co/cJkAP0CtWd">pic.twitter.com/cJkAP0CtWd</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1193377112100503552?ref_src=twsrc%5Etfw">November 10, 2019</a></blockquote>
+
       v-col.col-12.col-lg-8
         v-card
           v-card-text
@@ -31,6 +36,11 @@ export default {
   }),
 
   mounted() {
+    this.$store.dispatch('loadScripts', [
+      'https://platform.twitter.com/widgets.js'
+    ])
+    window.Handsfree.disable('head.vertScroll')
+
     this.maybeInitVideo()
     this.resizePlayer()
     window.addEventListener('resize', this.resizePlayer)
@@ -39,6 +49,7 @@ export default {
   beforeDestroy() {
     window.removeEventListener('resize', this.resizePlayer)
     window.Handsfree.disable('youtube360')
+    window.Handsfree.enable('head.vertScroll')
   },
 
   methods: {
