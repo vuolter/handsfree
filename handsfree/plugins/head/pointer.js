@@ -13,6 +13,11 @@ window.Handsfree.use('head.pointer', {
     offset: {
       x: 0,
       y: 0
+    },
+
+    speed: {
+      x: 1,
+      y: 1
     }
   },
 
@@ -41,14 +46,15 @@ window.Handsfree.use('head.pointer', {
     let z = (1 - head.translation[2]) * window.outerWidth * 2.5
 
     // Add pitch/yaw
-    x += z * Math.tan(head.rotation[1])
-    y += z * Math.tan(head.rotation[0]) - window.outerHeight
+    x += z * Math.tan(head.rotation[1]) * this.config.speed.x
+    y +=
+      z * Math.tan(head.rotation[0]) * this.config.speed.y - window.outerHeight
 
     // Add offsets
     x += this.config.offset.x
     y += this.config.offset.y
 
-    // @todo Make the sensetivity variable
+    // @todo Make the sensitivity variable
     TweenMax.to(this.tween, 1, {
       x,
       y,
