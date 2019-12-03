@@ -27,6 +27,10 @@
             v-list-item-action
               v-icon mdi-brush
             v-list-item-content Face Paint
+          v-list-item(:to='{name: "VirtualKeyboard"}')
+            v-list-item-action
+              v-icon mdi-keyboard
+            v-list-item-content Virtual Keyboard
         v-spacer
         div(ref='debuggerTarget')
 
@@ -34,7 +38,7 @@
       v-app-bar-nav-icon.mr-3.d-print-none(@click.stop="sidebar.main = !sidebar.main")
       div.d-flex.align-center
         div(style='width: 60px')
-          TensorMonkey.mr-3.ozramos-tensormonkey-mini(styles='height: 40px')
+          TensorMonkey.mr-3.ozramos-tensormonkey-mini(height='40px' perspective='5000px')
         h1.title Handsfree.js<small style='font-size: 16px'>.org</small>
       v-spacer
       v-btn(v-if='isTracking' color='error' @click='stopWebcam') Stop Webcam
@@ -52,15 +56,7 @@ export default {
 
   computed: mapState(['isTracking', 'sidebar']),
 
-  data: () => ({}),
-
   mounted() {
-    // Toggle sidebar (show on desktop, hide on mobile)
-    this.$store.commit('set', [
-      'sidebar.main',
-      this.$vuetify.breakpoint.lgAndUp
-    ])
-
     // Setup handsfree
     this.$store.commit('set', [
       'handsfree',
@@ -72,6 +68,15 @@ export default {
     ])
     window.App = this
     window.handsfree = this.$store.state.handsfree
+
+    // Toggle sidebar (show on desktop, hide on mobile)
+    // @fixem this stopped working with $nextTick
+    setTimeout(() => {
+      this.$store.commit('set', [
+        'sidebar.main',
+        this.$vuetify.breakpoint.lgAndUp
+      ])
+    }, 10)
   },
 
   methods: {

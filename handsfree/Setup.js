@@ -41,10 +41,12 @@ Handsfree.prototype.cleanConfig = function(config) {
     {
       // Whether Handsfree should automatically start after instantiation
       autostart: false,
+
       debugger: {
         // Where to inject the debugger into
         target: document.body
       },
+
       head: {
         morphs: {
           threshold: {
@@ -60,34 +62,6 @@ Handsfree.prototype.cleanConfig = function(config) {
             mouthRound: 0.8,
             upperLip: 0.5
           }
-        }
-      },
-      sensitivity: {
-        // A factor to adjust the cursors move speed by
-        xy: 0.7,
-        // How much wider (+) or narrower (-) a smile needs to be to click
-        click: 0
-      },
-      stabilizer: {
-        // How much stabilization to use: 0 = none, 3 = heavy
-        factor: 1,
-        // Number of frames to stabilizer over
-        buffer: 30
-      },
-      // Configs specific to plugins
-      plugin: {
-        click: {
-          // Morphs to watch for and their required confidences
-          morphs: {
-            0: 0.25,
-            1: 0.25
-          }
-        },
-        vertScroll: {
-          // The multiplier to scroll by. Lower numbers are slower
-          scrollSpeed: 0.15,
-          // How many pixels from the the edge to scroll
-          scrollZone: 100
         }
       }
     },
@@ -116,7 +90,10 @@ Handsfree.prototype.loadDependencies = function() {
       document.body.classList.remove('handsfree-loading')
       this.emit('dependenciesReady')
     }
-    $script.src = trimStart(Handsfree.libSrc + 'js/jeelizFaceTransfer.js', '/')
+    $script.src = trimStart(
+      Handsfree.libSrc + 'models/jeelizFaceTransfer.js',
+      '/'
+    )
     document.getElementsByTagName('head')[0].appendChild($script)
     document.body.classList.add('handsfree-loading')
   } else {
@@ -143,7 +120,10 @@ Handsfree.prototype.createDebugger = function() {
  * Initializes the head tracker SDK
  */
 Handsfree.prototype.initSDK = function() {
-  const url = trimStart(Handsfree.libSrc + 'js/jeelizFaceTransferNNC.json', '/')
+  const url = trimStart(
+    Handsfree.libSrc + 'models/jeelizFaceTransferNNC.json',
+    '/'
+  )
   document.body.classList.add('handsfree-loading')
   fetch(url)
     .then((model) => {
