@@ -1,4 +1,4 @@
-import { set, get } from 'lodash'
+import { set, get, merge } from 'lodash'
 
 /**
  * Adds a callback (we call it a plugin) to be called after every tracked frame
@@ -21,6 +21,8 @@ Handsfree.use = function(name, opts = {}) {
     name,
     Object.assign(
       {
+        // Stores the plugins name for internal use
+        name,
         // Whether the plugin is enabled by default
         enabled: true,
         // A set of default config values the user can override during instanciation
@@ -48,7 +50,7 @@ Handsfree.use = function(name, opts = {}) {
       // Assign config
       const handsfreePluginConfig = get(instance.config.plugin, name)
       if (typeof handsfreePluginConfig === 'object') {
-        Object.assign(plugin.config, handsfreePluginConfig)
+        merge(plugin.config, handsfreePluginConfig)
       }
     })
 
@@ -77,6 +79,12 @@ Handsfree.prototype.runOnUse = function(payload) {
   if (payload.hasOwnProperty('enabled')) {
     !payload.wasOnUseCalled && payload.onUse && payload.onUse(this)
     payload.wasOnUseCalled = true
+
+    // Assign config
+    const handsfreePluginConfig = get(this.config.plugin, payload.name)
+    if (typeof handsfreePluginConfig === 'object') {
+      merge(payload.config, handsfreePluginConfig)
+    }
 
     // Otherwise loop through each property
   } else {
