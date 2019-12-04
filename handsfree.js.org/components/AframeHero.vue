@@ -16,7 +16,7 @@
     a-entity(position="-3.5 0 -6" text-geometry="value: Handsfree.js; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0; bevelEnabled: true; bevelSize: 0.04; bevelThickness: 0.04; curveSegments: 1" material="shader: flat; color: white; transparent: true; opacity: 0.4")
 
     //- Floor
-    a-entity(geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0" material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;")
+    a-entity(ref="floor" geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0" material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;")
 
     //- Lights
     a-entity(light="color: #ccccff; intensity: 1; type: ambient;" visible="")
@@ -49,6 +49,11 @@ export default {
         component.$refs.camera.object3D.rotation.x = rotation.x
         component.$refs.camera.object3D.rotation.y = rotation.y
         component.$refs.camera.object3D.rotation.z = rotation.z
+
+        // Animate the floor moving
+        component.$refs.floor.object3D.position.z -= 0.1
+        if (component.$refs.floor.object3D.position.z < -100)
+          component.$refs.floor.object3D.position.z = 0
       }
     })
   },
