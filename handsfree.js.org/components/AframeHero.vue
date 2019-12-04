@@ -26,4 +26,35 @@
 
     //- Sky
     a-sky(src="#sky" rotation="0 -90 0")
+    a-entity(ref='camera' position='0 1.5 0')
+      a-entity(camera)
 </template>
+
+<script>
+import { TweenMax } from 'gsap/all'
+let rotation = { x: 0, y: 0, z: 0 }
+
+export default {
+  mounted() {
+    let component = this
+
+    window.Handsfree.use('aframe.hero', {
+      onFrame({ head }) {
+        TweenMax.to(rotation, 500 / 1000, {
+          x: -head.rotation[0] + 0.20944,
+          y: -head.rotation[1],
+          z: head.rotation[2]
+        })
+
+        component.$refs.camera.object3D.rotation.x = rotation.x
+        component.$refs.camera.object3D.rotation.y = rotation.y
+        component.$refs.camera.object3D.rotation.z = rotation.z
+      }
+    })
+  },
+
+  beforeDestroy() {
+    window.Handsfree.disable('aframe.hero')
+  }
+}
+</script>
