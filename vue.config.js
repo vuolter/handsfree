@@ -4,6 +4,15 @@ module.exports = {
   outputDir: 'dist/handsfree.js.org',
   transpileDependencies: ['vuetify'],
 
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: "@import '@/assets/sass/main.sass'",
+        implementation: require('sass')
+      }
+    }
+  },
+
   chainWebpack: (config) => {
     config
       .entry('app')

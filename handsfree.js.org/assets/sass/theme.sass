@@ -1,0 +1,64 @@
+// Colors
+body
+  // Alerts
+  .v-alert.warning
+    div,
+    i,
+    a
+      color: $bg
+    a
+      font-weight: bold
+
+  .v-application kbd
+    background: $secondary
+    color: $bg
+
+  // Cards
+  .v-card__title,
+  .v-card__title span
+    word-break: break-word
+    overflow-wrap: break-word
+
+  .theme--dark.v-card > .v-card__text
+    color: rgba(255,255,255,.85)
+
+  // Sheets
+  .theme--dark .v-menu__content .v-list
+    background: lighten($bg, 15%)
+
+  // buttons
+  .theme--dark.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined)
+    background: $secondary
+  .v-btn.blue.darken-1
+    span
+      color: #fff
+
+  // Chips
+  .theme--dark .v-chip.primary
+    .v-chip__content, .v-icon
+      color: $bg
+
+  // Success and Primary buttons
+  .theme--dark.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined),
+  .theme--dark.success,
+  .v-snack__wrapper.success
+    color: $bg
+
+  .theme--dark.success
+    .v-card__text
+      color: $bg
+
+  // Secondary
+  .theme--dark.secondary
+    a
+      color: #fff
+      font-weight: bold
+
+  // Tooltips
+  .v-tooltip__content
+    background: lighten($bg, 35%)
+
+// Darkmode fixes
+.theme--dark
+  .infoWindow
+    color: $bg
