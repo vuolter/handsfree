@@ -13,7 +13,7 @@
             <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
           p
             small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO for Creative Inquiry</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
-          p.subheading.font-weight-regular.text-left A wrapper library around web-based computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox!</b>
+          p.subheading.font-weight-regular.text-left A wrapper library around computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox!</b>
           p.my-5
             v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
             v-btn(v-else color='primary' x-large @click='startWebcam') Start Webcam
