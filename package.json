@@ -5,12 +5,12 @@
     "domain": "handsfree.js.org",
     "repo": "https://github.com/handsfreejs/handsfree"
   },
-  "main": "dist/handsfreejs/handsfree.js",
+  "main": "dist/handsfree.js/handsfree.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "npm run build && node deploy.js",
-    "bundle": "parcel build handsfree/handsfree.js -d dist/handsfreejs",
+    "bundle": "parcel build handsfree.js/handsfree.js -d dist/handsfree.js",
     "start": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"

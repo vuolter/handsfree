@@ -57,5 +57,6 @@ export default {
 <style>
 body .simple-keyboard.hg-theme-default .hg-button {
   height: 60px;
+  color: #000;
 }
 </style>

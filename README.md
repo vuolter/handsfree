@@ -86,8 +86,8 @@ For more examples, see the `/examples/` folder:
 >
 > This codebase is currently broken into two parts:
 >
-> - The library itself, located in `/handsfree/`
-> - The demos (Handsfree.js.org), located in `/demos/`
+> - The library itself, located in `/handsfree.js/`
+> - The demos (Handsfree.js.org), located in `/handsfree.js.org/`
 > - Ready to go examples with no server requirements, located in `/examples/`
 
 To run this project locally you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).

@@ -1,15 +1,24 @@
 const path = require('path')
 
 module.exports = {
-  outputDir: 'dist/demos',
+  outputDir: 'dist/handsfree.js.org',
   transpileDependencies: ['vuetify'],
+
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: "@import '@/assets/sass/main.sass'",
+        implementation: require('sass')
+      }
+    }
+  },
 
   chainWebpack: (config) => {
     config
       .entry('app')
       .clear()
-      .add('./demo/main.js')
+      .add('./handsfree.js.org/main.js')
       .end()
-    config.resolve.alias.set('@', path.join(__dirname, './demo'))
+    config.resolve.alias.set('@', path.join(__dirname, './handsfree.js.org'))
   }
 }
