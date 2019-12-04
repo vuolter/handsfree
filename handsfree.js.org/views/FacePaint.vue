@@ -82,8 +82,7 @@ export default {
 
         // Draw line
         if (head.state.smileLeft) this.p5.stroke(0, 255, 0)
-        if (head.state.smileRight) this.p5.stroke(0, 0, 0)
-        if (head.state.smile) this.p5.stroke(255, 0, 0)
+        if (head.state.smileRight) this.p5.stroke(255, 0, 255)
 
         if (head.state.smirk || head.state.smile) {
           this.p5.line(x, y, lastX, lastY)
