@@ -124,7 +124,7 @@ yarn deploy
 yarn bundle
 ```
 
-Assuming you haven't downloaded this repository yet, the following are the steps you should do in oder:
+Assuming you haven't downloaded this repository yet, the following are the steps you should do in order:
 
 1. Download this repository: `git clone https://github.com/handsfreejs/handsfree.git`
 2. Install dependencies: `cd handsfree && yarn`
@@ -145,6 +145,10 @@ The resulting directory structure should remain intact. If you'd like to host th
 ## Deploy Script
 
 Running `yarn deploy` will commit everything inside of `/dist/demos` to the `gh-pages` branch of the repository set in `package.json > deploy.repo` using the `package.json > deploy.url` custom domain. This lets you quickly deploy this repository to GitHub Pages!
+
+<br>
+<br>
+<br>
 
 # License & Attributions
 
