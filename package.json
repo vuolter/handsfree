@@ -1,14 +1,10 @@
 {
   "name": "handsfree",
   "version": "6.0.5",
-  "deploy": {
-    "domain": "handsfree.js.org",
-    "repo": "https://github.com/handsfreejs/handsfree"
-  },
-  "main": "dist/handsfree.js/handsfree.js",
+  "main": "dist/handsfree.js",
   "scripts": {
-    "start": "parcel handsfree.js/index.html --public-url='public'",
-    "bundle": "parcel build handsfree.js/handsfree.js -d dist/handsfree.js"
+    "start": "parcel src/index.html --public-url='public'",
+    "bundle": "parcel build src/handsfree.js -d dist"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
   "license": "Apache",
