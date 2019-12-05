@@ -1,5 +1,5 @@
 <template lang="pug">
-  a-scene#aframe-scene(embedded)
+  a-scene#aframe-scene(ref='aframe' embedded)
     a-assets
       img(id="pink" src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg" crossorigin="anonymous")
       img(src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" id="grid" crossorigin="anonymous")
@@ -38,6 +38,9 @@ export default {
   mounted() {
     let component = this
 
+    /**
+     * "Look around" the aframe
+     */
     window.Handsfree.use('aframe.hero', {
       onFrame({ head }) {
         TweenMax.to(rotation, 500 / 1000, {
@@ -56,10 +59,20 @@ export default {
           component.$refs.floor.object3D.position.z = 0
       }
     })
+
+    this.$refs.aframe.addEventListener('loaded', this.onAframeReady)
   },
 
   beforeDestroy() {
     window.Handsfree.disable('aframe.hero')
+    this.$refs.aframe.removeEventListener('loaded', this.onAframeReady)
+  },
+
+  methods: {
+    onAframeReady() {
+      console.log('ready')
+      this.$emit('aframeReady')
+    }
   }
 }
 </script>

@@ -4,13 +4,13 @@
       v-row
         v-col(cols=12 md=6).mb-4
           div(style='width: 190px; height: 190px; margin: auto; position: relative').text-left
-            div#aframe-scene-wrap
-              AframeHero
+            div#aframe-scene-wrap(:class='{invisible: !isAframeReady}')
+              AframeHero(v-on:aframeReady='onAframeReady')
             canvas#tensormonkey-fireworks(ref='canvas' width=500 height=500)
             TensorMonkey(height='150px' perspective='400px')
 
           div(style="position: relative; z-index: 3")
-            h1.display-2.font-weight-bold.mb-5(@click='startFireworks' style='opacity: 0') Handsfree.js
+            h1.display-2.font-weight-bold.mb-5(@click='startFireworks' :class="{invisible: isAframeReady}") Handsfree.js
             p
               <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
               <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
@@ -146,6 +146,10 @@ export default {
 
   computed: mapState(['isTracking']),
 
+  data: () => ({
+    isAframeReady: false
+  }),
+
   watch: {
     isTracking() {
       this.startFireworks()
@@ -173,6 +177,15 @@ export default {
     },
     stopWebcam() {
       this.$store.dispatch('stopTracking')
+    },
+
+    /**
+     * Called after aframe is ready
+     */
+    onAframeReady() {
+      setTimeout(() => {
+        this.isAframeReady = true
+      }, 1000)
     },
 
     /**
@@ -306,6 +319,11 @@ export default {
   z-index: 0
   overflow: hidden
   border-radius: 100%
+  opacity: 1
+  transition: opacity 0.5s ease
+
+  &.invisible
+    opacity: 0
 
   &:after
     content: ""
