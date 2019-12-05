@@ -1,0 +1,13 @@
+<!-- Our dependencies -->
+<link rel="stylesheet" href="assets/example-styles.css" />
+<script src="../src/handsfree.js"></script>
+
+<!-- It's a good idea to always ask the user to start the webcam -->
+<div class="text-center">
+  <button onclick="handsfree.start()">Start Webcam</button>
+</div>
+
+<!-- One instantiation per webcam -->
+<script>
+  handsfree = new Handsfree()
+</script>

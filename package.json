@@ -3,7 +3,7 @@
   "version": "6.0.5",
   "main": "dist/handsfree.js",
   "scripts": {
-    "start": "parcel src/index.html --public-url='public'",
+    "start": "parcel examples/index.html",
     "bundle": "parcel build src/handsfree.js -d dist"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
