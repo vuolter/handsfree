@@ -7,6 +7,7 @@
   },
   "main": "dist/handsfree.js/handsfree.js",
   "scripts": {
+    "library": "parcel handsfree.js/index.html --public-url='public'",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "npm run build && node deploy.js",

@@ -80,7 +80,23 @@ For more examples, see the `/examples/` folder:
 <br>
 <br>
 
-# Local Development
+# Local Handsfree.js Development
+
+> Note: These are temporary instructions and will be updated over the next few days as we move everything in `handsfree.js.org` into a separate repo!
+
+To work on just the Handsfree.js file, located in `/handsfree.js/`, do the following:
+
+- Install [Parcel](https://parceljs.org/) on your system globally with: `yarn global add parcel-bundler`
+- Run `yarn library` from the project root
+- This will open `/handsfree.js/index.html` on `localhost:1234`
+- The file entry point is `/handsfree.js/handsfree.js`
+- Run `yarn bundle` to bundle the library into `/dist/handsfree.js`
+
+<br>
+<br>
+<br>
+
+# Handsfree.js.org Development
 
 > ## A note about this codebase
 >
