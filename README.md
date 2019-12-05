@@ -30,8 +30,8 @@ For more examples, see the `/examples/` folder:
 <head>
   <!-- Require dependencies, which adds Handsfree to global namespace -->
   <!-- prettier-ignore -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@6.0.5/dist/handsfreejs/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.6/dist/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@6.0.6/dist/handsfree.js"></script>
 </head>
 <body>
   <button onclick="handsfree.start()">Start Webcam</button>
@@ -82,69 +82,35 @@ For more examples, see the `/examples/` folder:
 
 # Local Handsfree.js Development
 
-> Note: These are temporary instructions and will be updated over the next few days as we move everything in `handsfree.js.org` into a separate repo!
+- Install the [ParcelJS package bundler](https://parceljs.org/) on your system globally with `yarn global add parcel-bundler`
+- Install dependencies by running `yarn` the from project root
+- Run `yarn start` from the project root
+- This will open `/examples/index.html` on `localhost:1234`
 
-To work on just the Handsfree.js file, located in `/handsfree.js/`, do the following:
-
-- Install [Parcel](https://parceljs.org/) on your system globally with: `yarn global add parcel-bundler`
-- Run `yarn library` from the project root
-- This will open `/handsfree.js/index.html` on `localhost:1234`
-- The file entry point is `/handsfree.js/handsfree.js`
-- Run `yarn bundle` to bundle the library into `/dist/handsfree.js`
-
-<br>
-<br>
-<br>
-
-# Handsfree.js.org Development
-
-> ## A note about this codebase
->
-> This codebase is currently broken into two parts:
->
-> - The library itself, located in `/handsfree.js/`
-> - The demos (Handsfree.js.org), located in `/handsfree.js.org/`
-> - Ready to go examples with no server requirements, located in `/examples/`
-
-To run this project locally you'll need [NodeJS](https://nodejs.org/en/download/) and the [Yarn package manager](https://yarnpkg.com/en/docs/install#windows-stable).
-
-After downloading this project repo, you'll then need to install dependencies by running `yarn` in the project's root directory. Then you'll have the following commands available:
+## All scripts
 
 ```bash
-# Start a local dev environment on localhost:8080
+# Local development on localhost:1234
 yarn start
 
-# Build for production into /dist/demos/
-yarn build
-
-# Deploy to handsfree.js.org
-yarn deploy
-
-# Create handsfree.js in /dist/handsfreejs/
+# Bundle the library into /dist
 yarn bundle
 ```
 
-Assuming you haven't downloaded this repository yet, the following are the steps you should do in oder:
-
-1. Download this repository: `git clone https://github.com/handsfreejs/handsfree.git`
-2. Install dependencies: `cd handsfree && yarn`
-3. Run the development server: `yarn start`
-
-If you don't have git, you can also just [download and unzip our latest archive](https://github.com/handsfreejs/handsfree/archive/master.zip). You'll still need to install dependencies by running `yarn` in the unzipped directory.
-
 ## Building the handsfree.js library
 
-When you run `yarn start`, `yarn build`, or `yarn deploy` what you're actually doing is running or building the development environment. To create a single `handsfree.js` script (with accompanying models) for use within your own projects, do the following:
+To create a single `handsfree.js` script (with accompanying models) for use within your own projects, do the following:
 
 - Install [Parcel](https://parceljs.org/) on your system globally with: `yarn global add parcel-bundler`
+- Install dependencies with `yarn`
 - Run `yarn bundle`
-- The files will be built into `/dist/handsfree/`
+- The files will be built into `/dist/`
 
 The resulting directory structure should remain intact. If you'd like to host the `models` folder separate from the `handsfree.js` file, then set `Handsfree.libSrc` to its parent path. In other words if you're serving the models out of `example.com/path/to/models` then `Handsfree.libSrc = "/path/to"`.
 
-## Deploy Script
-
-Running `yarn deploy` will commit everything inside of `/dist/demos` to the `gh-pages` branch of the repository set in `package.json > deploy.repo` using the `package.json > deploy.url` custom domain. This lets you quickly deploy this repository to GitHub Pages!
+<br>
+<br>
+<br>
 
 # License & Attributions
 

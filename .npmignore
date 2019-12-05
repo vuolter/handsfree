@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-/dist/handsfree.js.org/
 .cache
 
 /tests/e2e/videos/

@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="assets/example-styles.css" />
+<!-- prettier-ignore -->
+<link rel="stylesheet" href="https://unpkg.com/handsfree@6.0.6/dist/handsfree.css"/>
+<script src="https://unpkg.com/handsfree@6.0.6/dist/handsfree.js"></script>
+
+<!-- Title -->
+<section>
+  <div class="text-center">
+    <h1>
+      <a href="/">🏠</a> 00: Using from CDN
+      <a href="01-log-head-rotation.html">▶</a>
+    </h1>
+    <button onclick="handsfree.start()">Start Webcam</button>
+  </div>
+</section>
+
+<script>
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({})
+
+  // Create a simple plugin that outputs head pose on every frame
+  Handsfree.use('consoleLogger', ({ head }) => {
+    console.log(`---
+    Pitch ${(head.rotation[0] * 180) / Math.PI}
+    Yaw ${(head.rotation[1] * 180) / Math.PI}
+    Roll ${(head.rotation[1] * 180) / Math.PI}`)
+  })
+</script>

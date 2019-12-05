@@ -1,57 +1,22 @@
 {
   "name": "handsfree",
-  "version": "6.0.5",
-  "deploy": {
-    "domain": "handsfree.js.org",
-    "repo": "https://github.com/handsfreejs/handsfree"
-  },
-  "main": "dist/handsfree.js/handsfree.js",
+  "version": "6.0.6",
+  "main": "dist/handsfree.js",
   "scripts": {
-    "library": "parcel handsfree.js/index.html --public-url='public'",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "deploy": "npm run build && node deploy.js",
-    "bundle": "parcel build handsfree.js/handsfree.js -d dist/handsfree.js",
-    "start": "vue-cli-service serve",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "start": "parcel examples/index.html",
+    "bundle": "parcel build src/handsfree.js -d dist"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
   "license": "Apache",
   "dependencies": {
-    "@mdi/font": "^3.6.95",
-    "animejs": "^3.1.0",
-    "core-js": "^3.3.2",
     "gsap": "^2.1.3",
-    "highlight.js": "^9.16.2",
-    "lodash": "^4.17.15",
-    "roboto-fontface": "*",
-    "simple-keyboard": "^2.27.24",
-    "vue": "^2.6.10",
-    "vue-router": "^3.1.3",
-    "vuetify": "^2.1.0",
-    "vuex": "^3.0.1"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.0.0",
-    "@vue/cli-plugin-e2e-cypress": "^4.0.0",
-    "@vue/cli-plugin-eslint": "^4.0.0",
-    "@vue/cli-plugin-unit-jest": "^4.0.0",
-    "@vue/cli-service": "^4.0.0",
-    "@vue/test-utils": "1.0.0-beta.29",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "autoprefixer": "^9.7.3",
+    "cssnano": "^4.1.10",
     "parcel-plugin-nuke-dist": "^1.0.1",
-    "parcel-plugin-static-files-copy": "^2.2.1",
-    "pug": "^2.0.4",
-    "pug-plain-loader": "^1.0.0",
-    "sass": "^1.19.0",
-    "sass-loader": "^8.0.0",
-    "shelljs": "^0.8.3",
-    "vue-cli-plugin-vuetify": "^2.0.2",
-    "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.3.0"
+    "parcel-plugin-static-files-copy": "^2.2.1"
   },
   "eslintConfig": {
     "root": true,
@@ -89,9 +54,6 @@
     "> 1%",
     "last 2 versions"
   ],
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest"
-  },
   "staticFiles": {
     "staticPath": [
       {
