@@ -1,4 +1,4 @@
-import './handsfree.sass'
+import './handsfree.css'
 
 /**
  * (∩｀-´)⊃━☆ﾟ.*・｡ﾟ Handsfree

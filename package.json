@@ -17,10 +17,9 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
+    "autoprefixer": "^9.7.3",
     "parcel-plugin-nuke-dist": "^1.0.1",
-    "parcel-plugin-static-files-copy": "^2.2.1",
-    "sass": "^1.19.0",
-    "sass-loader": "^8.0.0"
+    "parcel-plugin-static-files-copy": "^2.2.1"
   },
   "eslintConfig": {
     "root": true,
