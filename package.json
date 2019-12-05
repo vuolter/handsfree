@@ -7,6 +7,7 @@
   },
   "main": "dist/handsfree.js/handsfree.js",
   "scripts": {
+    "library": "parcel handsfree.js/index.html --public-url='public'",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "npm run build && node deploy.js",
@@ -19,6 +20,7 @@
   "license": "Apache",
   "dependencies": {
     "@mdi/font": "^3.6.95",
+    "animejs": "^3.1.0",
     "core-js": "^3.3.2",
     "gsap": "^2.1.3",
     "highlight.js": "^9.16.2",

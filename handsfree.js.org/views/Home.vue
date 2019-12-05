@@ -4,27 +4,30 @@
       v-row
         v-col(cols=12 md=6).mb-4
           div(style='width: 190px; height: 190px; margin: auto; position: relative').text-left
+            div#aframe-scene-wrap(:class='{invisible: !isAframeReady}')
+              AframeHero(v-on:aframeReady='onAframeReady')
             canvas#tensormonkey-fireworks(ref='canvas' width=500 height=500)
             TensorMonkey(height='150px' perspective='400px')
 
-          h1.display-2.font-weight-bold.mb-5(@click='startFireworks') Handsfree.js
-          p
-            <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
-            <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
-            <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
-          p
-            small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO for Creative Inquiry</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
-          p.subheading.font-weight-regular.text-left A wrapper library around computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox!</b>
-          p.my-5
-            v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
-            v-btn(v-else color='primary' x-large @click='startWebcam') Start Webcam
-          p
-            small Powered by:
-          p
-            a(href="https://github.com/jeeliz/jeelizWeboji")
-              img(src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png" height=30)
+          div(style="position: relative; z-index: 3")
+            h1.display-2.font-weight-bold.mb-5(@click='startFireworks' :class="{invisible: isAframeReady}") Handsfree.js
+            p
+              <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
+              <a href="https://github.com/handsfreejs/handsfree" class="mr-3"><img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
+              <a href="https://github.com/handsfreejs/handsfree"><img class="mr-1" src="https://img.shields.io/github/stars/handsfreejs/handsfree?style=social"></a>
+            p
+              small With support from the <a href="https://www.cmu.edu/cfa/studio/index.html">STUDIO for Creative Inquiry</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a>, and you!
+            p.subheading.font-weight-regular.text-left A wrapper library around computer vision models for the purpose of interacting with the web handsfree. <b>Works with Chrome and Firefox!</b>
+            p.my-5
+              v-btn(v-if='isTracking' color='error' x-large @click='stopWebcam') Stop Webcam
+              v-btn(v-else color='primary' x-large @click='startWebcam') Start Webcam
+            p
+              small Powered by:
+            p
+              a(href="https://github.com/jeeliz/jeelizWeboji")
+                img(src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png" height=30)
 
-        v-col(cols=12 md=6).mb-4
+        v-col.mb-4(cols=12 md=6 style="position: relative; z-index: 3")
           iframe(style='margin-top: 100px; max-width: 100%' width="560" height="315" src="https://www.youtube.com/embed/ty081LCcYpc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
     v-layout(wrap)
@@ -114,7 +117,7 @@
             v-card-text
               ul.mb-5
                 li Explore how to use Handsfree.js with just the core plugins
-                <blockquote class="twitter-tweet"><p lang="en" dir="ltr">What if you couldn&#39;t speak or type? In this demo I explore typing through a face pointer and virtual keyboard!<br><br>Demo: <a href="https://t.co/iM5YrLDg3u">https://t.co/iM5YrLDg3u</a><br><br>Day 1 of <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a>. I restarted because I took few weeks days off 😅: <a href="https://t.co/hPaVC1KRWC">https://t.co/hPaVC1KRWC</a> <a href="https://t.co/fMwkcA40QH">pic.twitter.com/fMwkcA40QH</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1201001984209195009?ref_src=twsrc%5Etfw">December 1, 2019</a></blockquote>
+              <blockquote class="twitter-tweet"><p lang="en" dir="ltr">What if you couldn&#39;t speak or type? In this demo I explore typing through a face pointer and virtual keyboard!<br><br>Demo: <a href="https://t.co/iM5YrLDg3u">https://t.co/iM5YrLDg3u</a><br><br>Day 1 of <a href="https://twitter.com/hashtag/100DaysofCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysofCode</a>. I restarted because I took few weeks days off 😅: <a href="https://t.co/hPaVC1KRWC">https://t.co/hPaVC1KRWC</a> <a href="https://t.co/fMwkcA40QH">pic.twitter.com/fMwkcA40QH</a></p>&mdash; Oz Ramos (@HeyOzRamos) <a href="https://twitter.com/HeyOzRamos/status/1201001984209195009?ref_src=twsrc%5Etfw">December 1, 2019</a></blockquote>
 
     v-layout
       v-row.my-spread
@@ -134,13 +137,18 @@
 
 <script>
 import TensorMonkey from '@/components/TensorMonkey'
+import AframeHero from '@/components/AframeHero'
 import { mapState } from 'vuex'
 import anime from 'animejs/lib/anime.es.js'
 
 export default {
-  components: { TensorMonkey },
+  components: { TensorMonkey, AframeHero },
 
   computed: mapState(['isTracking']),
+
+  data: () => ({
+    isAframeReady: false
+  }),
 
   watch: {
     isTracking() {
@@ -169,6 +177,15 @@ export default {
     },
     stopWebcam() {
       this.$store.dispatch('stopTracking')
+    },
+
+    /**
+     * Called after aframe is ready
+     */
+    onAframeReady() {
+      setTimeout(() => {
+        this.isAframeReady = true
+      }, 1000)
     },
 
     /**
@@ -291,4 +308,35 @@ export default {
   height: 800px
   top: -300px
   left: -300px
+  z-index: 1
+
+#aframe-scene-wrap
+  position: absolute
+  width: 800px
+  height: 800px
+  top: -300px
+  left: -300px
+  z-index: 0
+  overflow: hidden
+  border-radius: 100%
+  opacity: 1
+  transition: opacity 0.5s ease
+
+  &.invisible
+    opacity: 0
+
+  &:after
+    content: ""
+    display: block
+    width: 100%
+    height: 100%
+    background: radial-gradient(ellipse at center, rgba(30,30,63,0) 0%,rgba(30,30,63,1) 70%,rgba(30,30,63,1) 100%)
+    border-radius: 50%
+    position: absolute
+    top: 0
+    left: 0
+
+#aframe-scene
+  width: 100%
+  height: 100%
 </style>
