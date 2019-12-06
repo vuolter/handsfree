@@ -1,4 +1,4 @@
-import { trimStart } from 'lodash'
+import { trimStart, merge } from 'lodash'
 
 const Handsfree = window.Handsfree
 
@@ -37,7 +37,7 @@ Handsfree.prototype.poseDefaults = function() {
  */
 Handsfree.prototype.cleanConfig = function(config) {
   this._config = config
-  config = Object.assign(
+  this.config = merge(
     {
       // Whether Handsfree should automatically start after instantiation
       autostart: false,
@@ -45,6 +45,15 @@ Handsfree.prototype.cleanConfig = function(config) {
       debugger: {
         // Where to inject the debugger into
         target: document.body
+      },
+
+      models: {
+        head: {
+          enabled: true
+        },
+        bodypix: {
+          enabled: false
+        }
       },
 
       head: {
@@ -67,7 +76,6 @@ Handsfree.prototype.cleanConfig = function(config) {
     },
     config
   )
-  this.config = config
 }
 
 /**
@@ -83,22 +91,7 @@ Handsfree.prototype.initProps = function() {
  * Load the Weboji head tracker
  */
 Handsfree.prototype.loadDependencies = function() {
-  if (!this.trackerSDK) {
-    const $script = document.createElement('script')
-    $script.async = true
-    $script.onload = () => {
-      document.body.classList.remove('handsfree-loading')
-      this.emit('dependenciesReady')
-    }
-    $script.src = trimStart(
-      Handsfree.libSrc + 'models/jeelizFaceTransfer.js',
-      '/'
-    )
-    document.getElementsByTagName('head')[0].appendChild($script)
-    document.body.classList.add('handsfree-loading')
-  } else {
-    this.emit('dependenciesReady')
-  }
+  if (this.config.models.head.enabled) this.loadWeboji()
 }
 
 /**
@@ -113,6 +106,7 @@ Handsfree.prototype.createDebugger = function() {
   $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
   $wrap.appendChild($canvas)
 
+  console.log(this.config)
   this.config.debugger.target.appendChild($wrap)
 }
 
@@ -150,3 +144,8 @@ Handsfree.prototype.initSDK = function() {
     })
     .catch(() => console.error(`Couldn't load head tracking model at ${url}`))
 }
+
+/**
+ * Include model specific methods
+ */
+require('./models/Weboji')

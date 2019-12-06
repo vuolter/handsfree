@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@tensorflow-models/body-pix@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@tensorflow-models/body-pix/-/body-pix-2.0.4.tgz#01ef5adbe48b469c118dddc6aa8acca32d78ebb1"
+  integrity sha512-wRoEZBv2BNORDZjNNRLu1W4Td4/LRbaqSJFVWryHeBcHr5m5xSSETwnDfFRtLLofFtVNHfi7VUZ7TFjkaktNug==
+
 "@types/q@^1.5.1":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"

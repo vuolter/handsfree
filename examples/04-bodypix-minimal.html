@@ -8,34 +8,21 @@
   <div class="text-center">
     <h1>
       <a href="/">🏠</a>
-      <a href="02-adjust-pointer-sensitivity.html">◀</a> 03: Blink Click
-      <a href="/04-bodypix-minimal.html">▶</a>
+      <a href="03-blink-click.html">◀</a> 04: BodyPix Minimal
     </h1>
     <button onclick="handsfree.start()">Start Webcam</button>
   </div>
   <p>
-    Explores click events through eye blinks, overriding the ability to click
-    with smile gestures
+    A minimal example of enabling just the BodyPix model.
   </p>
 </section>
 
 <script>
   // Create a new instance. Use one instance for each camera
   const handsfree = new Handsfree({
-    plugin: {
-      head: {
-        click: {
-          morphs: {
-            // Right smile
-            0: 0,
-            // Left smile
-            1: 0,
-            // Right eye
-            8: 0.25,
-            // Left eye
-            9: 0.25
-          }
-        }
+    models: {
+      bodypix: {
+        enabled: true
       }
     }
   })
