@@ -28,8 +28,8 @@ window.Handsfree.use('head.click', {
     thresholdMet = false
 
     Object.keys(this.config.morphs).forEach((key) => {
-      const morph = this.config.morphs[key]
-      if (head.morphs[key] >= morph) thresholdMet = true
+      const morph = +this.config.morphs[key]
+      if (morph > 0 && head.morphs[key] >= morph) thresholdMet = true
     })
 
     if (thresholdMet) {
