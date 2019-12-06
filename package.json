@@ -1,10 +1,10 @@
 {
   "name": "handsfree",
-  "version": "6.0.7",
+  "version": "6.0.6",
   "main": "dist/handsfree.js",
   "scripts": {
     "start": "parcel examples/index.html",
-    "bundle": "parcel build src/handsfree.js -d dist --no-content-hash"
+    "bundle": "parcel build src/handsfree.js -d dist"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
   "license": "Apache",
