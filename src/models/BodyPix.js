@@ -4,7 +4,7 @@ import * as bodyPix from '@tensorflow-models/body-pix'
 /**
  * Begins loading BodyPix
  */
-Handsfree.prototype.loadBodyPix = async function() {
+Handsfree.prototype.loadBodyPixDependencies = async function() {
   if (!this.config.models.bodypix.sdk) {
     this.config.models.bodypix.sdk = await bodyPix.load({
       architecture: 'MobileNetV1',

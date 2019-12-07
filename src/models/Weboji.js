@@ -6,7 +6,7 @@ const Handsfree = window.Handsfree
  * Load the Weboji library
  * @see https://github.com/jeeliz/jeelizWeboji
  */
-Handsfree.prototype.loadWeboji = function() {
+Handsfree.prototype.loadWebojiDependencies = function() {
   // @FIXME let's use this.models.head.sdk
   if (!this.trackerSDK) {
     const $script = document.createElement('script')

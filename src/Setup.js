@@ -91,8 +91,8 @@ Handsfree.prototype.initProps = function() {
  * Load the Weboji head tracker
  */
 Handsfree.prototype.loadDependencies = function() {
-  if (this.config.models.head.enabled) this.loadWeboji()
-  if (this.config.models.bodypix.enabled) this.loadBodyPix()
+  if (this.config.models.head.enabled) this.loadWebojiDependencies()
+  if (this.config.models.bodypix.enabled) this.loadBodyPixDependencies()
 }
 
 /**
