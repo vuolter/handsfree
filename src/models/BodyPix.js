@@ -4,8 +4,8 @@ const Handsfree = window.Handsfree
  * Begins loading BodyPix
  */
 Handsfree.prototype.loadBodyPixDependencies = async function() {
-  if (!this.config.models.bodypix.sdk) {
-    this.config.models.bodypix.sdk = await bodyPix.load({
+  if (!this.config.model.bodypix.sdk) {
+    this.config.model.bodypix.sdk = await bodyPix.load({
       architecture: 'MobileNetV1',
       outputStride: 16,
       multiplier: 0.75,

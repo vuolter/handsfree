@@ -113,7 +113,6 @@ Handsfree.prototype.createDebugger = function() {
   $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
   $wrap.appendChild($canvas)
 
-  console.log(this.config)
   this.config.debugger.target.appendChild($wrap)
 }
 
