@@ -36,12 +36,7 @@ class Handsfree {
    * Starts the tracking loop
    */
   start() {
-    if (this.model.head.sdk && !this.isStarted) {
-      this.initSDK()
-      this.emit('started')
-    } else if (!this.isStarted) {
-      console.warn('Head tracking SDK not loaded yet')
-    }
+    !this.isStarted && this.startModels()
   }
 
   stop() {
@@ -49,16 +44,30 @@ class Handsfree {
   }
 
   /**
+   * Ensures that tracking is only ever called once
+   */
+  maybeStartTracking() {
+    if (!this.isStarted) {
+      this.isStarted = true
+      this.emit('started')
+      this.track()
+    }
+  }
+
+  /**
    * The main tracking loop
    * - Also runs plugins
    */
   track() {
-    // Head [yaw, pitch, roll]
-    this.head.rotation = this.model.head.sdk.get_rotationStabilized()
-    // Head [x, y, scale]
-    this.head.translation = this.model.head.sdk.get_positionScale()
-    // [0...10] Morphs between 0 - 1
-    this.head.morphs = this.model.head.sdk.get_morphTargetInfluencesStabilized()
+    // Get head tracking values
+    if (this.config.models.head.enabled) {
+      // Head [yaw, pitch, roll]
+      this.head.rotation = this.model.head.sdk.get_rotationStabilized()
+      // Head [x, y, scale]
+      this.head.translation = this.model.head.sdk.get_positionScale()
+      // [0...10] Morphs between 0 - 1
+      this.head.morphs = this.model.head.sdk.get_morphTargetInfluencesStabilized()
+    }
 
     // Run plugins
     this.runOnFrame(Handsfree.plugins)

@@ -98,7 +98,15 @@ Handsfree.prototype.initProps = function() {
  */
 Handsfree.prototype.loadDependencies = function() {
   if (this.config.models.head.enabled) this.loadWebojiDependencies()
-  if (this.config.models.bodypix.enabled) this.loadBodyPixDependencies()
+  if (this.config.models.bodypix.enabled) this.loadBodypixDependencies()
+}
+
+/**
+ * Start models
+ */
+Handsfree.prototype.startModels = function() {
+  if (this.config.models.head.enabled) this.maybeStartWeboji()
+  if (this.config.models.bodypix.enabled) this.maybeStartBodypix()
 }
 
 /**
@@ -114,41 +122,6 @@ Handsfree.prototype.createDebugger = function() {
   $wrap.appendChild($canvas)
 
   this.config.debugger.target.appendChild($wrap)
-}
-
-/**
- * Initializes the head tracker SDK
- */
-Handsfree.prototype.initSDK = function() {
-  const url = trimStart(
-    Handsfree.libSrc + 'models/jeelizFaceTransferNNC.json',
-    '/'
-  )
-  document.body.classList.add('handsfree-loading')
-  fetch(url)
-    .then((model) => {
-      return model.json()
-    })
-    // Next, let's initialize the head tracker API
-    .then((model) => {
-      this.trackerHelper.size_canvas({
-        canvasId: `handsfree-canvas-${this.id}`,
-        callback: (videoSettings) => {
-          this.model.head.sdk.init({
-            canvasId: `handsfree-canvas-${this.id}`,
-            NNCpath: JSON.stringify(model),
-            videoSettings,
-            callbackReady: () => {
-              document.body.classList.remove('handsfree-loading')
-              document.body.classList.add('handsfree-started')
-              this.isStarted = true
-              this.track()
-            }
-          })
-        }
-      })
-    })
-    .catch(() => console.error(`Couldn't load head tracking model at ${url}`))
 }
 
 /**
