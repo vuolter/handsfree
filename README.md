@@ -58,7 +58,8 @@ For more examples, see the `/examples/` folder:
 <div align="center">
   <img src="https://i.imgur.com/qkYyazG.gif" width=250>
   <h1>Learn how to use Handsfree.js</h1>
-  <a href="https://github.com/handsfreejs/handsfree/wiki/Config">Config</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Methods">Methods</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Properties">Properties</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Head">The Head</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Plugins">Plugins</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Events">Events</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Classes">Classes</a>
+  <p><a href="https://github.com/handsfreejs/handsfree/wiki/Config">Config</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Methods">Methods</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Properties">Properties</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Plugins">Plugins</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Events">Events</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Classes">Classes</a></p>
+  <p><a href="https://github.com/handsfreejs/handsfree/wiki/Head">The Head</a> &middot; <a href="https://github.com/handsfreejs/handsfree/wiki/Body">The Body</a></p>
 
   <h1>Tutorials</h1>
 </div>
