@@ -56,6 +56,19 @@ class Handsfree {
   }
 
   /**
+   * Show debugger
+   * - Toggle the debugger
+   */
+  showDebugger() {
+    this.debugger.wrap.style = 'display: block'
+    this.debugger.isVisible = true
+  }
+  hideDebugger() {
+    this.debugger.wrap.style = 'display: none'
+    this.debugger.isVisible = false
+  }
+
+  /**
    * The main tracking loop
    * - Also runs plugins
    */

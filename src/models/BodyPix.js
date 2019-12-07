@@ -43,7 +43,7 @@ Handsfree.prototype.maybeStartBodypix = function() {
  * Loads bodypix
  */
 Handsfree.prototype.loadBodypixModel = async function() {
-  this.model.bodypix.sdk = await this.model.bodypix.sdk.load({
+  this.model.bodypix.net = await this.model.bodypix.sdk.load({
     architecture: 'MobileNetV1',
     outputStride: 16,
     multiplier: 0.75,
@@ -55,7 +55,7 @@ Handsfree.prototype.loadBodypixModel = async function() {
 }
 
 Handsfree.prototype.inferBodypix = async function() {
-  let segmentation = await this.model.bodypix.sdk.segmentPerson(
+  let segmentation = await this.model.bodypix.net.segmentPerson(
     this.debugger.video,
     {
       internalResolution: 'medium',
@@ -63,5 +63,16 @@ Handsfree.prototype.inferBodypix = async function() {
       maxDetections: 1
     }
   )
-  console.log('segmentation', segmentation)
+
+  // Show debug
+  if (this.debugger.isVisible) {
+    this.model.bodypix.sdk.drawMask(
+      this.debugger.debug,
+      this.debugger.video,
+      this.model.bodypix.sdk.toMask(segmentation),
+      0.75,
+      0,
+      0
+    )
+  }
 }

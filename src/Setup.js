@@ -43,7 +43,8 @@ Handsfree.prototype.cleanConfig = function(config) {
 
       debugger: {
         // Where to inject the debugger into
-        target: document.body
+        target: document.body,
+        enabled: false
       },
 
       models: {
@@ -94,9 +95,15 @@ Handsfree.prototype.initProps = function() {
 
   // Debugger
   this.debugger = {
+    // The container div
     wrap: null,
+    // The main canvas (used by Weboji)
     canvas: null,
+    // The overlay debug canvas (used by Bodypix)
+    debug: null,
+    // The video element (used by bodypix)
     video: null,
+    // The video stream (used by bodypix)
     stream: null
   }
 }
@@ -125,6 +132,7 @@ Handsfree.prototype.createDebugger = function() {
   $wrap.classList.add('handsfree-debugger')
   this.debugger.wrap = $wrap
 
+  // Main canvas
   const $canvas = document.createElement('CANVAS')
   $canvas.classList.add('handsfree-canvas')
   $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
@@ -142,6 +150,21 @@ Handsfree.prototype.createDebugger = function() {
     $video.height = 480
     $wrap.appendChild($video)
     this.debugger.video = $video
+
+    // Debug canvas
+    const $debug = document.createElement('CANVAS')
+    $debug.classList.add('handsfree-debug')
+    $debug.setAttribute('id', `handsfree-debug-${this.id}`)
+    $wrap.appendChild($debug)
+    this.debugger.debug = $debug
+  }
+
+  // Toggle the debugger
+  if (this.config.debugger.enabled) {
+    this.debugger.isVisible = true
+  } else {
+    this.debugger.isVisible = false
+    $wrap.style.display = 'none'
   }
 
   this.config.debugger.target.appendChild($wrap)
