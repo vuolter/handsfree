@@ -1,3 +1,5 @@
+import { networkInterfaces } from 'os'
+
 const Handsfree = window.Handsfree
 
 /**
@@ -52,6 +54,14 @@ Handsfree.prototype.loadBodypixModel = async function() {
   this.maybeStartTracking()
 }
 
-Handsfree.prototype.inferBodypix = function() {
-  console.log('inferring with bodypix')
+Handsfree.prototype.inferBodypix = async function() {
+  let segmentation = await this.model.bodypix.sdk.segmentPerson(
+    this.debugger.video,
+    {
+      internalResolution: 'medium',
+      segmentationThreshold: 0.7,
+      maxDetections: 1
+    }
+  )
+  console.log('segmentation', segmentation)
 }

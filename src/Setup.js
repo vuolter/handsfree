@@ -134,8 +134,12 @@ Handsfree.prototype.createDebugger = function() {
   // Create video element
   if (this.config.models.bodypix.enabled) {
     const $video = document.createElement('VIDEO')
+    $video.setAttribute('playsinline', true)
     $video.classList.add('handsfree-video')
     $video.setAttribute('id', `handsfree-video-${this.id}`)
+    // @TODO make this configurable
+    $video.width = 640
+    $video.height = 480
     $wrap.appendChild($video)
     this.debugger.video = $video
   }
