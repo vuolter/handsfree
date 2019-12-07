@@ -18,7 +18,9 @@
 
 <script>
   // Create a new instance. Use one instance for each camera
-  const handsfree = new Handsfree({})
+  const handsfree = new Handsfree({
+    debugger: { enabled: true }
+  })
 
   // Create a simple plugin that outputs head pose on every frame
   Handsfree.use('consoleLogger', ({ head }) => {

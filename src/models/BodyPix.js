@@ -64,13 +64,17 @@ Handsfree.prototype.inferBodypix = async function() {
     }
   )
 
+  this.body.poses = segmentation.allPoses
+  this.body.pose = segmentation.allPoses[0]
+  this.body.segmentation = segmentation.data
+
   // Show debug
   if (this.debugger.isVisible) {
     this.model.bodypix.sdk.drawMask(
       this.debugger.debug,
       this.debugger.video,
       this.model.bodypix.sdk.toMask(segmentation),
-      0.75,
+      1,
       0,
       0
     )

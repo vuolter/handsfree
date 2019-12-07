@@ -29,6 +29,12 @@ Handsfree.prototype.poseDefaults = function() {
       state: ''
     }
   }
+
+  this.body = {
+    segmentation: [],
+    pose: {},
+    poses: []
+  }
 }
 
 /**
