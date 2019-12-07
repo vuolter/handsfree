@@ -11,6 +11,7 @@ export function loadAndWait(scripts, cb) {
     const $script = document.createElement('script')
     $script.async = true
 
+    // Increment the counter and call callback
     $script.onload = () => {
       if (++scriptsLoaded === scripts.length && cb) {
         document.body.classList.remove('handsfree-loading')
