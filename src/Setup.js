@@ -92,6 +92,7 @@ Handsfree.prototype.initProps = function() {
  */
 Handsfree.prototype.loadDependencies = function() {
   if (this.config.models.head.enabled) this.loadWeboji()
+  if (this.config.models.bodypix.enabled) this.loadBodyPix()
 }
 
 /**
@@ -149,3 +150,4 @@ Handsfree.prototype.initSDK = function() {
  * Include model specific methods
  */
 require('./models/Weboji')
+require('./models/BodyPix')
