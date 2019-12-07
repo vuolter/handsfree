@@ -43,12 +43,9 @@ Handsfree.prototype.maybeStartBodypix = function() {
  * Loads bodypix
  */
 Handsfree.prototype.loadBodypixModel = async function() {
-  this.model.bodypix.net = await this.model.bodypix.sdk.load({
-    architecture: 'MobileNetV1',
-    outputStride: 16,
-    multiplier: 0.75,
-    quantBytes: 2
-  })
+  this.model.bodypix.net = await this.model.bodypix.sdk.load(
+    this.config.models.bodypix.modelConfig
+  )
 
   this.model.bodypix.loaded = true
   this.maybeStartTracking()

@@ -1,6 +1,6 @@
 {
   "name": "handsfree",
-  "version": "6.0.7",
+  "version": "6.1.0",
   "main": "dist/handsfree.js",
   "scripts": {
     "start": "parcel examples/index.html",
