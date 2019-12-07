@@ -7,7 +7,6 @@ const Handsfree = window.Handsfree
  */
 Handsfree.prototype.setup = function(config) {
   this.poseDefaults()
-  this.addListeners()
   this.cleanConfig(config)
   this.initProps()
   this.loadDependencies()
@@ -84,6 +83,7 @@ Handsfree.prototype.cleanConfig = function(config) {
 Handsfree.prototype.initProps = function() {
   Handsfree.instances.push(this)
   this.id = Handsfree.instances.length
+  this._scriptsLoading = 0
 
   // Models
   this.model = {

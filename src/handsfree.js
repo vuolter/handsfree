@@ -81,8 +81,8 @@ Handsfree.plugins = {}
 Handsfree.instances = []
 window.Handsfree = Handsfree
 
+require('./Helpers')
 require('./Setup')
-require('./Listeners')
 require('./Plugins')
 
 console.log('(∩｀-´)⊃━☆ﾟ.*・｡ﾟ https://github.com/handsfreejs/handsfree')

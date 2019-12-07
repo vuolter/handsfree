@@ -1,5 +1,4 @@
 import { trimStart } from 'lodash'
-import { loadAndWait } from '../Helpers'
 
 const Handsfree = window.Handsfree
 
@@ -8,15 +7,23 @@ const Handsfree = window.Handsfree
  * @see https://github.com/jeeliz/jeelizWeboji
  */
 Handsfree.prototype.loadWebojiDependencies = function() {
-  // @FIXME let's use this.models.head.sdk
   if (!this.model.head.sdk) {
-    loadAndWait(
+    this.loadAndWait(
       [trimStart(Handsfree.libSrc + 'models/jeelizFaceTransfer.js', '/')],
       () => {
-        this.emit('dependenciesReady')
+        this.bindWeboji
       }
     )
   } else {
-    this.emit('dependenciesReady')
+    this.bindWeboji()
   }
+}
+
+/**
+ * Bind the SDK classes to handsfree properties
+ */
+Handsfree.prototype.bindWeboji = function() {
+  this.model.head.sdk = window.JEEFACETRANSFERAPI
+  this.trackerHelper = window.JEELIZ_RESIZER
+  this.config.autostart && this.start()
 }
