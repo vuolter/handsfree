@@ -152,24 +152,22 @@ Handsfree.prototype.createDebugger = function() {
   this.debugger.canvas = $canvas
 
   // Create video element
-  if (this.config.models.bodypix.enabled) {
-    const $video = document.createElement('VIDEO')
-    $video.setAttribute('playsinline', true)
-    $video.classList.add('handsfree-video')
-    $video.setAttribute('id', `handsfree-video-${this.id}`)
-    // @TODO make this configurable
-    $video.width = 640
-    $video.height = 480
-    $wrap.appendChild($video)
-    this.debugger.video = $video
+  const $video = document.createElement('VIDEO')
+  $video.setAttribute('playsinline', true)
+  $video.classList.add('handsfree-video')
+  $video.setAttribute('id', `handsfree-video-${this.id}`)
+  // @TODO make this configurable
+  $video.width = 640
+  $video.height = 480
+  $wrap.appendChild($video)
+  this.debugger.video = $video
 
-    // Debug canvas
-    const $debug = document.createElement('CANVAS')
-    $debug.classList.add('handsfree-debug')
-    $debug.setAttribute('id', `handsfree-debug-${this.id}`)
-    $wrap.appendChild($debug)
-    this.debugger.debug = $debug
-  }
+  // Debug canvas
+  const $debug = document.createElement('CANVAS')
+  $debug.classList.add('handsfree-debug')
+  $debug.setAttribute('id', `handsfree-debug-${this.id}`)
+  $wrap.appendChild($debug)
+  this.debugger.debug = $debug
 
   // Toggle the debugger
   if (this.config.debugger.enabled) {
