@@ -11,7 +11,7 @@ Handsfree.prototype.loadWebojiDependencies = function() {
     this.loadAndWait(
       [trimStart(Handsfree.libSrc + 'models/jeelizFaceTransfer.js', '/')],
       () => {
-        this.bindWeboji
+        this.bindWeboji()
       }
     )
   } else {
