@@ -23,6 +23,23 @@
   display: none !important;
 }
 
+/* Debugger */
+.handsfree-debugger {
+  position: relative;
+}
+.handsfree-canvas,
+.handsfree-video {
+  width: 100%;
+  height: auto;
+  position: relative;
+  transform: scale(-1, 1);
+}
+.handsfree-video {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 /* Loading states */
 .handsfree-show-when-loading {
   display: none;

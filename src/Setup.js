@@ -91,6 +91,14 @@ Handsfree.prototype.initProps = function() {
     head: { sdk: null },
     bodypix: { sdk: null }
   }
+
+  // Debugger
+  this.debugger = {
+    wrap: null,
+    canvas: null,
+    video: null,
+    stream: null
+  }
 }
 
 /**
@@ -115,13 +123,45 @@ Handsfree.prototype.startModels = function() {
 Handsfree.prototype.createDebugger = function() {
   const $wrap = document.createElement('DIV')
   $wrap.classList.add('handsfree-debugger')
+  this.debugger.wrap = $wrap
 
   const $canvas = document.createElement('CANVAS')
   $canvas.classList.add('handsfree-canvas')
   $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
   $wrap.appendChild($canvas)
+  this.debugger.canvas = $canvas
+
+  // Create video element
+  if (this.config.models.bodypix.enabled) {
+    const $video = document.createElement('VIDEO')
+    $video.classList.add('handsfree-video')
+    $video.setAttribute('id', `handsfree-video-${this.id}`)
+    $wrap.appendChild($video)
+    this.debugger.video = $video
+  }
 
   this.config.debugger.target.appendChild($wrap)
+}
+
+/**
+ * Captures the media stream
+ * @param {Function} cb The callback to run once the media stream is ready
+ */
+Handsfree.prototype.getUserMedia = function(cb) {
+  // @TODO config constraints
+  navigator.mediaDevices
+    .getUserMedia({ audio: false, video: true })
+    .then((stream) => {
+      this.debugger.stream = stream
+      this.debugger.video.srcObject = stream
+      this.debugger.video.onloadedmetadata = () => {
+        this.debugger.video.play()
+        cb && cb()
+      }
+    })
+    .catch((err) => {
+      console.error(`Error loading models: ${err}`)
+    })
 }
 
 /**

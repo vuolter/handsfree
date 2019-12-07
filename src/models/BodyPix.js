@@ -31,7 +31,9 @@ Handsfree.prototype.maybeStartBodypix = function() {
       this.maybeStartBodypix()
     }, 10)
   } else {
-    this.loadBodypixModel()
+    this.getUserMedia(() => {
+      this.loadBodypixModel()
+    })
   }
 }
 
