@@ -24,8 +24,7 @@ Handsfree.prototype.loadWebojiDependencies = function() {
  */
 Handsfree.prototype.bindWeboji = function() {
   this.model.head.sdk = window.JEEFACETRANSFERAPI
-  this.trackerHelper = window.JEELIZ_RESIZER
-  this.config.autostart && this.start()
+  this.model.head.sdkHelper = window.JEELIZ_RESIZER
 }
 
 /**
@@ -56,7 +55,7 @@ Handsfree.prototype.loadWebojiModel = function() {
     })
     // Next, let's initialize the head tracker API
     .then((model) => {
-      this.trackerHelper.size_canvas({
+      this.model.head.sdkHelper.size_canvas({
         canvasId: `handsfree-canvas-${this.id}`,
         callback: (videoSettings) => {
           this.model.head.sdk.init({
@@ -74,4 +73,16 @@ Handsfree.prototype.loadWebojiModel = function() {
       })
     })
     .catch(() => console.error(`Couldn't load head tracking model at ${url}`))
+}
+
+/**
+ * Runs inference with weboji
+ */
+Handsfree.prototype.inferWeboji = function() {
+  // Head [yaw, pitch, roll]
+  this.head.rotation = this.model.head.sdk.get_rotationStabilized()
+  // Head [x, y, scale]
+  this.head.translation = this.model.head.sdk.get_positionScale()
+  // [0...10] Morphs between 0 - 1
+  this.head.morphs = this.model.head.sdk.get_morphTargetInfluencesStabilized()
 }

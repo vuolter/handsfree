@@ -12,6 +12,7 @@ class Handsfree {
   constructor(config = {}) {
     this.setup(config)
     this.runOnUse(Handsfree.plugins)
+    this.config.autostart && this.start()
   }
 
   /**
@@ -59,15 +60,11 @@ class Handsfree {
    * - Also runs plugins
    */
   track() {
-    // Get head tracking values
-    if (this.config.models.head.enabled) {
-      // Head [yaw, pitch, roll]
-      this.head.rotation = this.model.head.sdk.get_rotationStabilized()
-      // Head [x, y, scale]
-      this.head.translation = this.model.head.sdk.get_positionScale()
-      // [0...10] Morphs between 0 - 1
-      this.head.morphs = this.model.head.sdk.get_morphTargetInfluencesStabilized()
-    }
+    // Run inference
+    this.config.models.head.enabled && this.model.head.sdk && this.inferWeboji()
+    this.config.models.bodypix.enabled &&
+      this.model.bodypix.sdk &&
+      this.inferBodypix()
 
     // Run plugins
     this.runOnFrame(Handsfree.plugins)
