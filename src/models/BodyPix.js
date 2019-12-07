@@ -1,5 +1,3 @@
-import { networkInterfaces } from 'os'
-
 const Handsfree = window.Handsfree
 
 /**
