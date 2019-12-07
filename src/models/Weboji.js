@@ -1,4 +1,5 @@
 import { trimStart } from 'lodash'
+import { loadAndWait } from '../Helpers'
 
 const Handsfree = window.Handsfree
 
@@ -9,18 +10,12 @@ const Handsfree = window.Handsfree
 Handsfree.prototype.loadWebojiDependencies = function() {
   // @FIXME let's use this.models.head.sdk
   if (!this.model.head.sdk) {
-    const $script = document.createElement('script')
-    $script.async = true
-    $script.onload = () => {
-      document.body.classList.remove('handsfree-loading')
-      this.emit('dependenciesReady')
-    }
-    $script.src = trimStart(
-      Handsfree.libSrc + 'models/jeelizFaceTransfer.js',
-      '/'
+    loadAndWait(
+      [trimStart(Handsfree.libSrc + 'models/jeelizFaceTransfer.js', '/')],
+      () => {
+        this.emit('dependenciesReady')
+      }
     )
-    document.getElementsByTagName('head')[0].appendChild($script)
-    document.body.classList.add('handsfree-loading')
   } else {
     this.emit('dependenciesReady')
   }
