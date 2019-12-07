@@ -8,7 +8,7 @@ const Handsfree = window.Handsfree
  */
 Handsfree.prototype.loadWebojiDependencies = function() {
   // @FIXME let's use this.models.head.sdk
-  if (!this.trackerSDK) {
+  if (!this.model.head.sdk) {
     const $script = document.createElement('script')
     $script.async = true
     $script.onload = () => {

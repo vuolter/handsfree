@@ -6,7 +6,7 @@ const Handsfree = window.Handsfree
 Handsfree.prototype.addListeners = function() {
   // Maybe autostart
   this.on('dependenciesReady', () => {
-    this.trackerSDK = window.JEEFACETRANSFERAPI
+    this.model.head.sdk = window.JEEFACETRANSFERAPI
     this.trackerHelper = window.JEELIZ_RESIZER
     this.config.autostart && this.start()
   })

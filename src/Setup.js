@@ -84,7 +84,13 @@ Handsfree.prototype.cleanConfig = function(config) {
 Handsfree.prototype.initProps = function() {
   Handsfree.instances.push(this)
   this.id = Handsfree.instances.length
-  this.trackerSDK = null
+
+  // Models
+  this.model = {
+    // Weboji model
+    head: { sdk: null },
+    bodypix: { sdk: null }
+  }
 }
 
 /**
@@ -129,7 +135,7 @@ Handsfree.prototype.initSDK = function() {
       this.trackerHelper.size_canvas({
         canvasId: `handsfree-canvas-${this.id}`,
         callback: (videoSettings) => {
-          this.trackerSDK.init({
+          this.model.head.sdk.init({
             canvasId: `handsfree-canvas-${this.id}`,
             NNCpath: JSON.stringify(model),
             videoSettings,

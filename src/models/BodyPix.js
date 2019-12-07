@@ -1,5 +1,4 @@
 const Handsfree = window.Handsfree
-import * as bodyPix from '@tensorflow-models/body-pix'
 
 /**
  * Begins loading BodyPix

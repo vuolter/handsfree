@@ -36,7 +36,7 @@ class Handsfree {
    * Starts the tracking loop
    */
   start() {
-    if (this.trackerSDK && !this.isStarted) {
+    if (this.model.head.sdk && !this.isStarted) {
       this.initSDK()
       this.emit('started')
     } else if (!this.isStarted) {
@@ -54,11 +54,11 @@ class Handsfree {
    */
   track() {
     // Head [yaw, pitch, roll]
-    this.head.rotation = this.trackerSDK.get_rotationStabilized()
+    this.head.rotation = this.model.head.sdk.get_rotationStabilized()
     // Head [x, y, scale]
-    this.head.translation = this.trackerSDK.get_positionScale()
+    this.head.translation = this.model.head.sdk.get_positionScale()
     // [0...10] Morphs between 0 - 1
-    this.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
+    this.head.morphs = this.model.head.sdk.get_morphTargetInfluencesStabilized()
 
     // Run plugins
     this.runOnFrame(Handsfree.plugins)
