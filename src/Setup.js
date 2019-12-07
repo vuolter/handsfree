@@ -101,8 +101,14 @@ Handsfree.prototype.initProps = function() {
   // Models
   this.model = {
     // Weboji model
-    head: { sdk: null },
-    bodypix: { sdk: null }
+    head: {
+      sdk: null,
+      enabled: this.config.models.head.enabled
+    },
+    bodypix: {
+      sdk: null,
+      enabled: this.config.models.bodypix.enabled
+    }
   }
 
   // Debugger
@@ -124,16 +130,16 @@ Handsfree.prototype.initProps = function() {
  * Load the Weboji head tracker
  */
 Handsfree.prototype.loadDependencies = function() {
-  if (this.config.models.head.enabled) this.loadWebojiDependencies()
-  if (this.config.models.bodypix.enabled) this.loadBodypixDependencies()
+  if (this.models.head.enabled) this.loadWebojiDependencies()
+  if (this.models.bodypix.enabled) this.loadBodypixDependencies()
 }
 
 /**
  * Start models
  */
 Handsfree.prototype.startModels = function() {
-  if (this.config.models.head.enabled) this.maybeStartWeboji()
-  if (this.config.models.bodypix.enabled) this.maybeStartBodypix()
+  if (this.models.head.enabled) this.maybeStartWeboji()
+  if (this.models.bodypix.enabled) this.maybeStartBodypix()
 }
 
 /**
