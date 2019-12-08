@@ -1,5 +1,3 @@
-import './handsfree.css'
-
 /**
  * (∩｀-´)⊃━☆ﾟ.*・｡ﾟ Handsfree
  *

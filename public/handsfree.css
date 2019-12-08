@@ -15,6 +15,7 @@
 .handsfree-pointer.handsfree-pointer-2 {
   border-color: #0f0;
 }
+
 .handsfree-started .handsfree-pointer {
   display: block;
 }
@@ -27,6 +28,7 @@
 .handsfree-debugger {
   position: relative;
 }
+
 .handsfree-canvas,
 .handsfree-video,
 .handsfree-debug {
@@ -35,6 +37,7 @@
   position: relative;
   transform: scale(-1, 1);
 }
+
 .handsfree-video,
 .handsfree-debug {
   position: absolute;
@@ -43,16 +46,19 @@
   height: 100%;
 }
 
-/* Loading states */
+/* Loading States */
 .handsfree-show-when-loading {
   display: none;
 }
+
 .handsfree-loading .handsfree-hide-when-loading {
   display: none;
 }
+
 .handsfree-loading .handsfree-show-when-loading {
   display: block;
 }
+
 .handsfree-loading a.handsfree-show-when-loading,
 .handsfree-loading button.handsfree-show-when-loading,
 .handsfree-loading span.handsfree-show-when-loading {
@@ -71,6 +77,7 @@
 .handsfree-started .handsfree-stop {
   display: block;
 }
+
 .handsfree-started a.handsfree-stop,
 .handsfree-started button.handsfree-stop,
 .handsfree-started span.handsfree-stop {
