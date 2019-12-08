@@ -64,7 +64,6 @@ Handsfree.prototype.loadWebojiModel = function() {
             videoSettings,
             callbackReady: () => {
               document.body.classList.remove('handsfree-loading')
-              document.body.classList.add('handsfree-started')
               this.model.head.loaded = true
               this.maybeStartTracking()
             }

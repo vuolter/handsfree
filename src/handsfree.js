@@ -50,6 +50,7 @@ class Handsfree {
   maybeStartTracking() {
     if (!this.isStarted) {
       this.isStarted = true
+      document.body.classList.add('handsfree-started')
       this.emit('started')
       this.track()
     }
