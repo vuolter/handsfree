@@ -1,6 +1,6 @@
 {
   "name": "handsfree",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "main": "dist/handsfree.js",
   "scripts": {
     "start": "parcel examples/index.pug",
@@ -62,8 +62,7 @@
   "staticFiles": {
     "staticPath": [
       {
-        "staticPath": "public/models",
-        "staticOutDir": "models"
+        "staticPath": "public"
       }
     ]
   }
