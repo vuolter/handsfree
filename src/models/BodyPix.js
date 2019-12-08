@@ -66,9 +66,9 @@ Handsfree.prototype.inferBodypix = async function() {
     }
   )
 
+  this.body.data = segmentation
   this.body.poses = segmentation.allPoses
   this.body.pose = segmentation.allPoses[0]
-  this.body.segmentation = segmentation.data
 
   // Show debug
   if (this.debugger.isVisible) {

@@ -1,0 +1,42 @@
+include header.pug
+  h1 BodyPix weird cuts
+  p Clones the users mask repeatedly onto the scene
+
+  #scene-wrap
+    canvas#scene-main
+
+script.
+  const handsfree = new Handsfree({
+    models: {
+      head: {enabled: false},
+      bodypix: {enabled: true}
+    }
+  })
+  Handsfree.disable('head.pointer')
+  Handsfree.disable('head.vertScroll')
+
+  const $scene = document.querySelector('#scene-main')
+
+  /**
+   * Create a plugin that clones the users mask repeatedly onto the canvas
+   */
+  Handsfree.use('bodypix.weirdCuts', {
+    // Setup main canvas
+    onUse () {
+      $scene.width = handsfree.debugger.video.width
+      $scene.height = handsfree.debugger.video.height
+    },
+
+    onFrame ({body, model}) {
+      if (!body.data) return
+
+      model.bodypix.sdk.drawMask(
+        $scene,
+        handsfree.debugger.video,
+        model.bodypix.sdk.toMask(body.data, {r: 0, g: 0, b: 0, a: 0}, {r: 0, g: 0, b: 0, a: 255}, 1),
+        1,
+        0,
+        1
+      )
+    }
+  })
