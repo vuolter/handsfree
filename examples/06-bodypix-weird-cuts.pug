@@ -3,7 +3,20 @@ include header.pug
   p Clones the users mask repeatedly onto the scene
 
   #scene-wrap
-    canvas#scene-main
+    canvas#scene-background
+    canvas#scene-person
+
+style.
+  #scene-wrap canvas {
+    transform: scale(-1, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #scene-person {z-index: 9999}
+
+  #scene-wrap, #scene-background {position: relative}
 
 script.
   const handsfree = new Handsfree({
@@ -15,7 +28,9 @@ script.
   Handsfree.disable('head.pointer')
   Handsfree.disable('head.vertScroll')
 
-  const $scene = document.querySelector('#scene-main')
+  const $wrap = document.querySelector('#scene-wrap')
+  const $background = document.querySelector('#scene-background')
+  const $scene = document.querySelector('#scene-person')
 
   /**
    * Create a plugin that clones the users mask repeatedly onto the canvas
@@ -23,20 +38,42 @@ script.
   Handsfree.use('bodypix.weirdCuts', {
     // Setup main canvas
     onUse () {
-      $scene.width = handsfree.debugger.video.width
-      $scene.height = handsfree.debugger.video.height
+      $background.width = $scene.width = handsfree.debugger.video.width
+      $background.height = $scene.height = handsfree.debugger.video.height
     },
 
     onFrame ({body, model}) {
       if (!body.data) return
 
+      $background.getContext('2d').drawImage(handsfree.debugger.video, 0, 0, $scene.width, $scene.height)
+      
+      this.weirdCut({body, model})
+    },
+
+    /**
+     * Create a new canvas element and copy just the mask onto it
+     */
+    weirdCut: Handsfree.throttle(function ({body, model}) {
+      // Create a mask
       model.bodypix.sdk.drawMask(
         $scene,
         handsfree.debugger.video,
-        model.bodypix.sdk.toMask(body.data, {r: 0, g: 0, b: 0, a: 0}, {r: 0, g: 0, b: 0, a: 255}, 1),
+        model.bodypix.sdk.toMask(body.data, {r: 0, g: 0, b: 0, a: 0}, {r: 0, g: 0, b: 0, a: 255}),
         1,
         0,
-        1
+        0
       )
-    }
+
+      // Remove black pixels
+      let sceneCtx = $scene.getContext('2d')
+      let imageData = sceneCtx.getImageData(0, 0, $scene.width, $scene.height)
+
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        if (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2] < 10) {
+          imageData.data[i + 3] = 0
+        }
+      }
+
+      sceneCtx.putImageData(imageData, 0, 0)
+    }, 0)
   })

@@ -1,4 +1,8 @@
+import { throttle } from 'lodash'
+
 const Handsfree = window.Handsfree
+
+Handsfree.throttle = throttle
 
 /**
  * Loads a set of scripts and runs a callback when they're all ready
