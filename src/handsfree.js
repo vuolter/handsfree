@@ -74,8 +74,8 @@ class Handsfree {
    */
   track() {
     // Run inference
-    this.models.head.enabled && this.model.head.loaded && this.inferWeboji()
-    this.models.bodypix.enabled &&
+    this.model.head.enabled && this.model.head.loaded && this.inferWeboji()
+    this.model.bodypix.enabled &&
       this.model.bodypix.loaded &&
       this.inferBodypix()
 

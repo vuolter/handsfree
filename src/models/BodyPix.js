@@ -31,9 +31,13 @@ Handsfree.prototype.maybeStartBodypix = function() {
       this.maybeStartBodypix()
     }, 10)
   } else {
-    this.getUserMedia(() => {
+    if (!this.debugger.stream) {
+      this.getUserMedia(() => {
+        this.loadBodypixModel()
+      })
+    } else {
       this.loadBodypixModel()
-    })
+    }
   }
 }
 
@@ -49,6 +53,9 @@ Handsfree.prototype.loadBodypixModel = async function() {
   this.maybeStartTracking()
 }
 
+/**
+ * Run inference
+ */
 Handsfree.prototype.inferBodypix = async function() {
   let segmentation = await this.model.bodypix.net.segmentPerson(
     this.debugger.video,

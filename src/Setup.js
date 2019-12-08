@@ -1,4 +1,4 @@
-import { trimStart, merge } from 'lodash'
+import { merge } from 'lodash'
 
 const Handsfree = window.Handsfree
 
@@ -130,16 +130,16 @@ Handsfree.prototype.initProps = function() {
  * Load the Weboji head tracker
  */
 Handsfree.prototype.loadDependencies = function() {
-  if (this.models.head.enabled) this.loadWebojiDependencies()
-  if (this.models.bodypix.enabled) this.loadBodypixDependencies()
+  if (this.model.head.enabled) this.loadWebojiDependencies()
+  if (this.model.bodypix.enabled) this.loadBodypixDependencies()
 }
 
 /**
  * Start models
  */
 Handsfree.prototype.startModels = function() {
-  if (this.models.head.enabled) this.maybeStartWeboji()
-  if (this.models.bodypix.enabled) this.maybeStartBodypix()
+  if (this.model.head.enabled) this.maybeStartWeboji()
+  if (this.model.bodypix.enabled) this.maybeStartBodypix()
 }
 
 /**
@@ -205,6 +205,18 @@ Handsfree.prototype.getUserMedia = function(cb) {
     .catch((err) => {
       console.error(`Error loading models: ${err}`)
     })
+}
+
+/**
+ * Reload models, starting any that haven't been started yet (if we're already running)
+ */
+Handsfree.prototype.reload = function() {
+  this.loadDependencies()
+
+  if (this.isStarted) {
+    if (this.model.head.enabled) this.maybeStartWeboji()
+    if (this.model.bodypix.enabled) this.maybeStartBodypix()
+  }
 }
 
 /**
