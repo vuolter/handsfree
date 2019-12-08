@@ -34,7 +34,11 @@
         enabled: false
       },
       bodypix: {
-        enabled: true
+        enabled: true,
+
+        // Let's stylize the debug info
+        method: 'segmentPersonParts',
+        debugMethod: 'toColoredPartMask'
       }
     }
   })

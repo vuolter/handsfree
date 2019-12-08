@@ -59,6 +59,8 @@ Handsfree.prototype.cleanConfig = function(config) {
         },
         bodypix: {
           enabled: false,
+          method: 'segmentPerson',
+          debugMethod: 'toMask',
           modelConfig: {
             architecture: 'MobileNetV1',
             outputStride: 16,
@@ -107,7 +109,9 @@ Handsfree.prototype.initProps = function() {
     },
     bodypix: {
       sdk: null,
-      enabled: this.config.models.bodypix.enabled
+      enabled: this.config.models.bodypix.enabled,
+      method: this.config.models.bodypix.method,
+      debugMethod: this.config.models.bodypix.debugMethod
     }
   }
 

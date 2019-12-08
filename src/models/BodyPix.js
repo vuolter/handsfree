@@ -57,7 +57,7 @@ Handsfree.prototype.loadBodypixModel = async function() {
  * Run inference
  */
 Handsfree.prototype.inferBodypix = async function() {
-  let segmentation = await this.model.bodypix.net.segmentPersonParts(
+  let segmentation = await this.model.bodypix.net[this.model.bodypix.method](
     this.debugger.video,
     {
       internalResolution: 'medium',
@@ -75,7 +75,7 @@ Handsfree.prototype.inferBodypix = async function() {
     this.model.bodypix.sdk.drawMask(
       this.debugger.debug,
       this.debugger.video,
-      this.model.bodypix.sdk.toColoredPartMask(segmentation),
+      this.model.bodypix.sdk[this.model.bodypix.debugMethod](segmentation),
       1,
       0,
       0
