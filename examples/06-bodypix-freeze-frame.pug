@@ -1,5 +1,5 @@
 include header.pug
-  h1 BodyPix weird cuts
+  h1 BodyPix Freeze Frame
   p Clones the users mask repeatedly onto the scene
 
   #scene-wrap
@@ -42,18 +42,23 @@ script.
       $background.height = $scene.height = handsfree.debugger.video.height
     },
 
+    /**
+     * Called once per frame
+     * - Paints the video onto the background
+     * - Extracts the user and places them on top canvas
+     */
     onFrame ({body, model}) {
       if (!body.data) return
 
       $background.getContext('2d').drawImage(handsfree.debugger.video, 0, 0, $scene.width, $scene.height)
       
-      this.weirdCut({body, model})
+      this.captureUser({body, model})
     },
 
     /**
      * Create a new canvas element and copy just the mask onto it
      */
-    weirdCut: Handsfree.throttle(function ({body, model}) {
+    captureUser ({body, model}) {
       // Create a mask
       model.bodypix.sdk.drawMask(
         $scene,
@@ -75,5 +80,23 @@ script.
       }
 
       sceneCtx.putImageData(imageData, 0, 0)
-    }, 0)
+
+      this.weirdCut()
+    },
+
+    /**
+     * Capture the user and place them onto a new canvas
+     */
+    weirdCut: Handsfree.throttle (function () {
+      const $canvas = document.createElement('canvas')
+      $canvas.width = handsfree.debugger.video.width
+      $canvas.height = handsfree.debugger.video.height
+      $wrap.appendChild($canvas)
+
+      $canvas.getContext('2d').drawImage($scene, 0, 0, $scene.width, $scene.height)
+
+      setTimeout(() => {
+        $canvas.remove()
+      }, 1500)
+    }, 500)
   })
