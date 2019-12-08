@@ -3,7 +3,7 @@
   "version": "6.1.0",
   "main": "dist/handsfree.js",
   "scripts": {
-    "start": "parcel examples/index.html",
+    "start": "parcel examples/index.pug",
     "bundle": "parcel build src/handsfree.js -d dist"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
@@ -16,7 +16,8 @@
     "autoprefixer": "^9.7.3",
     "cssnano": "^4.1.10",
     "parcel-plugin-nuke-dist": "^1.0.1",
-    "parcel-plugin-static-files-copy": "^2.2.1"
+    "parcel-plugin-static-files-copy": "^2.2.1",
+    "pug": "^2.0.4"
   },
   "eslintConfig": {
     "root": true,

@@ -1,0 +1,18 @@
+doctype html
+html
+  title Handsfree.js Examples
+  link(rel="stylesheet" href="assets/example-styles.css")
+  script(src="../src/handsfree.js")
+body
+  header
+    img(src='../public/favicon.png' height=80)
+    h1
+      span Handsfree.js
+      small Learn more at handsfree.js.org
+  ul
+    each demo in [['00-from-cdn', 'From CDN'],['01-log-head-rotation', 'Basic Console.log'],['02-adjust-pointer-sensitivity', 'Adjust pointer sensitivity'],['03-blink-click', 'Blink Click'],['04-bodypix-minimal', 'BodyPix minimal'],['05-bodypix-weboji', 'BodyPix and Weboji']]
+      li
+        a(href=`${demo[0]}.html`)= demo[1]
+
+  script.
+    handsfree = new Handsfree()
