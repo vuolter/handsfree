@@ -7,10 +7,14 @@ html
 body
   section
     header
-      img(src='../public/favicon.png' height=80)
+      div
+        a(href='index.pug')
+          img(src='../public/favicon.png' height=80)
       h1
         span Handsfree.js
         small
           a(href="https://handsfree.js.org") Learn more at handsfree.js.org
+      div(style='padding: 20px;')
+        button.handsfree-start(onclick='handsfree.start()') Start Webcam
     div
       section

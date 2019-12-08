@@ -1,0 +1,25 @@
+include header.pug
+  h1 BodyPix Minimal
+  p A minimal example of enabling just the BodyPix model.
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({
+    debugger: {
+      enabled: true
+    },
+    models: {
+      head: {
+        enabled: false
+      },
+      bodypix: {
+        enabled: true,
+
+        // Let's stylize the debug info
+        method: 'segmentPersonParts',
+        debugMethod: 'toColoredPartMask'
+      }
+    }
+  })
+
+  Handsfree.disable('head.pointer')
