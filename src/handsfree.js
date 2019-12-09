@@ -1,5 +1,3 @@
-import './handsfree.css'
-
 /**
  * (∩｀-´)⊃━☆ﾟ.*・｡ﾟ Handsfree
  *
@@ -12,6 +10,7 @@ class Handsfree {
   constructor(config = {}) {
     this.setup(config)
     this.runOnUse(Handsfree.plugins)
+    this.config.autostart && this.start()
   }
 
   /**
@@ -36,12 +35,7 @@ class Handsfree {
    * Starts the tracking loop
    */
   start() {
-    if (this.trackerSDK && !this.isStarted) {
-      this.initSDK()
-      this.emit('started')
-    } else if (!this.isStarted) {
-      console.warn('Head tracking SDK not loaded yet')
-    }
+    !this.isStarted && this.startModels()
   }
 
   stop() {
@@ -49,16 +43,40 @@ class Handsfree {
   }
 
   /**
+   * Ensures that tracking is only ever called once
+   */
+  maybeStartTracking() {
+    if (!this.isStarted) {
+      this.isStarted = true
+      document.body.classList.add('handsfree-started')
+      this.emit('started')
+      this.track()
+    }
+  }
+
+  /**
+   * Show debugger
+   * - Toggle the debugger
+   */
+  showDebugger() {
+    this.debugger.wrap.style = 'display: block'
+    this.debugger.isVisible = true
+  }
+  hideDebugger() {
+    this.debugger.wrap.style = 'display: none'
+    this.debugger.isVisible = false
+  }
+
+  /**
    * The main tracking loop
    * - Also runs plugins
    */
   track() {
-    // Head [yaw, pitch, roll]
-    this.head.rotation = this.trackerSDK.get_rotationStabilized()
-    // Head [x, y, scale]
-    this.head.translation = this.trackerSDK.get_positionScale()
-    // [0...10] Morphs between 0 - 1
-    this.head.morphs = this.trackerSDK.get_morphTargetInfluencesStabilized()
+    // Run inference
+    this.model.head.enabled && this.model.head.loaded && this.inferWeboji()
+    this.model.bodypix.enabled &&
+      this.model.bodypix.loaded &&
+      this.inferBodypix()
 
     // Run plugins
     this.runOnFrame(Handsfree.plugins)
@@ -81,8 +99,8 @@ Handsfree.plugins = {}
 Handsfree.instances = []
 window.Handsfree = Handsfree
 
+require('./Helpers')
 require('./Setup')
-require('./Listeners')
 require('./Plugins')
 
 console.log('(∩｀-´)⊃━☆ﾟ.*・｡ﾟ https://github.com/handsfreejs/handsfree')

@@ -1,0 +1,15 @@
+include header-cdn.pug
+  h1 Loading from CDN
+  p A minimal example using a CDN. This is mostly here as a template
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({})
+
+  // Create a simple plugin that outputs head pose on every frame
+  Handsfree.use('consoleLogger', ({ head }) => {
+    console.log(`---
+    Pitch ${(head.rotation[0] * 180) / Math.PI}
+    Yaw ${(head.rotation[1] * 180) / Math.PI}
+    Roll ${(head.rotation[1] * 180) / Math.PI}`)
+  })
