@@ -73,10 +73,12 @@ class Handsfree {
    */
   track() {
     // Run inference
-    this.model.head.enabled && this.model.head.loaded && this.inferWeboji()
-    this.model.bodypix.enabled &&
-      this.model.bodypix.loaded &&
-      this.inferBodypix()
+    if (!this.config.isClient) {
+      this.model.head.enabled && this.model.head.loaded && this.inferWeboji()
+      this.model.bodypix.enabled &&
+        this.model.bodypix.loaded &&
+        this.inferBodypix()
+    }
 
     // Run plugins
     this.runOnFrame(Handsfree.plugins)
@@ -90,7 +92,9 @@ class Handsfree {
  * Setup static properties
  */
 // Set the lib path to whereever this file is, this is required for loading dependencies correctly
-let libSrc = document.currentScript.getAttribute('src')
+let libSrc = document.currentScript
+  ? document.currentScript.getAttribute('src')
+  : ''
 libSrc = libSrc.substr(0, libSrc.lastIndexOf('/') + 1)
 Handsfree.libSrc = libSrc
 Handsfree.plugins = {}

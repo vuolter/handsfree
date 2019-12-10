@@ -4,14 +4,19 @@ const Handsfree = window.Handsfree
  * Begins loading BodyPix
  */
 Handsfree.prototype.loadBodypixDependencies = async function() {
-  if (!this.model.bodypix.sdk) {
-    this.loadAndWait([Handsfree.libSrc + 'models/tfjs@1.2.js'], () => {
-      this.loadAndWait([Handsfree.libSrc + 'models/body-pix@2.0.js'], () => {
-        this.bindBodypix()
+  if (!this.config.isClient) {
+    if (!this.model.bodypix.sdk) {
+      this.loadAndWait([Handsfree.libSrc + 'models/tfjs@1.2.js'], () => {
+        this.loadAndWait([Handsfree.libSrc + 'models/body-pix@2.0.js'], () => {
+          this.bindBodypix()
+        })
       })
-    })
+    } else {
+      this.bindBodypix()
+    }
   } else {
-    this.bindBodypix()
+    this.model.bodypix.loaded = true
+    this.maybeStartTracking()
   }
 }
 

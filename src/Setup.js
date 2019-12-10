@@ -47,6 +47,10 @@ Handsfree.prototype.cleanConfig = function(config) {
       // Whether Handsfree should automatically start after instantiation
       autostart: false,
 
+      // Whether to run this instance in "client mode" (eg, webcam/inference is handled elsewhere)
+      isClient: false,
+
+      // Represents the video feed and it's debug canvases
       debugger: {
         // Where to inject the debugger into
         target: document.body,
