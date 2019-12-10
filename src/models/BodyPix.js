@@ -16,7 +16,6 @@ Handsfree.prototype.loadBodypixDependencies = async function() {
     }
   } else {
     this.model.bodypix.loaded = true
-    this.maybeStartTracking()
   }
 }
 

@@ -20,7 +20,6 @@ Handsfree.prototype.loadWebojiDependencies = function() {
     }
   } else {
     this.model.head.loaded = true
-    this.maybeStartTracking()
   }
 }
 
