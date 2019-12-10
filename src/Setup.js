@@ -148,8 +148,16 @@ Handsfree.prototype.loadDependencies = function() {
  * Start models
  */
 Handsfree.prototype.startModels = function() {
-  if (this.model.head.enabled) this.maybeStartWeboji()
-  if (this.model.bodypix.enabled) this.maybeStartBodypix()
+  if (!this.config.isClient) {
+    if (this.model.head.enabled) {
+      this.maybeStartWeboji()
+    }
+    if (this.model.bodypix.enabled) {
+      this.maybeStartBodypix()
+    }
+  } else {
+    this.maybeStartTracking()
+  }
 }
 
 /**
