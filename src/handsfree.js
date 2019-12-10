@@ -81,7 +81,7 @@ class Handsfree {
     }
 
     // Run plugins
-    this.runOnFrame(Handsfree.plugins)
+    !this.config.isServer && this.runOnFrame(Handsfree.plugins)
 
     // Loop
     requestAnimationFrame(() => this.track())
