@@ -96,6 +96,12 @@ yarn start
 
 # Bundle the library into /dist
 yarn bundle
+
+# Bundle the library into the Chrome Extension located at ../handsfree-chrome
+yarn chrome
+
+# Bundle the library into our site located at ../handsfree.js.org
+yarn org
 ```
 
 ## Building the handsfree.js library
