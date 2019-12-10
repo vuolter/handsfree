@@ -80,8 +80,12 @@ class Handsfree {
         this.inferBodypix()
     }
 
-    // Run plugins
-    !this.config.isServer && this.runOnFrame(Handsfree.plugins)
+    // Run plugins or send messages
+    if (this.config.isServer) {
+      this.onServerFrame()
+    } else {
+      this.runOnFrame(Handsfree.plugins)
+    }
 
     // Loop
     requestAnimationFrame(() => this.track())
