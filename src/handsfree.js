@@ -81,11 +81,7 @@ class Handsfree {
     }
 
     // Run plugins or send messages
-    if (this.config.isServer) {
-      this.onServerFrame()
-    } else {
-      this.runOnFrame(Handsfree.plugins)
-    }
+    this.runOnFrame()
 
     // Loop
     requestAnimationFrame(() => this.track())
