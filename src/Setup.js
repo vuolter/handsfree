@@ -47,6 +47,10 @@ Handsfree.prototype.cleanConfig = function(config) {
       // Whether Handsfree should automatically start after instantiation
       autostart: false,
 
+      // Whether to run this instance in "client mode": models aren't loaded and no inference
+      isClient: false,
+
+      // Represents the video feed and it's debug canvases
       debugger: {
         // Where to inject the debugger into
         target: document.body,
@@ -142,8 +146,16 @@ Handsfree.prototype.loadDependencies = function() {
  * Start models
  */
 Handsfree.prototype.startModels = function() {
-  if (this.model.head.enabled) this.maybeStartWeboji()
-  if (this.model.bodypix.enabled) this.maybeStartBodypix()
+  if (!this.config.isClient) {
+    if (this.model.head.enabled) {
+      this.maybeStartWeboji()
+    }
+    if (this.model.bodypix.enabled) {
+      this.maybeStartBodypix()
+    }
+  } else {
+    this.maybeStartTracking()
+  }
 }
 
 /**

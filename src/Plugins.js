@@ -96,8 +96,12 @@ Handsfree.prototype.runOnUse = function(payload) {
 
 /**
  * Recurses through the plugins object, calling their onFrame
+ *
+ * @param {Object} payload A plugins object
  */
 Handsfree.prototype.runOnFrame = function(payload) {
+  if (!payload) payload = Handsfree.plugins
+
   // Plugins have .enabled, so lets run them
   if (payload.hasOwnProperty('enabled')) {
     payload.enabled && payload.onFrame && payload.onFrame(this)
@@ -112,7 +116,8 @@ Handsfree.prototype.runOnFrame = function(payload) {
 
 /**
  * Disable plugins
- * - Calls onDisable for each instance
+ *
+ * @param {String} name The name of the plugin to disable
  */
 Handsfree.disable = function(name) {
   const plugin = get(Handsfree.plugins, name)
@@ -121,6 +126,47 @@ Handsfree.disable = function(name) {
   Handsfree.instances.forEach((instance) => {
     plugin.onDisable && plugin.onDisable(instance)
   })
+}
+
+/**
+ * Disables all the plugins
+ * - Calls onDisable for each instance
+ *
+ * @param {Object} payload A plugins object
+ */
+Handsfree.disableAll = function(payload) {
+  if (!payload) payload = Handsfree.plugins
+
+  // Plugins have .enabled, so lets run them
+  if (payload.hasOwnProperty('enabled')) {
+    Handsfree.disable(payload.name)
+
+    // Otherwise loop through each property
+  } else {
+    Object.keys(payload).forEach((key) => {
+      this.disableAll(payload[key])
+    })
+  }
+}
+
+/**
+ * Enables all plugins
+ *
+ * @param {Object} payload A plugins object
+ */
+Handsfree.enableAll = function(payload) {
+  if (!payload) payload = Handsfree.plugins
+
+  // Plugins have .enabled, so lets run them
+  if (payload.hasOwnProperty('enabled')) {
+    Handsfree.enable(payload.name)
+
+    // Otherwise loop through each property
+  } else {
+    Object.keys(payload).forEach((key) => {
+      this.enableAll(payload[key])
+    })
+  }
 }
 
 require('./plugins/head/vertScroll')

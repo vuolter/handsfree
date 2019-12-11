@@ -7,15 +7,19 @@ const Handsfree = window.Handsfree
  * @see https://github.com/jeeliz/jeelizWeboji
  */
 Handsfree.prototype.loadWebojiDependencies = function() {
-  if (!this.model.head.sdk) {
-    this.loadAndWait(
-      [trimStart(Handsfree.libSrc + 'models/jeelizFaceTransfer.js', '/')],
-      () => {
-        this.bindWeboji()
-      }
-    )
+  if (!this.config.isClient) {
+    if (!this.model.head.sdk) {
+      this.loadAndWait(
+        [trimStart(Handsfree.libSrc + 'models/jeelizFaceTransfer.js', '/')],
+        () => {
+          this.bindWeboji()
+        }
+      )
+    } else {
+      this.bindWeboji()
+    }
   } else {
-    this.bindWeboji()
+    this.model.head.loaded = true
   }
 }
 
