@@ -49,8 +49,6 @@ Handsfree.prototype.cleanConfig = function(config) {
 
       // Whether to run this instance in "client mode": models aren't loaded and no inference
       isClient: false,
-      // Whether to  run this instance in "server mode": all plugins disabled
-      isServer: false,
 
       // Represents the video feed and it's debug canvases
       debugger: {
