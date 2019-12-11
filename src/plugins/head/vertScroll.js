@@ -15,6 +15,9 @@ window.Handsfree.use('head.vertScroll', {
    * Scroll the page when the cursor goes above/below the threshold
    */
   onFrame({ head }) {
+    // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
+    if (!head.pointer.x && !head.pointer.y) return
+
     if (head.pointer.y < this.config.vertScroll.scrollZone) {
       window.scrollTo(
         0,

@@ -25,6 +25,9 @@ window.Handsfree.use('head.click', {
    * Detect click state and trigger a real click event
    */
   onFrame({ head }) {
+    // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
+    if (!head.pointer.x && !head.pointer.y) return
+
     thresholdMet = false
 
     Object.keys(this.config.morphs).forEach((key) => {
