@@ -190,6 +190,8 @@ Handsfree.prototype.createDebugger = function() {
   $debug.setAttribute('id', `handsfree-debug-${this.id}`)
   $wrap.appendChild($debug)
   this.debugger.debug = $debug
+  $debug.width = $video.width
+  $debug.height = $video.height
 
   // Toggle the debugger
   if (this.config.debugger.enabled) {
