@@ -107,5 +107,4 @@ require('./Helpers')
 require('./Setup')
 require('./Plugins')
 
-console.log('(∩｀-´)⊃━☆ﾟ.*・｡ﾟ https://github.com/handsfreejs/handsfree')
 export default Handsfree
