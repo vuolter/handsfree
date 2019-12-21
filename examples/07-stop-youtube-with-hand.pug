@@ -46,22 +46,36 @@ script.
    * - body.pose.keypoints[9] = left wrist
    * - body.pose.keypoints[10] = right wrist
    */
-  Handsfree.use('hand.stopVideo', ({body}) => {
-    // only continue if one of the wrists are visible
-    if (!body.pose || !body.pose.keypoints
-      || (body.pose.keypoints[9].score < 0.6 && body.pose.keypoints[10].score < 0.6)) return
+  Handsfree.use('hand.stopVideo', {
+    // Whether we have entered "hands have been up" state
+    isBeingHeld: false,
 
-    const wrist = {
-      l: body.pose.keypoints[9],
-      r: body.pose.keypoints[10]
-    }
-    const shoulder = {
-      l: body.pose.keypoints[5],
-      r: body.pose.keypoints[6]
-    }
+    onFrame ({body}) {
+      // only continue if one of the wrists are visible
+      if (!body.pose || !body.pose.keypoints
+        || (body.leftWrist.score < 0.6 && body.rightWrist.score < 0.6)) return
 
-    // Check if one wrist is level with that shoulder
-    if (wrist.l.position.y <= shoulder.l.position.y || wrist.r.position.y <= shoulder.r.position.y) {
-      console.log('✋')
+      // Check if one wrist is level with that shoulder
+      if (body.leftWrist.y <= body.leftShoulder.y || body.rightWrist.y <= body.rightShoulder.y) {
+        if (!this.isBeingHeld) {
+          this.toggleVideo()
+          this.isBeingHeld = true
+        }
+      } else {
+        this.isBeingHeld = false
+      }
+    },
+
+    /**
+     * Toggle the video
+     */
+    toggleVideo () {
+      const state = player.getPlayerState()
+      
+      if (state === 1) {
+        player.pauseVideo()
+      } else {
+        player.playVideo()
+      }
     }
   })
