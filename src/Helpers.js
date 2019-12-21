@@ -57,10 +57,12 @@ Handsfree.prototype.throttleModel = function(modelName, time, opts = {}) {
 
   switch (modelName) {
     case 'head':
-      this.inferWeboji = Handsfree.throttle(this._inferWeboji, time, opts)
+      this.inferWeboji = throttle(this._inferWeboji, time, opts)
+      this.model.head.sdk.set_animationDelay &&
+        this.model.head.sdk.set_animationDelay(time)
       break
     case 'bodypix':
-      this.inferBodypix = Handsfree.throttle(this._inferBodypix, time, opts)
+      this.inferBodypix = throttle(this._inferBodypix, time, opts)
       break
   }
 }

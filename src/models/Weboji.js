@@ -66,6 +66,7 @@ Handsfree.prototype.loadWebojiModel = function() {
           this.model.head.sdk.init({
             canvasId: `handsfree-canvas-${this.id}`,
             NNCpath: JSON.stringify(model),
+            animateDelay: this.config.models.head.throttle,
             videoSettings,
             callbackReady: () => {
               document.body.classList.remove('handsfree-loading')
