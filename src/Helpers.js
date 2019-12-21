@@ -2,6 +2,13 @@ import { throttle } from 'lodash'
 
 const Handsfree = window.Handsfree
 
+/**
+ * Throttles callback to run timeInMilliseconds
+ *
+ * @param {function} callback The callback to run
+ * @param {Integer} time How many milliseconds to throttle (in other words, run this method at most ever x milliseconds)
+ * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
+ */
 Handsfree.throttle = throttle
 
 /**
@@ -36,4 +43,24 @@ Handsfree.prototype.loadAndWait = function(scripts, cb) {
     $script.src = script
     document.getElementsByTagName('head')[0].appendChild($script)
   })
+}
+
+/**
+ * Throttles a model
+ *
+ * @param {String} modelName The name of the model to throttle ['head', 'bodypix']
+ * @param {Integer} time How many milliseconds to throttle by (in other words, run this model every X milliseconds)
+ * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
+ */
+Handsfree.prototype.throttleModel = function(modelName, time, opts = {}) {
+  this.config.models[modelName].throttle = time
+
+  switch (modelName) {
+    case 'head':
+      this.inferWeboji = Handsfree.throttle(this._inferWeboji, time, opts)
+      break
+    case 'bodypix':
+      this.inferBodypix = Handsfree.throttle(this._inferBodypix, time, opts)
+      break
+  }
 }

@@ -24,6 +24,7 @@ Handsfree.prototype.loadBodypixDependencies = async function() {
  */
 Handsfree.prototype.bindBodypix = function() {
   this.model.bodypix.sdk = window.bodyPix
+  this.throttleModel('bodypix', this.config.models.bodypix.throttle)
 }
 
 /**
@@ -62,7 +63,7 @@ Handsfree.prototype.loadBodypixModel = async function() {
 /**
  * Run inference
  */
-Handsfree.prototype.inferBodypix = async function() {
+Handsfree.prototype._inferBodypix = Handsfree.prototype.inferBodypix = async function() {
   let segmentation = await this.model.bodypix.net[this.model.bodypix.method](
     this.debugger.video,
     {
