@@ -49,9 +49,11 @@ Handsfree.prototype.maybeStartBodypix = function() {
  * Loads bodypix
  */
 Handsfree.prototype.loadBodypixModel = async function() {
+  document.body.classList.add('handsfree-loading')
   this.model.bodypix.net = await this.model.bodypix.sdk.load(
     this.config.models.bodypix.modelConfig
   )
+  document.body.classList.remove('handsfree-loading')
 
   this.model.bodypix.loaded = true
   this.maybeStartTracking()
