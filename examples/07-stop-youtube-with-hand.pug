@@ -1,0 +1,81 @@
+include header.pug
+  h1 Stop YouTube with hand
+  p An example of how to start/stop a YouTube video with your palm ✋
+
+  #youtube
+  script(src='https://www.youtube.com/iframe_api')
+
+script.
+  // Create a new instance with bodypix enabled
+  const handsfree = new Handsfree({
+    debugger: {enabled: true},
+    
+    models: {
+
+      head: {enabled: false},
+
+      bodypix: {
+        enabled: true,
+
+        // Let's stylize the debug info
+        method: 'segmentPersonParts',
+        debugMethod: 'toColoredPartMask'
+      }
+    }
+  })
+  Handsfree.disable('head.pointer')
+
+  // Handle YouTube API
+  // @see https://developers.google.com/youtube/iframe_api_reference
+  let player
+  function onYouTubeIframeAPIReady () {
+    player = new YT.Player('youtube', {
+      videoId: 'Eah_3NPofks',
+      events: {
+        onReady (event) {
+          //- event.target.playVideo()
+        }
+      }
+    })
+  }
+
+  /**
+   * Create a plugin that stops the video when the hand is up
+   * - body.pose.keypoints[5] = left shoulder
+   * - body.pose.keypoints[6] = right shoulder
+   * - body.pose.keypoints[9] = left wrist
+   * - body.pose.keypoints[10] = right wrist
+   */
+  Handsfree.use('hand.stopVideo', {
+    // Whether we have entered "hands have been up" state
+    isBeingHeld: false,
+
+    onFrame ({body}) {
+      // only continue if one of the wrists are visible
+      if (!body.pose || !body.pose.keypoints
+        || (body.leftWrist.score < 0.6 && body.rightWrist.score < 0.6)) return
+
+      // Check if one wrist is level with that shoulder
+      if (body.leftWrist.y <= body.leftShoulder.y || body.rightWrist.y <= body.rightShoulder.y) {
+        if (!this.isBeingHeld) {
+          this.toggleVideo()
+          this.isBeingHeld = true
+        }
+      } else {
+        this.isBeingHeld = false
+      }
+    },
+
+    /**
+     * Toggle the video
+     */
+    toggleVideo () {
+      const state = player.getPlayerState()
+      
+      if (state === 1) {
+        player.pauseVideo()
+      } else {
+        player.playVideo()
+      }
+    }
+  })

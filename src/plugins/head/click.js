@@ -69,6 +69,8 @@ window.Handsfree.use('head.click', {
         // Focus
         if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
           $el.focus()
+
+        head.pointer.$target = $el
       }
     }
   }
