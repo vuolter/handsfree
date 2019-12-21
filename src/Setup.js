@@ -59,10 +59,12 @@ Handsfree.prototype.cleanConfig = function(config) {
 
       models: {
         head: {
-          enabled: true
+          enabled: true,
+          throttle: 0
         },
         bodypix: {
           enabled: false,
+          throttle: 0,
           method: 'segmentPerson',
           debugMethod: 'toMask',
           modelConfig: {

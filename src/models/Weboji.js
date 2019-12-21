@@ -29,6 +29,7 @@ Handsfree.prototype.loadWebojiDependencies = function() {
 Handsfree.prototype.bindWeboji = function() {
   this.model.head.sdk = window.JEEFACETRANSFERAPI
   this.model.head.sdkHelper = window.JEELIZ_RESIZER
+  this.throttleModel('head', this.config.models.head.throttle)
 }
 
 /**
@@ -65,6 +66,7 @@ Handsfree.prototype.loadWebojiModel = function() {
           this.model.head.sdk.init({
             canvasId: `handsfree-canvas-${this.id}`,
             NNCpath: JSON.stringify(model),
+            animateDelay: this.config.models.head.throttle,
             videoSettings,
             callbackReady: () => {
               document.body.classList.remove('handsfree-loading')
@@ -81,7 +83,7 @@ Handsfree.prototype.loadWebojiModel = function() {
 /**
  * Runs inference with weboji
  */
-Handsfree.prototype.inferWeboji = function() {
+Handsfree.prototype._inferWeboji = Handsfree.prototype.inferWeboji = function() {
   // Head [yaw, pitch, roll]
   this.head.rotation = this.model.head.sdk.get_rotationStabilized()
   // Head [x, y, scale]
