@@ -45,6 +45,8 @@ script.
     // Contains all of our canvases
     canvases: [],
 
+    // Possible colors
+    // @TODO let's pick a nicer palette
     colors: [[255, 0, 0], [255, 255, 0], [0, 255, 0], [0, 0, 255]],
     currentColorIndex: 0,
     
@@ -74,8 +76,8 @@ script.
      */
     scaleCanvases () {
       this.canvases.forEach($canvas => {
-        $canvas.scaleWidth += 50
-        $canvas.scaleHeight += 50
+        $canvas.scaleWidth += 100
+        $canvas.scaleHeight += 100
 
         $canvas.style.width = `${$canvas.scaleWidth}px`
         $canvas.style.height = `${$canvas.scaleHeight}px`
@@ -108,18 +110,19 @@ script.
         }
       }
 
+      // Place the users real pixels above all others
       sceneCtx.putImageData(imageData, 0, 0)
-
-      this.weirdCut()
+      this.weirdCut(body)
     },
 
     /**
      * Capture the user and place them onto a new canvas
      */
-    weirdCut: Handsfree.throttle (function () {
+    weirdCut: Handsfree.throttle (function (body) {
       let sceneCtx = $scene.getContext('2d')
       let imageData = sceneCtx.getImageData(0, 0, $scene.width, $scene.height)
 
+      // Colorize the mask
       for (let i = 0; i < imageData.data.length; i += 4) {
         if (imageData.data[i + 3] !== 0) {
           const color = this.colors[this.currentColorIndex]
@@ -139,6 +142,7 @@ script.
       $canvas.getContext('2d').putImageData(imageData, 0, 0)
       this.canvases.push($canvas)
 
+      // Set canvas offset
       this.currentColorIndex++
       if (this.currentColorIndex > this.colors.length - 1) {
         this.currentColorIndex = 0
@@ -148,6 +152,6 @@ script.
       setTimeout(() => {
         $canvas.remove()
         this.canvases.pop()
-      }, 40000)
-    }, 500)
+      }, 25000)
+    }, 250)
   })
