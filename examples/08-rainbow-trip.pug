@@ -18,6 +18,12 @@ style.
 
   #scene-wrap, #scene-background {position: relative}
 
+  #scene-wrap {
+    overflow: hidden;
+    width: 640px;
+    height: 480px;
+  }
+
 script.
   const handsfree = new Handsfree({
     models: {
@@ -36,6 +42,12 @@ script.
    * Create a plugin that clones the users mask repeatedly onto the canvas
    */
   Handsfree.use('bodypix.weirdCuts', {
+    // Contains all of our canvases
+    canvases: [],
+
+    colors: [[255, 0, 0], [255, 255, 0], [0, 255, 0], [0, 0, 255]],
+    currentColorIndex: 0,
+    
     // Setup main canvas
     onUse () {
       $background.width = $scene.width = handsfree.debugger.video.width
@@ -50,9 +62,26 @@ script.
     onFrame ({body, model}) {
       if (!body.data) return
 
-      $background.getContext('2d').drawImage(handsfree.debugger.video, 0, 0, $scene.width, $scene.height)
-      
+      // Copy the user onto the topmost canvas and copy a colorized mask
       this.captureUser({body, model})
+
+      // Scale the canvases
+      this.scaleCanvases()
+    },
+
+    /**
+     * Scales the canvases
+     */
+    scaleCanvases () {
+      this.canvases.forEach($canvas => {
+        $canvas.scaleWidth += 50
+        $canvas.scaleHeight += 50
+
+        $canvas.style.width = `${$canvas.scaleWidth}px`
+        $canvas.style.height = `${$canvas.scaleHeight}px`
+        $canvas.style.left = `${($canvas.scaleWidth - 640) / -2}px`
+        $canvas.style.top = `${($canvas.scaleHeight - 480) / -2}px`
+      })
     },
 
     /**
@@ -88,15 +117,37 @@ script.
      * Capture the user and place them onto a new canvas
      */
     weirdCut: Handsfree.throttle (function () {
+      let sceneCtx = $scene.getContext('2d')
+      let imageData = sceneCtx.getImageData(0, 0, $scene.width, $scene.height)
+
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        if (imageData.data[i + 3] !== 0) {
+          const color = this.colors[this.currentColorIndex]
+          
+          imageData.data[i] = color[0]
+          imageData.data[i + 1] = color[1]
+          imageData.data[i + 2] = color[2]
+        }
+      }
+
+      // Create the new canvas with the mask
       const $canvas = document.createElement('canvas')
-      $canvas.width = handsfree.debugger.video.width
-      $canvas.height = handsfree.debugger.video.height
+      $canvas.scaleWidth = $canvas.width = handsfree.debugger.video.width
+      $canvas.scaleHeight = $canvas.height = handsfree.debugger.video.height
       $wrap.appendChild($canvas)
 
-      $canvas.getContext('2d').drawImage($scene, 0, 0, $scene.width, $scene.height)
+      $canvas.getContext('2d').putImageData(imageData, 0, 0)
+      this.canvases.push($canvas)
 
+      this.currentColorIndex++
+      if (this.currentColorIndex > this.colors.length - 1) {
+        this.currentColorIndex = 0
+      }
+
+      // Delete the canvas
       setTimeout(() => {
         $canvas.remove()
-      }, 1500)
+        this.canvases.pop()
+      }, 40000)
     }, 500)
   })
