@@ -25,9 +25,10 @@ style.
 
 script.
   // Settings
-  const cloneCount = {
+  const cloneConfig = {
     horiz: 10,
-    vert: 10
+    vert: 12,
+    scale: 100
   }
 
   const handsfree = new Handsfree({
@@ -54,19 +55,22 @@ script.
       $scene.width = handsfree.debugger.video.width
       $scene.height = handsfree.debugger.video.height
       
-      for (let y = 0; y < cloneCount.vert + 1; y++) {
-        const cloneWidth = 50 * (y + 1)
-        const cloneHeight = 50 * (y + 1) * widthHeightRatio
+      for (let y = 0; y < cloneConfig.vert + 1; y++) {
+        const cloneWidth = 25 * (y + 1) + cloneConfig.scale
+        const cloneHeight = 25 * (y + 1) * widthHeightRatio + cloneConfig.scale
+        const isOdd = y % 2
 
-        for (let x = 0; x < cloneCount.horiz - y + 5; x++) {
+        for (let x = 0; x < cloneConfig.horiz - y + 5; x++) {
           const $canvas = document.createElement('canvas')
           
           $canvas.width = handsfree.debugger.video.width
           $canvas.height = handsfree.debugger.video.height
           $canvas.style.width = `${cloneWidth}px`
           $canvas.style.height = `${cloneHeight}px`
-          $canvas.style.left = `${x * cloneWidth}px`
-          $canvas.style.top = `${y * 25}px`
+
+          // I don't know what I'm doing here 😅
+          $canvas.style.left = `${x * cloneWidth + isOdd * cloneWidth / 2 - cloneWidth / 2 - cloneConfig.scale * 1.5}px`
+          $canvas.style.top = `${y * cloneHeight / 15 - cloneConfig.scale * 2}px`
 
           $wrap.appendChild($canvas)
 
