@@ -186,10 +186,10 @@ Handsfree.prototype.zeroBodypixData = function() {
   ]
 
   parts.forEach((part) => {
-    part.x = 0
-    part.y = 0
-    part.score = 0
-    part.position.x = 0
-    part.position.y = 0
+    this.body[part].x = 0
+    this.body[part].y = 0
+    this.body[part].score = 0
+    this.body[part].position.x = 0
+    this.body[part].position.y = 0
   })
 }
