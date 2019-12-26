@@ -240,6 +240,9 @@ Handsfree.prototype.reload = function() {
     if (this.model.head.enabled) this.maybeStartWeboji()
     if (this.model.bodypix.enabled) this.maybeStartBodypix()
   }
+
+  this.zeroBodypixData()
+  this.zeroWebojiData()
 }
 
 /**

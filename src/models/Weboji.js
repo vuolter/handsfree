@@ -104,6 +104,7 @@ Handsfree.prototype.zeroWebojiData = function() {
   this.head.pointer = {
     x: 0,
     y: 0,
+    state: '',
     $target: null
   }
   this.head.rotation = [0, 0, 0]
