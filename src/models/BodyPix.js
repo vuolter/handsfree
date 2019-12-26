@@ -158,3 +158,80 @@ Handsfree.prototype._inferBodypix = Handsfree.prototype.inferBodypix = async fun
     )
   }
 }
+
+/**
+ * Zeros data
+ */
+Handsfree.prototype.zeroBodypixData = function() {
+  this.body.data = []
+  this.body.poses = []
+  this.body.pose = {}
+
+  this.body.nose = 0
+  this.body.nose.x = 0
+  this.body.nose.y = 0
+
+  this.body.leftEye = 0
+  this.body.leftEye.x = 0
+  this.body.leftEye.y = 0
+
+  this.body.rightEye = 0
+  this.body.rightEye.x = 0
+  this.body.rightEye.y = 0
+
+  this.body.leftEar = 0
+  this.body.leftEar.x = 0
+  this.body.leftEar.y = 0
+
+  this.body.rightEar = 0
+  this.body.rightEar.x = 0
+  this.body.rightEar.y = 0
+
+  this.body.leftShoulder = 0
+  this.body.leftShoulder.x = 0
+  this.body.leftShoulder.y = 0
+
+  this.body.rightShoulder = 0
+  this.body.rightShoulder.x = 0
+  this.body.rightShoulder.y = 0
+
+  this.body.leftElbow = 0
+  this.body.leftElbow.x = 0
+  this.body.leftElbow.y = 0
+
+  this.body.rightElbow = 0
+  this.body.rightElbow.x = 0
+  this.body.rightElbow.y = 0
+
+  this.body.leftWrist = 0
+  this.body.leftWrist.x = 0
+  this.body.leftWrist.y = 0
+
+  this.body.rightWrist = 0
+  this.body.rightWrist.x = 0
+  this.body.rightWrist.y = 0
+
+  this.body.leftHip = 0
+  this.body.leftHip.x = 0
+  this.body.leftHip.y = 0
+
+  this.body.rightHip = 0
+  this.body.rightHip.x = 0
+  this.body.rightHip.y = 0
+
+  this.body.leftKnee = 0
+  this.body.leftKnee.x = 0
+  this.body.leftKnee.y = 0
+
+  this.body.rightKnee = 0
+  this.body.rightKnee.x = 0
+  this.body.rightKnee.y = 0
+
+  this.body.leftAnkle = 0
+  this.body.leftAnkle.x = 0
+  this.body.leftAnkle.y = 0
+
+  this.body.rightAnkle = 0
+  this.body.rightAnkle.x = 0
+  this.body.rightAnkle.y = 0
+}

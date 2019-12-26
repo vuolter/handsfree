@@ -140,8 +140,10 @@ Handsfree.prototype.initProps = function() {
  * Load the Weboji head tracker
  */
 Handsfree.prototype.loadDependencies = function() {
-  if (this.model.head.enabled) this.loadWebojiDependencies()
-  if (this.model.bodypix.enabled) this.loadBodypixDependencies()
+  if (this.model.head.enabled && !this.model.head.loaded)
+    this.loadWebojiDependencies()
+  if (this.model.bodypix.enabled && !this.model.bodypix.loaded)
+    this.loadBodypixDependencies()
 }
 
 /**
@@ -229,6 +231,7 @@ Handsfree.prototype.getUserMedia = function(cb) {
 
 /**
  * Reload models, starting any that haven't been started yet (if we're already running)
+ * - Clears out data as well
  */
 Handsfree.prototype.reload = function() {
   this.loadDependencies()
