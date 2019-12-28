@@ -12,6 +12,10 @@
   display: none;
 }
 
+.handsfree-scroll-focus {
+  outline: 3px solid #f00;
+}
+
 .handsfree-pointer.handsfree-pointer-2 {
   border-color: #0f0;
 }

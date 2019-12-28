@@ -77,18 +77,33 @@ window.Handsfree.use('head.vertScroll', {
     }
 
     if (this.numFramesFocused > this.FOCUSACTIVATION) {
-      this.$target = $potTarget
+      this.selectTarget($potTarget)
     }
 
     this.$lastTarget = $potTarget
   }, 100),
 
   /**
+   * Select and style the element
+   */
+  selectTarget($potTarget) {
+    // Check required in case the window is the target
+    if (this.$target.classList) {
+      this.$target.classList.remove('handsfree-scroll-focus')
+    }
+    if ($potTarget) {
+      $potTarget.classList.add('handsfree-scroll-focus')
+    }
+
+    this.$target = $potTarget
+  },
+
+  /**
    * Sets a new scroll target on click
    */
   maybeSetTarget(head) {
     if (head.pointer.state === 'mouseDown' && head.pointer.$target) {
-      this.$target = this.recursivelyFindScrollbar(head.pointer.$target)
+      this.selectTarget(this.recursivelyFindScrollbar(head.pointer.$target))
     }
   },
 
