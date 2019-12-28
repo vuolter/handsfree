@@ -29,10 +29,11 @@ window.Handsfree.use('head.vertScroll', {
 
     // Check for hover
     this.checkForFocus(head)
+    let isScrolling = false
 
     // Get bounds
     let bounds
-    let scrollTop = this.$target.scrollY || this.$target.scrollTop || 0
+    let scrollTop = this.getTargetScrollTop()
 
     if (this.$target.getBoundingClientRect) {
       bounds = this.$target.getBoundingClientRect()
@@ -54,6 +55,8 @@ window.Handsfree.use('head.vertScroll', {
           (head.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
+
+      isScrolling = true
     }
 
     // Scroll down
@@ -64,7 +67,52 @@ window.Handsfree.use('head.vertScroll', {
           (bounds.bottom - head.pointer.y - this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
+
+      isScrolling = true
     }
+
+    isScrolling && this.maybeSelectNewTarget()
+  },
+
+  /**
+   * Check that the scroll is actually happening, otherwise traverse up the DOM
+   */
+  maybeSelectNewTarget() {
+    let curScrollTop = this.getTargetScrollTop()
+    let didNotScroll = false
+
+    // Check if we have scrolled up
+    this.$target.scrollTo(0, curScrollTop + 1)
+    if (curScrollTop === this.getTargetScrollTop()) {
+      didNotScroll = true
+    } else {
+      this.$target.scrollTo(0, curScrollTop - 1)
+      return
+    }
+
+    // Check if we have scrolled down
+    this.$target.scrollTo(0, curScrollTop - 1)
+    if (curScrollTop === this.getTargetScrollTop()) {
+      if (didNotScroll) {
+        this.numFramesFocused = 0
+
+        this.selectTarget(
+          this.recursivelyFindScrollbar(this.$target.parentElement)
+        )
+
+        console.log()
+      }
+    } else {
+      this.$target.scrollTo(0, curScrollTop + 1)
+      return
+    }
+  },
+
+  /**
+   * Gets the scrolltop, taking account the window object
+   */
+  getTargetScrollTop() {
+    return this.$target.scrollY || this.$target.scrollTop || 0
   },
 
   /**
@@ -100,7 +148,7 @@ window.Handsfree.use('head.vertScroll', {
       $potTarget.classList.add('handsfree-scroll-focus')
     }
 
-    if ($potTarget.nodeName === 'HTML') {
+    if ($potTarget.nodeName === 'HTML' || !$potTarget.nodeName) {
       $potTarget = window
     }
 
@@ -120,13 +168,22 @@ window.Handsfree.use('head.vertScroll', {
    * Traverses up the DOM until a scrollbar is found, or until we hit the body/window
    */
   recursivelyFindScrollbar($target) {
+    const styles =
+      $target && $target.getBoundingClientRect ? getComputedStyle($target) : {}
+
     if (
+      $target &&
       $target.scrollHeight > $target.clientHeight &&
-      $target.style.overflow !== 'hidden'
+      (styles.overflow === 'auto' ||
+        styles.overflow === 'auto scroll' ||
+        styles.overflow === 'visible' ||
+        styles.overflowY === 'auto' ||
+        styles.overflowY === 'auto scroll' ||
+        styles.overflowY === 'visible')
     ) {
       return $target
     } else {
-      if ($target.parentElement) {
+      if ($target && $target.parentElement) {
         return this.recursivelyFindScrollbar($target.parentElement)
       } else {
         return window
