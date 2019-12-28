@@ -30,6 +30,16 @@ window.Handsfree.use('head.vertScroll', {
     // Check for hover
     this.checkForFocus(head)
 
+    // Get bounds
+    let bounds
+    let scrollTop = this.$target.scrollY || this.$target.scrollTop || 0
+
+    if (this.$target.getBoundingClientRect) {
+      bounds = this.$target.getBoundingClientRect()
+    } else {
+      bounds = { top: 0, bottom: window.innerHeight }
+    }
+
     // Check on click
     if (head.pointer.state === 'mouseDown') {
       this.numFramesFocused = 0
@@ -37,26 +47,21 @@ window.Handsfree.use('head.vertScroll', {
     }
 
     // Scroll up
-    if (head.pointer.y < this.config.vertScroll.scrollZone) {
+    if (head.pointer.y < bounds.top + this.config.vertScroll.scrollZone) {
       this.$target.scrollTo(
         0,
-        (this.$target.scrollY || this.$target.scrollTop) +
-          (head.pointer.y - this.config.vertScroll.scrollZone) *
+        scrollTop +
+          (head.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
     }
 
     // Scroll down
-    if (
-      head.pointer.y >
-      window.innerHeight - this.config.vertScroll.scrollZone
-    ) {
+    if (head.pointer.y > bounds.bottom - this.config.vertScroll.scrollZone) {
       this.$target.scrollTo(
         0,
-        (this.$target.scrollY || this.$target.scrollTop) +
-          (head.pointer.y -
-            (this.$target.clientHeight || window.innerHeight) +
-            this.config.vertScroll.scrollZone) *
+        scrollTop -
+          (bounds.bottom - head.pointer.y - this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
     }
@@ -91,8 +96,12 @@ window.Handsfree.use('head.vertScroll', {
     if (this.$target.classList) {
       this.$target.classList.remove('handsfree-scroll-focus')
     }
-    if ($potTarget) {
+    if ($potTarget && $potTarget.classList) {
       $potTarget.classList.add('handsfree-scroll-focus')
+    }
+
+    if ($potTarget.nodeName === 'HTML') {
+      $potTarget = window
     }
 
     this.$target = $potTarget
