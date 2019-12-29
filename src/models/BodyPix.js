@@ -41,7 +41,7 @@ Handsfree.prototype.maybeStartBodypix = function() {
         this.loadBodypixModel()
       })
     } else {
-      this.loadBodypixModel()
+      this.maybeStartTracking()
     }
   }
 }
@@ -157,4 +157,44 @@ Handsfree.prototype._inferBodypix = Handsfree.prototype.inferBodypix = async fun
       0
     )
   }
+}
+
+/**
+ * Zeros data
+ */
+Handsfree.prototype.zeroBodypixData = function() {
+  this.body.data = []
+  this.body.poses = []
+  this.body.pose = {}
+
+  const parts = [
+    'nose',
+    'leftEye',
+    'rightEye',
+    'leftEar',
+    'rightEar',
+    'leftShoulder',
+    'rightShoulder',
+    'leftWrist',
+    'rightWrist',
+    'leftHip',
+    'rightHip',
+    'leftKnee',
+    'rightKnee',
+    'leftAnkle',
+    'rightAnkle'
+  ]
+
+  parts.forEach((part) => {
+    this.body[part] = {
+      x: 0,
+      y: 0,
+      score: 0,
+      part,
+      position: {
+        x: 0,
+        y: 0
+      }
+    }
+  })
 }

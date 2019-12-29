@@ -58,8 +58,10 @@ Handsfree.prototype.throttleModel = function(modelName, time, opts = {}) {
   switch (modelName) {
     case 'head':
       this.inferWeboji = throttle(this._inferWeboji, time, opts)
-      this.model.head.sdk.set_animationDelay &&
-        this.model.head.sdk.set_animationDelay(time)
+      // @FIXME - Why isn't this.model.head.sdk not working?
+      window.JEEFACETRANSFERAPI &&
+        window.JEEFACETRANSFERAPI.set_animationDelay &&
+        window.JEEFACETRANSFERAPI.set_animationDelay(time)
       break
     case 'bodypix':
       this.inferBodypix = throttle(this._inferBodypix, time, opts)

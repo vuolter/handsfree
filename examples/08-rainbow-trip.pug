@@ -47,7 +47,7 @@ script.
 
     // Possible colors
     // @TODO let's pick a nicer palette
-    colors: [[255, 0, 0], [255, 255, 0], [0, 255, 0], [0, 0, 255]],
+    colors: [[254, 201, 7], [252, 161, 24], [245, 124, 33], [252, 81, 25], [244, 27, 44], [214, 9, 133], [169, 33, 133], [132, 42, 130], [88, 46, 130], [50, 46, 130]],
     currentColorIndex: 0,
     
     // Setup main canvas
@@ -94,7 +94,7 @@ script.
       model.bodypix.sdk.drawMask(
         $scene,
         handsfree.debugger.video,
-        model.bodypix.sdk.toMask(body.data, {r: 0, g: 0, b: 0, a: 0}, {r: 0, g: 0, b: 0, a: 255}),
+        model.bodypix.sdk.toMask(body.data, {r: 0, g: 0, b: 0, a: 0}, {r: 255, g: 0, b: 255, a: 255}),
         1,
         0,
         0
@@ -105,7 +105,7 @@ script.
       let imageData = sceneCtx.getImageData(0, 0, $scene.width, $scene.height)
 
       for (let i = 0; i < imageData.data.length; i += 4) {
-        if (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2] < 10) {
+        if (imageData.data[i] === 255 && imageData.data[i + 1] === 0 && imageData.data[i + 2] === 255) {
           imageData.data[i + 3] = 0
         }
       }
@@ -151,7 +151,7 @@ script.
       // Delete the canvas
       setTimeout(() => {
         $canvas.remove()
-        this.canvases.pop()
+        this.canvases.unshift()
       }, 25000)
     }, 250)
   })

@@ -49,6 +49,11 @@ Handsfree.prototype.maybeStartWeboji = function() {
  * Initializes the head tracker SDK
  */
 Handsfree.prototype.loadWebojiModel = function() {
+  if (this.model.head.loaded) {
+    this.maybeStartTracking()
+    return
+  }
+
   const url = trimStart(
     Handsfree.libSrc + 'models/jeelizFaceTransferNNC.json',
     '/'
@@ -90,4 +95,19 @@ Handsfree.prototype._inferWeboji = Handsfree.prototype.inferWeboji = function() 
   this.head.translation = this.model.head.sdk.get_positionScale()
   // [0...10] Morphs between 0 - 1
   this.head.morphs = this.model.head.sdk.get_morphTargetInfluencesStabilized()
+}
+
+/**
+ * Zeros the weboji data
+ */
+Handsfree.prototype.zeroWebojiData = function() {
+  this.head.pointer = {
+    x: 0,
+    y: 0,
+    state: '',
+    $target: null
+  }
+  this.head.rotation = [0, 0, 0]
+  this.head.translation = [0, 0, 0]
+  this.head.morphs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 }
