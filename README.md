@@ -31,8 +31,8 @@ For more examples, see the `/examples/` folder:
 <head>
   <!-- Require dependencies, which adds Handsfree to global namespace -->
   <!-- prettier-ignore -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@6.1.2/dist/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@6.1.2/dist/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@6.1.5/dist/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@6.1.5/dist/handsfree.js"></script>
 </head>
 <body>
   <button onclick="handsfree.start()">Start Webcam</button>
