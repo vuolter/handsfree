@@ -1,0 +1,17 @@
+include header.pug
+
+  h2 Ghosted Pointer
+  p Demonstrates fading out the pointer if the pointer is still after some time. This is <code>true</code> for Browser Extensions 
+
+style.
+  .handsfree-pointer {
+    opacity: 1;
+    transition: opacity 0.35s ease;
+  }
+  .handsfree-pointer-hidden {
+    opacity: 0;
+  }
+
+script.
+  handsfree = new Handsfree()
+  Handsfree.enable('head.ghostedPointer')
