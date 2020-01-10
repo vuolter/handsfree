@@ -1,6 +1,10 @@
 include header.pug
   h1 Throttled Clicks
-  p Demonstrates throttling how often a click can be triggered
+  p Demonstrates throttling how often a click can be triggered. Adjust the slider below to set the throttle
+  form
+    | Throttle in (ms):
+    input#throttle-slider(type="range" min="0" max="10000" oninput='updateThrottle()')
+    span#throttle-display 1000
   .test-buttons
     div
       button(id='a' onclick='focuseButton(this)') A
@@ -33,12 +37,23 @@ include header.pug
 
 style.
   .test-buttons button {
-    width: 120px;
+    width: 130px;
     height: 80px;
   }
   button.selected {
     background: #f00;
     color: #fff;
+  }
+  form {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  form > * {
+    flex: 0 0 auto;
+  }
+  form > input {
+    flex: 1 1 auto;
   }
 
 script.
@@ -53,4 +68,19 @@ script.
     $lastBtn && $lastBtn.classList.remove('selected')
     
     if ($lastBtn !== $btn) $btn.classList.add('selected')
+  }
+
+  /**
+   * Updates the throttle
+   */
+  const $throttleSlider = document.querySelector('#throttle-slider')
+  const $throttleDisplay = document.querySelector('#throttle-display')
+  function updateThrottle () {
+    const throttle = +$throttleSlider.value
+
+    // Update the plugin's throttle
+    Handsfree.plugins.head.click.updateClickThrottle(throttle)
+
+    // Display the throttle
+    $throttleDisplay.innerHTML = $throttleSlider.value
   }
