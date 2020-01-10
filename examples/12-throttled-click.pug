@@ -1,0 +1,134 @@
+include header.pug
+  h1 Throttled Clicks
+  p Demonstrates throttling how often a click can be triggered
+  .test-buttons
+    div
+      button(id='a' onclick='focuseButton(this)') A
+      button(id='b' onclick='focuseButton(this)') B
+      button(id='c' onclick='focuseButton(this)') C
+      button(id='d' onclick='focuseButton(this)') D
+      button(id='e' onclick='focuseButton(this)') E
+      button(id='f' onclick='focuseButton(this)') F
+    div
+      button(id='g' onclick='focuseButton(this)') G
+      button(id='h' onclick='focuseButton(this)') H
+      button(id='i' onclick='focuseButton(this)') I
+      button(id='j' onclick='focuseButton(this)') J
+      button(id='k' onclick='focuseButton(this)') K
+      button(id='l' onclick='focuseButton(this)') L
+    div
+      button(id='m' onclick='focuseButton(this)') M
+      button(id='n' onclick='focuseButton(this)') N
+      button(id='o' onclick='focuseButton(this)') O
+      button(id='p' onclick='focuseButton(this)') P
+      button(id='q' onclick='focuseButton(this)') Q
+      button(id='r' onclick='focuseButton(this)') R
+    div
+      button(id='a' onclick='focuseButton(this)') S
+      button(id='b' onclick='focuseButton(this)') T
+      button(id='c' onclick='focuseButton(this)') U
+      button(id='d' onclick='focuseButton(this)') V
+      button(id='e' onclick='focuseButton(this)') W
+      button(id='f' onclick='focuseButton(this)') X
+
+style.
+  .test-buttons button {
+    width: 120px;
+    height: 80px;
+  }
+  button.selected {
+    background: #f00;
+    color: #fff;
+  }
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({})
+
+  /**
+  * Click on things
+  */
+  window.Handsfree.use('head.click', {
+    config: {
+      // How often in milliseconds to trigger clicks
+      throttle: 0,
+      // Max number of frames to keep down
+      maxMouseDownedFrames: 1,
+      
+      // Morphs to watch for and their required confidences
+      morphs: {
+        0: 0.25,
+        1: 0.25
+      }
+    },
+
+    // Number of frames mouse has been downed
+    mouseDowned: 0,
+    // Is the mouse up?
+    mouseUp: false,
+    // Whether one of the morph confidences have been met
+    thresholdMet: false,
+
+    /**
+    * Detect click state and trigger a real click event
+    */
+    onFrame({ head }) {
+      // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
+      if (!head.pointer.x && !head.pointer.y) return
+
+      this.thresholdMet = false
+
+      Object.keys(this.config.morphs).forEach((key) => {
+        const morph = +this.config.morphs[key]
+        if (morph > 0 && head.morphs[key] >= morph) this.thresholdMet = true
+      })
+
+      if (this.thresholdMet) {
+        this.mouseDowned++
+        document.body.classList.add('handsfree-clicked')
+      } else {
+        this.mouseUp = this.mouseDowned
+        this.mouseDowned = 0
+        document.body.classList.remove('handsfree-clicked')
+      }
+
+      // Set the state
+      if (this.mouseDowned > 0 && this.mouseDowned <= this.config.maxMouseDownedFrames)
+        head.pointer.state = 'mouseDown'
+      else if (this.mouseDowned > this.config.maxMouseDownedFrames)
+        head.pointer.state = 'mouseDrag'
+      else if (this.mouseUp) head.pointer.state = 'mouseUp'
+      else ''
+
+      // Actually click something (or focus it)
+      if (head.pointer.state === 'mouseDown') {
+        const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
+        if ($el) {
+          $el.dispatchEvent(
+            new MouseEvent('click', {
+              bubbles: true,
+              cancelable: true,
+              clientX: head.pointer.x,
+              clientY: head.pointer.y
+            })
+          )
+
+          // Focus
+          if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+            $el.focus()
+
+          head.pointer.$target = $el
+        }
+      }
+    }
+  })
+
+  /**
+   * Focuses a button
+   */
+  function focuseButton ($btn) {
+    const $lastBtn = document.querySelector('.selected')
+    $lastBtn && $lastBtn.classList.remove('selected')
+    
+    if ($lastBtn !== $btn) $btn.classList.add('selected')
+  }
