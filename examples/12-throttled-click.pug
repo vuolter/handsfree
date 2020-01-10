@@ -69,6 +69,19 @@ script.
     // Whether one of the morph confidences have been met
     thresholdMet: false,
 
+    onUse () {
+      this.updateClickThrottle(this.config.throttle)
+    },
+
+    /**
+     * Maps .maybeClick to a new throttled function
+     */
+    updateClickThrottle (throttle) {
+      this.maybeClick = Handsfree.throttle(function (head) {
+        this.click(head)
+      }, throttle, {trailing: false})
+    },
+
     /**
     * Detect click state and trigger a real click event
     */
@@ -102,25 +115,38 @@ script.
 
       // Actually click something (or focus it)
       if (head.pointer.state === 'mouseDown') {
-        const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
-        if ($el) {
-          $el.dispatchEvent(
-            new MouseEvent('click', {
-              bubbles: true,
-              cancelable: true,
-              clientX: head.pointer.x,
-              clientY: head.pointer.y
-            })
-          )
-
-          // Focus
-          if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
-            $el.focus()
-
-          head.pointer.$target = $el
-        }
+        this.maybeClick(head)
       }
-    }
+    },
+
+    /**
+     * The actual click method, this is what gets throttled
+     */
+    click (head) {
+      const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
+      if ($el) {
+        $el.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            clientX: head.pointer.x,
+            clientY: head.pointer.y
+          })
+        )
+
+        // Focus
+        if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+          $el.focus()
+
+        head.pointer.$target = $el
+      }
+    },
+
+    /**
+     * Throttles the click event
+     * - Defined in onuse
+     */
+    maybeClick: function () {}
   })
 
   /**
