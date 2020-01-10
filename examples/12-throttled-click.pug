@@ -1,0 +1,86 @@
+include header.pug
+  h1 Throttled Clicks
+  p Demonstrates throttling how often a click can be triggered. Adjust the slider below to set the throttle
+  form
+    | Throttle in (ms):
+    input#throttle-slider(type="range" min="0" max="10000" oninput='updateThrottle()')
+    span#throttle-display 1000
+  .test-buttons
+    div
+      button(id='a' onclick='focuseButton(this)') A
+      button(id='b' onclick='focuseButton(this)') B
+      button(id='c' onclick='focuseButton(this)') C
+      button(id='d' onclick='focuseButton(this)') D
+      button(id='e' onclick='focuseButton(this)') E
+      button(id='f' onclick='focuseButton(this)') F
+    div
+      button(id='g' onclick='focuseButton(this)') G
+      button(id='h' onclick='focuseButton(this)') H
+      button(id='i' onclick='focuseButton(this)') I
+      button(id='j' onclick='focuseButton(this)') J
+      button(id='k' onclick='focuseButton(this)') K
+      button(id='l' onclick='focuseButton(this)') L
+    div
+      button(id='m' onclick='focuseButton(this)') M
+      button(id='n' onclick='focuseButton(this)') N
+      button(id='o' onclick='focuseButton(this)') O
+      button(id='p' onclick='focuseButton(this)') P
+      button(id='q' onclick='focuseButton(this)') Q
+      button(id='r' onclick='focuseButton(this)') R
+    div
+      button(id='a' onclick='focuseButton(this)') S
+      button(id='b' onclick='focuseButton(this)') T
+      button(id='c' onclick='focuseButton(this)') U
+      button(id='d' onclick='focuseButton(this)') V
+      button(id='e' onclick='focuseButton(this)') W
+      button(id='f' onclick='focuseButton(this)') X
+
+style.
+  .test-buttons button {
+    width: 130px;
+    height: 80px;
+  }
+  button.selected {
+    background: #f00;
+    color: #fff;
+  }
+  form {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  form > * {
+    flex: 0 0 auto;
+  }
+  form > input {
+    flex: 1 1 auto;
+  }
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({})
+
+  /**
+   * Focuses a button
+   */
+  function focuseButton ($btn) {
+    const $lastBtn = document.querySelector('.selected')
+    $lastBtn && $lastBtn.classList.remove('selected')
+    
+    if ($lastBtn !== $btn) $btn.classList.add('selected')
+  }
+
+  /**
+   * Updates the throttle
+   */
+  const $throttleSlider = document.querySelector('#throttle-slider')
+  const $throttleDisplay = document.querySelector('#throttle-display')
+  function updateThrottle () {
+    const throttle = +$throttleSlider.value
+
+    // Update the plugin's throttle
+    Handsfree.plugins.head.click.updateClickThrottle(throttle)
+
+    // Display the throttle
+    $throttleDisplay.innerHTML = $throttleSlider.value
+  }

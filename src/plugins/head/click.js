@@ -1,24 +1,42 @@
 /**
  * Click on things
  */
-// Number of frames mouse has been downed
-let mouseDowned = 0
-// Max number of frames to keep down
-// @TODO make this variable or adjustable
-let maxMouseDownedFrames = 1
-let mouseUp = false
-let thresholdMet = false
-// For some reason the linter isn't caching this
-// eslint-disable-next-line no-unused-vars
-let mouseDrag = false
-
 window.Handsfree.use('head.click', {
   config: {
+    // How often in milliseconds to trigger clicks
+    throttle: 50,
+    // Max number of frames to keep down
+    maxMouseDownedFrames: 1,
+
     // Morphs to watch for and their required confidences
     morphs: {
       0: 0.25,
       1: 0.25
     }
+  },
+
+  // Number of frames mouse has been downed
+  mouseDowned: 0,
+  // Is the mouse up?
+  mouseUp: false,
+  // Whether one of the morph confidences have been met
+  thresholdMet: false,
+
+  onUse() {
+    this.updateClickThrottle(this.config.throttle)
+  },
+
+  /**
+   * Maps .maybeClick to a new throttled function
+   */
+  updateClickThrottle(throttle) {
+    this.maybeClick = Handsfree.throttle(
+      function(head) {
+        this.click(head)
+      },
+      throttle,
+      { trailing: false }
+    )
   },
 
   /**
@@ -28,50 +46,65 @@ window.Handsfree.use('head.click', {
     // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
     if (!head.pointer.x && !head.pointer.y) return
 
-    thresholdMet = false
+    this.thresholdMet = false
 
     Object.keys(this.config.morphs).forEach((key) => {
       const morph = +this.config.morphs[key]
-      if (morph > 0 && head.morphs[key] >= morph) thresholdMet = true
+      if (morph > 0 && head.morphs[key] >= morph) this.thresholdMet = true
     })
 
-    if (thresholdMet) {
-      mouseDowned++
+    if (this.thresholdMet) {
+      this.mouseDowned++
       document.body.classList.add('handsfree-clicked')
     } else {
-      mouseUp = mouseDowned
-      mouseDowned = 0
-      mouseDrag = false
+      this.mouseUp = this.mouseDowned
+      this.mouseDowned = 0
       document.body.classList.remove('handsfree-clicked')
     }
 
     // Set the state
-    if (mouseDowned > 0 && mouseDowned <= maxMouseDownedFrames)
+    if (
+      this.mouseDowned > 0 &&
+      this.mouseDowned <= this.config.maxMouseDownedFrames
+    )
       head.pointer.state = 'mouseDown'
-    else if (mouseDowned > maxMouseDownedFrames)
+    else if (this.mouseDowned > this.config.maxMouseDownedFrames)
       head.pointer.state = 'mouseDrag'
-    else if (mouseUp) head.pointer.state = 'mouseUp'
+    else if (this.mouseUp) head.pointer.state = 'mouseUp'
     else ''
 
     // Actually click something (or focus it)
     if (head.pointer.state === 'mouseDown') {
-      const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
-      if ($el) {
-        $el.dispatchEvent(
-          new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            clientX: head.pointer.x,
-            clientY: head.pointer.y
-          })
-        )
-
-        // Focus
-        if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
-          $el.focus()
-
-        head.pointer.$target = $el
-      }
+      this.maybeClick(head)
     }
-  }
+  },
+
+  /**
+   * The actual click method, this is what gets throttled
+   */
+  click(head) {
+    const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
+    if ($el) {
+      $el.dispatchEvent(
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          clientX: head.pointer.x,
+          clientY: head.pointer.y
+        })
+      )
+
+      // Focus
+      if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+        $el.focus()
+
+      head.pointer.$target = $el
+    }
+  },
+
+  /**
+   * Throttles the click event
+   * - Defined in onuse
+   */
+  maybeClick: function() {}
 })
