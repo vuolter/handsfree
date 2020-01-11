@@ -3,7 +3,7 @@ include header.pug
   p Demonstrates throttling how often a click can be triggered. Adjust the slider below to set the throttle
   form
     | Throttle in (ms):
-    input#throttle-slider(type="range" min="0" max="10000" oninput='updateThrottle()')
+    input#throttle-slider(type="range" min="0" max="10000" oninput='updateThrottle()' value=1000)
     span#throttle-display 1000
   .test-buttons
     div
@@ -57,8 +57,16 @@ style.
   }
 
 script.
-  // Create a new instance. Use one instance for each camera
-  const handsfree = new Handsfree({})
+  // Create a new instance and set the throttle
+  const handsfree = new Handsfree({
+    plugin: {
+      head: {
+        click: {
+          throttle: 0
+        }
+      }
+    }
+  })
 
   /**
    * Focuses a button
@@ -79,7 +87,7 @@ script.
     const throttle = +$throttleSlider.value
 
     // Update the plugin's throttle
-    Handsfree.plugins.head.click.updateClickThrottle(throttle)
+    Handsfree.plugins.head.click.config.throttle = throttle
 
     // Display the throttle
     $throttleDisplay.innerHTML = $throttleSlider.value
