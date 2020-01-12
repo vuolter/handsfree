@@ -5,6 +5,10 @@ window.Handsfree.use('head.click', {
   config: {
     // How often in milliseconds to trigger clicks
     throttle: 50,
+    set throttle(throttle) {
+      Handsfree.plugins.head.click.updateClickThrottle(throttle)
+    },
+
     // Max number of frames to keep down
     maxMouseDownedFrames: 1,
 
