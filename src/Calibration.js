@@ -4,14 +4,14 @@ const Handsfree = window.Handsfree
  * Creates a calibrator panel
  */
 Handsfree.prototype.createCalibrator = function() {
-  if (!this.config.isClient && !this.calibrator.target) {
+  if (!this.calibrator.target) {
     // Wrap
     this.calibrator.wrap = document.createElement('DIV')
     this.calibrator.wrap.classList.add('handsfree-calibrator-wrap')
 
     // Instructions
     let $p = document.createElement('p')
-    $p.innerHTML = 'Point head towards center of circle below'
+    $p.innerHTML = this.calibrator.instructions
     this.calibrator.wrap.appendChild($p)
 
     // Marker
@@ -22,4 +22,12 @@ Handsfree.prototype.createCalibrator = function() {
 
     document.body.appendChild(this.calibrator.wrap)
   }
+}
+
+/**
+ * Starts the calibration process
+ * - Shows calibration overlay
+ */
+Handsfree.prototype.startCalibration = function() {
+  this.isStarted && this.calibrator.wrap.classList.add('handsfree-visible')
 }

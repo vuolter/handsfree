@@ -1,0 +1,13 @@
+include header.pug
+  h1 Calibration
+  p Demonstrates how to start the calibration process with the default calibration overlay
+  p
+    button(onclick='startCalibration()') Start Calibration
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({})
+
+  function startCalibration () {
+    handsfree.startCalibration()
+  }

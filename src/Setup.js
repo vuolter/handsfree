@@ -62,6 +62,8 @@ Handsfree.prototype.cleanConfig = function(config) {
       calibrator: {
         // (optional) The target element to act as the calibrator wrapping div
         target: null,
+        // The message to display over the marker, can be HTML
+        instructions: 'Point head towards center of circle below',
         // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
         marker: null
       },
