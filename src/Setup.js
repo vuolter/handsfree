@@ -11,6 +11,7 @@ Handsfree.prototype.setup = function(config) {
   this.initProps()
   this.loadDependencies()
   this.createDebugger()
+  this.createCalibrator()
 }
 
 /**
@@ -55,6 +56,14 @@ Handsfree.prototype.cleanConfig = function(config) {
         // Where to inject the debugger into
         target: document.body,
         enabled: false
+      },
+
+      // Represents the calibrator settings
+      calibrator: {
+        // (optional) The target element to act as the calibrator wrapping div
+        target: null,
+        // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+        marker: null
       },
 
       models: {
@@ -133,6 +142,12 @@ Handsfree.prototype.initProps = function() {
     video: null,
     // The video stream (used by bodypix)
     stream: null
+  }
+
+  // Calibrator
+  this.calibrator = {
+    // The calibrator wrap
+    wrap: null
   }
 }
 
