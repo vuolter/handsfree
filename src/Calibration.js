@@ -11,7 +11,7 @@ Handsfree.prototype.createCalibrator = function() {
 
     // Instructions
     let $p = document.createElement('p')
-    $p.innerHTML = this.calibrator.instructions
+    $p.innerHTML = this.config.calibrator.instructions
     this.calibrator.wrap.appendChild($p)
 
     // Marker
@@ -30,4 +30,70 @@ Handsfree.prototype.createCalibrator = function() {
  */
 Handsfree.prototype.startCalibration = function() {
   this.isStarted && this.calibrator.wrap.classList.add('handsfree-visible')
+  Handsfree.plugins.head.calibration.framesCalibrated = 0
+  Handsfree.enable('head.calibration')
+
+  // Disable calibration on calibration
+  this.on('handsfreeCalibrationEnded', () => {
+    Handsfree.disable('head.calibration')
+    this.calibrator.wrap.classList.remove('handsfree-visible')
+  })
 }
+
+/**
+ * Calibration plugin
+ */
+Handsfree.use('head.calibration', {
+  enabled: false,
+  framesCalibrated: 0,
+  numFramesToCalibrate: 60,
+
+  onFrame(instance) {
+    const bounds = instance.calibrator.wrap.getBoundingClientRect()
+    const center = {
+      x: bounds.left + bounds.width / 2,
+      y: bounds.top + bounds.height / 2
+    }
+    const dist = Math.sqrt(
+      Math.pow(instance.head.pointer.x - center.x, 2) +
+        Math.pow(instance.head.pointer.y - center.y, 2)
+    )
+
+    this.step(instance.head, dist, center)
+    this.maybeEndCalibration(instance, dist)
+  },
+
+  /**
+   * Step the pointer towards the center
+   */
+  step(head, dist, center) {
+    const stepSize = dist < 40 ? 3 : 20
+
+    // Move toward center
+    if (head.pointer.x < center.x) {
+      Handsfree.plugins.head.pointer.config.offset.x += stepSize
+    } else {
+      Handsfree.plugins.head.pointer.config.offset.x -= stepSize
+    }
+    if (head.pointer.y < center.y) {
+      Handsfree.plugins.head.pointer.config.offset.y += stepSize
+    } else {
+      Handsfree.plugins.head.pointer.config.offset.y -= stepSize
+    }
+  },
+
+  /**
+   * Ends calibration when the pointer is near the center
+   */
+  maybeEndCalibration(instance, dist) {
+    if (dist < 30) {
+      this.framesCalibrated++
+    } else {
+      this.framesCalibrated = 0
+    }
+
+    if (this.framesCalibrated > this.numFramesToCalibrate) {
+      instance.emit('handsfreeCalibrationEnded')
+    }
+  }
+})
