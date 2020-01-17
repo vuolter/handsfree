@@ -49,7 +49,7 @@ Handsfree.use('head.calibration', {
   numFramesToCalibrate: 60,
 
   onFrame(instance) {
-    const bounds = instance.calibrator.wrap.getBoundingClientRect()
+    const bounds = instance.calibrator.marker.getBoundingClientRect()
     const center = {
       x: bounds.left + bounds.width / 2,
       y: bounds.top + bounds.height / 2
