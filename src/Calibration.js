@@ -32,10 +32,12 @@ Handsfree.prototype.startCalibration = function() {
   this.isStarted && this.calibrator.wrap.classList.add('handsfree-visible')
   Handsfree.plugins.head.calibration.framesCalibrated = 0
   Handsfree.enable('head.calibration')
+  document.body.classList.add('handsfree-calibrating')
 
   // Disable calibration on calibration
   this.on('handsfreeCalibrationEnded', () => {
     Handsfree.disable('head.calibration')
+    document.body.classList.remove('handsfree-calibrating')
     this.calibrator.wrap.classList.remove('handsfree-visible')
   })
 }

@@ -16,6 +16,9 @@
 .handsfree-pointer-hidden {
   opacity: 0;
 }
+.handsfree-calibrating .handsfree-pointer.handsfree-pointer-hidden {
+  opacity: 1;
+}
 
 .handsfree-scroll-focus {
   outline: 3px solid #f00;
