@@ -99,8 +99,6 @@ window.Handsfree.use('head.vertScroll', {
         this.selectTarget(
           this.recursivelyFindScrollbar(this.$target.parentElement)
         )
-
-        console.log()
       }
     } else {
       this.$target.scrollTo(0, curScrollTop + 1)
@@ -176,10 +174,8 @@ window.Handsfree.use('head.vertScroll', {
       $target.scrollHeight > $target.clientHeight &&
       (styles.overflow === 'auto' ||
         styles.overflow === 'auto scroll' ||
-        styles.overflow === 'visible' ||
         styles.overflowY === 'auto' ||
-        styles.overflowY === 'auto scroll' ||
-        styles.overflowY === 'visible')
+        styles.overflowY === 'auto scroll')
     ) {
       return $target
     } else {

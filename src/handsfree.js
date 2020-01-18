@@ -107,5 +107,6 @@ window.Handsfree = Handsfree
 require('./Helpers')
 require('./Setup')
 require('./Plugins')
+require('./Calibration')
 
 export default Handsfree
