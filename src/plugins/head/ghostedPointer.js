@@ -16,6 +16,10 @@ window.Handsfree.use('head.ghostedPointer', {
     y: 0
   },
 
+  onDisable({ head }) {
+    head.pointer.$el.classList.remove('handsfree-pointer-hidden')
+  },
+
   /**
    * Handles ghosting
    */
