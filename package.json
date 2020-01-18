@@ -1,12 +1,11 @@
 {
   "name": "handsfree",
-  "version": "6.1.6",
+  "version": "6.1.7",
   "main": "dist/handsfree.js",
   "scripts": {
     "start": "parcel examples/index.pug",
     "bundle": "parcel build src/handsfree.js -d dist",
-    "chrome": "parcel build src/handsfree.js -d ../handsfree-chrome/chrome/handsfree",
-    "org": "parcel build src/handsfree.js -d ../handsfree.js.org/node_modules/handsfree/dist"
+    "chrome": "parcel build src/handsfree.js -d ../handsfree-chrome/chrome/handsfree"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
   "license": "Apache",
