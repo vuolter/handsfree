@@ -1,7 +1,13 @@
 include header.pug
 
-  button(onClick='handsfree.recordGesture()') Record Gesture
+  button(onClick='recordGesture()') Record Gesture
 
 script.
   handsfree = new Handsfree()
   
+  const recordGesture = function () {
+    handsfree.recordGesture({
+      models: ['head', 'bodypix'],
+      delaySeconds: 0
+    })
+  }
