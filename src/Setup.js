@@ -64,9 +64,9 @@ Handsfree.prototype.cleanConfig = function(config) {
         // (optional) The target element to act as the calibrator wrapping div
         target: null,
         // The message to display before recording
-        countdownMessage: 'Recording in {countdown}',
+        countdownMessage: 'Recording "{label}" in {countdown}',
         // The message to display during recording
-        recordingMessage: '{numSamples} samples collected',
+        recordingMessage: '{numSamples} samples collected for "{label}"',
         // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
         marker: null
       },
@@ -165,7 +165,15 @@ Handsfree.prototype.initProps = function() {
 
   // Gesture Recorder
   this.gestureRecorder = {
-    wrap: null
+    wrap: null,
+    // Message element
+    $message: null,
+    // Number of seconds looped for countdown
+    countdownTimesLooped: 0,
+    // The current training label index
+    curLabelIndex: 0,
+    samples: [],
+    ml5: null
   }
 }
 

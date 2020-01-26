@@ -7,7 +7,8 @@ script.
   
   const recordGesture = function () {
     handsfree.recordGesture({
-      models: ['head', 'bodypix'],
-      delaySeconds: 0
+      models: ['head'],
+      labels: ['base', 'smile'],
+      delaySeconds: 3
     })
   }
