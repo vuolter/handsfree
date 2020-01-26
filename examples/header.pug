@@ -16,7 +16,9 @@ body
         small
           a(href="https://handsfree.js.org") Learn more at handsfree.js.org
       div(style='padding: 20px;')
-        button.handsfree-start(onclick='handsfree.start()') Start Webcam
+        button.handsfree-show-when-stopped.handsfree-hide-when-loading(onclick='handsfree.start()') Start Webcam
+        button.handsfree-show-when-loading(disabled) Loading...
+        button.handsfree-show-when-started(onclick='handsfree.stop()') Stop Webcam
     div
       section
     

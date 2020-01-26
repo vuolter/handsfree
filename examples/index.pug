@@ -16,6 +16,13 @@ include header.pug
           each demo in [['06-bodypix-freeze-frame', 'BodyPix Freeze Frame'], ['07-stop-youtube-with-hand', 'Stop YouTube with hand'], ['08-rainbow-trip', 'Rainbow Trip'], ['09-million-clones', 'A Million Clones']]
             li
               a(href=`${demo[0]}.pug`)= demo[1]
+    tr
+      td
+        h3 Advanced
+        ul
+          each demo in [['14-gesture-recorder', 'Gesture Recorder']]
+            li
+              a(href=`${demo[0]}.pug`)= demo[1]
 
 script.
   handsfree = new Handsfree()

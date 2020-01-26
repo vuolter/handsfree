@@ -3,7 +3,7 @@ const Handsfree = window.Handsfree
 /**
  * Creates a calibrator panel
  */
-Handsfree.prototype.createCalibrator = function() {
+Handsfree.prototype.createCalibratorOverlay = function() {
   if (!this.calibrator.target) {
     // Wrap
     this.calibrator.wrap = document.createElement('DIV')

@@ -108,5 +108,6 @@ require('./Helpers')
 require('./Setup')
 require('./Plugins')
 require('./Calibration')
+require('./GestureRecorder')
 
 export default Handsfree
