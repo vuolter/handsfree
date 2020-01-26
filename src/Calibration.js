@@ -6,7 +6,7 @@ const Handsfree = window.Handsfree
 Handsfree.prototype.createCalibratorOverlay = function() {
   if (!this.calibrator.target) {
     // Wrap
-    this.calibrator.wrap = document.createElement('DIV')
+    this.calibrator.wrap = document.createElement('div')
     this.calibrator.wrap.classList.add('handsfree-calibrator-wrap')
 
     // Instructions
@@ -15,7 +15,7 @@ Handsfree.prototype.createCalibratorOverlay = function() {
     this.calibrator.wrap.appendChild($p)
 
     // Marker
-    let $marker = document.createElement('DIV')
+    let $marker = document.createElement('div')
     $marker.classList.add('handsfree-calibrator-marker')
     this.calibrator.marker = $marker
     this.calibrator.wrap.appendChild($marker)

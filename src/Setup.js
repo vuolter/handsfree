@@ -60,16 +60,18 @@ Handsfree.prototype.cleanConfig = function(config) {
       },
 
       // Represents the calibrator settings
-      calibrator: {
+      gestureRecorder: {
         // (optional) The target element to act as the calibrator wrapping div
         target: null,
-        // The message to display over the marker, can be HTML
-        instructions: 'Point head towards center of circle below',
+        // The message to display before recording
+        countdownMessage: 'Recording in {countdown}',
+        // The message to display during recording
+        recordingMessage: '{numSamples} samples collected',
         // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
         marker: null
       },
 
-      gestureRecorder: {
+      calibrator: {
         target: null,
         // (optional) The target element to act as the calibrator wrapping div
         overlay: null,
