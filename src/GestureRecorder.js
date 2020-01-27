@@ -122,11 +122,6 @@ Handsfree.use('gestureRecorder.collectSample', {
       !handsfree.head.translation.length
     )
       return
-    if (
-      gestureRecorder.config.models.includes('bodypix') &&
-      !handsfree.body.pose.keypoints
-    )
-      return
 
     // Loop through each model and store data in a flattened array
     gestureRecorder.config.models.forEach((model) => {
@@ -138,16 +133,6 @@ Handsfree.use('gestureRecorder.collectSample', {
             handsfree.head.rotation,
             handsfree.head.morphs
           )
-          break
-
-        case 'bodypix':
-          let flatKeypoints = []
-          handsfree.body.pose.keypoints.forEach((keypoint) => {
-            flatKeypoints.push(keypoint.x)
-            flatKeypoints.push(keypoint.y)
-          })
-
-          Array.prototype.push.apply(data, flatKeypoints)
           break
       }
     })
@@ -199,7 +184,7 @@ Handsfree.prototype.createGestureModel = function() {
     this.gestureRecorder.$message.innerHTML = message
 
     // Create brain
-    this.gestureRecorder.loadedMl5 = true
+    this.dependencies.tf = true
     const brain = (this.gestureRecorder.brain = ml5.neuralNetwork({
       inputs: this.gestureRecorder.samples[0].length,
       outputs: this.gestureRecorder.config.labels.length,
@@ -224,7 +209,7 @@ Handsfree.prototype.createGestureModel = function() {
   }
 
   // Load ML5 if it hasn't been loaded yet
-  if (this.gestureRecorder.loadedMl5) {
+  if (this.dependencies.tf) {
     onML5Ready()
   } else {
     this.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {

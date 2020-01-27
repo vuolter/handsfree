@@ -84,18 +84,6 @@ Handsfree.prototype.cleanConfig = function(config) {
         head: {
           enabled: true,
           throttle: 0
-        },
-        bodypix: {
-          enabled: false,
-          throttle: 0,
-          method: 'segmentPerson',
-          debugMethod: 'toMask',
-          modelConfig: {
-            architecture: 'MobileNetV1',
-            outputStride: 16,
-            multiplier: 0.75,
-            quantBytes: 2
-          }
         }
       },
 
@@ -135,12 +123,6 @@ Handsfree.prototype.initProps = function() {
     head: {
       sdk: null,
       enabled: this.config.models.head.enabled
-    },
-    bodypix: {
-      sdk: null,
-      enabled: this.config.models.bodypix.enabled,
-      method: this.config.models.bodypix.method,
-      debugMethod: this.config.models.bodypix.debugMethod
     }
   }
 
@@ -149,13 +131,7 @@ Handsfree.prototype.initProps = function() {
     // The container div
     wrap: null,
     // The main canvas (used by Weboji)
-    canvas: null,
-    // The overlay debug canvas (used by Bodypix)
-    debug: null,
-    // The video element (used by bodypix)
-    video: null,
-    // The video stream (used by bodypix)
-    stream: null
+    canvas: null
   }
 
   // Calibrator
@@ -174,12 +150,13 @@ Handsfree.prototype.initProps = function() {
     // The current training label index
     curLabelIndex: 0,
     samples: [],
-
-    // ML5 stuff
-    loadedMl5: false,
-    loadedTF: false,
-    // The ml5 neural net
+    // The NeuralNet returned by ML5
     brain: null
+  }
+
+  // Whether a dependency is loaded or not
+  this.dependencies = {
+    ml5: false
   }
 
   // Set of loaded gestureSet models
@@ -195,8 +172,6 @@ Handsfree.prototype.initProps = function() {
 Handsfree.prototype.loadDependencies = function() {
   if (this.model.head.enabled && !this.model.head.loaded)
     this.loadWebojiDependencies()
-  if (this.model.bodypix.enabled && !this.model.bodypix.loaded)
-    this.loadBodypixDependencies()
 }
 
 /**
@@ -206,9 +181,6 @@ Handsfree.prototype.startModels = function() {
   if (!this.config.isClient) {
     if (this.model.head.enabled) {
       this.maybeStartWeboji()
-    }
-    if (this.model.bodypix.enabled) {
-      this.maybeStartBodypix()
     }
   } else {
     this.maybeStartTracking()
@@ -262,27 +234,6 @@ Handsfree.prototype.createDebugger = function() {
 }
 
 /**
- * Captures the media stream
- * @param {Function} cb The callback to run once the media stream is ready
- */
-Handsfree.prototype.getUserMedia = function(cb) {
-  // @TODO config constraints
-  navigator.mediaDevices
-    .getUserMedia({ audio: false, video: true })
-    .then((stream) => {
-      this.debugger.stream = stream
-      this.debugger.video.srcObject = stream
-      this.debugger.video.onloadedmetadata = () => {
-        this.debugger.video.play()
-        cb && cb()
-      }
-    })
-    .catch((err) => {
-      console.error(`Error loading models: ${err}`)
-    })
-}
-
-/**
  * Reload models, starting any that haven't been started yet (if we're already running)
  * - Clears out data as well
  */
@@ -291,10 +242,8 @@ Handsfree.prototype.reload = function() {
 
   if (this.isStarted) {
     if (this.model.head.enabled) this.maybeStartWeboji()
-    if (this.model.bodypix.enabled) this.maybeStartBodypix()
   }
 
-  this.zeroBodypixData()
   this.zeroWebojiData()
 }
 
@@ -302,4 +251,3 @@ Handsfree.prototype.reload = function() {
  * Include model specific methods
  */
 require('./models/Weboji')
-require('./models/BodyPix')

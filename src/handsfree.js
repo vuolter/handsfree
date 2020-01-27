@@ -75,10 +75,6 @@ class Handsfree {
     // Run inference
     if (!this.config.isClient) {
       this.model.head.enabled && this.model.head.loaded && this.inferWeboji()
-
-      this.model.bodypix.enabled &&
-        this.model.bodypix.loaded &&
-        this.inferBodypix()
     }
 
     // Run plugins or send messages
