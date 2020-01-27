@@ -5,21 +5,22 @@ include header.pug
   section
     h2 Adjust Speed      
     p
-      span Handsfree.plugins.head.pointer.config.speed.x:
+      span Handsfree.plugins.weboji.pointer.config.speed.x:
       input(id="speed-x" type="text" value="0.5")
     </p>
     <p>
-      | Handsfree.plugins.head.pointer.config.speed.y:
+      | Handsfree.plugins.weboji.pointer.config.speed.y:
       input(id="speed-y" type="text" value="0.5")
     </p>
     button(onclick="updateSpeeds()") Update
+    button(onclick="handsfree.startCalibration()") Calibrate
 
 script.
   // Create a new instance. Use one instance for each camera
   const handsfree = new Handsfree({
-    // Override the "head.pointer" plugin's default speed
+    // Override the "weboji.pointer" plugin's default speed
     plugin: {
-      head: {
+      weboji: {
         pointer: {
           speed: {
             x: 0.5,
@@ -36,6 +37,6 @@ script.
   const $x = document.querySelector('#speed-x')
   const $y = document.querySelector('#speed-y')
   function updateSpeeds() {
-    Handsfree.plugins.head.pointer.config.speed.x = $x.value
-    Handsfree.plugins.head.pointer.config.speed.y = $y.value
+    Handsfree.plugins.weboji.pointer.config.speed.x = $x.value
+    Handsfree.plugins.weboji.pointer.config.speed.y = $y.value
   }

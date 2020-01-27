@@ -60,9 +60,9 @@ script.
   // Create a new instance and set the throttle
   const handsfree = new Handsfree({
     plugin: {
-      head: {
+      weboji: {
         click: {
-          throttle: 0
+          throttle: 1000
         }
       }
     }
@@ -87,7 +87,7 @@ script.
     const throttle = +$throttleSlider.value
 
     // Update the plugin's throttle
-    Handsfree.plugins.head.click.config.throttle = throttle
+    Handsfree.plugins.weboji.click.config.throttle = throttle
 
     // Display the throttle
     $throttleDisplay.innerHTML = $throttleSlider.value

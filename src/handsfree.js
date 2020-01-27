@@ -74,7 +74,9 @@ class Handsfree {
   track() {
     // Run inference
     if (!this.config.isClient) {
-      this.model.head.enabled && this.model.head.loaded && this.inferWeboji()
+      this.model.weboji.enabled &&
+        this.model.weboji.loaded &&
+        this.inferWeboji()
     }
 
     // Run plugins or send messages

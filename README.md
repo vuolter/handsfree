@@ -42,11 +42,11 @@ For more examples, see the `/examples/` folder:
     const handsfree = new Handsfree({})
 
     // Create a simple plugin that displays pointer values on every frame
-    Handsfree.use('consoleLogger', ({ head }) => {
+    Handsfree.use('consoleLogger', ({ weboji }) => {
       console.log(`---
-      Pitch ${(head.rotation[0] * 180) / Math.PI}
-      Yaw ${(head.rotation[1] * 180) / Math.PI}
-      Roll ${(head.rotation[1] * 180) / Math.PI}`)
+      Pitch ${(weboji.rotation[0] * 180) / Math.PI}
+      Yaw ${(weboji.rotation[1] * 180) / Math.PI}
+      Roll ${(weboji.rotation[1] * 180) / Math.PI}`)
     })
   </script>
 </body>
@@ -66,7 +66,7 @@ For more examples, see the `/examples/` folder:
 </div>
 
 - [Getting Started](https://dev.to/heyozramos/handsfree-js-a-web-based-face-pointer-24m1): Learn how to setup Handsfree.js and access the `handsfree.pointer` properties
-- [Controlling a YouTube 360 video](https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801): Learn how to access and use `handsfree.head.rotation` to control a 360 video
+- [Controlling a YouTube 360 video](https://dev.to/heyozramos/controlling-youtube-360-videos-handsfree-2801): Learn how to access and use `handsfree.weboji.rotation` to control a 360 video
 - [Puppeteering Emojis with face morphs](https://dev.to/heyozramos/puppeteering-emojis-with-face-morphs-with-handsfree-js-55kp): Explores the face morph activation properties
 - [Face Painting with P5.js](https://dev.to/heyozramos/face-painting-with-p5-js-2b64): Integrate with P5.js to paint with your face
 

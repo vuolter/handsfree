@@ -169,8 +169,8 @@ Handsfree.enableAll = function(payload) {
   }
 }
 
-require('./plugins/head/vertScroll')
-require('./plugins/head/click')
-require('./plugins/head/morphs')
-require('./plugins/head/pointer')
-require('./plugins/head/ghostedPointer')
+require('./plugins/weboji/vertScroll')
+require('./plugins/weboji/click')
+require('./plugins/weboji/morphs')
+require('./plugins/weboji/pointer')
+require('./plugins/weboji/ghostedPointer')

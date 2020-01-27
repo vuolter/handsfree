@@ -30,13 +30,13 @@ Handsfree.prototype.createCalibratorOverlay = function() {
  */
 Handsfree.prototype.startCalibration = function() {
   this.isStarted && this.calibrator.wrap.classList.add('handsfree-visible')
-  Handsfree.plugins.head.calibration.framesCalibrated = 0
-  Handsfree.enable('head.calibration')
+  Handsfree.plugins.weboji.calibration.framesCalibrated = 0
+  Handsfree.enable('weboji.calibration')
   document.body.classList.add('handsfree-calibrating')
 
   // Disable calibration on calibration
   this.on('handsfreeCalibrationEnded', () => {
-    Handsfree.disable('head.calibration')
+    Handsfree.disable('weboji.calibration')
     document.body.classList.remove('handsfree-calibrating')
     this.calibrator.wrap.classList.remove('handsfree-visible')
   })
@@ -45,7 +45,7 @@ Handsfree.prototype.startCalibration = function() {
 /**
  * Calibration plugin
  */
-Handsfree.use('head.calibration', {
+Handsfree.use('weboji.calibration', {
   enabled: false,
   framesCalibrated: 0,
   numFramesToCalibrate: 60,
@@ -57,30 +57,30 @@ Handsfree.use('head.calibration', {
       y: bounds.top + bounds.height / 2
     }
     const dist = Math.sqrt(
-      Math.pow(instance.head.pointer.x - center.x, 2) +
-        Math.pow(instance.head.pointer.y - center.y, 2)
+      Math.pow(instance.weboji.pointer.x - center.x, 2) +
+        Math.pow(instance.weboji.pointer.y - center.y, 2)
     )
 
-    this.step(instance.head, dist, center)
+    this.step(instance.weboji, dist, center)
     this.maybeEndCalibration(instance, dist)
   },
 
   /**
    * Step the pointer towards the center
    */
-  step(head, dist, center) {
+  step(weboji, dist, center) {
     const stepSize = dist < 40 ? 3 : 20
 
     // Move toward center
-    if (head.pointer.x < center.x) {
-      Handsfree.plugins.head.pointer.config.offset.x += stepSize
+    if (weboji.pointer.x < center.x) {
+      Handsfree.plugins.weboji.pointer.config.offset.x += stepSize
     } else {
-      Handsfree.plugins.head.pointer.config.offset.x -= stepSize
+      Handsfree.plugins.weboji.pointer.config.offset.x -= stepSize
     }
-    if (head.pointer.y < center.y) {
-      Handsfree.plugins.head.pointer.config.offset.y += stepSize
+    if (weboji.pointer.y < center.y) {
+      Handsfree.plugins.weboji.pointer.config.offset.y += stepSize
     } else {
-      Handsfree.plugins.head.pointer.config.offset.y -= stepSize
+      Handsfree.plugins.weboji.pointer.config.offset.y -= stepSize
     }
   },
 

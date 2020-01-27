@@ -1,7 +1,7 @@
 /**
  * Hides the pointer after numFramesToGhost frames
  */
-window.Handsfree.use('head.ghostedPointer', {
+window.Handsfree.use('weboji.ghostedPointer', {
   // Disable by default
   enabled: false,
   // Number of frames held still
@@ -19,17 +19,17 @@ window.Handsfree.use('head.ghostedPointer', {
     y: 0
   },
 
-  onDisable({ head }) {
-    head.pointer.$el.classList.remove('handsfree-pointer-hidden')
+  onDisable({ weboji }) {
+    weboji.pointer.$el.classList.remove('handsfree-pointer-hidden')
   },
 
   /**
    * Handles ghosting
    */
-  onFrame({ head }) {
+  onFrame({ weboji }) {
     const dist = Math.sqrt(
-      Math.pow(this.last.x - head.pointer.x, 2) +
-        Math.pow(this.last.y - head.pointer.y, 2)
+      Math.pow(this.last.x - weboji.pointer.x, 2) +
+        Math.pow(this.last.y - weboji.pointer.y, 2)
     )
 
     if (dist < this.config.distToReset) {
@@ -39,12 +39,12 @@ window.Handsfree.use('head.ghostedPointer', {
     }
 
     if (this.framesStill > this.config.numFramesToGhost) {
-      head.pointer.$el.classList.add('handsfree-pointer-hidden')
+      weboji.pointer.$el.classList.add('handsfree-pointer-hidden')
     } else {
-      head.pointer.$el.classList.remove('handsfree-pointer-hidden')
+      weboji.pointer.$el.classList.remove('handsfree-pointer-hidden')
     }
 
-    this.last.x = head.pointer.x
-    this.last.y = head.pointer.y
+    this.last.x = weboji.pointer.x
+    this.last.y = weboji.pointer.y
   }
 })

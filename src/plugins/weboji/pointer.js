@@ -1,6 +1,6 @@
 import { TweenMax } from 'gsap/all'
 
-window.Handsfree.use('head.pointer', {
+window.Handsfree.use('weboji.pointer', {
   // The pointer element
   $pointer: null,
   tween: {
@@ -24,31 +24,32 @@ window.Handsfree.use('head.pointer', {
   /**
    * Create a pointer for each user
    */
-  onUse({ head }) {
+  onUse({ weboji }) {
     // @FIXME make this a config
     const NUMUSERS = 1
-    head.pointer = { x: 0, y: 0 }
+    weboji.pointer = { x: 0, y: 0 }
 
     if (!this.$pointer) {
       for (let i = 0; i < NUMUSERS; i++) {
         const $pointer = document.createElement('div')
         $pointer.classList.add('handsfree-pointer')
         document.body.appendChild($pointer)
-        head.pointer.$el = this.$pointer = $pointer
+        weboji.pointer.$el = this.$pointer = $pointer
       }
     }
   },
 
-  onFrame({ head }) {
-    // Get X/Y as if looking straight ahead
-    let x = head.translation[0] * window.outerWidth
-    let y = window.outerHeight - head.translation[1] * window.outerHeight
-    let z = (1 - head.translation[2]) * window.outerWidth * 2.5
+  onFrame({ weboji }) {
+    // Get X/Y as if looking straight aweboji
+    let x = weboji.translation[0] * window.outerWidth
+    let y = window.outerHeight - weboji.translation[1] * window.outerHeight
+    let z = (1 - weboji.translation[2]) * window.outerWidth * 2.5
 
     // Add pitch/yaw
-    x += z * Math.tan(head.rotation[1]) * this.config.speed.x
+    x += z * Math.tan(weboji.rotation[1]) * this.config.speed.x
     y +=
-      z * Math.tan(head.rotation[0]) * this.config.speed.y - window.outerHeight
+      z * Math.tan(weboji.rotation[0]) * this.config.speed.y -
+      window.outerHeight
 
     // Add offsets
     x += this.config.offset.x
@@ -65,8 +66,8 @@ window.Handsfree.use('head.pointer', {
 
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
-    head.pointer.x = this.tween.x
-    head.pointer.y = this.tween.y
+    weboji.pointer.x = this.tween.x
+    weboji.pointer.y = this.tween.y
   },
 
   /**

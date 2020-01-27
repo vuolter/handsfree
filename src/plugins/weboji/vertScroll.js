@@ -1,7 +1,7 @@
 /**
  * Scrolls the page vertically
  */
-window.Handsfree.use('head.vertScroll', {
+window.Handsfree.use('weboji.vertScroll', {
   // Number of frames over the same element before activating that element
   FOCUSACTIVATION: 10,
   // Number of frames the current element is the same as the last
@@ -23,12 +23,12 @@ window.Handsfree.use('head.vertScroll', {
   /**
    * Scroll the page when the cursor goes above/below the threshold
    */
-  onFrame({ head }) {
+  onFrame({ weboji }) {
     // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
-    if (!head.pointer.x && !head.pointer.y) return
+    if (!weboji.pointer.x && !weboji.pointer.y) return
 
     // Check for hover
-    this.checkForFocus(head)
+    this.checkForFocus(weboji)
     let isScrolling = false
 
     // Get bounds
@@ -42,17 +42,17 @@ window.Handsfree.use('head.vertScroll', {
     }
 
     // Check on click
-    if (head.pointer.state === 'mouseDown') {
+    if (weboji.pointer.state === 'mouseDown') {
       this.numFramesFocused = 0
-      this.maybeSetTarget(head)
+      this.maybeSetTarget(weboji)
     }
 
     // Scroll up
-    if (head.pointer.y < bounds.top + this.config.vertScroll.scrollZone) {
+    if (weboji.pointer.y < bounds.top + this.config.vertScroll.scrollZone) {
       this.$target.scrollTo(
         0,
         scrollTop +
-          (head.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
+          (weboji.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
 
@@ -60,11 +60,13 @@ window.Handsfree.use('head.vertScroll', {
     }
 
     // Scroll down
-    if (head.pointer.y > bounds.bottom - this.config.vertScroll.scrollZone) {
+    if (weboji.pointer.y > bounds.bottom - this.config.vertScroll.scrollZone) {
       this.$target.scrollTo(
         0,
         scrollTop -
-          (bounds.bottom - head.pointer.y - this.config.vertScroll.scrollZone) *
+          (bounds.bottom -
+            weboji.pointer.y -
+            this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
 
@@ -116,8 +118,11 @@ window.Handsfree.use('head.vertScroll', {
   /**
    * Checks to see if we've hovered over an element for x turns
    */
-  checkForFocus: Handsfree.throttle(function(head) {
-    let $potTarget = document.elementFromPoint(head.pointer.x, head.pointer.y)
+  checkForFocus: Handsfree.throttle(function(weboji) {
+    let $potTarget = document.elementFromPoint(
+      weboji.pointer.x,
+      weboji.pointer.y
+    )
     if (!$potTarget) return
     $potTarget = this.recursivelyFindScrollbar($potTarget)
 
@@ -156,9 +161,9 @@ window.Handsfree.use('head.vertScroll', {
   /**
    * Sets a new scroll target on click
    */
-  maybeSetTarget(head) {
-    if (head.pointer.state === 'mouseDown' && head.pointer.$target) {
-      this.selectTarget(this.recursivelyFindScrollbar(head.pointer.$target))
+  maybeSetTarget(weboji) {
+    if (weboji.pointer.state === 'mouseDown' && weboji.pointer.$target) {
+      this.selectTarget(this.recursivelyFindScrollbar(weboji.pointer.$target))
     }
   },
 

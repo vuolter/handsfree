@@ -48,7 +48,7 @@ Handsfree.prototype.loadAndWait = function(scripts, cb) {
 /**
  * Throttles a model
  *
- * @param {String} modelName The name of the model to throttle ['head']
+ * @param {String} modelName The name of the model to throttle ['weboji']
  * @param {Integer} time How many milliseconds to throttle by (in other words, run this model every X milliseconds)
  * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
  */
@@ -56,9 +56,9 @@ Handsfree.prototype.throttleModel = function(modelName, time, opts = {}) {
   this.config.models[modelName].throttle = time
 
   switch (modelName) {
-    case 'head':
+    case 'weboji':
       this.inferWeboji = throttle(this._inferWeboji, time, opts)
-      // @FIXME - Why isn't this.model.head.sdk not working?
+      // @FIXME - Why isn't this.model.weboji.sdk not working?
       window.JEEFACETRANSFERAPI &&
         window.JEEFACETRANSFERAPI.set_animationDelay &&
         window.JEEFACETRANSFERAPI.set_animationDelay(time)

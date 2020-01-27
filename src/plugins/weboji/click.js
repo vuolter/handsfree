@@ -1,12 +1,12 @@
 /**
  * Click on things
  */
-window.Handsfree.use('head.click', {
+window.Handsfree.use('weboji.click', {
   config: {
     // How often in milliseconds to trigger clicks
     throttle: 50,
     set throttle(throttle) {
-      Handsfree.plugins.head.click.updateClickThrottle(throttle)
+      Handsfree.plugins.weboji.click.updateClickThrottle(throttle)
     },
 
     // Max number of frames to keep down
@@ -35,8 +35,8 @@ window.Handsfree.use('head.click', {
    */
   updateClickThrottle(throttle) {
     this.maybeClick = Handsfree.throttle(
-      function(head) {
-        this.click(head)
+      function(weboji) {
+        this.click(weboji)
       },
       throttle,
       { trailing: false }
@@ -46,15 +46,15 @@ window.Handsfree.use('head.click', {
   /**
    * Detect click state and trigger a real click event
    */
-  onFrame({ head }) {
+  onFrame({ weboji }) {
     // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
-    if (!head.pointer.x && !head.pointer.y) return
+    if (!weboji.pointer.x && !weboji.pointer.y) return
 
     this.thresholdMet = false
 
     Object.keys(this.config.morphs).forEach((key) => {
       const morph = +this.config.morphs[key]
-      if (morph > 0 && head.morphs[key] >= morph) this.thresholdMet = true
+      if (morph > 0 && weboji.morphs[key] >= morph) this.thresholdMet = true
     })
 
     if (this.thresholdMet) {
@@ -71,30 +71,30 @@ window.Handsfree.use('head.click', {
       this.mouseDowned > 0 &&
       this.mouseDowned <= this.config.maxMouseDownedFrames
     )
-      head.pointer.state = 'mouseDown'
+      weboji.pointer.state = 'mouseDown'
     else if (this.mouseDowned > this.config.maxMouseDownedFrames)
-      head.pointer.state = 'mouseDrag'
-    else if (this.mouseUp) head.pointer.state = 'mouseUp'
+      weboji.pointer.state = 'mouseDrag'
+    else if (this.mouseUp) weboji.pointer.state = 'mouseUp'
     else ''
 
     // Actually click something (or focus it)
-    if (head.pointer.state === 'mouseDown') {
-      this.maybeClick(head)
+    if (weboji.pointer.state === 'mouseDown') {
+      this.maybeClick(weboji)
     }
   },
 
   /**
    * The actual click method, this is what gets throttled
    */
-  click(head) {
-    const $el = document.elementFromPoint(head.pointer.x, head.pointer.y)
+  click(weboji) {
+    const $el = document.elementFromPoint(weboji.pointer.x, weboji.pointer.y)
     if ($el) {
       $el.dispatchEvent(
         new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
-          clientX: head.pointer.x,
-          clientY: head.pointer.y
+          clientX: weboji.pointer.x,
+          clientY: weboji.pointer.y
         })
       )
 
@@ -102,7 +102,7 @@ window.Handsfree.use('head.click', {
       if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
         $el.focus()
 
-      head.pointer.$target = $el
+      weboji.pointer.$target = $el
     }
   },
 

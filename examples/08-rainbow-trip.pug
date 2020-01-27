@@ -27,12 +27,12 @@ style.
 script.
   const handsfree = new Handsfree({
     models: {
-      head: {enabled: false},
+      weboji: {enabled: false},
       bodypix: {enabled: true}
     }
   })
-  Handsfree.disable('head.pointer')
-  Handsfree.disable('head.vertScroll')
+  Handsfree.disable('weboji.pointer')
+  Handsfree.disable('weboji.vertScroll')
 
   const $wrap = document.querySelector('#scene-wrap')
   const $background = document.querySelector('#scene-background')

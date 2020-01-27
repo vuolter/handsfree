@@ -30,7 +30,7 @@ Handsfree.prototype.recordGesture = function(opts, onReady) {
       delaySeconds: 3,
       numSamples: 100,
       labels: ['base'],
-      models: ['head'],
+      models: ['weboji'],
       storeInIndexedDB: false,
       exportToJSON: false,
       onReady
@@ -118,20 +118,20 @@ Handsfree.use('gestureRecorder.collectSample', {
 
     // Exit if models aren't active yet
     if (
-      gestureRecorder.config.models.includes('head') &&
-      !handsfree.head.translation.length
+      gestureRecorder.config.models.includes('weboji') &&
+      !handsfree.weboji.translation.length
     )
       return
 
     // Loop through each model and store data in a flattened array
     gestureRecorder.config.models.forEach((model) => {
       switch (model) {
-        case 'head':
+        case 'weboji':
           Array.prototype.push.apply(
             data,
-            handsfree.head.translation,
-            handsfree.head.rotation,
-            handsfree.head.morphs
+            handsfree.weboji.translation,
+            handsfree.weboji.rotation,
+            handsfree.weboji.morphs
           )
           break
       }

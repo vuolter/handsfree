@@ -19,7 +19,7 @@ Handsfree.prototype.setup = function(config) {
  * Sets up the pose default object
  */
 Handsfree.prototype.poseDefaults = function() {
-  this.head = {
+  this.weboji = {
     translation: [],
     rotation: [],
     morphs: [],
@@ -81,13 +81,13 @@ Handsfree.prototype.cleanConfig = function(config) {
       },
 
       models: {
-        head: {
+        weboji: {
           enabled: true,
           throttle: 0
         }
       },
 
-      head: {
+      weboji: {
         morphs: {
           threshold: {
             smileRight: 0.7,
@@ -120,9 +120,9 @@ Handsfree.prototype.initProps = function() {
   // Models
   this.model = {
     // Weboji model
-    head: {
+    weboji: {
       sdk: null,
-      enabled: this.config.models.head.enabled
+      enabled: this.config.models.weboji.enabled
     }
   }
 
@@ -167,10 +167,10 @@ Handsfree.prototype.initProps = function() {
 }
 
 /**
- * Load the Weboji head tracker
+ * Load the Weboji weboji tracker
  */
 Handsfree.prototype.loadDependencies = function() {
-  if (this.model.head.enabled && !this.model.head.loaded)
+  if (this.model.weboji.enabled && !this.model.weboji.loaded)
     this.loadWebojiDependencies()
 }
 
@@ -179,7 +179,7 @@ Handsfree.prototype.loadDependencies = function() {
  */
 Handsfree.prototype.startModels = function() {
   if (!this.config.isClient) {
-    if (this.model.head.enabled) {
+    if (this.model.weboji.enabled) {
       this.maybeStartWeboji()
     }
   } else {
@@ -241,7 +241,7 @@ Handsfree.prototype.reload = function() {
   this.loadDependencies()
 
   if (this.isStarted) {
-    if (this.model.head.enabled) this.maybeStartWeboji()
+    if (this.model.weboji.enabled) this.maybeStartWeboji()
   }
 
   this.zeroWebojiData()
