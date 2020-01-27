@@ -4,7 +4,10 @@ include header.pug
 
 script.
   handsfree = new Handsfree()
-  
+  handsfree.loadGestures({
+    facepointerActions: 'indexeddb://facepointerActions'
+  })
+
   const recordGesture = function () {
     handsfree.recordGesture({
       models: ['head'],

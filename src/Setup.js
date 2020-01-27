@@ -177,9 +177,16 @@ Handsfree.prototype.initProps = function() {
 
     // ML5 stuff
     loadedMl5: false,
+    loadedTF: false,
     // The ml5 neural net
     brain: null
   }
+
+  // Set of loaded gestureSet models
+  this.gestureSets = {}
+
+  // List of models that failed to load during the last loadGestures
+  this.missingGestureSets = []
 }
 
 /**

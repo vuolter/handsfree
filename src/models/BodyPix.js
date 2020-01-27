@@ -8,6 +8,7 @@ Handsfree.prototype.loadBodypixDependencies = async function() {
     if (!this.model.bodypix.sdk) {
       this.loadAndWait([Handsfree.libSrc + 'models/tfjs@1.2.js'], () => {
         this.loadAndWait([Handsfree.libSrc + 'models/body-pix@2.0.js'], () => {
+          this.gestureRecorder.loadedTF = true
           this.bindBodypix()
         })
       })
@@ -197,4 +198,42 @@ Handsfree.prototype.zeroBodypixData = function() {
       }
     }
   })
+}
+
+/**
+ * Loads a gestureSet model
+ *
+ * @param {Object} gestureSets A list of {gesturSetName: URL}
+ */
+Handsfree.prototype.loadGestures = function(gestureSets) {
+  // Load TensorFlow
+  const onTFReady = () => {
+    let gesturesToLoad = Object.keys(gestureSets).length
+    this.missingGestureSets = []
+    document.body.classList.add('handsfree-loading-gestures')
+
+    Object.keys(gestureSets).forEach(async (gestureSet) => {
+      try {
+        this.gestureSet[gestureSet] = await tf.loadLayersModel(
+          gestureSets[gestureSet]
+        )
+      } catch (e) {
+        this.missingGestureSets.push(gestureSet)
+      }
+
+      if (--gesturesToLoad <= 0) {
+        document.body.classList.remove('handsfree-loading-gestures')
+        this.emit('handsfreeGesturesLoaded')
+      }
+    })
+  }
+
+  // Load TensorFlow if it hasn't been loaded yet
+  if (this.gestureRecorder.loadedTF) {
+    onTFReady()
+  } else {
+    this.loadAndWait([Handsfree.libSrc + 'models/tfjs@1.2.js'], () => {
+      onTFReady()
+    })
+  }
 }
