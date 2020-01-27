@@ -184,7 +184,6 @@ Handsfree.prototype.createGestureModel = function() {
     this.gestureRecorder.$message.innerHTML = message
 
     // Create brain
-    this.dependencies.tf = true
     const brain = (this.gestureRecorder.brain = ml5.neuralNetwork({
       inputs: this.gestureRecorder.samples[0].length,
       outputs: this.gestureRecorder.config.labels.length,
@@ -211,10 +210,11 @@ Handsfree.prototype.createGestureModel = function() {
   }
 
   // Load ML5 if it hasn't been loaded yet
-  if (this.dependencies.tf) {
+  if (this.dependencies.ml5) {
     onML5Ready()
   } else {
     this.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+      this.dependencies.ml5 = true
       onML5Ready()
     })
   }
@@ -249,14 +249,14 @@ Handsfree.prototype.finishedTrainingGestures = function() {
  */
 Handsfree.prototype.loadGestures = function(gestureSets) {
   // Load TensorFlow
-  const onTFReady = () => {
+  const onML5Ready = () => {
     let gesturesToLoad = Object.keys(gestureSets).length
     this.missingGestureSets = []
     document.body.classList.add('handsfree-loading-gestures')
 
     Object.keys(gestureSets).forEach(async (gestureSet) => {
       try {
-        this.gestureSets[gestureSet] = await tf.loadLayersModel(
+        this.gestureSets[gestureSet] = await ml5.tf.loadLayersModel(
           gestureSets[gestureSet]
         )
       } catch (e) {
@@ -271,11 +271,12 @@ Handsfree.prototype.loadGestures = function(gestureSets) {
   }
 
   // Load TensorFlow if it hasn't been loaded yet
-  if (this.gestureRecorder.loadedTF) {
-    onTFReady()
+  if (this.dependencies.ml5) {
+    onML5Ready()
   } else {
-    this.loadAndWait([Handsfree.libSrc + 'models/tfjs@1.2.js'], () => {
-      onTFReady()
+    this.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+      this.dependencies.ml5 = true
+      onML5Ready()
     })
   }
 }
