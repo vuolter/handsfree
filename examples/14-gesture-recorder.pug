@@ -8,7 +8,11 @@ script.
   const recordGesture = function () {
     handsfree.recordGesture({
       models: ['head'],
-      labels: ['base', 'smile'],
-      delaySeconds: 3
+      labels: ['base', 'click'],
+      delaySeconds: 0,
+      storeInIndexedDB: true,
+      gestureSet: 'facepointerActions'
+    }, (model) => {
+      console.log('model saved')
     })
   }

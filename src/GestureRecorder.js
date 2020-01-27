@@ -22,17 +22,18 @@ Handsfree.prototype.createGestureRecorderOverlay = function() {
 /**
  * Start calibrating
  */
-Handsfree.prototype.recordGesture = function(opts) {
+Handsfree.prototype.recordGesture = function(opts, onReady) {
   // Setup opts
   opts = merge(
     {
-      gestureName: '',
+      gestureSet: '',
       delaySeconds: 3,
       numSamples: 100,
       labels: ['base'],
       models: ['head'],
-      storeInLocalStorage: false,
-      exportToJSON: false
+      storeInIndexedDB: false,
+      exportToJSON: false,
+      onReady
     },
     opts
   )
@@ -48,6 +49,7 @@ Handsfree.prototype.recordGesture = function(opts) {
   handsfree.start()
 
   // Enable gestureRecorder plugin
+  this.gestureRecorder.curLabelIndex = 0
   this.gestureRecordCountdown(() => {
     this.gestureRecorder.samples = []
     this.gestureRecorder.curLabelIndex = 0
@@ -63,7 +65,7 @@ Handsfree.prototype.recordGesture = function(opts) {
     Handsfree.disable('gestureRecorder.collectSample')
     document.body.classList.remove('handsfree-recording-gesture')
     this.gestureRecorder.wrap.classList.remove('handsfree-visible')
-    this.createModel()
+    this.createGestureModel()
   })
 }
 
@@ -189,15 +191,56 @@ Handsfree.use('gestureRecorder.collectSample', {
 /**
  * Create a model
  */
-Handsfree.prototype.createModel = function() {
-  this.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
-    this.ml5 = window.ml5
+Handsfree.prototype.createGestureModel = function() {
+  const onML5Ready = () => {
+    // Create brain
+    this.gestureRecorder.loadedMl5 = true
+    const brain = (this.gestureRecorder.brain = ml5.neuralNetwork({
+      inputs: this.gestureRecorder.samples[0].length,
+      outputs: this.gestureRecorder.config.labels.length,
+      task: 'classification',
+      debug: true
+    }))
 
-    // this.ml5.neuralNetwork({
-    //   inputs: this.gestureRecorder.samples[0].length,
-    //   outputs: this.gestureRecorder.config.labels.length,
-    //   task: 'classification',
-    //   debug: true
-    // })
-  })
+    // Add data
+    this.gestureRecorder.samples.forEach((samples, i) => {
+      let data = []
+      samples.forEach((sample) => {
+        data.push(...sample)
+      })
+      brain.addData(data, [this.gestureRecorder.config.labels[i]])
+    })
+
+    // Train
+    brain.normalizeData()
+    brain.train({ epochs: 50 }, () => {
+      this.finishedTrainingGestures()
+    })
+  }
+
+  // Load ML5 if it hasn't been loaded yet
+  if (this.gestureRecorder.loadedMl5) {
+    onML5Ready()
+  } else {
+    this.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+      onML5Ready()
+    })
+  }
+}
+
+/**
+ * Called once training is complete
+ */
+Handsfree.prototype.finishedTrainingGestures = function() {
+  const model = this.gestureRecorder.brain.model
+
+  this.gestureRecorder.brain.vis.tfvis.visor().close()
+
+  if (this.gestureRecorder.config.storeInIndexedDB)
+    model.save('indexeddb://' + this.gestureRecorder.config.gestureSet)
+  if (this.gestureRecorder.config.exportToJSON)
+    model.save('downloads://' + this.gestureRecorder.config.gestureSet)
+
+  this.gestureRecorder.config.onReady &&
+    this.gestureRecorder.config.onReady(model)
 }

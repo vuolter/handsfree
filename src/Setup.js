@@ -173,7 +173,11 @@ Handsfree.prototype.initProps = function() {
     // The current training label index
     curLabelIndex: 0,
     samples: [],
-    ml5: null
+
+    // ML5 stuff
+    loadedMl5: false,
+    // The ml5 neural net
+    brain: null
   }
 }
 
