@@ -67,6 +67,7 @@ Handsfree.prototype.cleanConfig = function(config) {
         countdownMessage: 'Recording "{label}" in {countdown}',
         // The message to display during recording
         recordingMessage: '{numSamples} samples collected for "{label}"',
+        trainingMessage: 'Training "{gestureSetName}"',
         // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
         marker: null
       },

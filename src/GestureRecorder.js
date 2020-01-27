@@ -63,8 +63,6 @@ Handsfree.prototype.recordGesture = function(opts, onReady) {
   // End gesture recording
   this.on('handsfreeGestureRecordingEnded', () => {
     Handsfree.disable('gestureRecorder.collectSample')
-    document.body.classList.remove('handsfree-recording-gesture')
-    this.gestureRecorder.wrap.classList.remove('handsfree-visible')
     this.createGestureModel()
   })
 }
@@ -193,6 +191,13 @@ Handsfree.use('gestureRecorder.collectSample', {
  */
 Handsfree.prototype.createGestureModel = function() {
   const onML5Ready = () => {
+    // Update message
+    let message = this.config.gestureRecorder.trainingMessage.replace(
+      /\{gestureSetName\}/g,
+      this.gestureRecorder.config.gestureSet
+    )
+    this.gestureRecorder.$message.innerHTML = message
+
     // Create brain
     this.gestureRecorder.loadedMl5 = true
     const brain = (this.gestureRecorder.brain = ml5.neuralNetwork({
@@ -243,4 +248,7 @@ Handsfree.prototype.finishedTrainingGestures = function() {
 
   this.gestureRecorder.config.onReady &&
     this.gestureRecorder.config.onReady(model)
+
+  document.body.classList.remove('handsfree-recording-gesture')
+  this.gestureRecorder.wrap.classList.remove('handsfree-visible')
 }

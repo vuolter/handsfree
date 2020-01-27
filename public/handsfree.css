@@ -134,6 +134,10 @@
   border: 2px solid #aac;
 }
 
+#tfjs-visor-container > .visor {
+  z-index: 1000000;
+}
+
 /* Click animation */
 body.handsfree-clicked .handsfree-pointer {
   background: #ff0;
