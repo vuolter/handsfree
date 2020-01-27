@@ -203,6 +203,8 @@ Handsfree.prototype.createGestureModel = function() {
 
     // Train
     brain.normalizeData()
+    this.gestureRecorder.brain.vis.tfvis.visor().open &&
+      this.gestureRecorder.brain.vis.tfvis.visor().open()
     brain.train({ epochs: 50 }, () => {
       this.finishedTrainingGestures()
     })
