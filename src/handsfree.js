@@ -14,6 +14,7 @@ class Handsfree {
     this.runOnUse(Handsfree.plugins)
     this.config.autostart && this.start()
 
+    this.gestures = {}
     this.gestureRecorder = new GestureRecorder(this.config, this)
   }
 
@@ -102,7 +103,7 @@ class Handsfree {
    *
    * @param {Object} gestureSets A list of {gesturSetName: URL}
    */
-  loadGestures(gestureSets) {
+  loadGestures(gestureSets, onReady) {
     // Load TensorFlow
     const onML5Ready = () => {
       let gesturesToLoad = Object.keys(gestureSets).length
@@ -123,17 +124,25 @@ class Handsfree {
             weights: gestureSets[name].replace('.json', '.weights.bin')
           }
 
-          brain.load(opts, (model) => {
-            console.log('loaded', model)
+          brain.load(opts, () => {
+            this.gestures[name] = brain
+            --gesturesToLoad
+            if (--gesturesToLoad === 0) {
+              document.body.classList.remove('handsfree-loading-gestures')
+              this.emit('handsfreeGesturesLoaded')
+              onReady && onReady()
+            }
           })
         } catch (e) {
           console.log(e)
           this.missingGestureSets.push(name)
+          --gesturesToLoad
         }
 
-        if (--gesturesToLoad <= 0) {
+        if (--gesturesToLoad === 0) {
           document.body.classList.remove('handsfree-loading-gestures')
           this.emit('handsfreeGesturesLoaded')
+          onReady && onReady()
         }
       })
     }
