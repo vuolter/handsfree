@@ -1,5 +1,5 @@
 /**
- * (∩｀-´)⊃━☆ﾟ.*・｡ﾟ Handsfree
+ * (∩｀-´)⊃━☆ﾟ.*・｡ﾟ Handsfree.js
  *
  * @usage const handsfree = new Handsfree(config);
  */

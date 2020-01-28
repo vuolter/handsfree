@@ -27,12 +27,11 @@ Handsfree.prototype.recordGesture = function(opts, onReady) {
   opts = merge(
     {
       gestureSet: '',
+      download: false,
       delaySeconds: 3,
       numSamples: 100,
       labels: ['base'],
       models: ['weboji'],
-      storeInIndexedDB: false,
-      exportToJSON: false,
       onReady
     },
     opts
@@ -230,16 +229,18 @@ Handsfree.prototype.finishedTrainingGestures = function() {
   this.gestureRecorder.brain.vis.tfvis.visor().close()
 
   // Persist models
-  if (this.gestureRecorder.config.storeInIndexedDB)
-    model.save('indexeddb://' + this.gestureRecorder.config.gestureSet)
-  if (this.gestureRecorder.config.exportToJSON)
-    model.save('downloads://' + this.gestureRecorder.config.gestureSet)
+  if (this.gestureRecorder.config.download) {
+    this.gestureRecorder.brain.save(() => {
+      this.gestureRecorder.config.onReady &&
+        this.gestureRecorder.config.onReady(model)
 
-  this.gestureRecorder.config.onReady &&
-    this.gestureRecorder.config.onReady(model)
-
-  document.body.classList.remove('handsfree-recording-gesture')
-  this.gestureRecorder.wrap.classList.remove('handsfree-visible')
+      document.body.classList.remove('handsfree-recording-gesture')
+      this.gestureRecorder.wrap.classList.remove('handsfree-visible')
+    }, this.gestureRecorder.config.gestureSet.toString())
+  } else {
+    document.body.classList.remove('handsfree-recording-gesture')
+    this.gestureRecorder.wrap.classList.remove('handsfree-visible')
+  }
 }
 
 /**
