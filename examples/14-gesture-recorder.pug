@@ -9,11 +9,11 @@ script.
    * Record a gesture
    */
   const recordGesture = function () {
-    handsfree.gestureRecorder.record({
+    handsfree.recordGesture({
       name: 'facepointer',
       models: ['weboji'],
       labels: ['base', 'click'],
-      delaySeconds: 0,
+      delaySeconds: 1,
       download: true
     })
   }

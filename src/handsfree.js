@@ -14,7 +14,14 @@ class Handsfree {
     this.runOnUse(Handsfree.plugins)
     this.config.autostart && this.start()
 
-    this.gestureRecorder = new GestureRecorder(this.config)
+    this.gestureRecorder = new GestureRecorder(this.config, this)
+  }
+
+  /**
+   * Record a gesture
+   */
+  recordGesture(opts, callback) {
+    this.gestureRecorder.record(opts, this, callback)
   }
 
   /**
