@@ -3,6 +3,8 @@
  *
  * @usage const handsfree = new Handsfree(config);
  */
+import GestureRecorder from './GestureRecorder/index'
+
 class Handsfree {
   /**
    * @param {Object} config The config object (see README)
@@ -11,6 +13,8 @@ class Handsfree {
     this.setup(config)
     this.runOnUse(Handsfree.plugins)
     this.config.autostart && this.start()
+
+    this.gestureRecorder = new GestureRecorder(this.config)
   }
 
   /**
@@ -106,6 +110,5 @@ require('./Helpers')
 require('./Setup')
 require('./Plugins')
 require('./Calibration')
-require('./GestureRecorder')
 
 export default Handsfree

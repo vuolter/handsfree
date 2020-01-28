@@ -4,19 +4,33 @@ include header.pug
 
 script.
   handsfree = new Handsfree()
-  handsfree.loadGestures({
-    facepointerActions: 'indexeddb://facepointerActions'
-  })
-
+  
+  /**
+   * Record a gesture
+   */
   const recordGesture = function () {
-    handsfree.recordGesture({
+    handsfree.gestureRecorder.record({
+      name: 'facepointer',
       models: ['weboji'],
       labels: ['base', 'click'],
       delaySeconds: 0,
-      storeInIndexedDB: true,
-      gestureSet: 'facepointerActions',
       download: true
-    }, (model) => {
-      console.log('model saved')
     })
   }
+  
+  //- handsfree.loadGestures({
+  //-   facepointerActions: 'indexeddb://facepointerActions'
+  //- })
+
+  //- const recordGesture = function () {
+  //-   handsfree.recordGesture({
+  //-     models: ['weboji'],
+  //-     labels: ['base', 'click'],
+  //-     delaySeconds: 0,
+  //-     storeInIndexedDB: true,
+  //-     gestureSet: 'facepointerActions',
+  //-     download: true
+  //-   }, (model) => {
+  //-     console.log('model saved')
+  //-   })
+  //- }

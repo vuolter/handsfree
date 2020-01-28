@@ -12,7 +12,6 @@ Handsfree.prototype.setup = function(config) {
   this.loadDependencies()
   this.createDebugger()
   this.createCalibratorOverlay()
-  this.createGestureRecorderOverlay()
 }
 
 /**
@@ -61,15 +60,15 @@ Handsfree.prototype.cleanConfig = function(config) {
 
       // Represents the calibrator settings
       gestureRecorder: {
-        // (optional) The target element to act as the calibrator wrapping div
-        target: null,
+        // (optional) The target element containing the popup
+        $target: null,
+        // (optional) The target element to receive message updates
+        $message: null,
         // The message to display before recording
         countdownMessage: 'Recording "{label}" in {countdown}',
         // The message to display during recording
         recordingMessage: '{numSamples} samples collected for "{label}"',
-        trainingMessage: 'Training "{gestureSetName}"',
-        // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
-        marker: null
+        trainingMessage: 'Training "{gestureSetName}"'
       },
 
       calibrator: {
@@ -77,7 +76,9 @@ Handsfree.prototype.cleanConfig = function(config) {
         // (optional) The target element to act as the calibrator wrapping div
         overlay: null,
         // The message to display over the countdown marker, can be HTML
-        instructions: 'Point head towards center of circle below'
+        instructions: 'Point head towards center of circle below',
+        // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+        marker: null
       },
 
       models: {

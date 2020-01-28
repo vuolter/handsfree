@@ -5,19 +5,19 @@ const Handsfree = window.Handsfree
 /**
  * Creates a calibrator panel
  */
-Handsfree.prototype.createGestureRecorderOverlay = function() {
-  if (!this.config.gestureRecorder.target) {
-    // Wrap
-    this.gestureRecorder.wrap = document.createElement('DIV')
-    this.gestureRecorder.wrap.classList.add('handsfree-gesture-recorder-wrap')
+// Handsfree.prototype.createGestureRecorderOverlay = function() {
+//   if (!this.config.$wrap) {
+//     // Wrap
+//     this.overlay.$wrap = document.createElement('DIV')
+//     this.overlay.$wrap.classList.add('handsfree-gesture-recorder-wrap')
 
-    // Countdown Message
-    this.gestureRecorder.$message = document.createElement('h1')
+//     // Countdown Message
+//     this.overlay.$message = document.createElement('h1')
 
-    document.body.appendChild(this.gestureRecorder.wrap)
-    this.gestureRecorder.wrap.appendChild(this.gestureRecorder.$message)
-  }
-}
+//     document.body.appendChild(this.overlay.$wrap)
+//     this.overlay.$wrap.appendChild(this.overlay.$message)
+//   }
+// }
 
 /**
  * Start calibrating
@@ -72,7 +72,7 @@ Handsfree.prototype.recordGesture = function(opts, onReady) {
  */
 Handsfree.prototype.gestureRecordCountdown = function(cb) {
   // Show countdown
-  this.gestureRecorder.wrap.classList.add('handsfree-visible')
+  this.overlay.$wrap.classList.add('handsfree-visible')
   document.body.classList.add('handsfree-recording-gesture')
 
   // Update message
@@ -81,7 +81,7 @@ Handsfree.prototype.gestureRecordCountdown = function(cb) {
     this.gestureRecorder.countdownTimesLooped
 
   secondsLeft = secondsLeft < 0 ? 0 : secondsLeft
-  let message = this.config.gestureRecorder.countdownMessage.replace(
+  let message = this.config.countdownMessage.replace(
     /\{countdown\}/g,
     secondsLeft
   )
@@ -89,7 +89,7 @@ Handsfree.prototype.gestureRecordCountdown = function(cb) {
     /\{label\}/g,
     this.gestureRecorder.config.labels[this.gestureRecorder.curLabelIndex]
   )
-  this.gestureRecorder.$message.innerHTML = message
+  this.overlay.$message.innerHTML = message
 
   // Zero data and start collecting samples
   if (
@@ -138,7 +138,7 @@ Handsfree.use('gestureRecorder.collectSample', {
     gestureRecorder.samples[gestureRecorder.curLabelIndex].push(data)
 
     // Update message
-    let message = handsfree.config.gestureRecorder.recordingMessage.replace(
+    let message = handsfree.config.recordingMessage.replace(
       /\{numSamples\}/g,
       gestureRecorder.samples[gestureRecorder.curLabelIndex].length
     )
@@ -176,11 +176,11 @@ Handsfree.use('gestureRecorder.collectSample', {
 Handsfree.prototype.createGestureModel = function() {
   const onML5Ready = () => {
     // Update message
-    let message = this.config.gestureRecorder.trainingMessage.replace(
+    let message = this.config.trainingMessage.replace(
       /\{gestureSetName\}/g,
       this.gestureRecorder.config.gestureSet
     )
-    this.gestureRecorder.$message.innerHTML = message
+    this.overlay.$message.innerHTML = message
 
     // Create brain
     const brain = (this.gestureRecorder.brain = ml5.neuralNetwork({
@@ -235,11 +235,11 @@ Handsfree.prototype.finishedTrainingGestures = function() {
         this.gestureRecorder.config.onReady(model)
 
       document.body.classList.remove('handsfree-recording-gesture')
-      this.gestureRecorder.wrap.classList.remove('handsfree-visible')
+      this.overlay.$wrap.classList.remove('handsfree-visible')
     }, this.gestureRecorder.config.gestureSet.toString())
   } else {
     document.body.classList.remove('handsfree-recording-gesture')
-    this.gestureRecorder.wrap.classList.remove('handsfree-visible')
+    this.overlay.$wrap.classList.remove('handsfree-visible')
   }
 }
 
