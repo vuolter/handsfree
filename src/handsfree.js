@@ -18,13 +18,6 @@ class Handsfree {
   }
 
   /**
-   * Record a gesture
-   */
-  recordGesture(opts, callback) {
-    this.gestureRecorder.record(opts, this, callback)
-  }
-
-  /**
    * Triggers an event on the document
    * @param {String} eventName The event name, appended as `handsfree-${eventName}`
    */
@@ -95,6 +88,20 @@ class Handsfree {
 
     // Loop
     requestAnimationFrame(() => this.track())
+  }
+
+  /**
+   * Record a gesture
+   */
+  recordGesture(opts, callback) {
+    this.gestureRecorder.record(opts, callback)
+  }
+
+  /**
+   * Load Gestures
+   */
+  loadGestures(opts) {
+    this.gestureRecorder.loadGestures(opts)
   }
 }
 

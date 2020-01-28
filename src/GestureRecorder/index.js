@@ -13,6 +13,8 @@ export default class GestureRecorder {
     this.samples = []
     // A reference to the parent instance
     this.handsfree = handsfree
+    // The ml5 neural net
+    this.brain = null
 
     // Overlay
     this.overlay = {
@@ -99,7 +101,7 @@ export default class GestureRecorder {
     // End gesture recording
     this.handsfree.on('handsfreeGestureRecordingEnded', () => {
       window.Handsfree.disable('gestureRecorder.collectSample')
-      this.handsfree.createGestureModel()
+      this.createModel()
     })
   }
 
@@ -134,6 +136,76 @@ export default class GestureRecorder {
         ++this.numSecondsWaited
         this.countdown(cb)
       }, 1000)
+    }
+  }
+
+  /**
+   * Creates the model from the collected samples
+   */
+  createModel() {
+    const onML5Ready = () => {
+      // Update message
+      let message = this.config.trainingMessage.replace(
+        /\{gestureSetName\}/g,
+        this.recordConfig.name
+      )
+      this.overlay.$message.innerHTML = message
+
+      // Create brain
+      const brain = (this.brain = ml5.neuralNetwork({
+        inputs: this.samples[0].length,
+        outputs: this.recordConfig.labels.length,
+        task: 'classification',
+        debug: true
+      }))
+
+      // Add data
+      this.samples.forEach((samples, i) => {
+        let data = []
+        samples.forEach((sample) => {
+          data.push(...sample)
+        })
+        brain.addData(data, [this.recordConfig.labels[i]])
+      })
+
+      // Train
+      brain.normalizeData()
+      brain.vis.tfvis.visor().open && brain.vis.tfvis.visor().open()
+      brain.train({ epochs: 50 }, () => {
+        this.onFinishedTraining()
+      })
+    }
+
+    // Load ML5 if it hasn't been loaded yet
+    if (handsfree.dependencies.ml5) {
+      onML5Ready()
+    } else {
+      handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+        handsfree.dependencies.ml5 = true
+        onML5Ready()
+      })
+    }
+  }
+
+  /**
+   * Called once training is complete to finish things up
+   */
+  onFinishedTraining() {
+    const model = this.brain.model
+    handsfree.gestureSets[this.recordConfig.name] = model
+    this.brain.vis.tfvis.visor().close()
+
+    // Persist models
+    if (this.recordConfig.download) {
+      this.brain.save(() => {
+        this.recordConfig.onReady && this.recordConfig.onReady(model)
+
+        document.body.classList.remove('handsfree-recording-gesture')
+        this.overlay.$wrap.classList.remove('handsfree-visible')
+      }, this.recordConfig.name.toString())
+    } else {
+      document.body.classList.remove('handsfree-recording-gesture')
+      this.overlay.$wrap.classList.remove('handsfree-visible')
     }
   }
 }
