@@ -180,7 +180,7 @@ export default class GestureRecorder {
     if (handsfree.dependencies.ml5) {
       onML5Ready()
     } else {
-      handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+      handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5.min.js'], () => {
         handsfree.dependencies.ml5 = true
         onML5Ready()
       })

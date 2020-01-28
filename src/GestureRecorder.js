@@ -142,7 +142,7 @@ Handsfree.prototype.createGestureModel = function() {
   if (handsfree.dependencies.ml5) {
     onML5Ready()
   } else {
-    handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+    handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5.min.js'], () => {
       handsfree.dependencies.ml5 = true
       onML5Ready()
     })
@@ -204,7 +204,7 @@ Handsfree.prototype.loadGestures = function(gestureSets) {
   if (handsfree.dependencies.ml5) {
     onML5Ready()
   } else {
-    handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5@0.4.3.js'], () => {
+    handsfree.loadAndWait([Handsfree.libSrc + 'models/ml5.min.js'], () => {
       handsfree.dependencies.ml5 = true
       onML5Ready()
     })

@@ -98,10 +98,55 @@ class Handsfree {
   }
 
   /**
-   * Load Gestures
+   * Loads a gestureSet model
+   *
+   * @param {Object} gestureSets A list of {gesturSetName: URL}
    */
-  loadGestures(opts) {
-    this.gestureRecorder.loadGestures(opts)
+  loadGestures(gestureSets) {
+    // Load TensorFlow
+    const onML5Ready = () => {
+      let gesturesToLoad = Object.keys(gestureSets).length
+      this.missingGestureSets = []
+      document.body.classList.add('handsfree-loading-gestures')
+
+      const brain = ml5.neuralNetwork({
+        inputs: 3,
+        outputs: 2,
+        task: 'classification'
+      })
+
+      Object.keys(gestureSets).forEach(async (name) => {
+        try {
+          let opts = {
+            model: gestureSets[name],
+            metadata: gestureSets[name].replace('.json', '_meta.json'),
+            weights: gestureSets[name].replace('.json', '.weights.bin')
+          }
+
+          brain.load(opts, (model) => {
+            console.log('loaded', model)
+          })
+        } catch (e) {
+          console.log(e)
+          this.missingGestureSets.push(name)
+        }
+
+        if (--gesturesToLoad <= 0) {
+          document.body.classList.remove('handsfree-loading-gestures')
+          this.emit('handsfreeGesturesLoaded')
+        }
+      })
+    }
+
+    // Load TensorFlow if it hasn't been loaded yet
+    if (this.dependencies.ml5) {
+      onML5Ready()
+    } else {
+      this.loadAndWait([Handsfree.libSrc + 'models/ml5.min.js'], () => {
+        this.dependencies.ml5 = true
+        onML5Ready()
+      })
+    }
   }
 }
 
