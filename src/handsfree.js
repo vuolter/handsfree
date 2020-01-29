@@ -99,7 +99,9 @@ class Handsfree {
 
     // Run plugins
     Object.keys(this.plugin).forEach((name) => {
-      this.plugin[name].onFrame && this.plugin[name].onFrame(this)
+      this.plugin[name].enabled &&
+        this.plugin[name].onFrame &&
+        this.plugin[name].onFrame(this)
     })
 
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())

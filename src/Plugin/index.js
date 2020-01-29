@@ -3,7 +3,7 @@ import { merge, get } from 'lodash'
 export default class Plugin {
   constructor(plugin, handsfree) {
     // Props
-    this._plugin = plugin
+    this.plugin = plugin
     this.handsfree = handsfree
 
     // Copy properties and methods from plugin into class
@@ -25,10 +25,10 @@ export default class Plugin {
    */
   enable() {
     this.enabled = true
-    plugin.onEnable && plugin.onEnable(this.handsfree)
+    this.plugin.onEnable && this.plugin.onEnable(this.handsfree)
   }
   disable() {
     this.enabled = false
-    plugin.onDisable && plugin.onDisable(this.handsfree)
+    this.plugin.onDisable && this.plugin.onDisable(this.handsfree)
   }
 }

@@ -6,4 +6,9 @@ include header.pug
   script.
     handsfree = new Handsfree({weboji: true})
 
-    handsfree.use('test', (instance) => {console.log(instance)})
+    handsfree.use('test', {
+      onUse: () => {console.log('onUse')},
+      onFrame: () => {console.log('onFrame')},
+      onDisable: () => {console.log('onDisable')},
+      onEnable: () => {console.log('onEnable')}
+    })
