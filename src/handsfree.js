@@ -1,5 +1,5 @@
 import './assets/handsfree.scss'
-import { merge, trim, get, set } from 'lodash'
+import { merge, trim, throttle } from 'lodash'
 import WebojiModel from './Model/Weboji'
 import Plugin from './Plugin'
 
@@ -94,9 +94,7 @@ export default class Handsfree {
    */
   loop() {
     // Set the data to pass into plugins/events
-    let data = {
-      handsfree: this
-    }
+    let data = {}
 
     // Get model data
     Object.keys(this.model).forEach((modelName) => {
@@ -237,7 +235,7 @@ export default class Handsfree {
     this.prevDisabledPlugins = []
 
     plugins.forEach((name) => {
-      get(this.plugin, name).disable()
+      this.plugin[name].disable()
       this.prevDisabledPlugins.push(name)
     })
   }
@@ -247,7 +245,7 @@ export default class Handsfree {
    */
   reenablePlugins() {
     this.prevDisabledPlugins.forEach((name) => {
-      get(this.plugin, name).enable()
+      this.plugin[name].enable()
     })
     this.prevDisabledPlugins = []
   }
@@ -271,6 +269,18 @@ export default class Handsfree {
    */
   loadDefaultPlugins() {
     this.use('facePointer', require('./plugins/facePointer').default)
+    this.use('faceClick', require('./plugins/faceClick').default)
+  }
+
+  /**
+   * Throttles callback to run timeInMilliseconds
+   *
+   * @param {function} callback The callback to run
+   * @param {Integer} time How many milliseconds to throttle (in other words, run this method at most ever x milliseconds)
+   * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
+   */
+  throttle(cb, time, obj) {
+    return throttle(cb, time, obj)
   }
 
   /**
