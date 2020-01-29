@@ -31,6 +31,26 @@ export default class BaseModel {
   }
 
   /**
+   * Triggers an event on the document
+   *
+   * @param {String} eventName The event name, appended as `handsfree-${eventName}`
+   */
+  emit(eventName, detail = null) {
+    const event = new CustomEvent(`handsfree-${eventName}`, detail)
+    document.dispatchEvent(event)
+  }
+
+  /**
+   * Calls a callback on `document` when an event is triggered
+   *
+   * @param {String} eventName The `handsfree-${eventName}` to listen to
+   * @param {Function} callback The callback to call
+   */
+  on(eventName, callback) {
+    document.addEventListener(`handsfree-${eventName}`, callback)
+  }
+
+  /**
    * Called when depenencies are loaded
    */
   onDepsLoaded() {}
@@ -46,7 +66,6 @@ export default class BaseModel {
 
     let scriptsLoaded = 0
     numScriptsLoading += scripts.length
-    document.body.classList.add('handsfree-loading')
 
     scripts.forEach((script) => {
       const $script = document.createElement('script')
@@ -61,15 +80,15 @@ export default class BaseModel {
           this.dependenciesReady = true
           this.onDepsLoaded()
         }
-
-        // Remove loading class
-        if (!numScriptsLoading) {
-          document.body.classList.remove('handsfree-loading')
-        }
       }
 
       $script.src = script
       document.getElementsByTagName('head')[0].appendChild($script)
     })
   }
+
+  /**
+   * Runs inference and sets up other data
+   */
+  getData() {}
 }

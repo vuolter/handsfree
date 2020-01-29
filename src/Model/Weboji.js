@@ -8,13 +8,21 @@ export default class WebojiModel extends BaseModel {
     super(...args)
   }
 
+  /**
+   * Adds data
+   */
+  getData() {}
+
+  /**
+   * Loads the actual model and initializes Weboji
+   * @see https://github.com/jeeliz/jeelizWeboji
+   */
   onDepsLoaded() {
     const url = this.config.modelPath + 'jeelizFaceTransferNNC.json'
 
     this.api = window.JEEFACETRANSFERAPI
     this.apiHelper = window.JEELIZ_RESIZER
 
-    document.body.classList.add('handsfree-loading')
     fetch(url)
       .then((model) => {
         return model.json()
@@ -30,15 +38,16 @@ export default class WebojiModel extends BaseModel {
               animateDelay: this.config.throttle,
               videoSettings,
               callbackReady: () => {
-                document.body.classList.remove('handsfree-loading')
                 this.isReady = true
+                this.emit('modelLoaded')
               }
             })
           }
         })
       })
-      .catch(() =>
+      .catch(() => {
         console.error(`Couldn't load weboji tracking model at ${url}`)
-      )
+        this.emit('modelError')
+      })
   }
 }
