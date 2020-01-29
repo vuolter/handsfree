@@ -1,5 +1,5 @@
 import './assets/handsfree.scss'
-import { merge } from 'lodash'
+import { merge, trim } from 'lodash'
 
 import WebojiModel from './Model/Weboji'
 
@@ -7,8 +7,12 @@ import WebojiModel from './Model/Weboji'
 let modelPath = document.currentScript
   ? document.currentScript.getAttribute('src')
   : ''
-modelPath = modelPath.substr(0, modelPath.lastIndexOf('/') + 1)
+modelPath =
+  trim(modelPath.substr(0, modelPath.lastIndexOf('/') + 1), '/') + '/models/'
 
+/**
+ * ✨ Handsfree.js
+ */
 class Handsfree {
   constructor(config = {}) {
     // Setup options
@@ -26,19 +30,25 @@ class Handsfree {
    * Sets config defaults
    */
   cleanConfig() {
+    const weboji = {
+      enabled: false,
+      throttle: 0
+    }
+
     this.config = merge(
       {
         modelPath,
-        weboji: {
-          enabled: false
-        }
+        weboji
       },
       this.config
     )
 
     // Map configs to standard format
-    if (typeof this.config.weboji === 'boolean')
-      this.config.weboji = { enabled: this.config.weboji }
+    if (typeof this.config.weboji === 'boolean') {
+      let isEnabled = this.config.weboji
+      this.config.weboji = weboji
+      this.config.weboji.enabled = isEnabled
+    }
 
     // Track the models we're using
     this.activeModels = []
@@ -56,14 +66,18 @@ class Handsfree {
    * Starts all active models
    */
   startModels() {
-    const config = {
-      modelPath: this.config.modelPath
-    }
-
     this.activeModels.forEach((modelName) => {
       switch (modelName) {
         case 'weboji':
-          if (!this.model.weboji) this.model.weboji = new WebojiModel(config)
+          if (!this.model.weboji) {
+            this.model.weboji = new WebojiModel({
+              modelPath: this.config.modelPath,
+              deps: this.config.modelPath + '/jeelizFaceTransfer.js',
+              throttle: this.config.weboji.throttle
+            })
+          } else {
+            this.model.weboji.start()
+          }
           break
       }
     })

@@ -4,8 +4,16 @@ let numScriptsLoading = 0
 export default class BaseModel {
   constructor(config) {
     this.config = config
+
+    // Inference only happens when this is true
     this.enabled = true
-    this.init()
+
+    // Turns true when dependencies are loaded
+    this.dependenciesReady = false
+    // This is true when we can run inference
+    this.isReady = false
+
+    this.loadDependencies(config.deps)
   }
 
   /**
@@ -23,12 +31,17 @@ export default class BaseModel {
   }
 
   /**
+   * Called when depenencies are loaded
+   */
+  onDepsLoaded() {}
+
+  /**
    * Loads a set of scripts and runs a callback when they're all ready
    *
    * @param {String|Array} scripts A list of scripts to load
    * @param {Function} cb The callback to run
    */
-  load(scripts, cb) {
+  loadDependencies(scripts) {
     if (typeof scripts === 'string') scripts = [scripts]
 
     let scriptsLoaded = 0
@@ -44,8 +57,9 @@ export default class BaseModel {
         numScriptsLoading -= 1
 
         // Call callback after this set of scripts is loaded
-        if (++scriptsLoaded === scripts.length && cb) {
-          cb()
+        if (++scriptsLoaded === scripts.length) {
+          this.dependenciesReady = true
+          this.onDepsLoaded()
         }
 
         // Remove loading class
