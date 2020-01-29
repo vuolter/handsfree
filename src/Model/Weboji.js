@@ -6,12 +6,25 @@ import BaseModel from './index'
 export default class WebojiModel extends BaseModel {
   constructor(...args) {
     super(...args)
+
+    this.data = {
+      // weboji [yaw, pitch, roll]
+      rotation: [],
+      // weboji [x, y, scale]
+      translation: [],
+      // [0...10] Morphs between 0 - 1
+      morphs: []
+    }
   }
 
   /**
    * Adds data
    */
-  getData() {}
+  getData() {
+    this.data.rotation = this.api.get_rotationStabilized()
+    this.data.translation = this.api.get_positionScale()
+    this.data.morphs = this.api.get_morphTargetInfluencesStabilized()
+  }
 
   /**
    * Loads the actual model and initializes Weboji

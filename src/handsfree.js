@@ -85,7 +85,9 @@ class Handsfree {
    */
   loop() {
     this.activeModels.forEach((modelName) => {
-      this.model[modelName].getData()
+      if (this.model[modelName].isReady) {
+        this.model[modelName].getData()
+      }
     })
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
