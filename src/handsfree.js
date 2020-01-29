@@ -1,13 +1,14 @@
 import './assets/handsfree.scss'
-import { merge, trim } from 'lodash'
+import { merge, trim, get, set } from 'lodash'
 import WebojiModel from './Model/Weboji'
+import Plugin from './Plugin'
 
-// Determine a default modelPath, using this <script>'s src
-let modelPath = document.currentScript
+// Determine a default assetsPath, using this <script>'s src
+let assetsPath = document.currentScript
   ? document.currentScript.getAttribute('src')
   : ''
-modelPath =
-  trim(modelPath.substr(0, modelPath.lastIndexOf('/') + 1), '/') + '/models/'
+assetsPath =
+  trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/models/'
 
 // Counter for unique instance IDs
 let id = 0
@@ -33,6 +34,9 @@ class Handsfree {
 
     // Models
     this.model = {}
+
+    // Plugins
+    this.plugin = {}
   }
 
   /**
@@ -51,7 +55,7 @@ class Handsfree {
           enabled: false,
           $target: document.body
         },
-        modelPath,
+        assetsPath,
         weboji
       },
       this.config
@@ -71,62 +75,124 @@ class Handsfree {
 
   /**
    * Start all enabled models
+   * - Once models loaded, starts loop
    */
   start() {
     if (!this.isStarted) {
-      this.startModels(this.activeModels)
+      this.startModels(this.activeModels).then(() => {
+        this.isLooping = true
+        this.loop()
+      })
     }
-    this.isLooping = true
-    this.loop()
   }
 
   /**
    * The main "Game Loop"
    */
   loop() {
+    // Get model data
     this.activeModels.forEach((modelName) => {
       if (this.model[modelName].isReady) {
         this.model[modelName].getData()
       }
     })
+
+    // Run plugins
+    Object.keys(this.plugin).forEach((name) => {
+      this.plugin[name].onFrame && this.plugin[name].onFrame(this)
+    })
+
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
+  }
+
+  /**
+   * Stop all models
+   */
+  stop() {
+    location.reload()
   }
 
   /**
    * Starts all active models
    * @param {Array} models A list of model names to load
+   * @returns {Promise} Resolves after all models loaded or rejected
    */
   startModels(models) {
-    // Set loading/ready classes
-    document.body.classList.add('handsfree-loading')
-    let numModels = this.activeModels.length
-    this.on('modelLoaded', () => {
-      if (--numModels === 0) {
-        document.body.classList.remove('handsfree-loading')
-        document.body.classList.add('handsfree-started')
-      }
-    })
+    return new Promise((resolve, reject) => {
+      // Set loading/ready classes
+      document.body.classList.add('handsfree-loading')
+      let numModels = this.activeModels.length
+      this.on('modelLoaded', () => {
+        if (--numModels === 0) {
+          document.body.classList.remove('handsfree-loading')
+          document.body.classList.add('handsfree-started')
+          resolve()
+        }
+      })
 
-    // Loop through each model and initialize them
-    models.forEach((modelName) => {
-      switch (modelName) {
-        case 'weboji':
-          if (!this.model.weboji) {
-            this.model.weboji = new WebojiModel(
-              {
-                id: this.id,
-                modelPath: this.config.modelPath,
-                deps: this.config.modelPath + '/jeelizFaceTransfer.js',
-                throttle: this.config.weboji.throttle
-              },
-              this
-            )
-          } else {
-            this.emit('modelLoaded')
-          }
-          break
-      }
+      // Loop through each model and initialize them
+      models.forEach((modelName) => {
+        switch (modelName) {
+          case 'weboji':
+            if (!this.model.weboji) {
+              this.model.weboji = new WebojiModel(
+                {
+                  id: this.id,
+                  assetsPath: this.config.assetsPath,
+                  deps: this.config.assetsPath + '/jeelizFaceTransfer.js',
+                  throttle: this.config.weboji.throttle
+                },
+                this
+              )
+            } else {
+              this.emit('modelLoaded')
+            }
+            break
+        }
+      })
     })
+  }
+
+  /**
+   * Adds a callback (we call it a plugin) to be called after every tracked frame
+   *
+   * @param {String} name The plugin name
+   * @param {Object|Function} config The config object, or a callback to run on every fram
+   * @returns {Plugin} The plugin object
+   */
+  use(name, config) {
+    // Make sure we have an options object
+    if (typeof config === 'function') {
+      config = {
+        onFrame: config
+      }
+    }
+
+    config = Object.assign(
+      {
+        // Stores the plugins name for internal use
+        name,
+        // Whether the plugin is enabled by default
+        enabled: true,
+        // A set of default config values the user can override during instanciation
+        config: {},
+        // (instance) => Called on every frame
+        onFrame: null,
+        // (instance) => Called when the plugin is first used
+        onUse: null,
+        // (instance) => Called when the plugin is enabled
+        onEnable: null,
+        // (instance) => Called when the plugin is disabled
+        onDisable: null
+      },
+      config
+    )
+
+    // Create the plugin
+    const plugin = new Plugin(config, this)
+    set(this.plugin, name, plugin)
+
+    return plugin
   }
 
   /**

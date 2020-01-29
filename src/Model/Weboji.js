@@ -31,7 +31,7 @@ export default class WebojiModel extends BaseModel {
    * @see https://github.com/jeeliz/jeelizWeboji
    */
   onDepsLoaded() {
-    const url = this.config.modelPath + 'jeelizFaceTransferNNC.json'
+    const url = this.config.assetsPath + 'jeelizFaceTransferNNC.json'
 
     this.api = window.JEEFACETRANSFERAPI
     this.apiHelper = window.JEELIZ_RESIZER
