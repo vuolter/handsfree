@@ -1,5 +1,8 @@
 import { merge, get } from 'lodash'
 
+/**
+ * Plugin class
+ */
 export default class Plugin {
   constructor(plugin, handsfree) {
     // Props
@@ -12,27 +15,29 @@ export default class Plugin {
     })
 
     // handsfree.config.plugin[name] overwrites plugin.config
-    const handsfreePluginConfig = get(handsfree.config.plugin, name)
-    if (typeof handsfreePluginConfig === 'object') {
-      merge(this.config, handsfreePluginConfig)
+    let handsfreePluginConfig = handsfree.config.plugin[plugin.name]
+    if (typeof handsfreePluginConfig === 'boolean') {
+      handsfreePluginConfig = { enabled: handsfreePluginConfig }
     }
 
-    plugin.onUse && plugin.onUse(handsfree)
+    // Disable plugins via new Handsfree(config)
+    if (typeof handsfreePluginConfig === 'object') {
+      merge(this.config, handsfreePluginConfig)
+      if (typeof handsfreePluginConfig.enabled === 'boolean') {
+        this.enabled = handsfreePluginConfig.enabled
+      }
+    }
   }
 
   /**
    * Toggle plugins
    */
   enable() {
-    !this.enabled &&
-      this.plugin.onEnable &&
-      this.plugin.onEnable(this.handsfree)
+    !this.enabled && this.onEnable && this.onEnable(this.handsfree)
     this.enabled = true
   }
   disable() {
-    this.enabled &&
-      this.plugin.onDisable &&
-      this.plugin.onDisable(this.handsfree)
+    this.enabled && this.onDisable && this.onDisable(this.handsfree)
     this.enabled = false
   }
 }

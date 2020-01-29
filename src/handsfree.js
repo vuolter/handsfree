@@ -16,7 +16,7 @@ let id = 0
 /**
  * ✨ Handsfree.js
  */
-class Handsfree {
+export default class Handsfree {
   constructor(config = {}) {
     this.id = ++id
 
@@ -38,6 +38,7 @@ class Handsfree {
     // Plugins
     this.plugin = {}
     this.prevDisabledPlugins = []
+    this.loadDefaultPlugins()
   }
 
   /**
@@ -57,7 +58,8 @@ class Handsfree {
           $target: document.body
         },
         assetsPath,
-        weboji
+        weboji,
+        plugin: {}
       },
       this.config
     )
@@ -91,20 +93,26 @@ class Handsfree {
    * The main "Game Loop"
    */
   loop() {
+    // Set the data to pass into plugins/events
+    let data = {
+      handsfree: this
+    }
+
     // Get model data
-    this.activeModels.forEach((modelName) => {
-      if (this.model[modelName].isReady) {
-        this.model[modelName].getData()
+    Object.keys(this.model).forEach((modelName) => {
+      if (this.model[modelName].isReady && this.model[modelName].enabled) {
+        data[modelName] = this.model[modelName].getData()
       }
     })
 
-    // Run plugins
     Object.keys(this.plugin).forEach((name) => {
       this.plugin[name].enabled &&
         this.plugin[name].onFrame &&
-        this.plugin[name].onFrame(this)
+        this.plugin[name].onFrame(data)
     })
 
+    // Emit event and loop again
+    this.emit('data', data)
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
 
@@ -192,10 +200,12 @@ class Handsfree {
     )
 
     // Create the plugin
-    const plugin = new Plugin(config, this)
-    set(this.plugin, name, plugin)
+    this.plugin[name] = new Plugin(config, this)
+    this.plugin[name].enabled &&
+      this.plugin[name].onUse &&
+      this.plugin[name].onUse()
 
-    return plugin
+    return this.plugin[name]
   }
 
   /**
@@ -227,7 +237,7 @@ class Handsfree {
     this.prevDisabledPlugins = []
 
     plugins.forEach((name) => {
-      this.plugin[name].disable()
+      get(this.plugin, name).disable()
       this.prevDisabledPlugins.push(name)
     })
   }
@@ -237,7 +247,7 @@ class Handsfree {
    */
   reenablePlugins() {
     this.prevDisabledPlugins.forEach((name) => {
-      this.plugin[name].enable()
+      get(this.plugin, name).enable()
     })
     this.prevDisabledPlugins = []
   }
@@ -254,6 +264,13 @@ class Handsfree {
       this.plugin[name].enable()
       this.prevDisabledPlugins.push(name)
     })
+  }
+
+  /**
+   * Load default plugins
+   */
+  loadDefaultPlugins() {
+    this.use('facePointer', require('./plugins/facePointer').default)
   }
 
   /**
@@ -302,5 +319,3 @@ class Handsfree {
     this.config.feedback.$target.appendChild($wrap)
   }
 }
-
-export default Handsfree

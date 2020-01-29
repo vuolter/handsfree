@@ -24,6 +24,8 @@ export default class WebojiModel extends BaseModel {
     this.data.rotation = this.api.get_rotationStabilized()
     this.data.translation = this.api.get_positionScale()
     this.data.morphs = this.api.get_morphTargetInfluencesStabilized()
+
+    return this.data
   }
 
   /**
