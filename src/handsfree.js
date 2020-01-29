@@ -37,6 +37,7 @@ class Handsfree {
 
     // Plugins
     this.plugin = {}
+    this.prevDisabledPlugins = []
   }
 
   /**
@@ -215,6 +216,44 @@ class Handsfree {
    */
   on(eventName, callback) {
     document.addEventListener(`handsfree-${eventName}`, callback)
+  }
+
+  /**
+   * Disables all plugins
+   * @param {Array} plugins List of plugin names to disable, or null to disable all
+   */
+  disablePlugins(plugins) {
+    if (!plugins) plugins = Object.keys(this.plugin)
+    this.prevDisabledPlugins = []
+
+    plugins.forEach((name) => {
+      this.plugin[name].disable()
+      this.prevDisabledPlugins.push(name)
+    })
+  }
+
+  /**
+   * Reenables plugins previously disabled with disableAllPlugins
+   */
+  reenablePlugins() {
+    this.prevDisabledPlugins.forEach((name) => {
+      this.plugin[name].enable()
+    })
+    this.prevDisabledPlugins = []
+  }
+
+  /**
+   * Enable all plugins
+   * @param {Array} plugins List of plugin names to enable, or null to disable all
+   */
+  enablePlugins(plugins) {
+    if (!plugins) plugins = Object.keys(this.plugin)
+    this.prevDisabledPlugins = []
+
+    plugins.forEach((name) => {
+      this.plugin[name].enable()
+      this.prevDisabledPlugins.push(name)
+    })
   }
 
   /**

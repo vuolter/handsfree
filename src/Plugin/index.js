@@ -24,11 +24,15 @@ export default class Plugin {
    * Toggle plugins
    */
   enable() {
+    !this.enabled &&
+      this.plugin.onEnable &&
+      this.plugin.onEnable(this.handsfree)
     this.enabled = true
-    this.plugin.onEnable && this.plugin.onEnable(this.handsfree)
   }
   disable() {
+    this.enabled &&
+      this.plugin.onDisable &&
+      this.plugin.onDisable(this.handsfree)
     this.enabled = false
-    this.plugin.onDisable && this.plugin.onDisable(this.handsfree)
   }
 }
