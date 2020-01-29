@@ -2,8 +2,9 @@
 let numScriptsLoading = 0
 
 export default class BaseModel {
-  constructor(config) {
+  constructor(config, handsfree) {
     this.config = config
+    this.handsfree = handsfree
 
     // Inference only happens when this is true
     this.enabled = true

@@ -24,8 +24,64 @@ export default class WebojiModel extends BaseModel {
     this.data.rotation = this.api.get_rotationStabilized()
     this.data.translation = this.api.get_positionScale()
     this.data.morphs = this.api.get_morphTargetInfluencesStabilized()
+    this.data.state = this.getStates()
 
     return this.data
+  }
+
+  getStates() {
+    /**
+     * Handles extra calculations for weboji morphs
+     */
+    const morphs = this.data.morphs
+    const state = this.data.state || {}
+
+    // Smiles
+    state.smileRight =
+      morphs[0] > this.handsfree.config.weboji.morphs.threshold.smileRight
+    state.smileLeft =
+      morphs[1] > this.handsfree.config.weboji.morphs.threshold.smileLeft
+    state.smile = state.smileRight && state.smileLeft
+    state.smirk =
+      (state.smileRight && !state.smileLeft) ||
+      (!state.smileRight && state.smileLeft)
+    state.pursed =
+      morphs[7] > this.handsfree.config.weboji.morphs.threshold.mouthRound
+
+    // Eyebrows
+    state.browLeftUp =
+      morphs[4] > this.handsfree.config.weboji.morphs.threshold.browLeftUp
+    state.browRightUp =
+      morphs[5] > this.handsfree.config.weboji.morphs.threshold.browRightUp
+    state.browsUp =
+      morphs[4] > this.handsfree.config.weboji.morphs.threshold.browLeftUp &&
+      morphs[5] > this.handsfree.config.weboji.morphs.threshold.browLeftUp
+
+    state.browLeftDown =
+      morphs[2] > this.handsfree.config.weboji.morphs.threshold.browLeftDown
+    state.browRightDown =
+      morphs[3] > this.handsfree.config.weboji.morphs.threshold.browRightDown
+    state.browsDown =
+      morphs[2] > this.handsfree.config.weboji.morphs.threshold.browLeftDown &&
+      morphs[3] > this.handsfree.config.weboji.morphs.threshold.browLeftDown
+
+    state.browsUpDown =
+      (state.browLeftDown && state.browRightUp) ||
+      (state.browRightDown && state.browLeftUp)
+
+    // Eyes
+    state.eyeLeftClosed =
+      morphs[8] > this.handsfree.config.weboji.morphs.threshold.eyeLeftClosed
+    state.eyeRightClosed =
+      morphs[9] > this.handsfree.config.weboji.morphs.threshold.eyeRightClosed
+    state.eyesClosed = state.eyeLeftClosed && state.eyeRightClosed
+
+    // Mouth
+    state.mouthClosed = morphs[6] === 0
+    state.mouthOpen =
+      morphs[6] > this.handsfree.config.weboji.morphs.threshold.mouthOpen
+
+    return state
   }
 
   /**
@@ -45,10 +101,10 @@ export default class WebojiModel extends BaseModel {
       // Next, let's initialize the weboji tracker API
       .then((model) => {
         this.apiHelper.size_canvas({
-          canvasId: `handsfree-canvas-${this.config.id}`,
+          canvasId: `handsfree-canvas-${this.handsfree.id}`,
           callback: (videoSettings) => {
             this.api.init({
-              canvasId: `handsfree-canvas-${this.config.id}`,
+              canvasId: `handsfree-canvas-${this.handsfree.id}`,
               NNCpath: JSON.stringify(model),
               animateDelay: this.config.throttle,
               videoSettings,

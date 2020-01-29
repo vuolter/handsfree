@@ -48,18 +48,35 @@ export default class Handsfree {
     // Model defaults
     const weboji = {
       enabled: false,
-      throttle: 0
+      throttle: 0,
+      morphs: {
+        threshold: {
+          smileRight: 0.7,
+          smileLeft: 0.7,
+          browLeftDown: 0.8,
+          browRightDown: 0.8,
+          browLeftUp: 0.8,
+          browRightUp: 0.8,
+          eyeLeftClosed: 0.4,
+          eyeRightClosed: 0.4,
+          mouthOpen: 0.3,
+          mouthRound: 0.8,
+          upperLip: 0.5
+        }
+      }
     }
 
     this.config = merge(
       {
+        assetsPath,
+        weboji,
+
+        // Plugin overrides
+        plugin: {},
         feedback: {
           enabled: false,
           $target: document.body
-        },
-        assetsPath,
-        weboji,
-        plugin: {}
+        }
       },
       this.config
     )
@@ -146,7 +163,6 @@ export default class Handsfree {
             if (!this.model.weboji) {
               this.model.weboji = new WebojiModel(
                 {
-                  id: this.id,
                   assetsPath: this.config.assetsPath,
                   deps: this.config.assetsPath + '/jeelizFaceTransfer.js',
                   throttle: this.config.weboji.throttle
@@ -270,6 +286,10 @@ export default class Handsfree {
   loadDefaultPlugins() {
     this.use('facePointer', require('./plugins/facePointer').default)
     this.use('faceClick', require('./plugins/faceClick').default)
+    this.use(
+      'faceGhostedPointer',
+      require('./plugins/faceGhostedPointer').default
+    )
   }
 
   /**
