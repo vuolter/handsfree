@@ -1,5 +1,8 @@
 import BaseModel from './index'
 
+/**
+ * @see https://github.com/jeeliz/jeelizWeboji
+ */
 export default class WebojiModel extends BaseModel {
   constructor(...args) {
     super(...args)
@@ -19,17 +22,16 @@ export default class WebojiModel extends BaseModel {
       // Next, let's initialize the weboji tracker API
       .then((model) => {
         this.apiHelper.size_canvas({
-          canvasId: `handsfree-canvas`,
+          canvasId: `handsfree-canvas-${this.config.id}`,
           callback: (videoSettings) => {
             this.api.init({
-              canvasId: `handsfree-canvas`,
+              canvasId: `handsfree-canvas-${this.config.id}`,
               NNCpath: JSON.stringify(model),
               animateDelay: this.config.throttle,
               videoSettings,
               callbackReady: () => {
                 document.body.classList.remove('handsfree-loading')
                 this.isReady = true
-                this.maybeStartTracking()
               }
             })
           }

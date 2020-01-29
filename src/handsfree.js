@@ -10,17 +10,26 @@ let modelPath = document.currentScript
 modelPath =
   trim(modelPath.substr(0, modelPath.lastIndexOf('/') + 1), '/') + '/models/'
 
+// Counter for id
+let id = 0
+
 /**
  * ✨ Handsfree.js
  */
 class Handsfree {
   constructor(config = {}) {
+    this.id = ++id
+
     // Setup options
     this.config = config
     this.cleanConfig()
 
     // Flags
     this.isStarted = false
+
+    // Video, canvas, and other feedback elements
+    this.feedback = {}
+    this.createFeedback()
 
     // Models
     this.model = {}
@@ -37,6 +46,10 @@ class Handsfree {
 
     this.config = merge(
       {
+        feedback: {
+          enabled: false,
+          $target: document.body
+        },
         modelPath,
         weboji
       },
@@ -70,17 +83,67 @@ class Handsfree {
       switch (modelName) {
         case 'weboji':
           if (!this.model.weboji) {
-            this.model.weboji = new WebojiModel({
-              modelPath: this.config.modelPath,
-              deps: this.config.modelPath + '/jeelizFaceTransfer.js',
-              throttle: this.config.weboji.throttle
-            })
+            this.model.weboji = new WebojiModel(
+              {
+                id: this.id,
+                modelPath: this.config.modelPath,
+                deps: this.config.modelPath + '/jeelizFaceTransfer.js',
+                throttle: this.config.weboji.throttle
+              },
+              this
+            )
           } else {
             this.model.weboji.start()
           }
           break
       }
     })
+  }
+
+  /**
+   * Creates the feedback debugger, which contains the canvas/video element
+   */
+  createFeedback() {
+    const $wrap = document.createElement('DIV')
+    $wrap.classList.add('handsfree-debugger')
+    this.feedback.$wrap = $wrap
+
+    // Main canvas
+    const $canvas = document.createElement('CANVAS')
+    $canvas.classList.add('handsfree-canvas')
+    $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
+    $wrap.appendChild($canvas)
+    this.feedback.$canvas = $canvas
+
+    // Create video element
+    const $video = document.createElement('VIDEO')
+    $video.setAttribute('playsinline', true)
+    $video.classList.add('handsfree-video')
+    $video.setAttribute('id', `handsfree-video-${this.id}`)
+    // @TODO make this configurable
+    $video.width = 640
+    $video.height = 480
+    $wrap.appendChild($video)
+    this.feedback.$video = $video
+
+    // Debug canvas
+    const $debug = document.createElement('CANVAS')
+    $debug.classList.add('handsfree-debug')
+    $debug.setAttribute('id', `handsfree-debug-${this.id}`)
+    $wrap.appendChild($debug)
+    this.feedback.$debug = $debug
+    $debug.width = $video.width
+    $debug.height = $video.height
+
+    // Toggle the debugger
+    if (this.config.feedback.enabled) {
+      this.feedback.isVisible = true
+    } else {
+      this.feedback.isVisible = false
+      $wrap.style.display = 'none'
+    }
+
+    this.config.feedback.$target.appendChild($wrap)
   }
 }
 
