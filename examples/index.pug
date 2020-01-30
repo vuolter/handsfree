@@ -4,13 +4,4 @@ include header.pug
   p View the following examples to explore different concepts. Feel free to make a pull request with your own examples!
 
   script.
-    handsfree = new Handsfree({
-      weboji: true
-    })
-
-    handsfree.use('test', {
-      onUse: () => {console.log('onUse')},
-      onFrame: () => {console.log('onFrame')},
-      onDisable: () => {console.log('onDisable')},
-      onEnable: () => {console.log('onEnable')}
-    })
+    handsfree = new Handsfree({weboji: true})

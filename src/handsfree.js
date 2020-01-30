@@ -290,6 +290,7 @@ export default class Handsfree {
       'faceGhostedPointer',
       require('./plugins/faceGhostedPointer').default
     )
+    this.use('faceScroll', require('./plugins/faceScroll').default)
   }
 
   /**
