@@ -1,0 +1,23 @@
+include header.pug
+  h1 Blink to click
+  p Explores click events through eye blinks, overriding the ability to click with smile gestures
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({
+    weboji: true,
+    plugin: {
+      faceClick: {
+        morphs: {
+          // Right smile
+          0: 0,
+          // Left smile
+          1: 0,
+          // Right eye
+          8: 0.35,
+          // Left eye
+          9: 0.35
+        }
+      }
+    }
+  })
