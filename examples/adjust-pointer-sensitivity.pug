@@ -7,11 +7,9 @@ include header.pug
     p
       span Handsfree.plugins.facePointer.config.speed.x:
       input(id="speed-x" type="number" step=0.5 value="0.5")
-    </p>
-    <p>
+    p
       | Handsfree.plugins.facePointer.config.speed.y:
       input(id="speed-y" type="number" step=0.5 value="0.5")
-    </p>
     button(onclick="updateSpeeds()") Update
 
 script.

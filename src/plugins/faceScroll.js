@@ -135,9 +135,7 @@ export default {
       this.numFramesFocused = 0
     }
 
-    if (
-      this.numFramesFocused > this.config.recursivelyFindScrollbarframesToFocus
-    ) {
+    if (this.numFramesFocused > this.config.framesToFocus) {
       this.selectTarget($potTarget)
     }
 

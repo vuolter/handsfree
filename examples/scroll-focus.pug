@@ -1,0 +1,35 @@
+include header.pug
+
+  h2 Scroll Focus
+  p Click into a scrollbar area to focus it for scrolling purposes
+
+  div.tall(style='box-shadow: none')
+    table
+      tr
+        td
+          div.overflow
+            div.tall
+        td
+          div.overflow
+            div.tall
+
+style.
+  body, table div {
+    background: url(./assets/let-there-be-sun.png)
+  }
+
+  .overflow {
+    height: 400px;
+    overflow: auto;
+    background: #000;
+  }
+
+  .tall {
+    height: 2000px;
+    opacity: 0.85;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.35);
+  }
+
+
+script.
+  handsfree = new Handsfree({weboji: true})
