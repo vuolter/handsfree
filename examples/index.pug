@@ -8,7 +8,11 @@ include header.pug
         h3 Basics
         ul
           li
-            a(href='/from-cdn.pug') From CDN
+            a(href='/from-cdn.pug') Minimal: From CDN
+          li
+            a(href='/adjust-pointer-sensitivity.pug') Adjust pointer sensitivity
 
 script.
-  handsfree = new Handsfree({weboji: true})
+  handsfree = new Handsfree({
+    weboji: true
+  })

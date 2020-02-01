@@ -3,6 +3,7 @@ html
   title Handsfree.js Examples
   link(rel="stylesheet" href="assets/styles.scss")
   link(rel="shortcut icon", href="../public/favicon.png", type="image/x-icon")
+  link(rel="stylesheet", href="../src/assets/handsfree.scss")
   script(src="./index.js")
 
 body
@@ -15,7 +16,7 @@ body
         span Handsfree.js
         small
           a(href="https://handsfree.js.org") Learn more at handsfree.js.org
-      div(style='padding: 20px;')
+      div.pad
         button.handsfree-show-when-stopped.handsfree-hide-when-loading(onclick='handsfree.start()') Start Webcam
         button.handsfree-show-when-loading(disabled) Loading...
         button.handsfree-show-when-started(onclick='handsfree.stop()') Stop Webcam

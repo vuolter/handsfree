@@ -8,7 +8,7 @@ let assetsPath = document.currentScript
   ? document.currentScript.getAttribute('src')
   : ''
 assetsPath =
-  trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/models/'
+  trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
 
 // Counter for unique instance IDs
 let id = 0
