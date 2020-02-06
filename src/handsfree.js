@@ -148,10 +148,10 @@ export default class Handsfree {
     let data = {}
 
     // Get model data
-    Object.keys(this.model).forEach((modelName) => {
-      if (this.model[modelName].isReady && this.model[modelName].enabled) {
-        this.model[modelName].getData()
-        data[modelName] = this.model[modelName].data || {}
+    this.activeModels.forEach((modelName) => {
+      if (this[modelName].isReady && this[modelName].enabled) {
+        this[modelName].getData()
+        data[modelName] = this[modelName].data || {}
       }
     })
 
@@ -180,7 +180,7 @@ export default class Handsfree {
    * @returns {Promise} Resolves after all models loaded or rejected
    */
   startModels(models) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // Set loading/ready classes
       document.body.classList.add('handsfree-loading')
       let numModels = this.activeModels.length
@@ -199,9 +199,10 @@ export default class Handsfree {
            * Weboji
            */
           case 'weboji':
-            if (!this.model.weboji) {
-              this.model.weboji = new WebojiModel(
+            if (!this.weboji) {
+              this.weboji = new WebojiModel(
                 {
+                  name: 'weboji',
                   ...this.config.weboji,
                   deps: this.config.assetsPath + '/jeelizFaceTransfer.js'
                 },
@@ -216,9 +217,10 @@ export default class Handsfree {
            * PoseNet
            */
           case 'posenet':
-            if (!this.model.posenet) {
-              this.model.posenet = new PoseNetModel(
+            if (!this.posenet) {
+              this.posenet = new PoseNetModel(
                 {
+                  name: 'posenet',
                   ...this.config.posenet,
                   deps: this.config.assetsPath + '/ml5.min.js'
                 },

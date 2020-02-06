@@ -22,6 +22,8 @@ export default class BaseModel {
    */
   enable() {
     this.enabled = true
+    let modelIdx = this.handsfree.activeModels.indexOf(this.name)
+    if (modelIdx !== -1) this.handsfree.activeModels.splice(modelIdx, 1)
   }
 
   /**
@@ -29,6 +31,7 @@ export default class BaseModel {
    */
   disable() {
     this.enabled = false
+    this.handsfree.activeModels.push(this.name)
   }
 
   /**

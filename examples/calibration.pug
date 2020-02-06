@@ -1,6 +1,6 @@
 include header.pug
   h1 Calibration
-  p A minimal example of using <code>handsfree.model.weboji.calibrate()</code>
+  p A minimal example of using <code>handsfree.weboji.calibrate()</code>
   p
     button(onclick='startCalibration()') Start calibration
 
@@ -10,6 +10,6 @@ script.
 
   function startCalibration () {
     handsfree.start(() => {
-      handsfree.model.weboji.calibrate()
+      handsfree.weboji.calibrate()
     })
   }
