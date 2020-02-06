@@ -1,6 +1,6 @@
 include header.pug
-  h1 PoseNet min
-  p Minimum PoseNet example
+  h1 PoseNet and Weboji min
+  p Minimum example using both weboji and posenet
 
   canvas#scene.flip(width=640 height=480)
 
@@ -8,7 +8,7 @@ script.
   const $canvas = document.querySelector('#scene')
   const ctx = $canvas.getContext('2d')
 
-  handsfree = new Handsfree({posenet: true})
+  handsfree = new Handsfree({weboji: true, posenet: true})
 
   handsfree.use('posenetDemo', {
     onFrame ({posenet}) {
