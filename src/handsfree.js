@@ -50,6 +50,15 @@ export default class Handsfree {
     const weboji = {
       enabled: false,
       throttle: 0,
+      // Represents the calibrator settings
+      calibrator: {
+        // (optional) The target element to act as the calibrator wrapping div
+        target: null,
+        // The message to display over the marker, can be HTML
+        instructions: 'Point head towards center of circle below',
+        // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+        marker: null
+      },
       morphs: {
         threshold: {
           smileRight: 0.7,
@@ -118,13 +127,17 @@ export default class Handsfree {
   /**
    * Start all enabled models
    * - Once models loaded, starts loop
+   * @param {Function} callback The callback to call once everything is started
    */
-  start() {
+  start(callback) {
     if (!this.isStarted) {
       this.startModels(this.activeModels).then(() => {
         this.isLooping = true
         this.loop()
+        callback && callback()
       })
+    } else {
+      callback && callback()
     }
   }
 

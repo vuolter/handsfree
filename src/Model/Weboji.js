@@ -1,4 +1,5 @@
 import BaseModel from './index'
+import Calibrator from '../Calibrator'
 
 /**
  * @see https://github.com/jeeliz/jeelizWeboji
@@ -14,6 +15,11 @@ export default class WebojiModel extends BaseModel {
       translation: [],
       // [0...10] Morphs between 0 - 1
       morphs: []
+    }
+
+    this.calibrator = new Calibrator(this.config, this.handsfree)
+    this.calibrate = () => {
+      this.calibrator.start.call(this.calibrator)
     }
   }
 
