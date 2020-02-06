@@ -12,8 +12,19 @@ export default class PoseNet extends BaseModel {
    * Stores the data in this.data
    */
   getData() {
-    this.api.singlePose((pose) => {
-      this.data = pose
+    if (!this.isGettingData) {
+      this.isGettingData = true
+      this.api.singlePose(this.handsfree.feedback.$video)
+    }
+  }
+
+  /**
+   * Listens for the posenet "pose" event
+   */
+  listenForPose() {
+    this.api.on('pose', (pose) => {
+      this.isGettingData = false
+      this.data = pose[0]
     })
   }
 
@@ -23,14 +34,11 @@ export default class PoseNet extends BaseModel {
    */
   onDepsLoaded() {
     this.handsfree.getUserMedia(() => {
-      this.api = ml5.poseNet(
-        this.handsfree.feedback.$video,
-        this.config,
-        () => {
-          this.isReady = true
-          this.emit('modelLoaded')
-        }
-      )
+      this.api = ml5.poseNet(() => {
+        this.isReady = true
+        this.emit('modelLoaded')
+        this.listenForPose()
+      }, this.config)
     })
   }
 }
