@@ -44,6 +44,8 @@ export default {
    * Detect click state and trigger a real click event
    */
   onFrame({ weboji }) {
+    if (!weboji) return
+
     // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
     if (!weboji.pointer.x && !weboji.pointer.y) return
 

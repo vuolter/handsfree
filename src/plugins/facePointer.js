@@ -45,6 +45,8 @@ export default {
   },
 
   onFrame({ weboji }) {
+    if (!weboji) return
+
     // Get X/Y as if looking straight aweboji
     let x = weboji.translation[0] * window.outerWidth
     let y = window.outerHeight - weboji.translation[1] * window.outerHeight

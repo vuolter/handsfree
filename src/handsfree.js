@@ -1,6 +1,7 @@
 import './assets/handsfree.scss'
 import { merge, trim, throttle } from 'lodash'
 import WebojiModel from './Model/Weboji'
+import PoseNetModel from './Model/PoseNet'
 import Plugin from './Plugin'
 
 // Determine a default assetsPath, using this <script>'s src
@@ -66,10 +67,25 @@ export default class Handsfree {
       }
     }
 
+    const posenet = {
+      enabled: false,
+      throttle: 0,
+      imageScaleFactor: 0.3,
+      outputStride: 16,
+      flipHorizontal: false,
+      minConfidence: 0.5,
+      maxPoseDetections: 5,
+      scoreThreshold: 0.5,
+      nmsRadius: 20,
+      detectionType: 'single',
+      multiplier: 0.75
+    }
+
     this.config = merge(
       {
         assetsPath,
         weboji,
+        posenet,
 
         // Plugin overrides
         plugin: {},
@@ -87,10 +103,16 @@ export default class Handsfree {
       this.config.weboji = weboji
       this.config.weboji.enabled = isEnabled
     }
+    if (typeof this.config.posenet === 'boolean') {
+      let isEnabled = this.config.posenet
+      this.config.posenet = posenet
+      this.config.posenet.enabled = isEnabled
+    }
 
     // Track the models we're using
     this.activeModels = []
     if (this.config.weboji.enabled) this.activeModels.push('weboji')
+    if (this.config.posenet.enabled) this.activeModels.push('posenet')
   }
 
   /**
@@ -110,16 +132,17 @@ export default class Handsfree {
    * The main "Game Loop"
    */
   loop() {
-    // Set the data to pass into plugins/events
     let data = {}
 
     // Get model data
     Object.keys(this.model).forEach((modelName) => {
       if (this.model[modelName].isReady && this.model[modelName].enabled) {
-        data[modelName] = this.model[modelName].getData()
+        this.model[modelName].getData()
+        data[modelName] = this.model[modelName].data || {}
       }
     })
 
+    // Run on frames
     Object.keys(this.plugin).forEach((name) => {
       this.plugin[name].enabled &&
         this.plugin[name].onFrame &&
@@ -159,13 +182,32 @@ export default class Handsfree {
       // Loop through each model and initialize them
       models.forEach((modelName) => {
         switch (modelName) {
+          /**
+           * Weboji
+           */
           case 'weboji':
             if (!this.model.weboji) {
               this.model.weboji = new WebojiModel(
                 {
-                  assetsPath: this.config.assetsPath,
-                  deps: this.config.assetsPath + '/jeelizFaceTransfer.js',
-                  throttle: this.config.weboji.throttle
+                  ...this.config.weboji,
+                  deps: this.config.assetsPath + '/jeelizFaceTransfer.js'
+                },
+                this
+              )
+            } else {
+              this.emit('modelLoaded')
+            }
+            break
+
+          /**
+           * PoseNet
+           */
+          case 'posenet':
+            if (!this.model.posenet) {
+              this.model.posenet = new PoseNetModel(
+                {
+                  ...this.config.posenet,
+                  deps: this.config.assetsPath + '/ml5.min.js'
                 },
                 this
               )
@@ -228,7 +270,7 @@ export default class Handsfree {
    * @param {String} eventName The event name, appended as `handsfree-${eventName}`
    */
   emit(eventName, detail = null) {
-    const event = new CustomEvent(`handsfree-${eventName}`, detail)
+    const event = new CustomEvent(`handsfree-${eventName}`, { detail })
     document.dispatchEvent(event)
   }
 
@@ -239,7 +281,9 @@ export default class Handsfree {
    * @param {Function} callback The callback to call
    */
   on(eventName, callback) {
-    document.addEventListener(`handsfree-${eventName}`, callback)
+    document.addEventListener(`handsfree-${eventName}`, (ev) => {
+      callback(ev.detail)
+    })
   }
 
   /**
@@ -309,7 +353,7 @@ export default class Handsfree {
    */
   createFeedback() {
     const $wrap = document.createElement('DIV')
-    $wrap.classList.add('handsfree-debugger')
+    $wrap.classList.add('handsfree-feedback')
     this.feedback.$wrap = $wrap
 
     // Main canvas
@@ -348,5 +392,42 @@ export default class Handsfree {
     }
 
     this.config.feedback.$target.appendChild($wrap)
+  }
+
+  /**
+   * Toggle feedback on/off
+   */
+  showFeedback() {
+    this.feedback.isVisible = true
+    this.feedback.$wrap.style.display = 'block'
+  }
+  hideFeedback() {
+    this.feedback.isVisible = false
+    this.feedback.$wrap.style.display = 'none'
+  }
+
+  /**
+   * Gets the webcam media stream into handsfree.feedback.stream
+   * @param {Object} callback The callback to call after the stream is received
+   */
+  getUserMedia(callback) {
+    if (!this.feedback.stream) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: false, video: true })
+        .then((stream) => {
+          this.feedback.stream = stream
+          this.feedback.$video.srcObject = stream
+          this.feedback.$video.onloadedmetadata = () => {
+            this.feedback.$video.play()
+            callback && callback()
+          }
+        })
+        .catch((err) => {
+          console.error(`Error loading models: ${err}`)
+        })
+    } else {
+      this.feedback.$video.play()
+      callback && callback()
+    }
   }
 }

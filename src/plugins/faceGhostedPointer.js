@@ -20,6 +20,8 @@ export default {
   },
 
   onDisable({ weboji }) {
+    if (!weboji) return
+
     this.handsfree.plugin.facePointer.$pointer.classList.remove(
       'handsfree-pointer-hidden'
     )

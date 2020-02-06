@@ -17,8 +17,14 @@ include header.pug
             a(href='/scroll-focus.pug') Scroll focus
           li
             a(href='/ghosted-pointer.pug') Ghosted pointer
+          li
+            a(href='/posenet-min.pug') PoseNet Min
 
 script.
   handsfree = new Handsfree({
     weboji: true
+  })
+
+  handsfree.on('data', data => {
+    console.log('data', data)
   })

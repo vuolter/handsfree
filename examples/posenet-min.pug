@@ -1,0 +1,12 @@
+include header.pug
+  h1 PoseNet min
+  p Minimum PoseNet example
+
+script.
+  handsfree = new Handsfree({posenet: true})
+
+  handsfree.use('posenetDemo', {
+    onFrame (...args) {
+      console.log(args)
+    }
+  })
