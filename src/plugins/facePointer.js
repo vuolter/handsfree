@@ -17,7 +17,10 @@ export default {
   config: {
     offset: {
       x: 0,
-      y: 0
+      y: 0,
+      pitch: 0,
+      yaw: 0,
+      roll: 0
     },
 
     speed: {
@@ -53,9 +56,16 @@ export default {
     let z = (1 - weboji.translation[2]) * window.outerWidth * 2.5
 
     // Add pitch/yaw
-    x += z * Math.tan(weboji.rotation[1]) * this.config.speed.x
+    x +=
+      z *
+      Math.tan(weboji.rotation[1] + (this.config.offset.yaw * Math.PI) / 180) *
+      this.config.speed.x
     y +=
-      z * Math.tan(weboji.rotation[0]) * this.config.speed.y -
+      z *
+        Math.tan(
+          weboji.rotation[0] + (this.config.offset.pitch * Math.PI) / 180
+        ) *
+        this.config.speed.y -
       window.outerHeight
 
     // Add offsets

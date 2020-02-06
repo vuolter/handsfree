@@ -85,18 +85,18 @@ export default class Calibrator {
        * Step the pointer towards the center
        */
       step(weboji, dist, center) {
-        const stepSize = dist < 60 ? 3 : 20
+        const stepSize = dist < 60 ? 0.1 : 0.5
 
         // Move toward center
         if (weboji.pointer.x < center.x) {
-          handsfree.plugin.facePointer.config.offset.x += stepSize
+          handsfree.plugin.facePointer.config.offset.yaw += stepSize
         } else {
-          handsfree.plugin.facePointer.config.offset.x -= stepSize
+          handsfree.plugin.facePointer.config.offset.yaw -= stepSize
         }
         if (weboji.pointer.y < center.y) {
-          handsfree.plugin.facePointer.config.offset.y += stepSize
+          handsfree.plugin.facePointer.config.offset.pitch += stepSize
         } else {
-          handsfree.plugin.facePointer.config.offset.y -= stepSize
+          handsfree.plugin.facePointer.config.offset.pitch -= stepSize
         }
       },
 
