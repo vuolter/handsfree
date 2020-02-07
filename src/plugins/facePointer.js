@@ -60,6 +60,7 @@ export default {
       z *
       Math.tan(weboji.rotation[1] + (this.config.offset.yaw * Math.PI) / 180) *
       this.config.speed.x
+
     y +=
       z *
         Math.tan(

@@ -1,3 +1,5 @@
+import { throttle } from 'lodash'
+
 // Number of scripts still being loaded
 let numScriptsLoading = 0
 
@@ -15,6 +17,10 @@ export default class BaseModel {
     this.isReady = false
 
     this.loadDependencies(config.deps)
+
+    // Apply throttle
+    this._getData = this.getData
+    this.throttle(this._getData, this.config.throttle)
   }
 
   /**
@@ -95,4 +101,14 @@ export default class BaseModel {
    * Runs inference and sets up other data
    */
   getData() {}
+
+  /**
+   * Throttles the model, running it every few milliseconds
+   *
+   * @param {Number} time The amount of milliseconds to throttle this model by
+   * @param {Object} opts {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
+   */
+  throttle(time, opts) {
+    this.getData = throttle(this._getData, time, opts)
+  }
 }

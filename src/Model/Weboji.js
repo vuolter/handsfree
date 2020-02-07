@@ -127,4 +127,12 @@ export default class WebojiModel extends BaseModel {
         this.emit('modelError')
       })
   }
+
+  /**
+   * Throttles the model
+   */
+  throttle(time, opts) {
+    this.api && this.api.set_animateDelay(time)
+    super.throttle(time, opts)
+  }
 }

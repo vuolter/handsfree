@@ -359,8 +359,8 @@ export default class Handsfree {
    * @param {Integer} time How many milliseconds to throttle (in other words, run this method at most ever x milliseconds)
    * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
    */
-  throttle(cb, time, obj) {
-    return throttle(cb, time, obj)
+  throttle(cb, time, opts) {
+    return throttle(cb, time, opts)
   }
 
   /**

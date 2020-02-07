@@ -6,6 +6,11 @@ import BaseModel from './index'
 export default class PoseNet extends BaseModel {
   constructor(...args) {
     super(...args)
+
+    this.data = {
+      score: 0,
+      keypoints: []
+    }
   }
 
   /**
