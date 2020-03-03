@@ -1,0 +1,15 @@
+include header.pug
+  h1 Calibration
+  p A minimal example of using <code>handsfree.weboji.calibrate()</code>
+  p
+    button(onclick='startCalibration()') Start calibration
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({weboji: true})
+
+  function startCalibration () {
+    handsfree.start(() => {
+      handsfree.weboji.calibrate()
+    })
+  }

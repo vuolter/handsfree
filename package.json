@@ -1,31 +1,25 @@
 {
   "name": "handsfree",
-  "version": "6.1.6",
-  "main": "dist/handsfree.js",
+  "version": "7.0.0",
+  "description": "A wrapper library around computer vision models for interacting with apps handsfree 👋",
+  "main": "dist/index.js",
   "scripts": {
     "start": "parcel examples/index.pug",
-    "bundle": "parcel build src/handsfree.js -d dist",
-    "chrome": "parcel build src/handsfree.js -d ../handsfree-chrome/chrome/handsfree",
-    "org": "parcel build src/handsfree.js -d ../handsfree.js.org/node_modules/handsfree/dist"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/handsfreejs/handsfree.git"
   },
   "author": "Oz Ramos <heyozramos@gmail.com>",
-  "license": "Apache",
-  "dependencies": {
-    "gsap": "^2.1.3",
-    "lodash": "^4.17.15",
-    "normalize.css": "^8.0.1"
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/handsfreejs/handsfree/issues"
   },
-  "devDependencies": {
-    "autoprefixer": "^9.7.3",
-    "babel-core": "^6.26.3",
-    "css-loader": "^3.2.1",
-    "cssnano": "^4.1.10",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-nuke-dist": "^1.0.1",
-    "parcel-plugin-static-files-copy": "^2.2.1",
-    "pug": "^2.0.4",
-    "sass": "^1.23.7"
-  },
+  "homepage": "https://github.com/handsfreejs/handsfree#readme",
+  "browserslist": [
+    "last 10 Chrome versions"
+  ],
   "eslintConfig": {
     "root": true,
     "env": {
@@ -53,19 +47,20 @@
       }
     ]
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "last 10 Chrome versions"
-  ],
   "staticFiles": {
     "staticPath": [
       {
         "staticPath": "public"
       }
     ]
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.2.1",
+    "pug": "^2.0.4",
+    "sass": "^1.25.0"
+  },
+  "dependencies": {
+    "gsap": "^3.1.1"
   }
 }

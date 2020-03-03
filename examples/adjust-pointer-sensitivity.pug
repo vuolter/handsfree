@@ -1,0 +1,47 @@
+include header.pug
+  h1 Adjust Pointer Sensitivity
+  p Explores two different ways to adjust settings: during instantiation and at run time
+
+  section
+    h2 Adjust Speed      
+    p
+      span Handsfree.plugins.facePointer.config.speed.x:
+      input(id="speed-x" type="number" step=0.5 value="0.5")
+    p
+      | Handsfree.plugins.facePointer.config.speed.y:
+      input(id="speed-y" type="number" step=0.5 value="0.5")
+    button(onclick="updateSpeeds()") Update
+
+script.
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({
+    weboji: true,
+
+    // Override the "weboji.pointer" plugin's default speed
+    plugin: {
+      facePointer: {
+        speed: {
+          x: 0.5,
+          y: 0.5
+        },
+        offset: {
+          x: 0,
+          y: window.outerHeight / 2
+        }
+      }
+    }
+  })
+
+  /**
+   * Updates the speed
+   */
+  const $x = document.querySelector('#speed-x')
+  const $y = document.querySelector('#speed-y')
+  $x.addEventListener('change', updateSpeeds)
+  $y.addEventListener('change', updateSpeeds)
+  function updateSpeeds() {
+    handsfree.plugin.facePointer.config.speed.x = $x.value
+    handsfree.plugin.facePointer.config.speed.y = $y.value
+    handsfree.plugin.facePointer.config.offset.x = window.outerWidth - window.outerWidth * $x.value
+    handsfree.plugin.facePointer.config.offset.y = window.outerHeight - window.outerHeight * $y.value
+  }

@@ -1,0 +1,27 @@
+include header.pug
+  h1 PoseNet min
+  p Minimum PoseNet example
+
+  canvas#scene.flip(width=640 height=480)
+
+script.
+  const $canvas = document.querySelector('#scene')
+  const ctx = $canvas.getContext('2d')
+
+  handsfree = new Handsfree({posenet: true})
+
+  handsfree.use('posenetDemo', {
+    onFrame ({posenet}) {
+      if (!posenet.pose) return
+      
+      ctx.clearRect(0, 0, 640, 480)
+      posenet.pose.keypoints.forEach(point => {
+        if (point.score > .2) {
+          ctx.beginPath()
+          ctx.arc(point.position.x, point.position.y, 10, 0, Math.PI * 2, false)
+          ctx.closePath()
+          ctx.fill()
+        }
+      })
+    }
+  })
