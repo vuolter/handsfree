@@ -17,7 +17,7 @@ let id = 0
 /**
  * ✨ Handsfree.js
  */
-export default class Handsfree {
+class Handsfree {
   constructor(config = {}) {
     this.id = ++id
 
@@ -446,3 +446,5 @@ export default class Handsfree {
     }
   }
 }
+
+module.exports = Handsfree
