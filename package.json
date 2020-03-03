@@ -1,6 +1,6 @@
 {
   "name": "handsfree",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "A wrapper library around computer vision models for interacting with apps handsfree 👋",
   "main": "dist/index.js",
   "scripts": {

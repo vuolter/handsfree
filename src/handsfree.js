@@ -447,4 +447,5 @@ class Handsfree {
   }
 }
 
+window.dispatchEvent(new Event('handsfree.ready'))
 module.exports = Handsfree
