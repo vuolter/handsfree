@@ -32,14 +32,14 @@ For more code examples, check out the `/examples/` folder!
 <!DOCTYPE html>
 <head>
   <!-- Require dependencies, which adds Handsfree to global namespace -->
-  <script src="https://unpkg.com/handsfree@7.0.0/dist/handsfree.js"></script>
+  <script src="https://unpkg.com/handsfree@7.0.2/dist/handsfree.js"></script>
 </head>
 <body>
   <button onclick="handsfree.start()">Start Webcam</button>
 
   <script>
     // Create a new instance. Use one instance for each camera
-    const handsfree = new Handsfree({})
+    const handsfree = new Handsfree({ weboji: true })
 
     // Create a plugin that logs head rotation
     handsfree.use('consoleLogger', ({ weboji }) => {
