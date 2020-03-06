@@ -1,17 +1,17 @@
 <div align="center">
   <p>~ Presenting ~</p>
-  <p>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and <a href="https://patreon.com/handsfreejs">you</a>!</p>
+  <p>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!</p>
   <br>
   <p><img src="https://media.giphy.com/media/3Z15Ve7WEQGkLa1FwC/giphy.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
-  <p>A wrapper library around computer vision models for interacting with apps handsfree 👋</p>
+  <p>A wrapper library around computer vision models for working with face pointers, assistive tech, and creative expression 👋</p>
   <p>
-    <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
-    <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
+    <img class="mr-1" src="https://img.shields.io/github/release-pre/CheckboxOz/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/CheckboxOz/handsfree.svg">
+    <img src="https://img.shields.io/github/repo-size/CheckboxOz/handsfree.svg">
   </p>
   <p>
-    <img class="mr-1" src="https://img.shields.io/github/issues-raw/handsfreejs/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/handsfreejs/handsfree.svg">
+    <img class="mr-1" src="https://img.shields.io/github/issues-raw/CheckboxOz/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/CheckboxOz/handsfree.svg">
   </p>
   <p>Powered by:</p>
   <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a> &nbsp;&nbsp;&nbsp; <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a> &nbsp;&nbsp;&nbsp; 
@@ -24,7 +24,7 @@
 
 # Quickstart
 
-**Explore the docs:** https://handsfree.js.org
+**📚 Explore the docs:** https://browsehandsfree.com/code
 
 For more code examples, check out the `/examples/` folder!
 
@@ -32,7 +32,11 @@ For more code examples, check out the `/examples/` folder!
 <!DOCTYPE html>
 <head>
   <!-- Require dependencies, which adds Handsfree to global namespace -->
-  <script src="https://unpkg.com/handsfree@7.0.2/dist/handsfree.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/handsfree@7.0.3/dist/handsfree.js"
+  />
+  <script src="https://unpkg.com/handsfree@7.0.3/dist/handsfree.js"></script>
 </head>
 <body>
   <button onclick="handsfree.start()">Start Webcam</button>
@@ -43,10 +47,10 @@ For more code examples, check out the `/examples/` folder!
 
     // Create a plugin that logs head rotation
     handsfree.use('consoleLogger', ({ weboji }) => {
-      console.log(`---
-      Pitch ${(weboji.rotation[0] * 180) / Math.PI}
-      Yaw ${(weboji.rotation[1] * 180) / Math.PI}
-      Roll ${(weboji.rotation[1] * 180) / Math.PI}`)
+      if (weboji.pointer.state === 'mousedown') {
+        console.log(`Clicked at: (${weboji.pointer.x}, ${weboji.pointer.y})`)
+        console.log('Clicked on:', weboji.pointer.$target)
+      }
     })
   </script>
 </body>
@@ -68,8 +72,8 @@ For more code examples, check out the `/examples/` folder!
 
 - Install [NodeJS](https://nodejs.org/en/download/)
 - Download this repository
-  - If you have [Git](https://git-scm.com/), run: `git clone https://github.com/handsfreejs/handsfree`
-  - If you don't have Git, [download the latest zip](https://github.com/handsfreejs/handsfree/archive/master.zip)
+  - If you have [Git](https://git-scm.com/), run: `git clone https://github.com/CheckboxOz/handsfree`
+  - If you don't have Git, [download the latest zip](https://github.com/CheckboxOz/handsfree/archive/master.zip)
 - Install dependencies by running `npm i` from the project root
 - Start development on `localhost:1234` by running `npm start`
 
