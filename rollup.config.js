@@ -3,11 +3,14 @@ import commonjs from '@rollup/plugin-commonjs'
 import cleaner from 'rollup-plugin-cleaner'
 import serve from 'rollup-plugin-serve'
 import html from '@open-wc/rollup-plugin-html'
+import copy from 'rollup-plugin-copy'
 
 export default [
-  // Module
+  /**
+   * Handsfree.js UMD library
+   */
   {
-    input: 'src/main.js',
+    input: 'src/handsfree.js',
 
     output: {
       name: 'Handsfree',
@@ -17,6 +20,11 @@ export default [
 
     plugins: [
       cleaner({targets: ['./dist/']}),
+      copy({
+        targets: [
+          {src: 'public/assets', dest: 'dist'}
+        ]
+      }),
       commonjs({
         include: 'node_modules/**'
       }),
@@ -24,7 +32,9 @@ export default [
     ]
   },
 
-  // Demo HTML
+  /**
+   * The sandbox site at localhost:8080
+   */
   {
     output: {
       name: 'index.html',
