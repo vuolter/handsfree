@@ -1,7 +1,4 @@
 <div align="center">
-  <p>~ Presenting ~</p>
-  <p>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!</p>
-  <br>
   <p><img src="https://media.giphy.com/media/3Z15Ve7WEQGkLa1FwC/giphy.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
@@ -16,6 +13,7 @@
   <p>Powered by:</p>
   <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a> &nbsp;&nbsp;&nbsp; <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a> &nbsp;&nbsp;&nbsp; 
   <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a>
+  <blockquote><br>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!<br><br></blockquote>
 </div>
 
 <br>
@@ -24,37 +22,55 @@
 
 # Quickstart
 
-**📚 Explore the docs:** https://browsehandsfree.com/code
-
-For more code examples, check out the `/examples/` folder!
+For more code examples, check out the `/examples/` folder.
 
 ```html
-<!DOCTYPE html>
-<head>
-  <!-- Require dependencies, which adds Handsfree to global namespace -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/handsfree@7.0.3/dist/handsfree.js"
-  />
-  <script src="https://unpkg.com/handsfree@7.0.3/dist/handsfree.js"></script>
-</head>
-<body>
-  <button onclick="handsfree.start()">Start Webcam</button>
+<!-- Require dependencies, which adds Handsfree to global namespace -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/handsfree@7.0.3/dist/handsfree.js"
+/>
+<script src="https://unpkg.com/handsfree@7.0.3/dist/handsfree.js"></script>
 
-  <script>
-    // Create a new instance. Use one instance for each camera
-    const handsfree = new Handsfree({ weboji: true })
+<!-- Instantiate Handsfree.js -->
+<script>
+  // Create a new instance. Use one instance for each camera
+  const handsfree = new Handsfree({ weboji: true })
 
-    // Create a plugin that logs head rotation
-    handsfree.use('consoleLogger', ({ weboji }) => {
-      if (weboji.pointer.state === 'mousedown') {
-        console.log(`Clicked at: (${weboji.pointer.x}, ${weboji.pointer.y})`)
-        console.log('Clicked on:', weboji.pointer.$target)
-      }
-    })
-  </script>
-</body>
+  // Create a plugin that logs head rotation
+  handsfree.use('consoleLogger', ({ weboji }) => {
+    if (weboji.pointer.state === 'mousedown') {
+      console.log(`Clicked at: (${weboji.pointer.x}, ${weboji.pointer.y})`)
+      console.log('Clicked on:', weboji.pointer.$target)
+    }
+  })
+</script>
+
+<!-- Start webcam on user input -->
+<button onclick="handsfree.start()">Start Webcam</button>
 ```
+
+<br>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<br>
+
+# 📆 Oct 2020 Update
+
+I rewrote Handsfree.js earlier this Spring but never got around to documenting it before stopping for some time. I'm a little behind 😅 but I'm working on the project again and will document, address issues, and setup new milestones over the coming weeks as I integrate Handsfree.js into my other project [Midiblocks](https://github.com/midiblocks/midiblocks) (a handsfree creative coding IDE).
+
+Thanks for your patience and also for the support!
+
+## Milestones:
+- [ ] Document all new APIs, including gesture recorder, calibrator, new Plugin API, etc
+- [ ] Move documentation to midiblocks.com/handsfree
+- [ ] Create new experiments and starter kits on Glitch.com
+- [ ] "Officially" re-launch the library
 
 <br>
 <br>
@@ -73,7 +89,7 @@ For more code examples, check out the `/examples/` folder!
 - Install [NodeJS](https://nodejs.org/en/download/)
 - Download this repository
   - If you have [Git](https://git-scm.com/), run: `git clone https://github.com/handsfreejs/handsfree`
-  - If you don't have Git, [download the latest zip](https://github.com/handsfreejs/handsfree/archive/master.zip)
+  - If you don't have Git, [download the latest zip](https://github.com/midiblocks/handsfree/archive/master.zip)
 - Install dependencies by running `npm i` from the project root
 - Start development on `localhost:1234` by running `npm start`
 
@@ -81,6 +97,26 @@ For more code examples, check out the `/examples/` folder!
 
 - The examples served on `localhost:1234` start in `/examples/index.pug`
 - The Handsfree.js library itself starts in `/src/Handsfree.js`
+
+<br>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<br>
+
+# Motivation
+
+In 2018, I became friends with another resident at Doreen's Place, a [veteran's homeless shelter](https://www.tprojects.org/) in Portland, OR that I had been living at (this was during my 2nd year there). This person was there recovering from a stroke, and after getting to know him I learned that he was depressed because he couldn't really communicate with others.
+
+I was already studying machine learning at this time, as I was trying to develop a "digital assistant" for the homeless to help those waiting for social work. I was aware of [Experiments with Google](https://experiments.withgoogle.com/collection/ai) and after poking around came across their first [Teachable Machine](https://teachablemachine.withgoogle.com/) project, which I used it to move a pointer around:
+
+![](https://media0.giphy.com/media/9AIYt1MHqdh1ExUWG2/giphy.gif)
+
+> more info coming soon
 
 <br>
 <br>
@@ -116,8 +152,8 @@ Handsfree.js is available for free and commercial use under [Apache 2.0](http://
 
 # Special Thanks
 
-A very special thanks goes out to [@Golan](https://twitter.com/golan) for inviting me out to [The STUDIO for Creative Inquiry at Carnegie Mellon](http://studioforcreativeinquiry.org/) during the [Spring of 2019](https://www.flickr.com/photos/creativeinquiry/albums/72157703188612302) and again for May 2020!
-
-Another special thanks goes out to [@AnilDash](https://twitter.com/anildash) for sponsoring me during Winter 2018. Also a thank you to [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58). And a very special thanks to [Jess Holbrook](https://twitter.com/jessscon) from Google Pair for driving all the way out to meet me and helping kickstart this all with a new computer!
-
-Thanks also to everyone who's supported me on Patreon, GoFundMe, and through Twitter over the years.
+- [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way
+- [@AnilDash](https://twitter.com/anildash) for supporting the project during Winter 2018 out of the blue and the opportunities to share my project on [Glitch.com](https://glitch.com/@ozramos)
+- [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58) in support of this project
+- [@jessscon](https://twitter.com/jessscon) and [Google PAIR](https://research.google/teams/brain/pair/) for the very early support that made starting this project possible
+- Everyone who's supported me on Patreon, GoFundMe, and through Twitter over the years

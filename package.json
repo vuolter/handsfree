@@ -1,7 +1,7 @@
 {
   "name": "handsfree",
   "version": "7.0.3",
-  "description": "A wrapper library around computer vision models for interacting with apps handsfree 👋",
+  "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "dist/index.js",
   "scripts": {
     "start": "parcel examples/index.pug",
