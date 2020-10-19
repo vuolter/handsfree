@@ -1,67 +1,28 @@
 {
   "name": "handsfree",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
-  "main": "dist/index.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "parcel examples/index.pug",
-    "build": "rm -rf dist && parcel build src/handsfree.js -d dist --global Handsfree",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup --config"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/handsfreejs/handsfree.git"
+    "url": "git+https://github.com/midiblocks/handsfree.git"
   },
-  "author": "Oz Ramos <heyozramos@gmail.com>",
+  "author": "Oz Ramos <midiblocks@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/handsfreejs/handsfree/issues"
+    "url": "https://github.com/midiblocks/handsfree/issues"
   },
-  "homepage": "https://github.com/handsfreejs/handsfree#readme",
-  "browserslist": [
-    "last 10 Chrome versions"
-  ],
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {
-      "no-console": "off"
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
-  },
-  "staticFiles": {
-    "staticPath": [
-      {
-        "staticPath": "public"
-      }
-    ]
-  },
+  "homepage": "https://github.com/midiblocks/handsfree#readme",
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-static-files-copy": "^2.2.1",
-    "pug": "^2.0.4",
-    "sass": "^1.25.0"
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "rollup": "^2.32.0"
   },
   "dependencies": {
-    "gsap": "^3.1.1"
+    "gsap": "^3.5.1",
+    "lodash": "^4.17.20"
   }
 }

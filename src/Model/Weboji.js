@@ -1,5 +1,5 @@
-import BaseModel from './index'
-import Calibrator from '../Calibrator'
+import BaseModel from './index.js'
+import Calibrator from '../Calibrator/index.js'
 
 /**
  * @see https://github.com/jeeliz/jeelizWeboji
