@@ -22,7 +22,8 @@ export default [
       cleaner({targets: ['./dist/']}),
       copy({
         targets: [
-          {src: 'public/assets', dest: 'dist'}
+          {src: 'public/assets', dest: 'dist'},
+          {src: 'public/favicon.png', dest: 'dist'}
         ]
       }),
       commonjs({
@@ -45,7 +46,7 @@ export default [
       html({
         name: 'index.html',
         inject: false,
-        files: 'src/index.html'
+        files: 'demo/index.html'
       }),
       serve({
         contentBase: ['dist'],
