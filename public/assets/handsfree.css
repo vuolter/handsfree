@@ -19,79 +19,57 @@
 .handsfree-calibrating .handsfree-pointer.handsfree-pointer-hidden {
   opacity: 1;
 }
-
 .handsfree-scroll-focus {
   outline: 3px solid #f00;
 }
-
 .handsfree-started .handsfree-pointer {
   display: block;
 }
-
 .handsfree-hidden {
   display: none !important;
 }
-
 /* feedback */
 .handsfree-feedback {
   position: relative;
 }
-
-.handsfree-canvas,
-.handsfree-video,
-.handsfree-debug {
+.handsfree-canvas, .handsfree-video, .handsfree-debug {
   width: 100%;
   height: auto;
   position: relative;
   transform: scale(-1, 1);
 }
-
-.handsfree-video,
-.handsfree-debug {
+.handsfree-video, .handsfree-debug {
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
 }
-
 /* Loading States */
 .handsfree-show-when-loading {
   display: none;
 }
-
 .handsfree-loading .handsfree-hide-when-loading {
   display: none;
 }
-
 .handsfree-loading .handsfree-show-when-loading {
   display: block;
 }
-
-.handsfree-loading a.handsfree-show-when-loading,
-.handsfree-loading button.handsfree-show-when-loading,
-.handsfree-loading span.handsfree-show-when-loading {
+.handsfree-loading a.handsfree-show-when-loading, .handsfree-loading button.handsfree-show-when-loading, .handsfree-loading span.handsfree-show-when-loading {
   display: inline-block;
 }
-
 /* Started/stop states */
 .handsfree-stop {
   display: none;
 }
-
 .handsfree-started .handsfree-start {
   display: none;
 }
-
 .handsfree-started .handsfree-stop {
   display: block;
 }
-
-.handsfree-started a.handsfree-stop,
-.handsfree-started button.handsfree-stop,
-.handsfree-started span.handsfree-stop {
+.handsfree-started a.handsfree-stop, .handsfree-started button.handsfree-stop, .handsfree-started span.handsfree-stop {
   display: inline-block;
 }
-
 .handsfree-started .handsfree-show-when-stopped {
   display: none;
 }
@@ -104,10 +82,8 @@
 .handsfree-loading .handsfree-show-when-loading {
   display: initial;
 }
-
 /* Calibrator, Gesture Recorder */
-.handsfree-gesture-recorder-wrap,
-.handsfree-calibrator-wrap {
+.handsfree-gesture-recorder-wrap, .handsfree-calibrator-wrap {
   position: fixed;
   top: 0;
   left: 0;
@@ -122,8 +98,7 @@
   pointer-events: none;
   z-index: 999998;
 }
-.handsfree-gesture-recorder-wrap.handsfree-visible,
-.handsfree-calibrator-wrap.handsfree-visible {
+.handsfree-gesture-recorder-wrap.handsfree-visible, .handsfree-calibrator-wrap.handsfree-visible {
   opacity: 0.95;
 }
 .handsfree-calibrator-marker {
@@ -133,23 +108,19 @@
   margin: auto;
   border: 2px solid #aac;
 }
-
 #tfjs-visor-container > .visor {
   z-index: 1000000;
 }
-
 /* Click animation */
 body.handsfree-clicked .handsfree-pointer {
   background: #ff0;
   animation: shadow-pulse 0.15s 1;
 }
-
 @keyframes shadow-pulse {
   0% {
     box-shadow: 0 0 0 15px rgba(255, 0, 0, 0.45);
-  }
-
+ }
   100% {
     box-shadow: 0 0 0 75px rgba(255, 0, 0, 0);
-  }
+ }
 }

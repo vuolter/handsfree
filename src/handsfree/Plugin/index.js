@@ -1,4 +1,4 @@
-import { merge, get } from 'lodash'
+import merge from 'lodash/merge'
 
 /**
  * Plugin class

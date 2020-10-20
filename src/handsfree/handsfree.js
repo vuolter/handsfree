@@ -1,8 +1,22 @@
-import './assets/handsfree.scss'
-import { merge, trim, throttle } from 'lodash'
-import WebojiModel from './Model/Weboji'
-import PoseNetModel from './Model/PoseNet'
-import Plugin from './Plugin'
+// import './assets/handsfree.scss'
+import merge from 'lodash/merge'
+import trim from 'lodash/trim'
+import throttle from 'lodash/throttle'
+import WebojiModel from './Model/Weboji.js'
+import PoseNetModel from './Model/PoseNet.js'
+import Plugin from './Plugin/index.js'
+
+// Core plugins
+import pluginFacePointer from './plugins/facePointer'
+import pluginFaceClick from './plugins/faceClick'
+import pluginFaceGhostedPointer from './plugins/faceGhostedPointer'
+import pluginFaceScroll from './plugins/faceScroll'
+const defaultPlugins = {
+  facePointer: pluginFacePointer,
+  faceClick: pluginFaceClick,
+  faceGhostedPointer: pluginFaceGhostedPointer,
+  faceScroll: pluginFaceScroll
+}
 
 // Determine a default assetsPath, using this <script>'s src
 let assetsPath = document.currentScript
@@ -343,13 +357,9 @@ class Handsfree {
    * Load default plugins
    */
   loadDefaultPlugins() {
-    this.use('facePointer', require('./plugins/facePointer').default)
-    this.use('faceClick', require('./plugins/faceClick').default)
-    this.use(
-      'faceGhostedPointer',
-      require('./plugins/faceGhostedPointer').default
-    )
-    this.use('faceScroll', require('./plugins/faceScroll').default)
+    Object.keys(defaultPlugins).forEach(name => {
+      this.use(name, defaultPlugins[name])
+    })
   }
 
   /**
@@ -448,4 +458,4 @@ class Handsfree {
 }
 
 window.dispatchEvent(new Event('handsfree.ready'))
-module.exports = Handsfree
+export default Handsfree

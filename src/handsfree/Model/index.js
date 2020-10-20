@@ -1,4 +1,4 @@
-import { throttle } from 'lodash'
+import throttle from 'lodash/throttle'
 
 // Number of scripts still being loaded
 let numScriptsLoading = 0

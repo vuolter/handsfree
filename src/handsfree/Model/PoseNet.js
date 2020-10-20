@@ -1,4 +1,4 @@
-import BaseModel from './index'
+import BaseModel from './index.js'
 
 /**
  * @see https://ml5js.org/reference/api-PoseNet/
