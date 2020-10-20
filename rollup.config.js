@@ -1,16 +1,18 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-import cleaner from 'rollup-plugin-cleaner'
 import serve from 'rollup-plugin-serve'
 import html from '@open-wc/rollup-plugin-html'
 import copy from 'rollup-plugin-copy'
+import LiveReload from 'rollup-plugin-livereload'
+
+const livereload = LiveReload('dist')
 
 export default [
   /**
    * Handsfree.js UMD library
    */
   {
-    input: 'src/handsfree.js',
+    input: 'src/handsfree/handsfree.js',
 
     output: {
       name: 'Handsfree',
@@ -19,7 +21,6 @@ export default [
     },
 
     plugins: [
-      cleaner({targets: ['./dist/']}),
       copy({
         targets: [
           {src: 'public/assets', dest: 'dist'},
@@ -29,7 +30,8 @@ export default [
       commonjs({
         include: 'node_modules/**'
       }),
-      nodeResolve()
+      nodeResolve(),
+      livereload
     ]
   },
 
@@ -46,12 +48,13 @@ export default [
       html({
         name: 'index.html',
         inject: false,
-        files: 'demo/index.html'
+        files: 'src/index.html'
       }),
       serve({
         contentBase: ['dist'],
         port: 8080
-      })
+      }),
+      livereload
     ]
   }
 ]

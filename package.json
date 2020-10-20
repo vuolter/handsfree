@@ -4,8 +4,8 @@
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "src/main.js",
   "scripts": {
-    "start": "rollup --watch --config",
-    "build": "rollup --config"
+    "start": "rm -rf dist && rollup --watch --config",
+    "build": "rm -rf dist && rollup --config"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.32.0",
-    "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-serve": "^1.0.4"
   },
   "dependencies": {
