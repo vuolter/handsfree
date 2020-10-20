@@ -24,7 +24,8 @@ export default [
       copy({
         targets: [
           {src: 'public/assets', dest: 'dist'},
-          {src: 'public/favicon.png', dest: 'dist'}
+          {src: 'public/favicon.png', dest: 'dist'},
+          {src: 'public/sun.png', dest: 'dist'}
         ]
       }),
       commonjs({
@@ -36,17 +37,18 @@ export default [
   },
 
   /**
-   * The sandbox site at localhost:8080
+   * /index.html at localhost:8080
    */
   {
-    output: {
-      name: 'index.html',
-      dir: 'dist'
-    },
+    output: {dir: 'dist'},
     
     plugins: [
+      copy({
+        targets: [
+          {src: 'src/demo', dest: 'dist'},
+        ]
+      }),
       html({
-        name: 'index.html',
         inject: false,
         files: 'src/index.html'
       }),

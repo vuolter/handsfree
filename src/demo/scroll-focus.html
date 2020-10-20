@@ -5,6 +5,25 @@
   <link rel="stylesheet" href="/assets/handsfree.css">
   <link rel="stylesheet" href="/assets/dev.css">
   <link rel="icon" href="/favicon.png" type="image/png">
+
+  <!-- Demo specific styles -->
+  <style>
+    body, table div {
+      background: url(/sun.png)
+    }
+
+    .overflow {
+      height: 400px;
+      overflow: auto;
+      background: #000;
+    }
+
+    .tall {
+      height: 2000px;
+      opacity: 0.85;
+      box-shadow: inset 1px 1px 3px rgba(0,0,0,0.35);
+    }
+  </style>
 </head>
 <body>
   <section>
@@ -24,25 +43,24 @@
     <!-- Contemt -->
     <div>
       <section>
-        <h2>Index</h2>
-        <p>View the following examples to explore different concepts (click on the logo to come back):</p>
-        <table>
-          <tr>
-            <td>
-              <h3>Basics</h3>
-              <ul>
-                <li><a href="/demo/from-cdn.html">Minimal: From CDN</a></li>
-                <li><a href="/demo/adjust-pointer-sensitivity.html">Adjust pointer sensitivity</a></li>
-                <li><a href="/demo/blink-to-click.html">Blink to click</a></li>
-                <li><a href="/demo/scroll-focus.html">Scroll focus</a></li>
-                <li><a href="/demo/ghosted-pointer.html">Ghosted pointer</a></li>
-                <li><a href="/demo/posenet-min.html">PoseNet minimal</a></li>
-                <li><a href="/demo/posenet-weboji-min.html">PoseNet + Weboji minimal</a></li>
-                <li><a href="/demo/calibration.html">Calibration</a></li>
-              </ul>
-            </td>
-          </tr>
-        </table>
+        <h2>Scroll Focus</h2>
+        <p>Hover over or click into a scrollbar area to focus it for scrolling purposes</p>
+        <div class="tall" style="box-shadow: none">
+          <table>
+            <tr>
+              <td>
+                <div class="overflow">
+                  <div class="tall"></div>
+                </div>
+              </td>
+              <td>
+                <div class="overflow">
+                  <div class="tall"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
       </section>
     </div>
   </section>
