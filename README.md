@@ -22,7 +22,9 @@
 
 # Quickstart
 
-For more code examples, check out the `/demo/` folder.
+For more code examples, check out the `/demo/` folder or try them out on Glitch:
+- [Glitch Sourcecode](https://glitch.com/edit/#!/handsfree-minimal-examples?path=README.md)
+- [Glitch live demo](https://handsfree-minimal-examples.glitch.me/)
 
 ```html
 <!-- Require dependencies, which adds Handsfree to global namespace -->
