@@ -29,7 +29,7 @@ export default [
         ]
       }),
       commonjs({
-        include: 'node_modules/**'
+        include: /node_modules/
       }),
       nodeResolve(),
       livereload

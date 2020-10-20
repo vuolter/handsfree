@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Handsfree.js Examples</title>
+  <link rel="stylesheet" href="/assets/handsfree.css">
+  <link rel="stylesheet" href="/assets/dev.css">
+  <link rel="icon" href="/favicon.png" type="image/png">
+</head>
+<body>
+  <section>
+    <!-- Header -->
+    <header>
+      <div>
+        <a href="/"><img src="/favicon.png" height="80"></a>
+      </div>
+      <h1><a href="/"><span>Handsfree.js</span></a></h1>
+      <div class="pad">
+        <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
+        <button class="handsfree-show-when-loading" disabled>Loading...</button>
+        <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
+      </div>
+    </header>
+
+    <!-- Contemt -->
+    <div>
+      <section>
+        <h2>Loading from CDN</h2>
+        <p>A minimal example using a CDN. This is mostly here as a template</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- Code -->
+  <script src="/handsfree.js"></script>
+  <script>
+    handsfree = new Handsfree({weboji: true})
+  </script>
+</body>
+</html>
