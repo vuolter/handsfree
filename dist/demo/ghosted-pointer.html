@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Handsfree.js Examples</title>
+  <link rel="stylesheet" href="/assets/handsfree.css">
+  <link rel="stylesheet" href="/assets/dev.css">
+  <link rel="icon" href="/favicon.png" type="image/png">
+</head>
+<body>
+  <section>
+    <!-- Header -->
+    <header>
+      <div>
+        <a href="/"><img src="/favicon.png" height="80"></a>
+      </div>
+      <h1><a href="/"><span>Handsfree.js</span></a></h1>
+      <div class="pad">
+        <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
+        <button class="handsfree-show-when-loading" disabled>Loading...</button>
+        <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
+      </div>
+    </header>
+
+    <!-- Contemt -->
+    <div>
+      <section>
+        <h2>Ghosted Pointer</h2>
+        <p>Demonstrates fading out the pointer if the pointer is still after some time. This is <code>true</code> for Browser Extensions</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- Code -->
+  <script src="/handsfree.js"></script>
+  <script>
+    handsfree = new Handsfree({weboji: true})
+    handsfree.plugin.faceGhostedPointer.enable()
+  </script>
+</body>
+</html>

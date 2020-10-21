@@ -1,11 +1,11 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-import serve from 'rollup-plugin-serve'
+// import serve from 'rollup-plugin-serve'
 import html from '@open-wc/rollup-plugin-html'
 import copy from 'rollup-plugin-copy'
-import LiveReload from 'rollup-plugin-livereload'
+// import LiveReload from 'rollup-plugin-livereload'
 
-const livereload = LiveReload('dist')
+// const livereload = LiveReload('dist')
 
 export default [
   /**
@@ -29,10 +29,10 @@ export default [
         ]
       }),
       commonjs({
-        include: 'node_modules/**'
+        include: /node_modules/
       }),
       nodeResolve(),
-      livereload
+      // livereload
     ]
   },
 
@@ -45,18 +45,19 @@ export default [
     plugins: [
       copy({
         targets: [
-          {src: 'src/demo', dest: 'dist'},
+          {src: 'src/index.html', dest: 'dist'},
+          {src: 'src/demo', dest: 'dist'}
         ]
       }),
       html({
         inject: false,
         files: 'src/index.html'
       }),
-      serve({
-        contentBase: ['dist'],
-        port: 8080
-      }),
-      livereload
+      // serve({
+      //   contentBase: ['dist'],
+      //   port: 8080
+      // }),
+      // livereload
     ]
   }
 ]

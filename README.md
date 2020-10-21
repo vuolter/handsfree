@@ -20,7 +20,7 @@
 <br>
 <br>
 
-# Quickstart
+# HTML Quickstart
 
 For more code examples, check out the `/demo/` folder or try them out on Glitch:
 - [Glitch Sourcecode](https://glitch.com/edit/#!/handsfree-minimal-examples?path=README.md)
@@ -50,6 +50,22 @@ For more code examples, check out the `/demo/` folder or try them out on Glitch:
 
 <!-- Start webcam on user input -->
 <button onclick="handsfree.start()">Start Webcam</button>
+```
+
+# NPM Quickstart
+
+I switched over from Parcel to Rollup for package management and am still new to it. For now, a little extra setup is needed when installing through npm:
+
+- Install with: `npm i handsfree`
+- Copy this project's `/public/assets` folder into your own projects public folder (this makes the computer vision models accessible to your app)
+- When instantiating `Handsfree`, set the `assetsPath` property:
+
+```js
+import Handsfree from 'handsfree'
+const handsfree = new Handsfree({
+  weboji: true,
+  assetsPath: document.location.origin + '/assets/'
+})
 ```
 
 <br>
@@ -112,9 +128,9 @@ Thanks for your patience and also for the support!
 
 # Motivation
 
-In 2018, I became friends with another resident at Doreen's Place, a [veteran's homeless shelter](https://www.tprojects.org/) in Portland, OR that I had been living at (this was during my 2nd year there). This person was there recovering from a stroke, and after getting to know him I learned that he was depressed because he couldn't really communicate with others.
+In 2018, I became friends with another resident at Doreen's Place, a [veteran's homeless shelter](https://www.tprojects.org/) in Portland, OR that I had been living at (this was during my 2nd year there). This person was there recovering from a stroke, and after getting to know him I learned that he was depressed because he couldn't really communicate with others as he couldn't speak clearly or use a mobile device.
 
-I was already studying machine learning at this time, as I was trying to develop a "digital assistant" for the homeless to help those waiting for social work. I was aware of [Experiments with Google](https://experiments.withgoogle.com/collection/ai) and after poking around came across their first [Teachable Machine](https://teachablemachine.withgoogle.com/) project, which I used it to move a pointer around:
+I was already studying machine learning at this time, as I was trying to develop a "digital assistant" for the homeless to help those waiting for social work. I was aware of [Experiments with Google](https://experiments.withgoogle.com/collection/ai) and after poking around came across their first [Teachable Machine](https://teachablemachine.withgoogle.com/) project, which I used to move a pointer around:
 
 ![](https://media0.giphy.com/media/9AIYt1MHqdh1ExUWG2/giphy.gif)
 

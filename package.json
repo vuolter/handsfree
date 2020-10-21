@@ -1,8 +1,8 @@
 {
   "name": "handsfree",
-  "version": "7.0.4",
+  "version": "7.0.7",
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
-  "main": "src/main.js",
+  "main": "src/handsfree/handsfree.js",
   "scripts": {
     "start": "rm -rf dist && rollup --watch --config",
     "build": "rm -rf dist && rollup --config"
