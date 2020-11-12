@@ -3416,18 +3416,19 @@
             callback: (videoSettings) => {
               this.api.init({
                 canvasId: `handsfree-canvas-${this.handsfree.id}`,
-                NNCpath: JSON.stringify(model),
-                animateDelay: this.config.throttle,
+                NNC: JSON.stringify(model),
                 videoSettings,
                 callbackReady: () => {
                   this.isReady = true;
+                  this.api.set_animateDelay(this.config.throttle),
                   this.emit('modelLoaded');
                 }
               });
             }
           });
         })
-        .catch(() => {
+        .catch((ev) => {
+          console.log(ev);
           console.error(`Couldn't load weboji tracking model at ${url}`);
           this.emit('modelError');
         });
@@ -8715,8 +8716,9 @@
       offset: {
         x: 0,
         y: 0,
-        pitch: 0,
-        yaw: 0,
+        // A little nudge for when camera is above screen
+        pitch: -15,
+        yaw: -12,
         roll: 0
       },
 
@@ -9476,10 +9478,12 @@
 
     /**
      * Disables all plugins
-     * @param {Array} plugins List of plugin names to disable, or null to disable all
+     * @param {String|Array} plugins List of plugin names to disable, or null to disable all
      */
     disablePlugins(plugins) {
       if (!plugins) plugins = Object.keys(this.plugin);
+      if (typeof plugins === 'string') plugins = [plugins];
+
       this.prevDisabledPlugins = [];
 
       plugins.forEach((name) => {

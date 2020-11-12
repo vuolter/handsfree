@@ -1,11 +1,12 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-// import serve from 'rollup-plugin-serve'
+import serve from 'rollup-plugin-serve'
 import html from '@open-wc/rollup-plugin-html'
 import copy from 'rollup-plugin-copy'
-// import LiveReload from 'rollup-plugin-livereload'
+import LiveReload from 'rollup-plugin-livereload'
 
-// const livereload = LiveReload('dist')
+const livereload = LiveReload('dist')
+const isProduction = process.env.BUILD === 'production'
 
 export default [
   /**
@@ -32,7 +33,7 @@ export default [
         include: /node_modules/
       }),
       nodeResolve(),
-      // livereload
+      (() => !isProduction ? livereload : null)()
     ]
   },
 
@@ -53,11 +54,11 @@ export default [
         inject: false,
         files: 'src/index.html'
       }),
-      // serve({
-      //   contentBase: ['dist'],
-      //   port: 8080
-      // }),
-      // livereload
+      (() => !isProduction ? serve({
+        contentBase: ['dist'],
+        port: 8080
+      }) : null)(),
+      (() => !isProduction ? livereload : null)()
     ]
   }
 ]
