@@ -111,18 +111,19 @@ export default class WebojiModel extends BaseModel {
           callback: (videoSettings) => {
             this.api.init({
               canvasId: `handsfree-canvas-${this.handsfree.id}`,
-              NNCpath: JSON.stringify(model),
-              animateDelay: this.config.throttle,
+              NNC: JSON.stringify(model),
               videoSettings,
               callbackReady: () => {
                 this.isReady = true
+                this.api.set_animateDelay(this.config.throttle),
                 this.emit('modelLoaded')
               }
             })
           }
         })
       })
-      .catch(() => {
+      .catch((ev) => {
+        console.log(ev)
         console.error(`Couldn't load weboji tracking model at ${url}`)
         this.emit('modelError')
       })
