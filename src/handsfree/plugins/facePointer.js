@@ -18,8 +18,9 @@ export default {
     offset: {
       x: 0,
       y: 0,
-      pitch: 0,
-      yaw: 0,
+      // A little nudge for when camera is above screen
+      pitch: -15,
+      yaw: -12,
       roll: 0
     },
 
