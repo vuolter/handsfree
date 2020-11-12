@@ -1,5 +1,5 @@
 <div align="center">
-  <p><img src="https://media.giphy.com/media/3Z15Ve7WEQGkLa1FwC/giphy.gif" alt="handsfree.js"></p>
+  <p><img src="https://media2.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
   <p>A wrapper library around computer vision models for working with face pointers, assistive tech, and creative expression 👋</p>
@@ -14,6 +14,15 @@
   <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a> &nbsp;&nbsp;&nbsp; <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a> &nbsp;&nbsp;&nbsp; 
   <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a>
   <blockquote><br>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!<br><br></blockquote>
+</div>
+
+<br>
+<br>
+<br>
+
+<div align="center">
+  <p><img src="https://media1.giphy.com/media/YATR9GZSSHKeNw3fht/giphy.gif" alt="handsfree.js"></p>
+  <p>Using Handsfree.js with Robot.js (demo soon)</p>
 </div>
 
 <br>
