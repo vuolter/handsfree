@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Handsfree.js Examples</title>
+
+  <!-- Handsfree -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.0.9/dist/assets/dev.css">
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.0.9/dist/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@7.0.9/dist/handsfree.js"></script>
+
+  <!-- Handpose -->
+  <script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0/dist/tf-core.js"></script>
+  <script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0/dist/tf-converter.js"></script>
+  <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
+  <script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6/dist/handpose.js"></script>
+
+  <link rel="icon" href="/favicon.png" type="image/png">
+</head>
+<body>
+  <section>
+    <!-- Header -->
+    <header>
+      <div>
+        <a href="/"><img src="/favicon.png" height="80"></a>
+      </div>
+      <h1><a href="/"><span>Handsfree.js</span></a></h1>
+      <div class="pad">
+        <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
+        <button class="handsfree-show-when-loading" disabled>Loading...</button>
+        <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
+      </div>
+    </header>
+
+    <!-- Contemt -->
+    <div>
+      <section>
+        <h2>Loading from CDN</h2>
+        <p>A minimal example using a CDN. This is mostly here as a template</p>
+      </section>
+    </div>
+  </section>
+
+  <div id="demo">
+    <div id="info" style="display:none"></div>
+    <div id="predictions"></div>
+    <div id="canvas-wrapper">
+      <canvas id="output" width="640" height="500"></canvas>
+      <video id="video" playsinline="" style="-webkit-transform:scaleX(-1);transform:scaleX(-1);visibility:hidden;width:auto;height:auto;position:absolute;" data-vscid="lzxnnio6n" width="640" height="500"> </video>
+    </div>
+  </div>
+
+  <!-- Code -->
+  <script>
+    function isMobile() {
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      return isAndroid || isiOS;
+    }
+
+    let videoWidth, videoHeight, rafID, ctx, canvas, ANCHOR_POINTS,
+        fingerLookupIndices = {
+          thumb: [0, 1, 2, 3, 4],
+          indexFinger: [0, 5, 6, 7, 8],
+          middleFinger: [0, 9, 10, 11, 12],
+          ringFinger: [0, 13, 14, 15, 16],
+          pinky: [0, 17, 18, 19, 20]
+        };  // for rendering each finger as a polyline
+
+    const VIDEO_WIDTH = 640;
+    const VIDEO_HEIGHT = 500;
+    const mobile = isMobile();
+
+    const state = {
+      backend: 'webgl'
+    };
+
+    /**
+     * Helpers
+     */
+    function drawPoint(y, x, r) {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    function drawKeypoints(keypoints) {
+      const keypointsArray = keypoints;
+
+      for (let i = 0; i < keypointsArray.length; i++) {
+        const y = keypointsArray[i][0];
+        const x = keypointsArray[i][1];
+        drawPoint(x - 2, y - 2, 3);
+      }
+
+      const fingers = Object.keys(fingerLookupIndices);
+      for (let i = 0; i < fingers.length; i++) {
+        const finger = fingers[i];
+        const points = fingerLookupIndices[finger].map(idx => keypoints[idx]);
+        drawPath(points, false);
+      }
+    }
+
+    function drawPath(points, closePath) {
+      const region = new Path2D();
+      region.moveTo(points[0][0], points[0][1]);
+      for (let i = 1; i < points.length; i++) {
+        const point = points[i];
+        region.lineTo(point[0], point[1]);
+      }
+
+      if (closePath) {
+        region.closePath();
+      }
+      ctx.stroke(region);
+    }
+
+    let model;
+
+    /**
+     * Setup camera
+     */
+    async function setupCamera() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error(
+            'Browser API navigator.mediaDevices.getUserMedia not available');
+      }
+
+      const video = document.getElementById('video');
+      const stream = await navigator.mediaDevices.getUserMedia({
+        'audio': false,
+        'video': {
+          facingMode: 'user',
+          // Only setting the video to a specified size in order to accommodate a
+          // point cloud, so on mobile devices accept the default size.
+          width: mobile ? undefined : VIDEO_WIDTH,
+          height: mobile ? undefined : VIDEO_HEIGHT
+        },
+      });
+      video.srcObject = stream;
+
+      return new Promise((resolve) => {
+        video.onloadedmetadata = () => {
+          resolve(video);
+        };
+      });
+    }
+
+    async function loadVideo() {
+      const video = await setupCamera();
+      video.play();
+      return video;
+    }
+
+    async function main() {
+      await tf.setBackend(state.backend);
+      model = await handpose.load();
+      let video;
+
+      try {
+        video = await loadVideo();
+      } catch (e) {
+        let info = document.getElementById('info');
+        info.textContent = e.message;
+        info.style.display = 'block';
+        throw e;
+      }
+
+      videoWidth = video.videoWidth;
+      videoHeight = video.videoHeight;
+
+      canvas = document.getElementById('output');
+      canvas.width = videoWidth;
+      canvas.height = videoHeight;
+      video.width = videoWidth;
+      video.height = videoHeight;
+
+      ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, videoWidth, videoHeight);
+      ctx.strokeStyle = 'red';
+      ctx.fillStyle = 'red';
+
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+
+      // These anchor points allow the hand pointcloud to resize according to its
+      // position in the input.
+      ANCHOR_POINTS = [
+        [0, 0, 0], [0, -VIDEO_HEIGHT, 0], [-VIDEO_WIDTH, 0, 0],
+        [-VIDEO_WIDTH, -VIDEO_HEIGHT, 0]
+      ];
+
+      landmarksRealTime(video);
+    }
+
+    const landmarksRealTime = async (video) => {
+      async function frameLandmarks() {
+        ctx.drawImage(
+            video, 0, 0, videoWidth, videoHeight, 0, 0, canvas.width,
+            canvas.height);
+        const predictions = await model.estimateHands(video);
+        if (predictions.length > 0) {
+          const result = predictions[0].landmarks;
+          drawKeypoints(result, predictions[0].annotations);
+        }
+        rafID = requestAnimationFrame(frameLandmarks);
+      };
+
+      frameLandmarks();
+    };
+
+    navigator.getUserMedia = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    main();
+  </script>
+</body>
+</html>

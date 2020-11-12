@@ -2,11 +2,8 @@ import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import serve from 'rollup-plugin-serve'
 import html from '@open-wc/rollup-plugin-html'
-import copy from 'rollup-plugin-copy'
-import LiveReload from 'rollup-plugin-livereload'
-
-const livereload = LiveReload('dist')
-const isProduction = process.env.BUILD === 'production'
+import copy from 'rollup-plugin-copy-watch'
+import livereload from 'rollup-plugin-livereload'
 
 export default [
   /**
@@ -23,6 +20,8 @@ export default [
 
     plugins: [
       copy({
+        watch: 'static',
+        
         targets: [
           {src: 'public/assets', dest: 'dist'},
           {src: 'public/favicon.png', dest: 'dist'},
@@ -33,7 +32,7 @@ export default [
         include: /node_modules/
       }),
       nodeResolve(),
-      (() => !isProduction ? livereload : null)()
+      livereload({ delay: 500, watch: 'dist' })
     ]
   },
 
@@ -45,20 +44,22 @@ export default [
     
     plugins: [
       copy({
+        watch: 'src/demo/**/*',
+
         targets: [
           {src: 'src/index.html', dest: 'dist'},
-          {src: 'src/demo', dest: 'dist'}
+          {src: 'src/demo/**/*', dest: 'dist/demo'}
         ]
       }),
       html({
         inject: false,
         files: 'src/index.html'
       }),
-      (() => !isProduction ? serve({
+      serve({
         contentBase: ['dist'],
         port: 8080
-      }) : null)(),
-      (() => !isProduction ? livereload : null)()
+      }),
+      livereload({ delay: 500, watch: 'dist' })
     ]
   }
 ]
