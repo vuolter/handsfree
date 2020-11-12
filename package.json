@@ -1,11 +1,11 @@
 {
   "name": "handsfree",
-  "version": "7.0.8",
+  "version": "7.0.9",
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "src/handsfree/handsfree.js",
   "scripts": {
     "start": "rm -rf dist && rollup --watch --config",
-    "build": "rm -rf dist && rollup --config"
+    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config"
   },
   "repository": {
     "type": "git",

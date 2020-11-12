@@ -6,6 +6,7 @@ import copy from 'rollup-plugin-copy'
 import LiveReload from 'rollup-plugin-livereload'
 
 const livereload = LiveReload('dist')
+const isProduction = process.env.BUILD === 'production'
 
 export default [
   /**
@@ -32,7 +33,7 @@ export default [
         include: /node_modules/
       }),
       nodeResolve(),
-      livereload
+      (() => !isProduction ? livereload : null)()
     ]
   },
 
@@ -53,11 +54,11 @@ export default [
         inject: false,
         files: 'src/index.html'
       }),
-      serve({
+      (() => !isProduction ? serve({
         contentBase: ['dist'],
         port: 8080
-      }),
-      livereload
+      }) : null)(),
+      (() => !isProduction ? livereload : null)()
     ]
   }
 ]
