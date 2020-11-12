@@ -317,10 +317,12 @@ class Handsfree {
 
   /**
    * Disables all plugins
-   * @param {Array} plugins List of plugin names to disable, or null to disable all
+   * @param {String|Array} plugins List of plugin names to disable, or null to disable all
    */
   disablePlugins(plugins) {
     if (!plugins) plugins = Object.keys(this.plugin)
+    if (typeof plugins === 'string') plugins = [plugins]
+
     this.prevDisabledPlugins = []
 
     plugins.forEach((name) => {
