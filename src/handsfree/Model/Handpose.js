@@ -39,7 +39,8 @@ export default class Handpose extends BaseModel {
    */
   async getData () {
     if (!this.handsfree.feedback.$video) return
-    
     const predictions = await this.api.estimateHands(this.handsfree.feedback.$video)
+
+    this.data = predictions[0]
   }
 }

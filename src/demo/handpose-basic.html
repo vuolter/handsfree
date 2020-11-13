@@ -34,14 +34,33 @@
     <!-- Contemt -->
     <div>
       <section>
-        <h2>Loading from CDN</h2>
-        <p>A minimal example using a CDN. This is mostly here as a template</p>
+        <h2>Handpose Demo</h2>
+        <p>A minimal example of using handpose.</p>
       </section>
     </div>
   </section>
 
   <script>
     const handsfree = new Handsfree({handpose: true})
+
+    /**
+     * Handpointer
+     */
+    handsfree.use('handPointer', {
+      onFrame ({handpose}) {
+        // @todo make handinViewConfidence configurable
+        if (!handpose || !handpose.handInViewConfidence) return
+        
+        const midpoint = {
+          left: (handpose.boundingBox.topLeft[0] + handpose.boundingBox.bottomRight[0]) / 2,
+          top: (handpose.boundingBox.topLeft[1] + handpose.boundingBox.bottomRight[1]) / 2
+        }
+
+        console.log(midpoint)
+        this.handsfree.plugin.facePointer.$pointer.style.left = `${window.outerWidth - midpoint.left}px`
+        this.handsfree.plugin.facePointer.$pointer.style.top = `${midpoint.top}px`
+      }
+    })
   </script>
 </body>
 </html>
