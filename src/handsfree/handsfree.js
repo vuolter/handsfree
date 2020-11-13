@@ -4,6 +4,7 @@ import trim from 'lodash/trim'
 import throttle from 'lodash/throttle'
 import WebojiModel from './Model/Weboji.js'
 import PoseNetModel from './Model/PoseNet.js'
+import HandposeModel from './Model/Handpose.js'
 import Plugin from './Plugin/index.js'
 
 // Core plugins
@@ -104,11 +105,16 @@ class Handsfree {
       multiplier: 0.75
     }
 
+    const handpose = {
+      enabled: false
+    }
+    
     this.config = merge(
       {
         assetsPath,
         weboji,
         posenet,
+        handpose,
 
         // Plugin overrides
         plugin: {},
@@ -131,11 +137,17 @@ class Handsfree {
       this.config.posenet = posenet
       this.config.posenet.enabled = isEnabled
     }
+    if (typeof this.config.handpose === 'boolean') {
+      let isEnabled = this.config.handpose
+      this.config.handpose = handpose
+      this.config.handpose.enabled = isEnabled
+    }
 
     // Track the models we're using
     this.activeModels = []
     if (this.config.weboji.enabled) this.activeModels.push('weboji')
     if (this.config.posenet.enabled) this.activeModels.push('posenet')
+    if (this.config.handpose.enabled) this.activeModels.push('handpose')
   }
 
   /**
@@ -243,7 +255,22 @@ class Handsfree {
             } else {
               this.emit('modelLoaded')
             }
-            break
+          break
+
+          /**
+           * Handpose
+           */
+          case 'handpose':
+            if (!this.handpose) {
+              this.handpose = new HandposeModel({
+                name: 'handpose',
+                ...this.config.handpose,
+                deps: this.config.assetsPath + '/handpose.js'
+              }, this)
+            } else {
+              this.emit('modelLoaded')
+            }
+          break
         }
       })
     })
