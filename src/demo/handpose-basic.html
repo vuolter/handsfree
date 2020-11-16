@@ -59,9 +59,10 @@
           top: (handpose.boundingBox.topLeft[1] + handpose.boundingBox.bottomRight[1]) / 2
         }
 
-        console.log(midpoint)
-        this.handsfree.plugin.facePointer.$pointer.style.left = `${window.outerWidth - midpoint.left}px`
-        this.handsfree.plugin.facePointer.$pointer.style.top = `${midpoint.top}px`
+        const left = this.handsfree.normalize(midpoint.left, this.handsfree.feedback.$video.width) 
+        const top = this.handsfree.normalize(midpoint.top, this.handsfree.feedback.$video.height) 
+        this.handsfree.plugin.facePointer.$pointer.style.left = `${left * window.outerWidth}px`
+        this.handsfree.plugin.facePointer.$pointer.style.top = `${window.outerHeight - top * window.outerHeight}px`
       }
     })
   </script>

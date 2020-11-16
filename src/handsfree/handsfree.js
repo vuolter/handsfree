@@ -166,6 +166,13 @@ class Handsfree {
   }
 
   /**
+   * Helper to normalze a value within a max range
+   */
+  normalize (value, max) {
+    return (max - value) / max
+  }
+
+  /**
    * The main "Game Loop"
    */
   loop() {
