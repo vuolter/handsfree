@@ -39,8 +39,8 @@ For more code examples, check out the `/demo/` folder or try them out on Glitch:
 <!-- Require dependencies, which adds Handsfree to global namespace -->
 <link
   rel="stylesheet"
-  href="https://unpkg.com/handsfree@7.0.9/dist/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.0.9/dist/handsfree.js"></script>
+  href="https://unpkg.com/handsfree@7.1.0/dist/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.1.0/dist/handsfree.js"></script>
 
 <!-- Instantiate Handsfree.js -->
 <script>

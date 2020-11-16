@@ -270,7 +270,7 @@ class Handsfree {
               this.handpose = new HandposeModel({
                 name: 'handpose',
                 ...this.config.handpose,
-                deps: this.config.assetsPath + '/handpose.js'
+                deps: this.config.assetsPath + '/handpose-bundle.js'
               }, this)
             } else {
               this.emit('modelLoaded')
