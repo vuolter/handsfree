@@ -79,7 +79,7 @@ export default class Handpose extends BaseModel {
     
       obj.add(mesh)
       this.three.scene.add(obj)
-      this.three.meshes.push(mesh)
+      this.three.meshes.push(obj)
     }
   }
 
