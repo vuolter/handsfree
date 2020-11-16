@@ -1,3 +1,5 @@
+
+(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -3097,6 +3099,15 @@
     }
 
     /**
+     * Detects if device is mobile
+     */
+    isMobile() {
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      return isAndroid || isiOS;
+    }
+
+    /**
      * Enable this model
      */
     enable() {
@@ -3488,6 +3499,51 @@
           this.listenForPose();
         }, this.config);
       });
+    }
+  }
+
+  /**
+   * @see https://github.com/tensorflow/tfjs-models/tree/master/handpose
+   */
+  class Handpose extends BaseModel {
+    constructor(...args) {
+      super(...args);
+
+      this.data = {};
+
+      this.fingerLookupIndices = {
+        thumb: [0, 1, 2, 3, 4],
+        indexFinger: [0, 5, 6, 7, 8],
+        middleFinger: [0, 9, 10, 11, 12],
+        ringFinger: [0, 13, 14, 15, 16],
+        pinky: [0, 17, 18, 19, 20]
+      };
+    }
+
+    /**
+     * Called when depenencies are loaded
+     * - Sets up camera
+     * 
+     * @todo is async necessary?
+     */
+     onDepsLoaded () {
+      this.handsfree.getUserMedia(async () => {
+        await tf.setBackend('webgl');
+        this.api = await handpose.load();
+
+        this.isReady = true;
+        this.emit('modelLoaded');
+      });
+    }
+    
+    /**
+     * Runs inference and sets up other data
+     */
+    async getData () {
+      if (!this.handsfree.feedback.$video) return
+      const predictions = await this.api.estimateHands(this.handsfree.feedback.$video);
+
+      this.data = predictions[0];
     }
   }
 
@@ -9221,82 +9277,91 @@
      * Sets config defaults
      */
     cleanConfig() {
-      // Model defaults
-      const weboji = {
-        enabled: false,
-        throttle: 0,
-        // Represents the calibrator settings
-        calibrator: {
-          // (optional) The target element to act as the calibrator wrapping div
-          target: null,
-          // The message to display over the marker, can be HTML
-          instructions: 'Point head towards center of circle below',
-          // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
-          marker: null
-        },
-        morphs: {
-          threshold: {
-            smileRight: 0.7,
-            smileLeft: 0.7,
-            browLeftDown: 0.8,
-            browRightDown: 0.8,
-            browLeftUp: 0.8,
-            browRightUp: 0.8,
-            eyeLeftClosed: 0.4,
-            eyeRightClosed: 0.4,
-            mouthOpen: 0.3,
-            mouthRound: 0.8,
-            upperLip: 0.5
+      const defaults = {
+        // Model defaults
+        weboji: {
+          enabled: false,
+          throttle: 0,
+          // Represents the calibrator settings
+          calibrator: {
+            // (optional) The target element to act as the calibrator wrapping div
+            target: null,
+            // The message to display over the marker, can be HTML
+            instructions: 'Point head towards center of circle below',
+            // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+            marker: null
+          },
+          morphs: {
+            threshold: {
+              smileRight: 0.7,
+              smileLeft: 0.7,
+              browLeftDown: 0.8,
+              browRightDown: 0.8,
+              browLeftUp: 0.8,
+              browRightUp: 0.8,
+              eyeLeftClosed: 0.4,
+              eyeRightClosed: 0.4,
+              mouthOpen: 0.3,
+              mouthRound: 0.8,
+              upperLip: 0.5
+            }
           }
+        },
+
+        posenet: {
+          enabled: false,
+          throttle: 0,
+          imageScaleFactor: 0.3,
+          outputStride: 16,
+          flipHorizontal: false,
+          minConfidence: 0.5,
+          maxPoseDetections: 5,
+          scoreThreshold: 0.5,
+          nmsRadius: 20,
+          detectionType: 'single',
+          multiplier: 0.75
+        },
+
+        handpose: {
+          enabled: false
+        },
+
+        feedback: {
+          enabled: false,
+          $target: document.body
         }
       };
 
-      const posenet = {
-        enabled: false,
-        throttle: 0,
-        imageScaleFactor: 0.3,
-        outputStride: 16,
-        flipHorizontal: false,
-        minConfidence: 0.5,
-        maxPoseDetections: 5,
-        scoreThreshold: 0.5,
-        nmsRadius: 20,
-        detectionType: 'single',
-        multiplier: 0.75
-      };
-
+      
       this.config = merge_1(
         {
           assetsPath,
-          weboji,
-          posenet,
+          weboji: defaults.weboji,
+          posenet: defaults.posenet,
+          handpose: defaults.handpose,
 
           // Plugin overrides
           plugin: {},
-          feedback: {
-            enabled: false,
-            $target: document.body
-          }
+          feedback: defaults.feedback
         },
         this.config
       );
 
       // Transform defaults (string => [string])
-      if (typeof this.config.weboji === 'boolean') {
-        let isEnabled = this.config.weboji;
-        this.config.weboji = weboji;
-        this.config.weboji.enabled = isEnabled;
-      }
-      if (typeof this.config.posenet === 'boolean') {
-        let isEnabled = this.config.posenet;
-        this.config.posenet = posenet;
-        this.config.posenet.enabled = isEnabled;
-      }
+      const configs = ['weboji', 'posenet', 'handpose', 'feedback'];
+      configs.forEach(config => {
+        if (typeof this.config[config] === 'boolean') {
+          let isEnabled = this.config[config];
+          this.config[config] = defaults[config];
+          this.config[config].enabled = isEnabled;
+        }
+      });
 
       // Track the models we're using
       this.activeModels = [];
       if (this.config.weboji.enabled) this.activeModels.push('weboji');
       if (this.config.posenet.enabled) this.activeModels.push('posenet');
+      if (this.config.handpose.enabled) this.activeModels.push('handpose');
     }
 
     /**
@@ -9314,6 +9379,13 @@
       } else {
         callback && callback();
       }
+    }
+
+    /**
+     * Helper to normalze a value within a max range
+     */
+    normalize (value, max) {
+      return (max - value) / max
     }
 
     /**
@@ -9404,7 +9476,22 @@
               } else {
                 this.emit('modelLoaded');
               }
-              break
+            break
+
+            /**
+             * Handpose
+             */
+            case 'handpose':
+              if (!this.handpose) {
+                this.handpose = new Handpose({
+                  name: 'handpose',
+                  ...this.config.handpose,
+                  deps: this.config.assetsPath + '/handpose-bundle.js'
+                }, this);
+              } else {
+                this.emit('modelLoaded');
+              }
+            break
           }
         });
       })

@@ -39,8 +39,8 @@ For more code examples, check out the `/demo/` folder or try them out on Glitch:
 <!-- Require dependencies, which adds Handsfree to global namespace -->
 <link
   rel="stylesheet"
-  href="https://unpkg.com/handsfree@7.0.9/dist/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.0.9/dist/handsfree.js"></script>
+  href="https://unpkg.com/handsfree@7.1.0/dist/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.1.0/dist/handsfree.js"></script>
 
 <!-- Instantiate Handsfree.js -->
 <script>
@@ -104,6 +104,8 @@ handsfree = new Handsfree({
 
   /**
    * Used to show the webcam feed along with basic debug info
+   * @param {Boolean|Object} feedback if boolean,
+   *  then this is converted to the default below
    */
   feedback: {
     enabled: false,
@@ -233,11 +235,28 @@ handsfree.use('myPlugin', data => {
 
 See `/src/demo` and `/src/handsfree/plugins` for examples (simpler ones will be made soon)!
 
+## Toggling functionality on/off
+
+You can use the `.disable` and `.enable` methods of a plugin to toggle them on/off. If a plugin has a `.onDisable` or `.onEnable` then the corresponding method will be called.
+
+```js
+handsfree.use('myPlugin', {
+  onEnable () {console.log('enabled 😀')},
+  onDisable () {console.log('disabled 😞')}
+})
+
+handsfree.plugin.myPlugin.enable()
+// console: enabled 😀
+
+handsfree.plugin.myPlugin.disable()
+// console: disabled 😞
+```
 ## Removing Functionality
 
 You can disable all the pre-packaged plugins with `handsfree.disablePlugins()` or by passing a list of plugin names to disable with `handsfree.disablePlugins(['pluginName'])` or just a string with `handsfree.disablePlugins('pluginName')`.
 
 You can also just delete the plugin with `delete handsfree.plugin['pluginName']`
+
 
 <br>
 <br>
@@ -380,21 +399,45 @@ handsfree.posenet.pose.rightWrist
 
 The [PoseNet API](https://github.com/tensorflow/tfjs-models/tree/master/posenet) is available through `handsfree.posenet.api`.
 
-## Toggling the plugin on/off
 
-You can use the `.disable` and `.enable` methods of a plugin to toggle them on/off. If a plugin has a `.onDisable` or `.onEnable` then the corresponding method will be called.
+
+## Handpose - Hand Tracker
+
+Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`.
+
+### Properties
 
 ```js
-handsfree.use('myPlugin', {
-  onEnable () {console.log('enabled 😀')},
-  onDisable () {console.log('disabled 😞')}
-})
+/**
+ * How confident the model is that a hand is in view
+ * [0 - 1]
+ */
+handsfree.handpose.data.handInViewConfidence
 
-handsfree.plugin.myPlugin.enable()
-// console: enabled 😀
+/**
+ * The top left and bottom right pixels containing the hand in the iframe
+ */
+handsfree.handpose.data.boundingBox = {
+  topLeft: [x, y],
+  bottomRight: [x, y]
+}
 
-handsfree.plugin.myPlugin.disable()
-// console: disabled 😞
+/**
+ * [x, y, z] of various hand landmarks
+ */
+handsfree.handpose.data.landmarks[0..9] = [...[x, y, z]]
+
+/**
+ * [x, y, z] of various hand landmarks
+ */
+handsfree.handpose.data.annotations: {
+  thumb: [...[x, y, z]], // 4 landmarks
+  indexFinger: [...[x, y, z]], // 4 landmarks
+  middleFinger: [...[x, y, z]], // 4 landmarks
+  ringFinger: [...[x, y, z]], // 4 landmarks
+  finger: [...[x, y, z]], // 4 landmarks
+  palmBase: [[x, y, z]], // 1 landmarks
+}
 ```
 
 <br>

@@ -24,6 +24,15 @@ export default class BaseModel {
   }
 
   /**
+   * Detects if device is mobile
+   */
+  isMobile() {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    return isAndroid || isiOS;
+  }
+
+  /**
    * Enable this model
    */
   enable() {
