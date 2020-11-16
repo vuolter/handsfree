@@ -61,87 +61,85 @@ class Handsfree {
    * Sets config defaults
    */
   cleanConfig() {
-    // Model defaults
-    const weboji = {
-      enabled: false,
-      throttle: 0,
-      // Represents the calibrator settings
-      calibrator: {
-        // (optional) The target element to act as the calibrator wrapping div
-        target: null,
-        // The message to display over the marker, can be HTML
-        instructions: 'Point head towards center of circle below',
-        // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
-        marker: null
-      },
-      morphs: {
-        threshold: {
-          smileRight: 0.7,
-          smileLeft: 0.7,
-          browLeftDown: 0.8,
-          browRightDown: 0.8,
-          browLeftUp: 0.8,
-          browRightUp: 0.8,
-          eyeLeftClosed: 0.4,
-          eyeRightClosed: 0.4,
-          mouthOpen: 0.3,
-          mouthRound: 0.8,
-          upperLip: 0.5
+    const defaults = {
+      // Model defaults
+      weboji: {
+        enabled: false,
+        throttle: 0,
+        // Represents the calibrator settings
+        calibrator: {
+          // (optional) The target element to act as the calibrator wrapping div
+          target: null,
+          // The message to display over the marker, can be HTML
+          instructions: 'Point head towards center of circle below',
+          // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+          marker: null
+        },
+        morphs: {
+          threshold: {
+            smileRight: 0.7,
+            smileLeft: 0.7,
+            browLeftDown: 0.8,
+            browRightDown: 0.8,
+            browLeftUp: 0.8,
+            browRightUp: 0.8,
+            eyeLeftClosed: 0.4,
+            eyeRightClosed: 0.4,
+            mouthOpen: 0.3,
+            mouthRound: 0.8,
+            upperLip: 0.5
+          }
         }
+      },
+
+      posenet: {
+        enabled: false,
+        throttle: 0,
+        imageScaleFactor: 0.3,
+        outputStride: 16,
+        flipHorizontal: false,
+        minConfidence: 0.5,
+        maxPoseDetections: 5,
+        scoreThreshold: 0.5,
+        nmsRadius: 20,
+        detectionType: 'single',
+        multiplier: 0.75
+      },
+
+      handpose: {
+        enabled: false
+      },
+
+      feedback: {
+        enabled: false,
+        $target: document.body
       }
     }
 
-    const posenet = {
-      enabled: false,
-      throttle: 0,
-      imageScaleFactor: 0.3,
-      outputStride: 16,
-      flipHorizontal: false,
-      minConfidence: 0.5,
-      maxPoseDetections: 5,
-      scoreThreshold: 0.5,
-      nmsRadius: 20,
-      detectionType: 'single',
-      multiplier: 0.75
-    }
-
-    const handpose = {
-      enabled: false
-    }
     
     this.config = merge(
       {
         assetsPath,
-        weboji,
-        posenet,
-        handpose,
+        weboji: defaults.weboji,
+        posenet: defaults.posenet,
+        handpose: defaults.handpose,
 
         // Plugin overrides
         plugin: {},
-        feedback: {
-          enabled: false,
-          $target: document.body
-        }
+        feedback: defaults.feedback
       },
       this.config
     )
 
     // Transform defaults (string => [string])
-    if (typeof this.config.weboji === 'boolean') {
-      let isEnabled = this.config.weboji
-      this.config.weboji = weboji
-      this.config.weboji.enabled = isEnabled
-    }
-    if (typeof this.config.posenet === 'boolean') {
-      let isEnabled = this.config.posenet
-      this.config.posenet = posenet
-      this.config.posenet.enabled = isEnabled
-    }
-    if (typeof this.config.handpose === 'boolean') {
-      let isEnabled = this.config.handpose
-      this.config.handpose = handpose
-      this.config.handpose.enabled = isEnabled
-    }
+    const configs = ['weboji', 'posenet', 'handpose', 'feedback']
+    configs.forEach(config => {
+      if (typeof this.config[config] === 'boolean') {
+        let isEnabled = this.config[config]
+        this.config[config] = defaults[config]
+        this.config[config].enabled = isEnabled
+      }
+    })
 
     // Track the models we're using
     this.activeModels = []
