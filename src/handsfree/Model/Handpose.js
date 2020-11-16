@@ -52,12 +52,14 @@ export default class Handpose extends BaseModel {
     // Setup Three
     this.three = {
       scene: new window.THREE.Scene(),
-      camera: new window.THREE.PerspectiveCamera(90, window.outerWidth / window.outerHeight, 0.1, 1000),
+      camera: new window.THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000),
       renderer: new THREE.WebGLRenderer(),
       meshes: []
     }
-    this.three.renderer.setSize(window.outerWidth, window.outerHeight)
+    this.three.renderer.setSize(window.innerWidth, window.innerHeight)
+    this.three.renderer.domElement.classList.add('handsfree-handpose-canvas')
     this.handsfree.feedback.$wrap.appendChild(this.three.renderer.domElement)
+    this.three.camera.position.z = this.handsfree.feedback.$video.videoWidth / 2
 
     // Create model representations (one for each keypoint)
     for (let i = 0; i < 21; i++){
@@ -91,10 +93,10 @@ export default class Handpose extends BaseModel {
     const isPalm = idx != -1
     let next // who to connect with?
 
-    if (!isPalm){ // connect with previous finger landmark if it's a finger landmark
-      next = i-1
+    if (!isPalm) { // connect with previous finger landmark if it's a finger landmark
+      next = i - 1
     }else{ // connect with next palm landmark if it's a palm landmark
-      next = palms[(idx+1)%palms.length]
+      next = palms[(idx + 1) % palms.length]
     }
 
     return {isPalm, next}
@@ -130,7 +132,7 @@ export default class Handpose extends BaseModel {
     return new window.THREE.Vector3(
       (x-this.handsfree.feedback.$video.videoWidth / 2),
       -(y-this.handsfree.feedback.$video.videoHeight / 2), // in threejs, +y is up
-      - z
+      -z
     )
   }
 
@@ -141,6 +143,11 @@ export default class Handpose extends BaseModel {
     if (!this.handsfree.feedback.$video) return
     const predictions = await this.api.estimateHands(this.handsfree.feedback.$video)
 
-    this.data = predictions[0]
+    this.data = {
+      ...predictions[0],
+      meshes: this.three.meshes
+    }
+
+    return this.data
   }
 }

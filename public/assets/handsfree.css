@@ -28,22 +28,27 @@
 .handsfree-hidden {
   display: none !important;
 }
+
 /* feedback */
 .handsfree-feedback {
   position: relative;
 }
-.handsfree-canvas, .handsfree-video, .handsfree-debug {
+.handsfree-canvas, .handsfree-video, .handsfree-debug, .handsfree-handpose-canvas {
   width: 100%;
   height: auto;
   position: relative;
   transform: scale(-1, 1);
 }
-.handsfree-video, .handsfree-debug {
+.handsfree-video, .handsfree-debug, .handsfree-handpose-canvas {
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
 }
+.handsfree-handpose-canvas {
+  z-index: 10;
+}
+
 /* Loading States */
 .handsfree-show-when-loading {
   display: none;

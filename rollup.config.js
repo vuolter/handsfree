@@ -20,7 +20,6 @@ export default [
 
     plugins: [
       copy({
-        watch: 'src/**/*',
         targets: [
           {src: 'public/assets', dest: 'dist'},
           {src: 'public/favicon.png', dest: 'dist'},
@@ -57,7 +56,7 @@ export default [
         contentBase: ['dist'],
         port: 8080
       }),
-      livereload({ delay: 100, watch: 'src' })
+      livereload({ delay: 500, watch: 'src' })
     ]
   }
 ]
