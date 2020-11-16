@@ -270,6 +270,8 @@ You can also just delete the plugin with `delete handsfree.plugin['pluginName']`
 
 ## Weboji - Face Tracker
 
+![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
+
 Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji.data` when inside `onFrame`.
 
 ### Properties
@@ -402,6 +404,8 @@ The [PoseNet API](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
 
 
 ## Handpose - Hand Tracker
+
+![](https://media.giphy.com/media/TluOjMFVgo4KINVURy/source.gif)
 
 Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`.
 
