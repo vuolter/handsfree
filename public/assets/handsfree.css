@@ -47,6 +47,7 @@
 }
 .handsfree-handpose-canvas {
   z-index: 10;
+  transform: scale(1, 1) !important
 }
 
 /* Loading States */

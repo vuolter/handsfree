@@ -52,14 +52,29 @@ export default class Handpose extends BaseModel {
     // Setup Three
     this.three = {
       scene: new window.THREE.Scene(),
-      camera: new window.THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000),
+      camera: new window.THREE.PerspectiveCamera(90, window.outerWidth / window.outerHeight, 0.1, 1000),
       renderer: new THREE.WebGLRenderer(),
       meshes: []
     }
-    this.three.renderer.setSize(window.innerWidth, window.innerHeight)
+    this.three.renderer.setSize(window.outerWidth, window.outerHeight)
     this.three.renderer.domElement.classList.add('handsfree-handpose-canvas')
     this.handsfree.feedback.$wrap.appendChild(this.three.renderer.domElement)
-    this.three.camera.position.z = this.handsfree.feedback.$video.videoWidth / 2
+    this.three.camera.position.z = -this.handsfree.feedback.$video.videoWidth / 2
+    this.three.camera.lookAt(new window.THREE.Vector3(0, 0, 0))
+
+    // Camera plane
+    this.three.screen = new window.THREE.Mesh(
+      // new window.THREE.PlaneGeometry(window.outerWidth, window.outerHeight),
+      new window.THREE.BoxGeometry(window.outerWidth, window.outerHeight, 1),
+      new window.THREE.MeshNormalMaterial()
+    )
+    this.three.screen.position.z = 300
+    this.three.scene.add(this.three.screen)
+
+    // Camera raycaster
+    this.three.raycaster = new window.THREE.Raycaster()
+    this.three.arrow = new window.THREE.ArrowHelper(this.three.raycaster.ray.direction, this.three.raycaster.ray.origin, 300, 0xff0000)
+    this.three.scene.add(this.three.arrow)
 
     // Create model representations (one for each keypoint)
     for (let i = 0; i < 21; i++){
@@ -70,9 +85,7 @@ export default class Handpose extends BaseModel {
       // we make each bone a cylindrical shape, but you can use your own models here too
       const geometry = new window.THREE.CylinderGeometry(isPalm ? 5 : 10, 5, 1)
     
-      const material = new window.THREE.MeshNormalMaterial()
-      // another possible material (after adding a light source):
-      // var material = new THREE.MeshPhongMaterial({color:0x00ffff})
+      let material = new window.THREE.MeshNormalMaterial()
     
       const mesh = new window.THREE.Mesh(geometry, material)
       mesh.rotation.x = Math.PI / 2
@@ -116,14 +129,22 @@ export default class Handpose extends BaseModel {
       const p1 = this.webcam2space(...hand.landmarks[next])  // the other end of the bone
   
       // compute the center of the bone (midpoint)
-      const mid = p0.clone().lerp(p1,0.5)
-      this.three.meshes[i].position.set(mid.x,mid.y,mid.z)
+      const mid = p0.clone().lerp(p1, 0.5)
+      this.three.meshes[i].position.set(mid.x, mid.y, mid.z)
   
       // compute the length of the bone
       this.three.meshes[i].scale.z = p0.distanceTo(p1)
-  
+
       // compute orientation of the bone
       this.three.meshes[i].lookAt(p1)
+
+      if (i === 8) {
+        this.three.arrow.position.set(mid.x, mid.y, mid.z)
+        const direction = new window.THREE.Vector3().sub(p0, mid)
+        this.three.arrow.setDirection(direction.normalize())
+        this.three.arrow.setLength(800)
+        this.three.arrow.direction = direction
+      }
     }
   }
   
