@@ -20,6 +20,7 @@ export default [
 
     plugins: [
       copy({
+        watch: 'public/**/*',
         targets: [
           {src: 'public/assets', dest: 'dist'},
           {src: 'public/favicon.png', dest: 'dist'},

@@ -5,59 +5,90 @@
   
   <link rel="stylesheet" href="/assets/handsfree.css">
   <link rel="stylesheet" href="/assets/dev.css">
+  <link rel="stylesheet" href="/assets/98.css">
   <link rel="icon" href="/favicon.png" type="image/png">
 </head>
 <body>
-  <section>
-    <!-- Header -->
-    <header>
-      <div>
-        <a href="/"><img src="/favicon.png" height="80"></a>
-      </div>
-      <h1><a href="/"><span>Handsfree.js</span></a></h1>
-      <div class="pad">
-        <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
-        <button class="handsfree-show-when-loading" disabled>Loading...</button>
-        <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
-      </div>
-    </header>
-
-    <!-- Contemt -->
-    <div>
+  <div class="flex-row">
+    <aside>
+      <ul class="tree-view">
+        <li><a href="/">Home</a></li>
+        <li>
+          <details open>
+            <summary><strong>Face Tracking</strong></summary>
+          </details>
+        </li>
+      </ul>
+    </aside>
+    <main>
       <section>
-        <h2>Index</h2>
-        <p>View the following examples to explore different concepts (click on the logo to come back):</p>
-        <h3>Face Tracking</h3>
-        <p><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></p>
-        <ul>
-          <li><a href="/demo/from-cdn.html">Minimal: From CDN</a></li>
-          <li><a href="/demo/adjust-pointer-sensitivity.html">Adjust pointer sensitivity</a></li>
-          <li><a href="/demo/blink-to-click.html">Blink to click</a></li>
-          <li><a href="/demo/scroll-focus.html">Scroll focus</a></li>
-          <li><a href="/demo/ghosted-pointer.html">Ghosted pointer</a></li>
-          <li><a href="/demo/calibration.html">Calibration</a></li>
-        </ul>
-        <br>
+        <!-- Header -->
+        <h1><span>Handsfree.js</span></h1>
         <hr>
-        <br>
+        <h4>This library provides a simple API around popular computer vision models designed to help you create handsfree user interfaces driven by Face Tracking, Hand Tracking, Pose Estimation, and eventually Eye Tracking, Voice, and Mind Control as well!</h4>
+        <!-- <table>
+          <tr>
+            <td><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></td>
+            <td><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif"></td>
+            <td></td>
+          </tr>
+        </table> -->
 
-        <h3>Pose Estimation</h3>
-        <ul>
-          <li><a href="/demo/posenet-min.html">PoseNet minimal</a></li>
-          <li><a href="/demo/posenet-weboji-min.html">PoseNet + Weboji minimal</a></li>
-        </ul>
-        <br>
+        <p class="verticle-middle-children space-children">
+          <img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
+          <img src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg">
+          <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
+        </p>
+        <p class="verticle-middle-children space-children">
+          <strong>Powered by:</strong>
+          <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
+          <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a> <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a>
+        </p>
+        
+        <p><strong>With support from:</strong> The <a href="https://www.cmu.edu/cfa/studio/">Studio for Creative Inquiry</a>, <a href="https://glitch.com">Glitch</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!<br><br></p>
         <hr>
-        <br>
-
-        <h3>Hand Tracking</h3>
-        <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif"></p>
-        <ul>
-          <li><a href="/demo/handpose-basic.html">Handpose Basic</a></li>
-        </ul>
+        <p>
+          <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
+          <button class="handsfree-show-when-loading" disabled>Loading...</button>
+          <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
+        </p>
+          
+        <!-- Contemt -->
+        <div>
+          <section>
+            <h2>Index</h2>
+            <p>View the following examples to explore different concepts (click on the logo to come back):</p>
+            <h3>Face Tracking</h3>
+            <ul>
+              <li><a href="/demo/from-cdn.html">Minimal: From CDN</a></li>
+              <li><a href="/demo/adjust-pointer-sensitivity.html">Adjust pointer sensitivity</a></li>
+              <li><a href="/demo/blink-to-click.html">Blink to click</a></li>
+              <li><a href="/demo/scroll-focus.html">Scroll focus</a></li>
+              <li><a href="/demo/ghosted-pointer.html">Ghosted pointer</a></li>
+              <li><a href="/demo/calibration.html">Calibration</a></li>
+            </ul>
+            <br>
+            <hr>
+            <br>
+    
+            <h3>Pose Estimation</h3>
+            <ul>
+              <li><a href="/demo/posenet-min.html">PoseNet minimal</a></li>
+              <li><a href="/demo/posenet-weboji-min.html">PoseNet + Weboji minimal</a></li>
+            </ul>
+            <br>
+            <hr>
+            <br>
+    
+            <h3>Hand Tracking</h3>
+            <ul>
+              <li><a href="/demo/handpose-basic.html">Handpose Basic</a></li>
+            </ul>
+          </section>
+        </div>
       </section>
-    </div>
-  </section>
+    </main>
+  </div>
 
   <!-- Code -->
   <script src="/handsfree.js"></script>
