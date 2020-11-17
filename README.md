@@ -1,5 +1,6 @@
 <div align="center">
   <p><img src="https://media2.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" alt="handsfree.js"></p>
+  <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
   <p>A wrapper library around computer vision models for working with face pointers, assistive tech, and creative expression 👋</p>
@@ -405,7 +406,7 @@ The [PoseNet API](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
 
 ## Handpose - Hand Tracker
 
-![](https://media.giphy.com/media/TluOjMFVgo4KINVURy/source.gif)
+![](https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif)
 
 Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`.
 
