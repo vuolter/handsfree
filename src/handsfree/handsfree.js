@@ -12,11 +12,15 @@ import pluginFacePointer from './plugins/facePointer'
 import pluginFaceClick from './plugins/faceClick'
 import pluginFaceGhostedPointer from './plugins/faceGhostedPointer'
 import pluginFaceScroll from './plugins/faceScroll'
+
+import pluginFingerPointer from './plugins/fingerPointer'
+
 const defaultPlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
   faceGhostedPointer: pluginFaceGhostedPointer,
-  faceScroll: pluginFaceScroll
+  faceScroll: pluginFaceScroll,
+  fingerPointer: pluginFingerPointer
 }
 
 // Determine a default assetsPath, using this <script>'s src
