@@ -59,8 +59,8 @@ export default {
 
     if (hits && hits.length) {
       TweenMax.to(this.tween, 1, {
-        x: hits[0].point.x,
-        y: hits[0].point.y,
+        x: window.outerWidth - this.handsfree.normalize(this.handsfree.handpose.three.renderer.domElement.width - (hits[0].point.x + this.handsfree.handpose.three.renderer.domElement.width / 2), this.handsfree.handpose.three.renderer.domElement.width) * window.outerWidth,
+        y: this.handsfree.normalize(hits[0].point.y + this.handsfree.handpose.three.renderer.domElement.height / 2, this.handsfree.handpose.three.renderer.domElement.height) * window.outerHeight, 
         overwrite: true,
         ease: 'linear.easeNone',
         immediate: true
