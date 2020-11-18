@@ -13,22 +13,21 @@ export default [
     output: {
       name: 'Handsfree',
       format: 'umd',
-      dir: 'dist/lib'
+      dir: 'build/lib'
     },
 
     plugins: [
       copy({
         targets: [
-          {src: 'public/assets', dest: 'dist/lib'},
-          {src: 'public/favicon.png', dest: 'dist/lib'},
-          {src: 'public/sun.png', dest: 'dist/lib'}
+          {src: 'public/assets', dest: 'build/lib'},
+          {src: 'public/favicon.png', dest: 'build/lib'},
+          {src: 'public/sun.png', dest: 'build/lib'}
         ]
       }),
       commonjs({
         include: /node_modules/
       }),
-      nodeResolve(),
-      // livereload({ delay: 500, watch: 'dist' })
+      nodeResolve()
     ]
   },
 
@@ -36,13 +35,13 @@ export default [
    * /index.html at localhost:8080
    */
   {
-    output: {dir: 'dist/lib'},
+    output: {dir: 'build/lib'},
     
     plugins: [
       copy({
         targets: [
-          {src: 'src/index.html', dest: 'dist/lib'},
-          {src: 'src/demo/**/*', dest: 'dist/lib/demo'}
+          {src: 'src/index.html', dest: 'build/lib'},
+          {src: 'src/demo/**/*', dest: 'build/lib/demo'}
         ]
       }),
       html({

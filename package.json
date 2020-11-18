@@ -5,8 +5,8 @@
   "main": "src/handsfree/handsfree.js",
   "scripts": {
     "start": "vuepress dev docs",
-    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
-    "build:lib": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config",
+    "build": "rm -rf docs/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
+    "build:lib": "rm -rf docs/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config",
     "build:docs": "vuepress build docs"
   },
   "repository": {

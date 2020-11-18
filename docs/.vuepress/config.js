@@ -1,5 +1,5 @@
 module.exports = {
-  dest: 'dist/docs',
+  dest: 'build/docs',
   
   themeConfig: {
     sidebar: [
