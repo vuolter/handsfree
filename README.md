@@ -481,6 +481,21 @@ handsfree.handpose.data.annotations: {
 - Start development on `localhost:8080` by running `npm start`
 
 
+## Command line scripts
+```bash
+# Start local development on localhost:8080
+npm start 
+
+# Build into /dist/lib/ and /dist/docs/
+npm run build
+
+# Build only /dist/docs/
+npm run build:docs
+
+# Build only /dist/lib/
+npm run build:lib
+```
+
 ---
 
 <br>
