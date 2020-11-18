@@ -1,4 +1,6 @@
 module.exports = {
+  dest: 'dist/docs',
+  
   themeConfig: {
     sidebar: [
       ['/', 'Home'],

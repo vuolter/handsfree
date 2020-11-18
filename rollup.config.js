@@ -1,9 +1,7 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-import serve from 'rollup-plugin-serve'
 import html from '@open-wc/rollup-plugin-html'
 import copy from 'rollup-plugin-copy-watch'
-import livereload from 'rollup-plugin-livereload'
 
 export default [
   /**
@@ -15,23 +13,22 @@ export default [
     output: {
       name: 'Handsfree',
       format: 'umd',
-      dir: 'dist'
+      dir: 'dist/lib'
     },
 
     plugins: [
       copy({
-        watch: 'public/**/*',
         targets: [
-          {src: 'public/assets', dest: 'dist'},
-          {src: 'public/favicon.png', dest: 'dist'},
-          {src: 'public/sun.png', dest: 'dist'}
+          {src: 'public/assets', dest: 'dist/lib'},
+          {src: 'public/favicon.png', dest: 'dist/lib'},
+          {src: 'public/sun.png', dest: 'dist/lib'}
         ]
       }),
       commonjs({
         include: /node_modules/
       }),
       nodeResolve(),
-      livereload({ delay: 500, watch: 'dist' })
+      // livereload({ delay: 500, watch: 'dist' })
     ]
   },
 
@@ -39,25 +36,19 @@ export default [
    * /index.html at localhost:8080
    */
   {
-    output: {dir: 'dist'},
+    output: {dir: 'dist/lib'},
     
     plugins: [
       copy({
-        watch: 'src/**/*',
         targets: [
-          {src: 'src/index.html', dest: 'dist'},
-          {src: 'src/demo/**/*', dest: 'dist/demo'}
+          {src: 'src/index.html', dest: 'dist/lib'},
+          {src: 'src/demo/**/*', dest: 'dist/lib/demo'}
         ]
       }),
       html({
         inject: false,
         files: 'src/index.html'
-      }),
-      serve({
-        contentBase: ['dist'],
-        port: 8080
-      }),
-      livereload({ delay: 500, watch: 'src' })
+      })
     ]
   }
 ]

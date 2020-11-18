@@ -5,7 +5,9 @@
   "main": "src/handsfree/handsfree.js",
   "scripts": {
     "start": "vuepress dev docs",
-    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs"
+    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
+    "build:lib": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config",
+    "build:docs": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -23,8 +25,6 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.32.0",
     "rollup-plugin-copy-watch": "0.0.1",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-serve": "^1.0.4",
     "vuepress": "^1.7.1"
   },
   "dependencies": {
