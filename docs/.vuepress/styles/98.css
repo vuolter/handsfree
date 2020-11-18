@@ -4,7 +4,7 @@
  * https://github.com/jdan/98.css/blob/master/LICENSE
  */
 
- :root {
+:root {
   /* Color */
   --surface: #c0c0c0;
   --button-highlight: #ffffff;
@@ -28,19 +28,14 @@
   --range-spacing: 10px;
 
   /* Some detailed computations for radio buttons and checkboxes */
-  --radio-total-width-precalc: var(--radio-width) + var(--radio-label-spacing);
+  --radio-total-width-precalc: calc(var(--radio-width) + var(--radio-label-spacing));
   --radio-total-width: calc(var(--radio-total-width-precalc));
   --radio-left: calc(-1 * var(--radio-total-width-precalc));
   --radio-dot-width: 4px;
   --radio-dot-top: calc(var(--radio-width) / 2 - var(--radio-dot-width) / 2);
-  --radio-dot-left: calc(
-    -1 * (var(--radio-total-width-precalc)) + var(--radio-width) / 2 - var(
-        --radio-dot-width
-      ) / 2
-  );
+  --radio-dot-left: calc(-1 * var(--radio-total-width-precalc) + var(--radio-width) / 2 - var(--radio-dot-width) / 2);
 
-  --checkbox-total-width-precalc: var(--checkbox-width) +
-    var(--radio-label-spacing);
+  --checkbox-total-width-precalc: calc(var(--checkbox-width) + var(--radio-label-spacing));
   --checkbox-total-width: calc(var(--checkbox-total-width-precalc));
   --checkbox-left: calc(-1 * var(--checkbox-total-width-precalc));
   --checkmark-width: 7px;
@@ -72,16 +67,16 @@
 
 @font-face {
   font-family: "Pixelated MS Sans Serif";
-  src: url("fonts/converted/ms_sans_serif.woff") format("woff");
-  src: url("fonts/converted/ms_sans_serif.woff2") format("woff2");
+  src: url("/fonts/converted/ms_sans_serif.woff") format("woff");
+  src: url("/fonts/converted/ms_sans_serif.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pixelated MS Sans Serif";
-  src: url("fonts/converted/ms_sans_serif_bold.woff") format("woff");
-  src: url("fonts/converted/ms_sans_serif_bold.woff2") format("woff2");
+  src: url("/fonts/converted/ms_sans_serif_bold.woff") format("woff");
+  src: url("/fonts/converted/ms_sans_serif_bold.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
 }
@@ -151,7 +146,7 @@ button:not(:disabled):active {
   padding: 2px 11px 0 13px;
 }
 
-@media (not(hover)) {
+@media not all and (hover: none) {
   button:not(:disabled):hover {
     box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
   }

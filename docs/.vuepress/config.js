@@ -1,5 +1,11 @@
+const path = require('path')
+
 module.exports = {
   dest: 'build/docs',
+
+  alias: {
+    styles: path.resolve(__dirname, './styles')
+  },
   
   themeConfig: {
     sidebar: [
