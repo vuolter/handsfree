@@ -2,7 +2,8 @@
 body > div {
   height: 100%;
 }
-html body p {
+html body p,
+html body li {
   font-size: 1.25em;
 }
 
@@ -50,12 +51,12 @@ img {
 
 main {
   width: 65rem;
-  margin-left: 240px;
+  margin-left: 340px;
   margin-bottom: 60px;
 }
 
 aside {
-  width: 200px;
+  width: 300px;
   position: fixed;
   top: 0;
   bottom: 0;

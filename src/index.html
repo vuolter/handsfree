@@ -15,7 +15,32 @@
         <li><a href="/">Home</a></li>
         <li>
           <details open>
-            <summary><strong>Face Tracking</strong></summary>
+            <summary><strong>Face Tracking (Weboji)</strong></summary>
+            <ul>
+              <li><a href="/demo/from-cdn.html">Minimal: From CDN</a></li>
+              <li><a href="/demo/adjust-pointer-sensitivity.html">Adjust pointer sensitivity</a></li>
+              <li><a href="/demo/blink-to-click.html">Blink to click</a></li>
+              <li><a href="/demo/scroll-focus.html">Scroll focus</a></li>
+              <li><a href="/demo/ghosted-pointer.html">Ghosted pointer</a></li>
+              <li><a href="/demo/calibration.html">Calibration</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details open>
+            <summary><strong>Hand Tracking (Handpose)</strong></summary>
+            <ul>
+              <li><a href="/demo/handpose-basic.html">Finger laser pointers</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details open>
+            <summary><strong>Pose Estimation (PoseNet)</strong></summary>
+            <ul>
+              <li><a href="/demo/posenet-min.html">PoseNet minimal</a></li>
+              <li><a href="/demo/posenet-weboji-min.html">PoseNet + Weboji minimal</a></li>
+            </ul>
           </details>
         </li>
       </ul>
@@ -24,23 +49,28 @@
       <!-- Header -->
       <h1><span>Handsfree.js</span></h1>
       <hr>
-      <h4>This library provides a simple API around popular computer vision models designed to help you create handsfree user interfaces driven by Face Tracking, Hand Tracking, Pose Estimation, and eventually Eye Tracking, Voice, and Mind Control as well!</h4>
+      <h4 style="margin-bottom: 0">This library helps you add face tracking, hand tracking, and/or pose estimation to your JavaScript projects in a snap. It also:</h4>
+      <ul>
+        <li>Manages dependencies to minimize impact on initial page load times</li>
+        <li>Creates a single, pluggable "game loop" that is passed face morphs, keypoints, confidences and more</li>
+        <li>Provides bindings to the models original API along with a custom API largely focused around handsfree user interfaces</li>
+      </ul>
 
-      <p class="verticle-middle-children space-children">
-        <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
-        <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
-        <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
-        <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg"></a>
-      </p>
-
+      
       <blockquote>
         <p class="verticle-middle-children space-children">
           <strong>Powered by:</strong>
           <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
           <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a> <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a>
         </p>
+        <p class="verticle-middle-children space-children">
+          <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
+          <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
+          <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
+          <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg"></a>
+        </p>
         
-        <p style="margin-bottom: 0"><strong>With support from:</strong> The <a href="https://www.cmu.edu/cfa/studio/">Studio for Creative Inquiry</a>, <a href="https://glitch.com">Glitch</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!<br><br></p>
+        <!-- <p style="margin-bottom: 0"><strong>With support from:</strong> The <a href="https://www.cmu.edu/cfa/studio/">Studio for Creative Inquiry</a>, <a href="https://glitch.com">Glitch</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!<br><br></p> -->
       </blockquote>
       <hr>
         
@@ -58,46 +88,6 @@
           </p>
         </div>
       </section>
-
-      <section class="component">
-        <h3>Setup</h3>
-        <div>
-        </div>
-      </section>
-      
-      <!-- <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif"></p>
-      <div>
-        <section>
-          <h2>Index</h2>
-          <p>View the following examples to explore different concepts (click on the logo to come back):</p>
-          <h3>Face Tracking</h3>
-          <ul>
-            <li><a href="/demo/from-cdn.html">Minimal: From CDN</a></li>
-            <li><a href="/demo/adjust-pointer-sensitivity.html">Adjust pointer sensitivity</a></li>
-            <li><a href="/demo/blink-to-click.html">Blink to click</a></li>
-            <li><a href="/demo/scroll-focus.html">Scroll focus</a></li>
-            <li><a href="/demo/ghosted-pointer.html">Ghosted pointer</a></li>
-            <li><a href="/demo/calibration.html">Calibration</a></li>
-          </ul>
-          <br>
-          <hr>
-          <br>
-  
-          <h3>Pose Estimation</h3>
-          <ul>
-            <li><a href="/demo/posenet-min.html">PoseNet minimal</a></li>
-            <li><a href="/demo/posenet-weboji-min.html">PoseNet + Weboji minimal</a></li>
-          </ul>
-          <br>
-          <hr>
-          <br>
-  
-          <h3>Hand Tracking</h3>
-          <ul>
-            <li><a href="/demo/handpose-basic.html">Handpose Basic</a></li>
-          </ul>
-        </section>
-      </div> -->
     </main>
   </div>
 
