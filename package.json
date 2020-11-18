@@ -4,8 +4,8 @@
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "src/handsfree/handsfree.js",
   "scripts": {
-    "start": "rm -rf dist && rollup --watch --config",
-    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config"
+    "start": "vuepress dev docs",
+    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
     "rollup": "^2.32.0",
     "rollup-plugin-copy-watch": "0.0.1",
     "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-serve": "^1.0.4"
+    "rollup-plugin-serve": "^1.0.4",
+    "vuepress": "^1.7.1"
   },
   "dependencies": {
     "gsap": "^3.5.1",
