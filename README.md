@@ -504,16 +504,20 @@ npm run build:lib
 
 # License & Attributions
 
-Handsfree.js is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+## License: Apache 2.0 and...
 
-## Models
+The Handsfree.js core is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). However, to use the models and plugins included with Handsfree.js you'll also have to follow their licenses (❓ feel free to start an issue about this):
 
-- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache License 2.0) - Face and head pose estimation
+- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache 2.0) - Used for face and head tracking
+- [ml5.js](https://github.com/ml5js/ml5-library) (MIT) - Currently used for pose estimation (PoseNet)
+- [TensorFlow.js](https://github.com/tensorflow/tfjs-models) (Apache 2.0) - PoseNet and Handpose
 
-## Art
+## Attributions
+I'd like to also thank the following people and projects:
+- [98.css by @jdan](https://github.com/jdan/98.css) (MIT) - Used as boilerplate for documentation theme
+- [Handpose Three.js boilerplate by @LingDong-](https://github.com/LingDong-/handpose-facemesh-demos) - Boilerplate for rendering Handpose in 3D space
 
-- [Monkey logo adaption](https://www.designevo.com/apps/logo/?name=cute-monkey-and-interesting-gaming)
-
+## 
 <br>
 <br>
 <br>
