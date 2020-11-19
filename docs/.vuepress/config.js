@@ -18,6 +18,14 @@ module.exports = {
       }
     }
   },
+
+  thirdPartyComponents: {
+    // @see https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only
+    fontAwesomeIcons: {
+      regular: ['video'],
+      solid: ['spinner', 'video', 'video-slash']
+    }
+  },
   
   title: 'Handsfree.js',
   description: 'Handsfree.js is a library that helps you add face tracking, hand tracking, and/or pose estimation to your JavaScript projects in a snap.',

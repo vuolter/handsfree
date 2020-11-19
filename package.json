@@ -5,9 +5,12 @@
   "main": "src/handsfree/handsfree.js",
   "scripts": {
     "start": "vuepress dev docs",
+
     "build": "rm -rf docs/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
     "build:lib": "rm -rf docs/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config",
-    "build:docs": "vuepress build docs"
+    "build:docs": "vuepress build docs",
+
+    "fa:build": "node node_modules/vuepress-plugin-font-awesome/index.js --dest=docs"
   },
   "repository": {
     "type": "git",
@@ -24,7 +27,8 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.32.0",
     "rollup-plugin-copy": "^3.3.0",
-    "vuepress": "^1.7.1"
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-font-awesome": "^1.90.6"
   },
   "dependencies": {
     "gsap": "^3.5.1",

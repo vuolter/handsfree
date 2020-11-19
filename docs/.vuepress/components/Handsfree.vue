@@ -19,16 +19,6 @@ window.handsfree = new Handsfree({
 export default {
   name: 'HandsfreeContainer',
 
-  components: {HandsfreeToggle},
-
-  /**
-   * Add handsfree button to header
-   */
-  mounted () {
-    this.$nextTick(() => {
-      console.log(document.querySelector('header.navbar .links'))
-      document.querySelector('header.navbar .links')//.appendChild(document.querySelector('#main-handsfree-toggle'))
-    })
-  }
+  components: {HandsfreeToggle}
 }
 </script>

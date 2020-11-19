@@ -1,8 +1,8 @@
 <template>
 <div>
-  <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
-  <button class="handsfree-show-when-loading" disabled>Loading...</button>
-  <button class="handsfree-show-when-started negative" onclick="handsfree.stop()">Stop Webcam</button>
+  <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()"><Fa-Video /> <span>Start Webcam</span></button>
+  <button class="handsfree-show-when-loading" disabled><Fa-Spinner :spin='true' /> <span>Loading...</span></button>
+  <button class="handsfree-show-when-started negative" onclick="handsfree.stop()"><Fa-VideoSlash /> <span>Stop Webcam</span></button>
 </div>
 </template>
 

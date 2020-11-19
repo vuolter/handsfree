@@ -496,6 +496,10 @@ npm run build:docs
 npm run build:lib
 ```
 
+## Dev Notes
+- See [vuepress-component-font-awesome](https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only) for adding fonts. Remember to run `npm run fa:build` when adding new fonts so that they are copied over into the `docs/.vuepress/components/FA`  folder
+- You may occasionally need to restart server when adding new files to the `/docs`, this is true when changing `/docs/.vuepress.config.js` as well
+
 ---
 
 <br>
@@ -517,7 +521,6 @@ I'd like to also thank the following people and projects:
 - [98.css by @jdan](https://github.com/jdan/98.css) (MIT) - Used as boilerplate for documentation theme
 - [Handpose Three.js boilerplate by @LingDong-](https://github.com/LingDong-/handpose-facemesh-demos) - Boilerplate for rendering Handpose in 3D space
 
-## 
 <br>
 <br>
 <br>
