@@ -5,7 +5,7 @@ module.exports = {
 
   alias: {
     styles: path.resolve(__dirname, './styles'),
-    assets: path.resolve(__dirname, '../../public/assets'),
+    assets: path.resolve(__dirname, '../../public/assets')
   },
   
   title: 'Handsfree.js',

@@ -1,14 +1,13 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-import html from '@open-wc/rollup-plugin-html'
-import copy from 'rollup-plugin-copy-watch'
+import copy from 'rollup-plugin-copy'
 
 export default [
   /**
    * Handsfree.js UMD library
    */
   {
-    input: 'src/handsfree/handsfree.js',
+    input: 'src/handsfree.js',
 
     output: {
       name: 'Handsfree',
@@ -28,26 +27,6 @@ export default [
         include: /node_modules/
       }),
       nodeResolve()
-    ]
-  },
-
-  /**
-   * /index.html at localhost:8080
-   */
-  {
-    output: {dir: 'build/lib'},
-    
-    plugins: [
-      copy({
-        targets: [
-          {src: 'src/index.html', dest: 'build/lib'},
-          {src: 'src/demo/**/*', dest: 'build/lib/demo'}
-        ]
-      }),
-      html({
-        inject: false,
-        files: 'src/index.html'
-      })
     ]
   }
 ]

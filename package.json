@@ -20,11 +20,10 @@
   },
   "homepage": "https://github.com/midiblocks/handsfree#readme",
   "devDependencies": {
-    "@open-wc/rollup-plugin-html": "^1.2.5",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.32.0",
-    "rollup-plugin-copy-watch": "0.0.1",
+    "rollup-plugin-copy": "^3.3.0",
     "vuepress": "^1.7.1"
   },
   "dependencies": {
