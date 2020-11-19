@@ -13,7 +13,7 @@
 
 - Manages dependencies to minimize impact on initial page load times
 - Creates a single, pluggable "game loop" that is passed face morphs, keypoints, confidences and more
-- Comes with a collection of plugins for using your face and fingers as pointing devices
+- Comes with a collection of plugins for accelerating assistive tech development, including Face Pointers and Finger Pointers
 
 <!-- <blockquote>
   <p class="verticle-middle-children space-children">

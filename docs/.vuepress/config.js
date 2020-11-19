@@ -4,7 +4,8 @@ module.exports = {
   dest: 'build/docs',
 
   alias: {
-    styles: path.resolve(__dirname, './styles')
+    styles: path.resolve(__dirname, './styles'),
+    assets: path.resolve(__dirname, '../../public/assets'),
   },
   
   themeConfig: {
