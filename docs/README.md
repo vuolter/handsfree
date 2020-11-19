@@ -67,9 +67,12 @@
 
 Press the start button below to enable a "Face Pointer". Move the pointer with your head, and scroll the page by moving the pointer above and below the window. Click on things with a smirk (smile to either side).
 
-<button class="large handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
-<button class="large handsfree-show-when-loading" disabled>Loading...</button>
-<button class="large handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
+```js
+const handsfree = new Handsfree({head: true})
+handsfree.start()
+```
+
+<HandsfreeToggle />
 
 <!-- Setup Handsfree.js for this page -->
 <script>
