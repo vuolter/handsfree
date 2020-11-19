@@ -8,6 +8,12 @@ module.exports = {
     assets: path.resolve(__dirname, '../../public/assets'),
   },
   
+  title: 'Handsfree.js',
+  description: 'Handsfree.js is a library that helps you add face tracking, hand tracking, and/or pose estimation to your JavaScript projects in a snap.',
+  head: [
+    ['link', {rel: 'icon', href: '/favicon-dark.png'}]
+  ],
+  
   themeConfig: {
     sidebar: [
       ['/', 'Home'],

@@ -1,0 +1,22 @@
+button
+  display: inline-block
+  font-size: 1.2rem
+  color: #fff
+  background-color: $accentColor
+  padding: .8rem 1.6rem
+  border-radius: 4px
+  transition: background-color .1s ease
+  box-sizing: border-box
+  border-color: lighten($accentColor, 10%)
+  border-bottom: 1px solid darken($accentColor, 10%)
+  cursor: pointer
+
+  &:hover
+    background: lighten($accentColor, 10%)
+    border-color: lighten($accentColor, 20%)
+    border-bottom-color: $accentColor
+
+  &:active
+    background: darken($accentColor, 10%)
+    border-color: $accentColor
+    border-bottom-color: darken($accentColor, 20%)
