@@ -40,10 +40,10 @@ module.exports = {
       ['/', 'Home'],
       {
         title: '📚 Documentation',
-        path: '/docs/',
         collapsable: true,
         sidebarDepth: 1,
         children: [
+          ['/docs/', 'Getting Started'],
           ['/docs/face/', '😀 Face Tracking'],
           ['/docs/hand/', '🖖 Hand Tracking'],
           ['/docs/pose/', '🤺 Pose Tracking']    
