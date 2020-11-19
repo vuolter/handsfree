@@ -13,7 +13,8 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@handsfree': path.resolve(__dirname, '../../src')
+        '@handsfree': path.resolve(__dirname, '../../src'),
+        '@components': path.resolve(__dirname, './components')
       }
     }
   },

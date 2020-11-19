@@ -11,6 +11,10 @@ button
   border-bottom: 1px solid darken($accentColor, 10%)
   cursor: pointer
 
+  &[disabled]
+    opacity: 0.5
+    cursor: not-allowed
+
   &:hover
     background: lighten($accentColor, 10%)
     border-color: lighten($accentColor, 20%)
@@ -20,3 +24,7 @@ button
     background: darken($accentColor, 10%)
     border-color: $accentColor
     border-bottom-color: darken($accentColor, 20%)
+
+header.navbar button
+  padding: .4rem .8rem
+  font-size: .8rem
