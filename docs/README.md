@@ -70,3 +70,7 @@ Press the start button below to enable a "Face Pointer". Move the pointer with y
 <button class="large handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Webcam</button>
 <button class="large handsfree-show-when-loading" disabled>Loading...</button>
 <button class="large handsfree-show-when-started" onclick="handsfree.stop()">Stop Webcam</button>
+
+<!-- Setup Handsfree.js for this page -->
+<script>
+</script>

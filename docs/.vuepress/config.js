@@ -7,7 +7,7 @@ module.exports = {
 
   alias: {
     styles: path.resolve(__dirname, './styles'),
-    assets: path.resolve(__dirname, '../../public/assets')
+    public: path.resolve(__dirname, './public')
   },
 
   configureWebpack: {

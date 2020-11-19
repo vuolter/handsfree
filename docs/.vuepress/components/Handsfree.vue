@@ -5,7 +5,10 @@
 <script>
 import Handsfree from '@handsfree/handsfree.js'
 window.Handsfree = Handsfree
-window.handsfree = new Handsfree()
+window.handsfree = new Handsfree({
+  assetsPath: 'handsfree/',
+  weboji: true
+})
 
 export default {
   name: 'HandsfreeDebugger'
