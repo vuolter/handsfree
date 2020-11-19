@@ -117,6 +117,7 @@ export default class WebojiModel extends BaseModel {
                 this.isReady = true
                 this.api.set_animateDelay(this.config.throttle),
                 this.emit('modelLoaded')
+                document.body.classList.add('handsfree-model-weboji')
               }
             })
           }

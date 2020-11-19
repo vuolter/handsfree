@@ -42,7 +42,8 @@ export default class PoseNet extends BaseModel {
       this.api = ml5.poseNet(() => {
         this.isReady = true
         this.emit('modelLoaded')
-        this.listenForPose()
+          document.body.classList.add('handsfree-model-posenet')
+          this.listenForPose()
       }, this.config)
     })
   }

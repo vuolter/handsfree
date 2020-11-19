@@ -42,6 +42,7 @@ export default class Handpose extends BaseModel {
 
       this.isReady = true
       this.emit('modelLoaded')
+      document.body.classList.add('handsfree-model-handpose')
     })
   }
 

@@ -36,7 +36,7 @@ export default {
   onUse() {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
-      $pointer.classList.add('handsfree-pointer')
+      $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-face')
       document.body.appendChild($pointer)
       this.$pointer = $pointer
     }

@@ -22,7 +22,8 @@
 .handsfree-scroll-focus {
   outline: 3px solid #f00;
 }
-.handsfree-started .handsfree-pointer {
+.handsfree-started.handsfree-model-weboji .handsfree-pointer-face,
+.handsfree-started.handsfree-model-handpose .handsfree-pointer-finger {
   display: block;
 }
 .handsfree-hidden {
@@ -63,6 +64,7 @@
 .handsfree-loading a.handsfree-show-when-loading, .handsfree-loading button.handsfree-show-when-loading, .handsfree-loading span.handsfree-show-when-loading {
   display: inline-block;
 }
+
 /* Started/stop states */
 .handsfree-stop {
   display: none;
@@ -88,6 +90,7 @@
 .handsfree-loading .handsfree-show-when-loading {
   display: initial;
 }
+
 /* Calibrator, Gesture Recorder */
 .handsfree-gesture-recorder-wrap, .handsfree-calibrator-wrap {
   position: fixed;
@@ -117,6 +120,7 @@
 #tfjs-visor-container > .visor {
   z-index: 1000000;
 }
+
 /* Click animation */
 body.handsfree-clicked .handsfree-pointer {
   background: #ff0;
