@@ -233,6 +233,8 @@ class Handsfree {
           /**
            * Weboji
            */
+          case 'head':
+          case 'face':
           case 'weboji':
             if (!this.weboji) {
               this.weboji = new WebojiModel(
@@ -251,6 +253,7 @@ class Handsfree {
           /**
            * PoseNet
            */
+          case 'pose':
           case 'posenet':
             if (!this.posenet) {
               this.posenet = new PoseNetModel(
@@ -269,6 +272,7 @@ class Handsfree {
           /**
            * Handpose
            */
+          case 'hand':
           case 'handpose':
             if (!this.handpose) {
               this.handpose = new HandposeModel({

@@ -68,12 +68,43 @@
 Press the start button below to enable a "Face Pointer". Move the pointer with your head, and scroll the page by moving the pointer above and below the window. Click on things with a smirk (smile to either side).
 
 ```js
-const handsfree = new Handsfree({head: true})
+const handsfree = new Handsfree({face: true})
 handsfree.start()
 ```
 
 <HandsfreeToggle />
 
-<!-- Setup Handsfree.js for this page -->
+## Quickstart
+
+### Through CDN
+```html
+<!-- Include Handsfree.js -->
+<link rel="stylesheet" href="https://unpkg.com/handsfree@7.1.0/dist/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.1.0/dist/handsfree.js"></script>
+
+<!-- Instantiate and start it -->
 <script>
+  const handsfree = new Handsfree({face: true})
+  handsfree.start()
 </script>
+```
+
+### Through NPM
+
+::: warning Important
+In order to keep startup times snappy some dependencies must be loaded at runtime:
+
+- Install with: `npm i handsfree`
+- Copy `node_modules/handsfree/build/lib/assets` folder into your projects public folder
+- When instantiating `Handsfree` set the `assetsPath` option to where you moved the assets into
+:::
+
+```js
+import Handsfree from 'handsfree'
+const handsfree = new Handsfree({
+  assetsPath: '/public/assets/',
+  face: true
+})
+
+handsfree.start()
+```
