@@ -36,7 +36,7 @@ handsfree.face.data.pointer.y
 The `scrollFocus` grants the Face Pointer the ability to scroll different areas by:
 
 1. Hover the pointer over an area with a scrollbar
-2. When focused (highlighted with a red border by default) move the pointer above or below the scrollbar area to scroll in that direction
+2. When the area is focused (it'll receive a red border) move the pointer into the scroll area (red boxes) to scroll in that direction
 3. Clicking into a scroll area also focuses it
 
 <table>
@@ -58,7 +58,9 @@ The `scrollFocus` grants the Face Pointer the ability to scroll different areas 
 
 <script>
   window.demo = {
-    // Slow scrolling speed
+    /**
+     * Adjust scroll speed for demo
+     */
     toggleScrollSpeed () {
       if (handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed === .01) {
         handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .45
@@ -69,9 +71,19 @@ The `scrollFocus` grants the Face Pointer the ability to scroll different areas 
       }
     },
 
-    // Increase scrolling speed
+    /**
+     * Adjust scroll zone for demo
+     */
     toggleScrollZone () {
-      handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .45
+      if (handsfree.plugin.faceScroll.config.vertScroll.scrollZone === 100) {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollZone = 0
+        document.querySelector('#demo-toggle-scroll-zone').innerHTML = '↕ Increase scroll zone'
+        document.body.classList.add('demo-negative-scroll-zone')
+      } else {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollZone = 100
+        document.querySelector('#demo-toggle-scroll-zone').innerHTML = '↕ Decrease scroll zone'
+        document.body.classList.remove('demo-negative-scroll-zone')
+      }
     }
   }
 </script>
@@ -88,8 +100,8 @@ You can also set the scroll zone (how many pixels from the edge of the scroll ar
 
 ```js
 // Default is 100
-// - ex) set to -200px to require pointer to go above the top/bottom of the area
-handsfree.plugin.faceScroll.config.scrollZone = -200
+// - ex) set to 0px to require pointer to go above the top/bottom of the area
+handsfree.plugin.faceScroll.config.scrollZone = 0
 ```
 
 You can set both of these during instantiation:
