@@ -102,7 +102,8 @@ if (handsfree.isLooping) {
 }
 ```
 
-<button onclick="demo.calibrate()"><Fa-Crosshairs /> Start Calibration</button>
+<button onclick="demo.calibrate()" class="handsfree-hide-when-loading"><Fa-Crosshairs /> Start Calibration</button>
+<button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading</button>
 
 ## Changing click gesture
 
@@ -150,8 +151,6 @@ if (handsfree.isLooping) {
      * - Starts handsfree if it isn't already
      */
     calibrate () {
-      console.log('calibrate')
-      
       if (handsfree.isLooping) {
         handsfree.weboji.calibrate()
       } else {
