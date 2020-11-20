@@ -56,7 +56,7 @@ module.exports = {
         children: [
           ['/examples/', 'Examples'],
           ['/examples/face-pointer', '😀 Face Pointer Playground'],
-          ['/examples/finger-pointer', '👆 Finger Pointer Playgound']
+          ['/examples/finger-pointer', '👆 Finger Pointer Playground']
         ]
       },
       ['https://midiblocks.com', '💻 Gesture mapper'],

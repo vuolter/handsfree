@@ -6,8 +6,8 @@
     <td class="col-6">
       <h2>Try it</h2>
       <ul>
-        <li>Point at the screen with a pointer finger 👆</li>
-        <li>Point palm towards screen 🖐 and move hand up and down to scroll (while keeping palm towards screen)</li>
+        <li>Point at the screen to move the pointer 👆</li>
+        <li>With palm towards screen 🖐, move hand up and down to scroll</li>
       </ul>
       <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" />
     </td>
@@ -27,9 +27,8 @@ handsfree.hand.data.pointer.y
 ```
 
 ## Plugins used
-- `facePointer` - calculates and positions a pointer on the screen
-- `faceScroll` - scrolls the window or active scroll area
-- `faceClick` - triggers a click event when a gesture is performed
+- `fingerPointer` - calculates and positions a pointer on the screen
+- `palmScroll` - scrolls the window or active scroll area
 
 ## Scroll focus
 
