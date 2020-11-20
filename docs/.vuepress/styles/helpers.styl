@@ -13,10 +13,28 @@ html
 
   // Examples
   .demo-focus-area
-    overflow auto
-    height 300px
+    position relative
 
     > div
-      height 1090px
-      // @see http://www.patternify.com/
-      background url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAP0lEQVQoU42Q0QoAIAgDz///aMPAKKeQb26HTg0tB6zKVUhI4Bus5tMn2K4Djh7gBGXM7Uvo5riQ/BfUNwwTWfn+Cgg4zkoRAAAAAElFTkSuQmCC')
+      overflow auto
+      height 300px
+
+      > div
+        height 2000px
+        // @see http://www.patternify.com/
+        background url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAP0lEQVQoU42Q0QoAIAgDz///aMPAKKeQb26HTg0tB6zKVUhI4Bus5tMn2K4Djh7gBGXM7Uvo5riQ/BfUNwwTWfn+Cgg4zkoRAAAAAElFTkSuQmCC')
+
+    &:before,
+    &:after
+      content ''
+      opacity 0.35
+      pointer-events none
+      position absolute
+      width 100%
+      height 100px
+      background $blockRed
+
+    &:after
+      top: 0
+    &:before
+      bottom: 0

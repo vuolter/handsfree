@@ -43,15 +43,15 @@ The `scrollFocus` grants the Face Pointer the ability to scroll different areas 
   <tr>
     <td>
       <div class="demo-focus-area">
-        <div></div>
+        <div><div></div></div>
       </div>
-      <p><button onclick="demo.slowScrolling()" class="block">🐰 Slow Scrolling</button></p>
+      <p><button id="demo-toggle-scroll-speed" onclick="demo.toggleScrollSpeed()" class="block">🐢 Activate slow scrolling</button></p>
     </td>
     <td>
       <div class="demo-focus-area">
-        <div></div>
+        <div><div></div></div>
       </div>
-      <p><button onclick="demo.fastScrolling()" class="block">🐢 Fast Scrolling</button></p>
+      <p><button id="demo-toggle-scroll-zone" onclick="demo.toggleScrollZone()" class="block">↕ Decrease scroll zone</button></p>
     </td>
   </tr>
 </table>
@@ -59,12 +59,18 @@ The `scrollFocus` grants the Face Pointer the ability to scroll different areas 
 <script>
   window.demo = {
     // Slow scrolling speed
-    slowScrolling () {
-      handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .01
+    toggleScrollSpeed () {
+      if (handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed === .01) {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .45
+        document.querySelector('#demo-toggle-scroll-speed').innerHTML = '🐢 Active slow scrolling'
+      } else {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .01
+        document.querySelector('#demo-toggle-scroll-speed').innerHTML = '🐰 Activate fast scrolling'
+      }
     },
 
     // Increase scrolling speed
-    fastScrolling () {
+    toggleScrollZone () {
       handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .45
     }
   }
