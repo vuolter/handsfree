@@ -9,6 +9,10 @@
 
 ---
 
+::: warning 📅 Coming Soon!
+These docs should be finished by Sunday 11/22
+:::
+
 ### Handsfree.js is a library that helps you add face tracking, hand tracking, and/or pose estimation to your JavaScript projects in a snap. It also:
 
 - Manages dependencies to minimize impact on initial page load times

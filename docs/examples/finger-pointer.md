@@ -34,21 +34,37 @@ handsfree.hand.data.pointer.y
 
 <table>
   <tr>
-    <td style="height: 300px">
-      <div style="height: 1000px"></div>
+    <td>
+      <div class="demo-focus-area">
+        <div><div></div></div>
+      </div>
+      <p><button id="demo-toggle-scroll-speed" onclick="demo.toggleScrollSpeed()" class="block">🐢 Activate slow scrolling</button></p>
     </td>
-    <td style="height: 300px">
-      <div style="height: 1000px"></div>
+    <td>
+      <div class="demo-focus-area">
+        <div><div></div></div>
+      </div>
+      <p><button id="demo-toggle-scroll-zone" onclick="demo.toggleScrollZone()" class="block">↕ Decrease scroll zone</button></p>
     </td>
   </tr>
 </table>
 
 ## Calibrating
 
+> ⌚ More info coming soon
+
 ## Changing scroll speed
+
+> ⌚ More info coming soon
 
 ## Changing other properties
 
+> ⌚ More info coming soon
+
 ## Extending the Face Pointer
 
+> ⌚ More info coming soon
+
 ## Contributing
+
+> ⌚ More info coming soon

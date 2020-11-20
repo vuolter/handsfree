@@ -105,15 +105,27 @@ if (handsfree.isLooping) {
 <button onclick="demo.calibrate()" class="handsfree-hide-when-loading"><Fa-Crosshairs /> Start Calibration</button>
 <button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading</button>
 
+> ⌚ More info coming soon
+
 ## Changing click gesture
+
+> ⌚ More info coming soon
 
 ## Changing scroll speed
 
+> ⌚ More info coming soon
+
 ## Changing other properties
+
+> ⌚ More info coming soon
 
 ## Extending the Face Pointer
 
+> ⌚ More info coming soon
+
 ## Contributing
+
+> ⌚ More info coming soon
 
 <!-- Code -->
 <script>
