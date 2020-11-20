@@ -8,17 +8,8 @@
 
 <script>
 import HandsfreeToggle from '@components/HandsfreeToggle.vue'
-
-import Handsfree from '@handsfree/handsfree.js'
-window.Handsfree = Handsfree
-window.handsfree = new Handsfree({
-  assetsPath: '/handsfree/',
-  weboji: true
-})
-
 export default {
   name: 'HandsfreeContainer',
-
   components: {HandsfreeToggle}
 }
 </script>
