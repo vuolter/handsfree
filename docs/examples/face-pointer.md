@@ -1,4 +1,4 @@
-# Face Pointer
+# Face Pointer Playground
 
 <table>
   <tr>
@@ -14,7 +14,6 @@
     </td>
   </tr>
 </table>
-
 
 The face pointer detects your heads rotation and position in space and from that (very roughly) determines where your forehead is pointed towards on the screen. It positions a pointer there and you can use the calculated values to all sorts of things which we'll explore!
 
@@ -33,6 +32,75 @@ handsfree.face.data.pointer.y
 - `faceClick` - triggers a click event when a gesture is performed
 
 ## Scroll focus
+
+The `scrollFocus` grants the Face Pointer the ability to scroll different areas by:
+
+1. Hover the pointer over an area with a scrollbar
+2. When focused (highlighted with a red border by default) move the pointer above or below the scrollbar area to scroll in that direction
+3. Clicking into a scroll area also focuses it
+
+<table>
+  <tr>
+    <td>
+      <div class="demo-focus-area">
+        <div></div>
+      </div>
+      <p><button onclick="demo.slowScrolling()" class="block">🐰 Slow Scrolling</button></p>
+    </td>
+    <td>
+      <div class="demo-focus-area">
+        <div></div>
+      </div>
+      <p><button onclick="demo.fastScrolling()" class="block">🐢 Fast Scrolling</button></p>
+    </td>
+  </tr>
+</table>
+
+<script>
+  window.demo = {
+    // Slow scrolling speed
+    slowScrolling () {
+      handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .01
+    },
+
+    // Increase scrolling speed
+    fastScrolling () {
+      handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .45
+    }
+  }
+</script>
+
+You can update the scrolling speed at run time:
+
+```js
+// Default is .15
+// - ex) set to .01 to slow it down
+handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .01
+```
+
+You can also set the scroll zone (how many pixels from the edge of the scroll area to begin scrolling in that direction):
+
+```js
+// Default is 100
+// - ex) set to -200px to require pointer to go above the top/bottom of the area
+handsfree.plugin.faceScroll.config.scrollZone = -200
+```
+
+You can set both of these during instantiation:
+
+```js
+handsfree = new Handsfree({
+  face: true,
+  plugin: {
+    faceScroll: {
+      vertScroll: {
+        scrollSpeed: .01,
+        scrollZone: 100
+      }
+    }
+  }
+})
+```
 
 ## Calibrating
 

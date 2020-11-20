@@ -1,4 +1,4 @@
-# Finger Pointer
+# Finger Pointer Playground
 
 <table>
   <tr>
@@ -31,6 +31,17 @@ handsfree.hand.data.pointer.y
 - `palmScroll` - scrolls the window or active scroll area
 
 ## Scroll focus
+
+<table>
+  <tr>
+    <td style="height: 300px">
+      <div style="height: 1000px"></div>
+    </td>
+    <td style="height: 300px">
+      <div style="height: 1000px"></div>
+    </td>
+  </tr>
+</table>
 
 ## Calibrating
 
