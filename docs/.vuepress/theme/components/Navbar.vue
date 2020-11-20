@@ -32,7 +32,7 @@
       />
       <SearchBox v-else-if="$site.themeConfig.search !== false && $page.frontmatter.search !== false" />
       <NavLinks class="can-hide" />
-      <HandsfreeToggle />
+      <HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
     </div>
   </header>
 </template>

@@ -12,7 +12,7 @@ import HandsfreeToggle from '@components/HandsfreeToggle.vue'
 import Handsfree from '@handsfree/handsfree.js'
 window.Handsfree = Handsfree
 window.handsfree = new Handsfree({
-  assetsPath: 'handsfree/',
+  assetsPath: '/handsfree/',
   weboji: true
 })
 
