@@ -4,7 +4,7 @@
 
 Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji.data` when inside `onFrame`.
 
-### Properties
+## Properties
 
 ```js
 /**
@@ -70,7 +70,7 @@ handsfree.weboji.data.pointer
 handsfree.weboji.data.state
 ```
 
-### Methods
+## Methods
 
 Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.weboji.api`:
 

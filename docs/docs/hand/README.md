@@ -4,7 +4,7 @@
 
 Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`.
 
-### Properties
+## Properties
 
 ```js
 /**

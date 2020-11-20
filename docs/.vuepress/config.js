@@ -49,9 +49,19 @@ module.exports = {
           ['/docs/pose/', '🤺 Pose Tracking']    
         ]
       },
-      ['/mapper/', '💻 Gesture mapper'],
-      ['/webhook/', '🔌 Connect to Webhook'],
-      ['/community/', '💜 Get Involved']
+      {
+        title: '🎮 Examples',
+        collapsable: true,
+        sidebarDepth: 1,
+        children: [
+          ['/examples/', 'Examples'],
+          ['/examples/face-pointer', '😀 Face Pointer Playground'],
+          ['/examples/finger-pointer', '👆 Finger Pointer Playgound']
+        ]
+      },
+      ['https://midiblocks.com', '💻 Gesture mapper'],
+      // ['/webhook/', '🔌 Connect to Webhook'],
+      // ['/community/', '💜 Get Involved']
     ]
   }
 }
