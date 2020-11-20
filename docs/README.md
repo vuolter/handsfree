@@ -27,7 +27,7 @@
 
 <table>
   <tr>
-    <td style="width: 50%"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></td>
+    <td style="width: 50%"><a href="/examples/face-pointer"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></a></td>
     <td>
       <div><strong>Face Tracking (through <a href="https://github.com/jeeliz/jeelizWeboji">Weboji</a>)</strong></div>
       <ul>
@@ -35,11 +35,11 @@
         <li>11 face morphs for eyes and mouth</li>
         <li>~1.4Mb filesize</li>
       </ul>
-      <div><strong>Featured Plugin:</strong> Face Pointer</div>
+      <div><strong>Featured Example:</strong> <a href="/examples/face-pointer">Face Pointer</a></div>
     </td>
   </tr>
   <tr>
-    <td style="width: 50%"><img src="https://media2.giphy.com/media/2vcbWI2ZAPeGvJVpII/giphy.gif"></td>
+    <td style="width: 50%"><a href="/examples/finger-pointer"><img src="https://media2.giphy.com/media/2vcbWI2ZAPeGvJVpII/giphy.gif"></a></td>
     <td>
       <div><strong>Hand Tracking (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">Handpose</a>)</strong></div>
       <ul>
@@ -47,11 +47,11 @@
         <li>Get vectors for where fingers are pointed</li>
         <li>~2.9Mb filesize</li>
       </ul>
-      <div><strong>Featured Plugin:</strong> Finger Pointers</div>
+      <div><strong>Featured Example:</strong> <a href="/examples/finger-pointer">Finger Pointer</a></div>
     </td>
   </tr>
   <tr>
-    <td style="width: 50%"><img src="https://media1.giphy.com/media/gUHHKdnuOW4OGOXcrI/giphy.gif"></td>
+    <td style="width: 50%"><a href="https://flappy-pose.glitch.me/"><img src="https://media1.giphy.com/media/gUHHKdnuOW4OGOXcrI/giphy.gif"></a></td>
     <td>
       <div><strong>Pose Estimation (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet">PoseNet/ml5.js</a>)</strong></div>
       <ul>
@@ -59,6 +59,7 @@
         <li>Detect many people at the same time</li>
         <li>~2.6Mb filesize</li>
       </ul>
+      <div><strong>Featured Example:</strong> <a href="https://flappy-pose.glitch.me/">coming soon</a></div>
     </td>
   </tr>
 </table>
@@ -72,7 +73,7 @@ const handsfree = new Handsfree({face: true})
 handsfree.start()
 ```
 
-<HandsfreeToggle />
+<HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
 
 ## Quickstart
 
