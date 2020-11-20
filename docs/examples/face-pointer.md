@@ -56,38 +56,6 @@ The `scrollFocus` grants the Face Pointer the ability to scroll different areas 
   </tr>
 </table>
 
-<script>
-  window.demo = {
-    /**
-     * Adjust scroll speed for demo
-     */
-    toggleScrollSpeed () {
-      if (handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed === .01) {
-        handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .45
-        document.querySelector('#demo-toggle-scroll-speed').innerHTML = '🐢 Active slow scrolling'
-      } else {
-        handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .01
-        document.querySelector('#demo-toggle-scroll-speed').innerHTML = '🐰 Activate fast scrolling'
-      }
-    },
-
-    /**
-     * Adjust scroll zone for demo
-     */
-    toggleScrollZone () {
-      if (handsfree.plugin.faceScroll.config.vertScroll.scrollZone === 100) {
-        handsfree.plugin.faceScroll.config.vertScroll.scrollZone = 0
-        document.querySelector('#demo-toggle-scroll-zone').innerHTML = '↕ Increase scroll zone'
-        document.body.classList.add('demo-negative-scroll-zone')
-      } else {
-        handsfree.plugin.faceScroll.config.vertScroll.scrollZone = 100
-        document.querySelector('#demo-toggle-scroll-zone').innerHTML = '↕ Decrease scroll zone'
-        document.body.classList.remove('demo-negative-scroll-zone')
-      }
-    }
-  }
-</script>
-
 You can update the scrolling speed at run time:
 
 ```js
@@ -113,7 +81,7 @@ handsfree = new Handsfree({
     faceScroll: {
       vertScroll: {
         scrollSpeed: .01,
-        scrollZone: 100
+        scrollZone: 0
       }
     }
   }
@@ -121,6 +89,20 @@ handsfree = new Handsfree({
 ```
 
 ## Calibrating
+
+The Face Pointer comes with a Calibrator, which you can trigger by running:
+
+```js
+if (handsfree.isLooping) {
+  handsfree.weboji.calibrate()
+} else {
+  handsfree.start(() => {
+    handsfree.weboji.calibrate()
+  })
+}
+```
+
+<button onclick="demo.calibrate()"><Fa-Crosshairs /> Start Calibration</button>
 
 ## Changing click gesture
 
@@ -131,3 +113,52 @@ handsfree = new Handsfree({
 ## Extending the Face Pointer
 
 ## Contributing
+
+<!-- Code -->
+<script>
+  window.demo = {
+    /**
+     * Adjust scroll speed for demo
+     */
+    toggleScrollSpeed () {
+      if (handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed === .01) {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .15
+        document.querySelector('#demo-toggle-scroll-speed').innerHTML = '🐢 Active slow scrolling'
+      } else {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollSpeed = .01
+        document.querySelector('#demo-toggle-scroll-speed').innerHTML = '🐰 Activate fast scrolling'
+      }
+    },
+
+    /**
+     * Adjust scroll zone for demo
+     */
+    toggleScrollZone () {
+      if (handsfree.plugin.faceScroll.config.vertScroll.scrollZone === 100) {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollZone = 0
+        document.querySelector('#demo-toggle-scroll-zone').innerHTML = '↕ Increase scroll zone'
+        document.body.classList.add('demo-negative-scroll-zone')
+      } else {
+        handsfree.plugin.faceScroll.config.vertScroll.scrollZone = 100
+        document.querySelector('#demo-toggle-scroll-zone').innerHTML = '↕ Decrease scroll zone'
+        document.body.classList.remove('demo-negative-scroll-zone')
+      }
+    },
+
+    /**
+     * Calibrate the face pointer
+     * - Starts handsfree if it isn't already
+     */
+    calibrate () {
+      console.log('calibrate')
+      
+      if (handsfree.isLooping) {
+        handsfree.weboji.calibrate()
+      } else {
+        handsfree.start(() => {
+          handsfree.weboji.calibrate()
+        })
+      }
+    }
+  }
+</script>

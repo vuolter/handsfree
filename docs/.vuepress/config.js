@@ -23,7 +23,7 @@ module.exports = {
     // @see https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only
     fontAwesomeIcons: {
       regular: ['video'],
-      solid: ['spinner', 'video', 'video-slash']
+      solid: ['spinner', 'video', 'video-slash', 'crosshairs']
     }
   },
   
