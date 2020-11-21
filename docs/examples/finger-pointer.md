@@ -9,7 +9,8 @@
         <li>Point at the screen to move the pointer 👆</li>
         <li>With palm towards screen 🖐, move hand up and down to scroll</li>
       </ul>
-      <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" @started='activateFingerPointer' />
+      <button disabled>Coming soon</button>
+      <!-- <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" @started='activateFingerPointer' /> -->
     </td>
   </tr>
 </table>
@@ -74,6 +75,9 @@ handsfree.hand.data.pointer.y
 <script>
 export default {
   methods: {
+    /**
+     * Activate demo plugins
+     */
     activateFingerPointer () {
       console.log('started')
     }
