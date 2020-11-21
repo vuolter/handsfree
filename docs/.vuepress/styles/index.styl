@@ -1,0 +1,152 @@
+// @require '~styles/98.css'
+@require '~styles/helpers.styl'
+@require '~styles/buttons.styl'
+@require '~styles/navbar.styl'
+@require '~public/handsfree/handsfree.css'
+
+/**
+ * Theme Overrides
+ */
+html
+  .sidebar .sidebar-sub-headers
+    padding-left 2em
+
+  table
+    display table
+    table-layout fixed
+    width 100%
+
+/**
+ * @TODO Organize the following better
+ */
+.text-center
+  text-align center
+
+.handsfree-debugger
+  width 300px
+  margin auto
+  margin-top 40px
+
+.pad
+  padding 20px
+
+.flip
+  transform scale(-1, 1)
+
+[class^='flex']
+  display flex
+
+.flex-row
+  flex-direction row
+
+.verticle-middle-children
+  & > *
+    vertical-align middle
+
+.space-children
+  & > *
+    display inline-block
+    margin-right 10px
+
+img
+  max-width 100%
+
+// h1
+//   margin 12px 0
+
+hr
+  margin 0
+  border none
+  width 400px
+  height 1px
+  opacity 0.5
+  background linear-gradient(
+    to right,
+    red 20%,
+    yellow 20%,
+    yellow 36%,
+    green 36%,
+    green 60%,
+    blue 60%,
+    blue 100%
+  )
+
+// h2
+//   margin-bottom 12px
+
+// h3
+//   font-size 1.6rem
+
+// h3,
+// h4
+//   padding-top 20px
+//   margin-top 0
+//   display block
+//   flex 0 0 180px
+
+// p
+//   max-width 50rem
+//   line-height 1.5
+
+// .component
+//   display flex
+//   margin-top 24px
+
+// blockquote
+//   margin 0 0 20px
+//   padding 20px
+//   background #dfdfdf
+//   footer
+//     margin 12px 0 0 12px
+
+// .example
+//   margin 16px 0
+//   padding 12px 24px
+//   border-left 1px solid #808080
+
+// details
+//   margin-top 12px
+
+// summary
+//   user-select none
+//   cursor pointer
+//   display inline
+//   &::-webkit-details-marker
+//     display none
+
+// details[open]
+//   summary
+//     margin-bottom 8px
+
+// button
+//   &.focused
+//     outline 1px dotted #000000
+//     outline-offset -4px
+//   &.active
+//     box-shadow inset -1px -1px #ffffff, inset 1px 1px #0a0a0a,
+//     inset -2px -2px #dfdfdf, inset 2px 2px #808080
+//   &.large
+//     font-size 2em
+//     height 2em
+
+// @media (max-width: 480px)
+//   aside
+//     display none
+//   main
+//     box-sizing border-box
+//     width 100%
+//     margin 0
+//     padding 16px
+//   hr
+//     width 100%
+//   p
+//     width 100%
+//   .component
+//     display block
+//     margin-top 24px
+//   pre
+//     overflow-x scroll
+
+// @media (max-width: 480px)
+//   h3, h4
+//     flex 0

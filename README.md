@@ -1,9 +1,11 @@
+> # 📅 I'm working on [new documentation](https://handsfree.js.org) which should be ready by 11/22
+
 <div align="center">
   <p><img src="https://media2.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" alt="handsfree.js"></p>
   <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
-  <p>A wrapper library around computer vision models for working with face pointers, assistive tech, and creative expression 👋</p>
+  <p>Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap ✨</p>
   <p>
     <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
     <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
@@ -14,7 +16,6 @@
   <p>Powered by:</p>
   <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a> &nbsp;&nbsp;&nbsp; <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a> &nbsp;&nbsp;&nbsp; 
   <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a>
-  <blockquote><br>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!<br><br></blockquote>
 </div>
 
 <br>
@@ -481,6 +482,25 @@ handsfree.handpose.data.annotations: {
 - Start development on `localhost:8080` by running `npm start`
 
 
+## Command line scripts
+```bash
+# Start local development on localhost:8080
+npm start 
+
+# Build into /dist/lib/ and /dist/docs/
+npm run build
+
+# Build only /dist/docs/
+npm run build:docs
+
+# Build only /dist/lib/
+npm run build:lib
+```
+
+## Dev Notes
+- See [vuepress-component-font-awesome](https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only) for adding fonts. Remember to run `npm run fa:build` when adding new fonts so that they are copied over into the `docs/.vuepress/components/FA`  folder
+- You may occasionally need to restart server when adding new files to the `/docs`, this is true when changing `/docs/.vuepress.config.js` as well
+
 ---
 
 <br>
@@ -489,15 +509,18 @@ handsfree.handpose.data.annotations: {
 
 # License & Attributions
 
-Handsfree.js is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+## License: Apache 2.0 and...
 
-## Models
+The Handsfree.js core is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). However, to use the models and plugins included with Handsfree.js you'll also have to follow their licenses (❓ feel free to start an issue about this):
 
-- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache License 2.0) - Face and head pose estimation
+- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache 2.0) - Used for face and head tracking
+- [ml5.js](https://github.com/ml5js/ml5-library) (MIT) - Currently used for pose estimation (PoseNet)
+- [TensorFlow.js](https://github.com/tensorflow/tfjs-models) (Apache 2.0) - PoseNet and Handpose
 
-## Art
-
-- [Monkey logo adaption](https://www.designevo.com/apps/logo/?name=cute-monkey-and-interesting-gaming)
+## Attributions
+I'd like to also thank the following people and projects:
+- [98.css by @jdan](https://github.com/jdan/98.css) (MIT) - Used as boilerplate for documentation theme
+- [Handpose Three.js boilerplate by @LingDong-](https://github.com/LingDong-/handpose-facemesh-demos) - Boilerplate for rendering Handpose in 3D space
 
 <br>
 <br>

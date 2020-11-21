@@ -1,11 +1,17 @@
 {
   "name": "handsfree",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "src/handsfree/handsfree.js",
   "scripts": {
-    "start": "rm -rf dist && rollup --watch --config",
-    "build": "rm -rf dist && rollup --environment INCLUDE_DEPS,BUILD:production --config"
+    "start": "vuepress dev docs",
+
+    "build": "rm -rf docs/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
+    "build:lib": "rm -rf docs/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config",
+    "build:docs": "vuepress build docs",
+    "build:serve": "npm run build:docs && npx http-server build/docs",
+
+    "fa:build": "node node_modules/vuepress-plugin-font-awesome/index.js --dest=docs"
   },
   "repository": {
     "type": "git",
@@ -18,13 +24,12 @@
   },
   "homepage": "https://github.com/midiblocks/handsfree#readme",
   "devDependencies": {
-    "@open-wc/rollup-plugin-html": "^1.2.5",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.32.0",
-    "rollup-plugin-copy-watch": "0.0.1",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-serve": "^1.0.4"
+    "rollup-plugin-copy": "^3.3.0",
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-font-awesome": "^1.90.6"
   },
   "dependencies": {
     "gsap": "^3.5.1",
