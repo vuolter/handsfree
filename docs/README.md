@@ -1,6 +1,6 @@
-<h1>Handsfree.js</h1>
-
-<p class="mt-0 verticle-middle-children space-children">
+<h1 class="mb-0">Handsfree.js</h1>
+<h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap ✨</h3>
+<p class="verticle-middle-children space-children">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
@@ -9,25 +9,73 @@
 
 ---
 
+```js
+const handsfree = new Handsfree({face: true})
+handsfree.start()
+```
+
+<table>
+  <tr>
+    <td class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></td>
+    <td class="col-6">
+      <h2>Try it!</h2>
+      <ul>
+        <li>Move head to move red pointer</li>
+        <li>Smile to the left or right to click on things</li>
+        <li>Move pointer above/or below page to scroll</li>
+      </ul>
+      <HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
+    </td>
+  </tr>
+</table>
+
 ::: warning 📅 Coming Soon!
 These docs should be finished by Sunday 11/22
 :::
 
-### Handsfree.js is a library that helps you add face tracking, hand tracking, and/or pose estimation to your JavaScript projects in a snap. It also:
+<blockquote class="verticle-middle-children space-children text-center">
+  <strong>Powered by:</strong>
+  <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
+  <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a> <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a>
+</blockquote>
 
-- Manages dependencies to minimize impact on initial page load times
-- Creates a single, pluggable "game loop" that is passed face morphs, keypoints, confidences and more
-- Comes with a collection of plugins for accelerating assistive tech development, including Face Pointers and Finger Pointers
+## How it Works
 
-<!-- <blockquote>
-  <p class="verticle-middle-children space-children">
-    <strong>Powered by:</strong>
-    <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
-    <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a> <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a>
-  </p>
-  <hr>
-  <br>
-</blockquote> -->
+1. Create a new instance of `Handsfree` with some models you'd like to use:
+```js
+const handsfree = new Handsfree({face: true})
+```
+
+2. When you run `handsfree.start()` the models you chose are loaded, along with any dependencies. Throughout the Handsfree lifecycle, various classes are added to the DOM `body` which you can style:
+
+```css
+/* Helper classes */
+.handsfree-show-when-stopped
+.handsfree-show-when-loading
+.handsfree-hide-when-loading
+
+/* Automatically assigned body classes */
+body.handsfree-started
+body.handsfree-clicked
+body.handsfree-calibrating
+
+/* When different models are loaded */
+body.handsfree-model-weboji
+body.handsfree-model-handpose
+body.handsfree-model-posenet
+```
+
+3. Throughout the lifecycle, various events are dispatched which you can hook into. You can also hook into the main "game loop" by creating a plugin with `handsfree.use(pluginName, callbackOrOptions)`. Plugins can be toggled on/off, allowing for rich and dynamic User Experiences:
+
+## Models
+
+In Handsfree.js, models are added to the page through the Model API. The Model API ensures a few things:
+
+- Automatic dependency and state management
+- The ability to dynamically toggle and throttle models
+- The ability to hot-swap a model out for another
+
+Here are the models that come with Handsfree.js out of the box:
 
 <table>
   <tr>
@@ -67,17 +115,6 @@ These docs should be finished by Sunday 11/22
     </td>
   </tr>
 </table>
-
-## Try it
-
-Press the start button below to enable a "Face Pointer". Move the pointer with your head, and scroll the page by moving the pointer above and below the window. Click on things with a smirk (smile to either side).
-
-```js
-const handsfree = new Handsfree({face: true})
-handsfree.start()
-```
-
-<HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
 
 ## Quickstart
 
