@@ -3431,6 +3431,7 @@
                   this.isReady = true;
                   this.api.set_animateDelay(this.config.throttle),
                   this.emit('modelLoaded');
+                  document.body.classList.add('handsfree-model-weboji');
                 }
               });
             }
@@ -3494,7 +3495,8 @@
         this.api = ml5.poseNet(() => {
           this.isReady = true;
           this.emit('modelLoaded');
-          this.listenForPose();
+            document.body.classList.add('handsfree-model-posenet');
+            this.listenForPose();
         }, this.config);
       });
     }
@@ -3542,6 +3544,7 @@
 
         this.isReady = true;
         this.emit('modelLoaded');
+        document.body.classList.add('handsfree-model-handpose');
       });
     }
 
@@ -8916,7 +8919,7 @@
     onUse() {
       if (!this.$pointer) {
         const $pointer = document.createElement('div');
-        $pointer.classList.add('handsfree-pointer');
+        $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-face');
         document.body.appendChild($pointer);
         this.$pointer = $pointer;
       }
@@ -9164,7 +9167,7 @@
     // The last scrollable target focused
     $lastTarget: null,
     // The current scrollable target
-    $target: window,
+    $target: null,
 
     config: {
       // Number of frames over the same element before activating that element
@@ -9176,6 +9179,10 @@
         // How many pixels from the the edge to scroll
         scrollZone: 100
       }
+    },
+
+    onUse () {
+      this.$target = window;
     },
 
     /**
@@ -9389,7 +9396,7 @@
     onUse() {
       if (!this.$pointer) {
         const $pointer = document.createElement('div');
-        $pointer.classList.add('handsfree-pointer');
+        $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger');
         document.body.appendChild($pointer);
         this.$pointer = $pointer;
       }
@@ -9451,13 +9458,6 @@
     fingerPointer: pluginFingerPointer
   };
 
-  // Determine a default assetsPath, using this <script>'s src
-  let assetsPath = document.currentScript
-    ? document.currentScript.getAttribute('src')
-    : '';
-  assetsPath =
-    trim_1(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/';
-
   // Counter for unique instance IDs
   let id = 0;
 
@@ -9468,6 +9468,13 @@
     constructor(config = {}) {
       this.id = ++id;
 
+      // Determine a default assetsPath, using this <script>'s src
+      let assetsPath = document.currentScript
+        ? document.currentScript.getAttribute('src')
+        : '';
+      this._defaultAssetsPath =
+        trim_1(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/';
+      
       // Setup options
       this.config = config;
       this.cleanConfig();
@@ -9487,6 +9494,8 @@
       this.plugin = {};
       this.prevDisabledPlugins = [];
       this.loadDefaultPlugins();
+
+      this.emit('init', this);
     }
 
     /**
@@ -9547,11 +9556,10 @@
           $target: document.body
         }
       };
-
       
       this.config = merge_1(
         {
-          assetsPath,
+          assetsPath: this._defaultAssetsPath,
           weboji: defaults.weboji,
           posenet: defaults.posenet,
           handpose: defaults.handpose,
@@ -9661,6 +9669,8 @@
             /**
              * Weboji
              */
+            case 'head':
+            case 'face':
             case 'weboji':
               if (!this.weboji) {
                 this.weboji = new WebojiModel(
@@ -9679,6 +9689,7 @@
             /**
              * PoseNet
              */
+            case 'pose':
             case 'posenet':
               if (!this.posenet) {
                 this.posenet = new PoseNet(
@@ -9697,6 +9708,7 @@
             /**
              * Handpose
              */
+            case 'hand':
             case 'handpose':
               if (!this.handpose) {
                 this.handpose = new Handpose({
@@ -9922,8 +9934,6 @@
       }
     }
   }
-
-  window.dispatchEvent(new Event('handsfree.ready'));
 
   return Handsfree;
 

@@ -163,7 +163,7 @@ Here are the models that come with Handsfree.js out of the box:
 
 ### Through NPM
 
-::: warning Important
+::: warning 💻 Extra steps required
 In order to keep startup times snappy some dependencies must be loaded at runtime:
 
 - Install with: `npm i handsfree`

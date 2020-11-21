@@ -129,7 +129,7 @@ if (handsfree.isLooping) {
 
 <!-- Code -->
 <script>
-  window.demo = {
+  demo = {
     /**
      * Adjust scroll speed for demo
      */

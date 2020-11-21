@@ -9,7 +9,7 @@ export default {
   // The last scrollable target focused
   $lastTarget: null,
   // The current scrollable target
-  $target: window,
+  $target: null,
 
   config: {
     // Number of frames over the same element before activating that element
@@ -21,6 +21,10 @@ export default {
       // How many pixels from the the edge to scroll
       scrollZone: 100
     }
+  },
+
+  onUse () {
+    this.$target = window
   },
 
   /**

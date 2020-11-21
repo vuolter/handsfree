@@ -1,9 +1,11 @@
+> # 📅 I'm working on [new documentation](https://handsfree.js.org) which should be ready by 11/22
+
 <div align="center">
   <p><img src="https://media2.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" alt="handsfree.js"></p>
   <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
-  <p>A wrapper library around computer vision models for working with face pointers, assistive tech, and creative expression 👋</p>
+  <p>Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap ✨</p>
   <p>
     <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
     <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
@@ -14,7 +16,6 @@
   <p>Powered by:</p>
   <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a> &nbsp;&nbsp;&nbsp; <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a> &nbsp;&nbsp;&nbsp; 
   <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a>
-  <blockquote><br>with support from the <a href="https://www.cmu.edu/cfa/studio/index.html">Studio for Creative Inquiry at CMU</a>, <a href="https://glitch.com/@handsfreejs">Glitch.com</a>, the <a href="https://youtu.be/CJDpF4xUieY?t=58">School of AI</a> and you!<br><br></blockquote>
 </div>
 
 <br>

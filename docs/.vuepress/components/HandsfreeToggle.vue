@@ -17,13 +17,13 @@ export default {
 
   methods: {
     start () {
-      this.$handsfree.start(() => {
+      this.$root.handsfree.start(() => {
         this.$emit('started')
       })
     },
 
     stop () {
-      this.$handsfree.stop()
+      this.$root.handsfree.stop()
     }
   }
 }

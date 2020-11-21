@@ -23,13 +23,6 @@ const defaultPlugins = {
   fingerPointer: pluginFingerPointer
 }
 
-// Determine a default assetsPath, using this <script>'s src
-let assetsPath = document.currentScript
-  ? document.currentScript.getAttribute('src')
-  : ''
-assetsPath =
-  trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
-
 // Counter for unique instance IDs
 let id = 0
 
@@ -40,6 +33,13 @@ class Handsfree {
   constructor(config = {}) {
     this.id = ++id
 
+    // Determine a default assetsPath, using this <script>'s src
+    let assetsPath = document.currentScript
+      ? document.currentScript.getAttribute('src')
+      : ''
+    this._defaultAssetsPath =
+      trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
+    
     // Setup options
     this.config = config
     this.cleanConfig()
@@ -59,6 +59,8 @@ class Handsfree {
     this.plugin = {}
     this.prevDisabledPlugins = []
     this.loadDefaultPlugins()
+
+    this.emit('init', this)
   }
 
   /**
@@ -119,11 +121,10 @@ class Handsfree {
         $target: document.body
       }
     }
-
     
     this.config = merge(
       {
-        assetsPath,
+        assetsPath: this._defaultAssetsPath,
         weboji: defaults.weboji,
         posenet: defaults.posenet,
         handpose: defaults.handpose,
@@ -499,5 +500,4 @@ class Handsfree {
   }
 }
 
-window.dispatchEvent(new Event('handsfree.ready'))
 export default Handsfree
