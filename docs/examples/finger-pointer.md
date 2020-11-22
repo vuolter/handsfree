@@ -9,7 +9,7 @@
         <li>Point at the screen to move the pointer 👆</li>
         <li>With palm towards screen 🖐, move hand up and down to scroll</li>
       </ul>
-      <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="handsfreeOpts" @started="onStarted" />
+      <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
     </td>
   </tr>
 </table>
@@ -75,9 +75,9 @@ handsfree.hand.data.pointer.y
 export default {
   data () {
     return {
-      handsfreeOpts: {
-        face: false,
-        hand: true
+      demoOpts: {
+        weboji: false,
+        handpose: true
       }
     }
   },

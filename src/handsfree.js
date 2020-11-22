@@ -27,6 +27,64 @@ const defaultPlugins = {
 let id = 0
 
 /**
+ * Defaults to use for instantiation
+ */
+const configDefaults = {
+  // Model defaults
+  weboji: {
+    enabled: false,
+    throttle: 0,
+    // Represents the calibrator settings
+    calibrator: {
+      // (optional) The target element to act as the calibrator wrapping div
+      target: null,
+      // The message to display over the marker, can be HTML
+      instructions: 'Point head towards center of circle below',
+      // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+      marker: null
+    },
+    morphs: {
+      threshold: {
+        smileRight: 0.7,
+        smileLeft: 0.7,
+        browLeftDown: 0.8,
+        browRightDown: 0.8,
+        browLeftUp: 0.8,
+        browRightUp: 0.8,
+        eyeLeftClosed: 0.4,
+        eyeRightClosed: 0.4,
+        mouthOpen: 0.3,
+        mouthRound: 0.8,
+        upperLip: 0.5
+      }
+    }
+  },
+
+  posenet: {
+    enabled: false,
+    throttle: 0,
+    imageScaleFactor: 0.3,
+    outputStride: 16,
+    flipHorizontal: false,
+    minConfidence: 0.5,
+    maxPoseDetections: 5,
+    scoreThreshold: 0.5,
+    nmsRadius: 20,
+    detectionType: 'single',
+    multiplier: 0.75
+  },
+
+  handpose: {
+    enabled: false
+  },
+
+  feedback: {
+    enabled: false,
+    $target: document.body
+  }
+}
+
+/**
  * ✨ Handsfree.js
  */
 class Handsfree {
@@ -41,8 +99,16 @@ class Handsfree {
       trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
     
     // Setup options
-    this.config = config
-    this.cleanConfig()
+    this.updateConfig({
+      assetsPath: this._defaultAssetsPath,
+      weboji: configDefaults.weboji,
+      posenet: configDefaults.posenet,
+      handpose: configDefaults.handpose,
+
+      // Plugin overrides
+      plugin: {},
+      feedback: configDefaults.feedback
+    }, config)
 
     // Flags
     this.isStarted = false
@@ -64,90 +130,24 @@ class Handsfree {
   }
 
   /**
-   * Sets config defaults
+   * Merges new configs
    */
-  cleanConfig() {
-    const defaults = {
-      // Model defaults
-      weboji: {
-        enabled: false,
-        throttle: 0,
-        // Represents the calibrator settings
-        calibrator: {
-          // (optional) The target element to act as the calibrator wrapping div
-          target: null,
-          // The message to display over the marker, can be HTML
-          instructions: 'Point head towards center of circle below',
-          // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
-          marker: null
-        },
-        morphs: {
-          threshold: {
-            smileRight: 0.7,
-            smileLeft: 0.7,
-            browLeftDown: 0.8,
-            browRightDown: 0.8,
-            browLeftUp: 0.8,
-            browRightUp: 0.8,
-            eyeLeftClosed: 0.4,
-            eyeRightClosed: 0.4,
-            mouthOpen: 0.3,
-            mouthRound: 0.8,
-            upperLip: 0.5
-          }
-        }
-      },
+  updateConfig (defaults, config) {
+    this.config = merge(defaults, config)
 
-      posenet: {
-        enabled: false,
-        throttle: 0,
-        imageScaleFactor: 0.3,
-        outputStride: 16,
-        flipHorizontal: false,
-        minConfidence: 0.5,
-        maxPoseDetections: 5,
-        scoreThreshold: 0.5,
-        nmsRadius: 20,
-        detectionType: 'single',
-        multiplier: 0.75
-      },
-
-      handpose: {
-        enabled: false
-      },
-
-      feedback: {
-        enabled: false,
-        $target: document.body
-      }
-    }
-    
-    this.config = merge(
-      {
-        assetsPath: this._defaultAssetsPath,
-        weboji: defaults.weboji,
-        posenet: defaults.posenet,
-        handpose: defaults.handpose,
-
-        // Plugin overrides
-        plugin: {},
-        feedback: defaults.feedback
-      },
-      this.config
-    )
-
-    // Transform defaults (string => [string])
+    // Transform configDefaults (string => [string])
     const configs = ['weboji', 'posenet', 'handpose', 'feedback']
     configs.forEach(config => {
       if (typeof this.config[config] === 'boolean') {
         let isEnabled = this.config[config]
-        this.config[config] = defaults[config]
+        this.config[config] = configDefaults[config]
         this.config[config].enabled = isEnabled
       }
     })
 
     // Track the models we're using
     this.activeModels = []
+    
     if (this.config.weboji.enabled) this.activeModels.push('weboji')
     if (this.config.posenet.enabled) this.activeModels.push('posenet')
     if (this.config.handpose.enabled) this.activeModels.push('handpose')
@@ -173,8 +173,11 @@ class Handsfree {
       callback = opts
     }
 
-    // @todo #63 Merge opts with current config
+    // Merge opts with current config
+    this.updateConfig(this.config, opts)
+    
     // @todo #63 Start each model that needs to be started
+    // @todo #63 Stop active models if required
     // @todo #63 Start the game loop
     
     // Start required models
