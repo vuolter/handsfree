@@ -56,7 +56,7 @@
   display: none;
 }
 .handsfree-loading .handsfree-hide-when-loading {
-  display: none;
+  display: none !important;
 }
 .handsfree-loading .handsfree-show-when-loading {
   display: block;
@@ -103,6 +103,15 @@
 .handsfree-show-when-started-without-handpose,
 .handsfree-started.handsfree-model-handpose .handsfree-show-when-started-without-handpose {
   display: none;
+}
+
+.handsfree-hide-when-started-without-handpose + .handsfree-show-when-loading,
+.handsfree-loading .handsfree-show-when-started-without-handpose + .handsfree-hide-when-loading {
+  display: none !important;
+}
+
+.handsfree-started.handsfree-loading .handsfree-hide-when-started-without-handpose + .handsfree-show-when-started-without-handpose {
+  display: inline-block !important;
 }
 
 /* Calibrator, Gesture Recorder */

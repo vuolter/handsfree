@@ -10,7 +10,8 @@
         <li>With palm towards screen 🖐, move hand up and down to scroll</li>
       </ul>
       <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
-      <button class="large handsfree-show-when-started-without-handpose" @click="$root.handsfree.start(demoOpts)">👆 Activate Finger Pointer</button>
+      <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="$root.handsfree.start(demoOpts)">👆 Activate Finger Pointer</button>
     </td>
   </tr>
 </table>
