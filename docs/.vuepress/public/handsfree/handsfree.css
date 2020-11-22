@@ -91,6 +91,20 @@
   display: initial;
 }
 
+.handsfree-started .handsfree-hide-when-started-without-handpose {
+  display: none;
+}
+.handsfree-started.handsfree-model-handpose .handsfree-hide-when-started-without-handpose {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-started-without-handpose {
+  display: inline-block;
+}
+.handsfree-show-when-started-without-handpose,
+.handsfree-started.handsfree-model-handpose .handsfree-show-when-started-without-handpose {
+  display: none;
+}
+
 /* Calibrator, Gesture Recorder */
 .handsfree-gesture-recorder-wrap, .handsfree-calibrator-wrap {
   position: fixed;

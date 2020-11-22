@@ -9,7 +9,8 @@
         <li>Point at the screen to move the pointer 👆</li>
         <li>With palm towards screen 🖐, move hand up and down to scroll</li>
       </ul>
-      <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+      <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+      <button class="large handsfree-show-when-started-without-handpose" @click="$root.handsfree.start(demoOpts)">👆 Activate Finger Pointer</button>
     </td>
   </tr>
 </table>
