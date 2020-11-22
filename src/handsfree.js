@@ -154,20 +154,40 @@ class Handsfree {
   }
 
   /**
-   * Start all enabled models
-   * - Once models loaded, starts loop
-   * @param {Function} callback The callback to call once everything is started
+   * Starts Handsfree and updates existing config
+   * ⭐ Use this method to safely live-update the user experience,
+   * for example when transitioning to a new view or part of a game or app
+   * or when switching from a Face Pointer to a Finger Pointer without a refresh
+   * 
+   * - opts will be deep merged with the handsfree.config
+   * - if first argument is a function, then it is used as callback and no updates are done
+   * - Once models loaded, starts loop and runs the callback
+   * - If already started or no models need to be loaded then any new configs are merged in real time
+   *    (eg, running models will be stopped if you explicitely disable them, plugin configs may be udpated)
+   * 
+   * @param {Opts|Function} opts (Optional) To be merged into. If function, then it is used as callback instead 
+   * @param {Function} callback (Optional) The callback to call once everything is started
    */
-  start(callback) {
-    if (!this.isStarted) {
-      this.startModels(this.activeModels).then(() => {
-        this.isLooping = true
-        this.loop()
-        callback && callback()
-      })
-    } else {
-      callback && callback()
+  start(opts, callback) {
+    if (typeof opts === 'function') {
+      callback = opts
     }
+
+    // @todo #63 Merge opts with current config
+    // @todo #63 Start each model that needs to be started
+    // @todo #63 Start the game loop
+    
+    // Start required models
+    this.startModels(this.activeModels)
+
+    // Start game loop
+    if (!this.isLooping) {
+      this.isLooping = true
+      this.loop()
+    }
+    
+    // Run callback
+    callback && callback()
   }
 
   /**

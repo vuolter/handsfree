@@ -103,7 +103,7 @@ In Handsfree.js, models are added to the page through the Model API. The Model A
 
 - Automatic dependency and state management
 - The ability to dynamically toggle and throttle models
-- The ability to hot-swap a model out for another
+- The ability to hot-swap a model out for another while maintaining a similar API
 
 Here are the models that come with Handsfree.js out of the box:
 

@@ -13,11 +13,11 @@
 export default {
   name: 'HandsfreeToggle',
 
-  props: ['textOff', 'textOn'],
+  props: ['textOff', 'textOn', 'opts'],
 
   methods: {
     start () {
-      this.$root.handsfree.start(() => {
+      this.$root.handsfree.start(this.$props.opts, () => {
         this.$emit('started')
       })
     },
