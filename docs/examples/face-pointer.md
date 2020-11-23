@@ -10,7 +10,9 @@
         <li>Smile to the left or right to click on things</li>
         <li>Move pointer above/or below page to scroll</li>
       </ul>
-      <HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
+      <HandsfreeToggle class="handsfree-hide-when-started-without-weboji" text-off="Activate Face Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+      <button class="large handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+      <button class="large handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo">👆 Activate Face Pointer</button>
     </td>
   </tr>
 </table>
@@ -45,13 +47,13 @@ The `scrollFocus` grants the Face Pointer the ability to scroll different areas 
       <div class="demo-focus-area">
         <div><div></div></div>
       </div>
-      <p><button id="demo-toggle-scroll-speed" onclick="demo.toggleScrollSpeed()" class="block">🐢 Activate slow scrolling</button></p>
+      <p><button id="demo-toggle-scroll-speed" @click="toggleScrollSpeed()" class="block">🐢 Activate slow scrolling</button></p>
     </td>
     <td>
       <div class="demo-focus-area">
         <div><div></div></div>
       </div>
-      <p><button id="demo-toggle-scroll-zone" onclick="demo.toggleScrollZone()" class="block">↕ Decrease scroll zone</button></p>
+      <p><button id="demo-toggle-scroll-zone" @click="toggleScrollZone()" class="block">↕ Decrease scroll zone</button></p>
     </td>
   </tr>
 </table>
@@ -102,7 +104,7 @@ if (handsfree.isLooping) {
 }
 ```
 
-<button onclick="demo.calibrate()" class="handsfree-hide-when-loading"><Fa-Crosshairs /> Start Calibration</button>
+<button @click="calibrate()" class="handsfree-hide-when-loading"><Fa-Crosshairs /> Start Calibration</button>
 <button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading</button>
 
 > ⌚ More info coming soon
@@ -129,7 +131,31 @@ if (handsfree.isLooping) {
 
 <!-- Code -->
 <script>
-  demo = {
+export default {
+  data () {
+    return {
+      demoOpts: {
+        weboji: true,
+        handpose: false
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Start the page with our preset options
+     */
+    startDemo () {
+      this.$root.handsfree.start(this.demoOpts, this.onStarted)
+    },
+    
+    /**
+     * Toggle plugins
+     */
+    onStarted () {
+      console.log('onStarted')
+    },
+
     /**
      * Adjust scroll speed for demo
      */
@@ -172,4 +198,5 @@ if (handsfree.isLooping) {
       }
     }
   }
+}
 </script>

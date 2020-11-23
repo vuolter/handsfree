@@ -91,6 +91,29 @@
   display: initial;
 }
 
+/* Weboji */
+.handsfree-started .handsfree-hide-when-started-without-weboji {
+  display: none;
+}
+.handsfree-started.handsfree-model-weboji .handsfree-hide-when-started-without-weboji {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-started-without-weboji {
+  display: inline-block;
+}
+.handsfree-show-when-started-without-weboji,
+.handsfree-started.handsfree-model-weboji .handsfree-show-when-started-without-weboji {
+  display: none;
+}
+.handsfree-hide-when-started-without-weboji + .handsfree-show-when-loading,
+.handsfree-loading .handsfree-show-when-started-without-weboji + .handsfree-hide-when-loading {
+  display: none !important;
+}
+.handsfree-started.handsfree-loading .handsfree-hide-when-started-without-weboji + .handsfree-show-when-started-without-weboji {
+  display: inline-block !important;
+}
+
+/* Handpose */
 .handsfree-started .handsfree-hide-when-started-without-handpose {
   display: none;
 }
@@ -104,12 +127,10 @@
 .handsfree-started.handsfree-model-handpose .handsfree-show-when-started-without-handpose {
   display: none;
 }
-
 .handsfree-hide-when-started-without-handpose + .handsfree-show-when-loading,
 .handsfree-loading .handsfree-show-when-started-without-handpose + .handsfree-hide-when-loading {
   display: none !important;
 }
-
 .handsfree-started.handsfree-loading .handsfree-hide-when-started-without-handpose + .handsfree-show-when-started-without-handpose {
   display: inline-block !important;
 }

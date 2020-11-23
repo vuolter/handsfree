@@ -11,7 +11,7 @@
       </ul>
       <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
       <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="$root.handsfree.start(demoOpts)">👆 Activate Finger Pointer</button>
+      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo">👆 Activate Finger Pointer</button>
     </td>
   </tr>
 </table>
@@ -20,7 +20,7 @@
 The finger pointer estimates a ray from your index/pointer finger onto the screen. It positions a pointer there and you can use the calculated values to all sorts of things which we'll explore!
 
 ```js
-const handsfree = new Handsfree({face: true})
+const handsfree = new Handsfree({hand: true})
 handsfree.start()
 
 // Where on the screen to position the pointer
@@ -85,6 +85,16 @@ export default {
   },
 
   methods: {
+    /**
+     * Start the page with our preset options
+     */
+    startDemo () {
+      this.$root.handsfree.start(this.demoOpts, this.onStarted)
+    },
+    
+    /**
+     * Toggle plugins
+     */
     onStarted () {
       console.log('onStarted')
     }
