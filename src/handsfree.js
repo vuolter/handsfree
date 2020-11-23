@@ -99,6 +99,7 @@ class Handsfree {
     let assetsPath = document.currentScript
       ? document.currentScript.getAttribute('src')
       : ''
+    assetsPath = assetsPath || ''
     this._defaultAssetsPath =
       trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
     

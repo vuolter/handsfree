@@ -151,8 +151,8 @@ Here are the models that come with Handsfree.js out of the box:
 ### Through CDN
 ```html
 <!-- Include Handsfree.js -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.3/dist/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.2.3/dist/handsfree.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.4/build/lib/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.2.4/build/lib/handsfree.js"></script>
 
 <!-- Instantiate and start it -->
 <script>

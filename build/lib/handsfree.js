@@ -9515,7 +9515,8 @@
 
     feedback: {
       enabled: false,
-      $target: document.body
+      // set in constructor due to document not being defined during build
+      $target: null
     }
   };
 
@@ -9526,10 +9527,14 @@
     constructor(config = {}) {
       this.id = ++id;
 
+      // Setup defaults once a context is defined
+      configDefaults.feedback.$target = document.body;
+
       // Determine a default assetsPath, using this <script>'s src
       let assetsPath = document.currentScript
         ? document.currentScript.getAttribute('src')
         : '';
+      assetsPath = assetsPath || '';
       this._defaultAssetsPath =
         trim_1(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/';
       
