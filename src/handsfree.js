@@ -135,6 +135,13 @@ class Handsfree {
   updateConfig (defaults, config) {
     this.config = merge(defaults, config)
 
+    // Handle aliases
+    if (config) {
+      if (config.face) config.weboji = config.face
+      if (config.pose) config.posenet = config.pose
+      if (config.hand) config.handpose = config.hand
+    }
+
     // Transform configDefaults (string => [string])
     const configs = ['weboji', 'posenet', 'handpose', 'feedback']
     configs.forEach(config => {
@@ -211,6 +218,20 @@ class Handsfree {
       if (this[modelName].isReady && this[modelName].enabled) {
         this[modelName].getData()
         data[modelName] = this[modelName].data || {}
+
+        // Alias
+        if (modelName === 'weboji') {
+          data.face = data.weboji
+          this.face = this.weboji
+        }
+        if (modelName === 'handpose') {
+          data.hand = data.handpose
+          this.hand = this.handpose
+        }
+        if (modelName === 'posenet') {
+          data.pose = data.posenet
+          this.pose = this.posenet
+        }
       }
     })
 

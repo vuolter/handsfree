@@ -96,10 +96,10 @@ The Face Pointer comes with a Calibrator, which you can trigger by running:
 
 ```js
 if (handsfree.isLooping) {
-  handsfree.weboji.calibrate()
+  handsfree.face.calibrate()
 } else {
   handsfree.start(() => {
-    handsfree.weboji.calibrate()
+    handsfree.face.calibrate()
   })
 }
 ```
@@ -135,7 +135,7 @@ export default {
   data () {
     return {
       demoOpts: {
-        weboji: true,
+        face: true,
         handpose: false
       }
     }
@@ -190,10 +190,10 @@ export default {
      */
     calibrate () {
       if (handsfree.isLooping) {
-        handsfree.weboji.calibrate()
+        handsfree.face.calibrate()
       } else {
         handsfree.start(() => {
-          handsfree.weboji.calibrate()
+          handsfree.face.calibrate()
         })
       }
     }
