@@ -80,7 +80,8 @@ const configDefaults = {
 
   feedback: {
     enabled: false,
-    $target: document.body
+    // set in constructor due to document not being defined during build
+    $target: null
   }
 }
 
@@ -90,6 +91,9 @@ const configDefaults = {
 class Handsfree {
   constructor(config = {}) {
     this.id = ++id
+
+    // Setup defaults once a context is defined
+    configDefaults.feedback.$target = document.body
 
     // Determine a default assetsPath, using this <script>'s src
     let assetsPath = document.currentScript
