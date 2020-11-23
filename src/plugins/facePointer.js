@@ -80,7 +80,7 @@ export default {
       y,
       overwrite: true,
       ease: 'linear.easeNone',
-      immediate: true
+      immediateRender: true
     })
 
     this.$pointer.style.left = `${this.tween.x}px`

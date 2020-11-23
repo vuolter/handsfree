@@ -30,7 +30,7 @@ handsfree.start()
 </table>
 
 ::: warning 📅 Coming Soon!
-These docs should be finished by Sunday 11/22
+These docs should be finished by December 1st 2020
 :::
 
 <blockquote class="verticle-middle-children space-children text-center">
@@ -151,8 +151,8 @@ Here are the models that come with Handsfree.js out of the box:
 ### Through CDN
 ```html
 <!-- Include Handsfree.js -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@7.1.0/dist/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.1.0/dist/handsfree.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.2/dist/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.2.2/dist/handsfree.js"></script>
 
 <!-- Instantiate and start it -->
 <script>
