@@ -5,7 +5,7 @@
   <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
-  <p>Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap ✨</p>
+  <p>Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap 👌✨</p>
   <p>
     <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
     <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
