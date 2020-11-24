@@ -23,6 +23,8 @@ const defaultPlugins = {
   fingerPointer: pluginFingerPointer
 }
 
+let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : ''
+
 // Counter for unique instance IDs
 let id = 0
 
@@ -96,10 +98,6 @@ class Handsfree {
     configDefaults.feedback.$target = document.body
 
     // Determine a default assetsPath, using this <script>'s src
-    let assetsPath = document.currentScript
-      ? document.currentScript.getAttribute('src')
-      : ''
-    assetsPath = assetsPath || ''
     this._defaultAssetsPath =
       trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
     
@@ -138,14 +136,14 @@ class Handsfree {
    * Merges new configs
    */
   updateConfig (defaults, config) {
-    this.config = merge(defaults, config)
-
     // Handle aliases
     if (config) {
       if (config.face) config.weboji = config.face
       if (config.pose) config.posenet = config.pose
       if (config.hand) config.handpose = config.hand
     }
+
+    this.config = merge(defaults, config)
 
     // Transform configDefaults (string => [string])
     const configs = ['weboji', 'posenet', 'handpose', 'feedback']
@@ -217,6 +215,7 @@ class Handsfree {
    */
   loop() {
     let data = {}
+    let hasData = false
 
     // Get model data
     this.activeModels.forEach((modelName) => {
@@ -228,27 +227,32 @@ class Handsfree {
         if (modelName === 'weboji') {
           data.face = data.weboji
           this.face = this.weboji
+          if (this.weboji.data) hasData = true
         }
         if (modelName === 'handpose') {
           data.hand = data.handpose
           this.hand = this.handpose
+          if (this.handpose.data) hasData = true
         }
         if (modelName === 'posenet') {
           data.pose = data.posenet
           this.pose = this.posenet
+          if (this.pose.data) hasData = true
         }
       }
     })
 
     // Run on frames
-    Object.keys(this.plugin).forEach((name) => {
-      this.plugin[name].enabled &&
-        this.plugin[name].onFrame &&
-        this.plugin[name].onFrame(data)
-    })
+    if (hasData) {
+      Object.keys(this.plugin).forEach((name) => {
+        this.plugin[name].enabled &&
+          this.plugin[name].onFrame &&
+          this.plugin[name].onFrame(data)
+      })
+      this.emit('data', data)
+    }
 
     // Emit event and loop again
-    this.emit('data', data)
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
 

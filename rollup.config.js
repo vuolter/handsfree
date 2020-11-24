@@ -18,9 +18,7 @@ export default [
     plugins: [
       copy({
         targets: [
-          {src: 'public/assets', dest: 'build/lib'},
-          {src: 'public/favicon.png', dest: 'build/lib'},
-          {src: 'public/sun.png', dest: 'build/lib'}
+          {src: 'docs/.vuepress/public/handsfree/*', dest: 'build/lib/assets/'}
         ]
       }),
       commonjs({
