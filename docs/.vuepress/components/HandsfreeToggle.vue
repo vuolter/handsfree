@@ -2,7 +2,7 @@
 <div>
   <button class="handsfree-show-when-stopped handsfree-hide-when-loading" @click='start'><Fa-Video /> <span>{{textOff}}</span></button>
   <button class="handsfree-show-when-loading" disabled><Fa-Spinner :spin='true' /> <span>Loading...</span></button>
-  <button class="handsfree-show-when-started negative" @click='stop'><Fa-VideoSlash /> <span>{{textOn}}</span></button>
+  <button class="handsfree-hide-when-loading handsfree-show-when-started negative" @click='stop'><Fa-VideoSlash /> <span>{{textOn}}</span></button>
 </div>
 </template>
 
@@ -13,11 +13,11 @@
 export default {
   name: 'HandsfreeToggle',
 
-  props: ['textOff', 'textOn'],
+  props: ['textOff', 'textOn', 'opts'],
 
   methods: {
     start () {
-      this.$root.handsfree.start(() => {
+      this.$root.handsfree.start(this.$props.opts, () => {
         this.$emit('started')
       })
     },

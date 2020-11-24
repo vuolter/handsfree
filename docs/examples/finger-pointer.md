@@ -9,8 +9,9 @@
         <li>Point at the screen to move the pointer 👆</li>
         <li>With palm towards screen 🖐, move hand up and down to scroll</li>
       </ul>
-      <button disabled>Coming soon</button>
-      <!-- <HandsfreeToggle text-off="Activate Finger Pointer" text-on="Stop Handsfree" @started='activateFingerPointer' /> -->
+      <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+      <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo">👆 Activate Finger Pointer</button>
     </td>
   </tr>
 </table>
@@ -19,7 +20,7 @@
 The finger pointer estimates a ray from your index/pointer finger onto the screen. It positions a pointer there and you can use the calculated values to all sorts of things which we'll explore!
 
 ```js
-const handsfree = new Handsfree({face: true})
+const handsfree = new Handsfree({hand: true})
 handsfree.start()
 
 // Where on the screen to position the pointer
@@ -74,12 +75,28 @@ handsfree.hand.data.pointer.y
 <!-- Code -->
 <script>
 export default {
+  data () {
+    return {
+      demoOpts: {
+        weboji: false,
+        handpose: true
+      }
+    }
+  },
+
   methods: {
     /**
-     * Activate demo plugins
+     * Start the page with our preset options
      */
-    activateFingerPointer () {
-      console.log('started')
+    startDemo () {
+      this.$root.handsfree.start(this.demoOpts, this.onStarted)
+    },
+    
+    /**
+     * Toggle plugins
+     */
+    onStarted () {
+      console.log('onStarted')
     }
   }
 }

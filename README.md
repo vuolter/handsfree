@@ -1,4 +1,4 @@
-> # 📅 I'm working on [new documentation](https://handsfree.js.org) which should be ready by 11/22
+> # 📅 I'm working on [new documentation](https://handsfree.js.org) which should be ready by December 1st 2020
 
 <div align="center">
   <p><img src="https://media2.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" alt="handsfree.js"></p>
@@ -41,8 +41,8 @@ For more code examples, check out the `/demo/` folder or try them out on Glitch:
 <!-- Require dependencies, which adds Handsfree to global namespace -->
 <link
   rel="stylesheet"
-  href="https://unpkg.com/handsfree@7.1.0/dist/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.1.0/dist/handsfree.js"></script>
+  href="https://unpkg.com/handsfree@7.2.11/build/lib/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.2.11/build/lib/handsfree.js"></script>
 
 <!-- Instantiate Handsfree.js -->
 <script>

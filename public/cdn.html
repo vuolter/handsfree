@@ -1,0 +1,23 @@
+<!-- Require dependencies, which adds Handsfree to global namespace -->
+<head>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/handsfree@7.2.11/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@7.2.11/build/lib/handsfree.js"></script>
+</head>
+
+<body>
+  <!-- Instantiate Handsfree.js -->
+  <script>
+    // Create a new instance. Use one instance for each camera
+    const handsfree = new Handsfree({ weboji: true })
+  
+    // Create a plugin that logs head rotation
+    handsfree.use('consoleLogger', ({ face }) => {
+      if (face.pointer.state === 'mousedown') {
+        console.log(`Clicked at: (${weboji.pointer.x}, ${weboji.pointer.y})`)
+        console.log('Clicked on:', weboji.pointer.$target)
+      }
+    })
+  </script>
+</body>

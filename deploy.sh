@@ -2,8 +2,6 @@
 
 # abort on errors
 set -e
-# build
-npm run build:docs
 
 # navigate into the build output directory
 cd build/docs

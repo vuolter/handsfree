@@ -23,8 +23,69 @@ const defaultPlugins = {
   fingerPointer: pluginFingerPointer
 }
 
+let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : ''
+
 // Counter for unique instance IDs
 let id = 0
+
+/**
+ * Defaults to use for instantiation
+ */
+const configDefaults = {
+  // Model defaults
+  weboji: {
+    enabled: false,
+    throttle: 0,
+    // Represents the calibrator settings
+    calibrator: {
+      // (optional) The target element to act as the calibrator wrapping div
+      target: null,
+      // The message to display over the marker, can be HTML
+      instructions: 'Point head towards center of circle below',
+      // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+      marker: null
+    },
+    morphs: {
+      threshold: {
+        smileRight: 0.7,
+        smileLeft: 0.7,
+        browLeftDown: 0.8,
+        browRightDown: 0.8,
+        browLeftUp: 0.8,
+        browRightUp: 0.8,
+        eyeLeftClosed: 0.4,
+        eyeRightClosed: 0.4,
+        mouthOpen: 0.3,
+        mouthRound: 0.8,
+        upperLip: 0.5
+      }
+    }
+  },
+
+  posenet: {
+    enabled: false,
+    throttle: 0,
+    imageScaleFactor: 0.3,
+    outputStride: 16,
+    flipHorizontal: false,
+    minConfidence: 0.5,
+    maxPoseDetections: 5,
+    scoreThreshold: 0.5,
+    nmsRadius: 20,
+    detectionType: 'single',
+    multiplier: 0.75
+  },
+
+  handpose: {
+    enabled: false
+  },
+
+  feedback: {
+    enabled: false,
+    // set in constructor due to document not being defined during build
+    $target: null
+  }
+}
 
 /**
  * ✨ Handsfree.js
@@ -33,16 +94,24 @@ class Handsfree {
   constructor(config = {}) {
     this.id = ++id
 
+    // Setup defaults once a context is defined
+    configDefaults.feedback.$target = document.body
+
     // Determine a default assetsPath, using this <script>'s src
-    let assetsPath = document.currentScript
-      ? document.currentScript.getAttribute('src')
-      : ''
     this._defaultAssetsPath =
       trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/assets/'
     
     // Setup options
-    this.config = config
-    this.cleanConfig()
+    this.updateConfig({
+      assetsPath: this._defaultAssetsPath,
+      weboji: configDefaults.weboji,
+      posenet: configDefaults.posenet,
+      handpose: configDefaults.handpose,
+
+      // Plugin overrides
+      plugin: {},
+      feedback: configDefaults.feedback
+    }, config)
 
     // Flags
     this.isStarted = false
@@ -64,110 +133,74 @@ class Handsfree {
   }
 
   /**
-   * Sets config defaults
+   * Merges new configs
    */
-  cleanConfig() {
-    const defaults = {
-      // Model defaults
-      weboji: {
-        enabled: false,
-        throttle: 0,
-        // Represents the calibrator settings
-        calibrator: {
-          // (optional) The target element to act as the calibrator wrapping div
-          target: null,
-          // The message to display over the marker, can be HTML
-          instructions: 'Point head towards center of circle below',
-          // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
-          marker: null
-        },
-        morphs: {
-          threshold: {
-            smileRight: 0.7,
-            smileLeft: 0.7,
-            browLeftDown: 0.8,
-            browRightDown: 0.8,
-            browLeftUp: 0.8,
-            browRightUp: 0.8,
-            eyeLeftClosed: 0.4,
-            eyeRightClosed: 0.4,
-            mouthOpen: 0.3,
-            mouthRound: 0.8,
-            upperLip: 0.5
-          }
-        }
-      },
-
-      posenet: {
-        enabled: false,
-        throttle: 0,
-        imageScaleFactor: 0.3,
-        outputStride: 16,
-        flipHorizontal: false,
-        minConfidence: 0.5,
-        maxPoseDetections: 5,
-        scoreThreshold: 0.5,
-        nmsRadius: 20,
-        detectionType: 'single',
-        multiplier: 0.75
-      },
-
-      handpose: {
-        enabled: false
-      },
-
-      feedback: {
-        enabled: false,
-        $target: document.body
-      }
+  updateConfig (defaults, config) {
+    // Handle aliases
+    if (config) {
+      if (config.face) config.weboji = config.face
+      if (config.pose) config.posenet = config.pose
+      if (config.hand) config.handpose = config.hand
     }
-    
-    this.config = merge(
-      {
-        assetsPath: this._defaultAssetsPath,
-        weboji: defaults.weboji,
-        posenet: defaults.posenet,
-        handpose: defaults.handpose,
 
-        // Plugin overrides
-        plugin: {},
-        feedback: defaults.feedback
-      },
-      this.config
-    )
+    this.config = merge(defaults, config)
 
-    // Transform defaults (string => [string])
+    // Transform configDefaults (string => [string])
     const configs = ['weboji', 'posenet', 'handpose', 'feedback']
     configs.forEach(config => {
       if (typeof this.config[config] === 'boolean') {
         let isEnabled = this.config[config]
-        this.config[config] = defaults[config]
+        this.config[config] = configDefaults[config]
         this.config[config].enabled = isEnabled
       }
     })
 
     // Track the models we're using
     this.activeModels = []
+    
     if (this.config.weboji.enabled) this.activeModels.push('weboji')
     if (this.config.posenet.enabled) this.activeModels.push('posenet')
     if (this.config.handpose.enabled) this.activeModels.push('handpose')
   }
 
   /**
-   * Start all enabled models
-   * - Once models loaded, starts loop
-   * @param {Function} callback The callback to call once everything is started
+   * Starts Handsfree and updates existing config
+   * ⭐ Use this method to safely live-update the user experience,
+   * for example when transitioning to a new view or part of a game or app
+   * or when switching from a Face Pointer to a Finger Pointer without a refresh
+   * 
+   * - opts will be deep merged with the handsfree.config
+   * - if first argument is a function, then it is used as callback and no updates are done
+   * - Once models loaded, starts loop and runs the callback
+   * - If already started or no models need to be loaded then any new configs are merged in real time
+   *    (eg, running models will be stopped if you explicitely disable them, plugin configs may be udpated)
+   * 
+   * @param {Opts|Function} opts (Optional) To be merged into. If function, then it is used as callback instead 
+   * @param {Function} callback (Optional) The callback to call once everything is started
    */
-  start(callback) {
-    if (!this.isStarted) {
-      this.startModels(this.activeModels).then(() => {
-        this.isLooping = true
-        this.loop()
-        callback && callback()
-      })
-    } else {
-      callback && callback()
+  start(opts, callback) {
+    if (typeof opts === 'function') {
+      callback = opts
     }
+
+    // Merge opts with current config
+    this.updateConfig(this.config, opts)
+    
+    // @todo #63 Start each model that needs to be started
+    // @todo #63 Stop active models if required
+    // @todo #63 Start the game loop
+    
+    // Start required models
+    this.startModels(this.activeModels)
+
+    // Start game loop
+    if (!this.isLooping) {
+      this.isLooping = true
+      this.loop()
+    }
+    
+    // Run callback
+    callback && callback()
   }
 
   /**
@@ -182,24 +215,44 @@ class Handsfree {
    */
   loop() {
     let data = {}
+    let hasData = false
 
     // Get model data
     this.activeModels.forEach((modelName) => {
       if (this[modelName].isReady && this[modelName].enabled) {
         this[modelName].getData()
         data[modelName] = this[modelName].data || {}
+
+        // Alias
+        if (modelName === 'weboji') {
+          data.face = data.weboji
+          this.face = this.weboji
+          if (this.weboji.data) hasData = true
+        }
+        if (modelName === 'handpose') {
+          data.hand = data.handpose
+          this.hand = this.handpose
+          if (this.handpose.data) hasData = true
+        }
+        if (modelName === 'posenet') {
+          data.pose = data.posenet
+          this.pose = this.posenet
+          if (this.pose.data) hasData = true
+        }
       }
     })
 
     // Run on frames
-    Object.keys(this.plugin).forEach((name) => {
-      this.plugin[name].enabled &&
-        this.plugin[name].onFrame &&
-        this.plugin[name].onFrame(data)
-    })
+    if (hasData) {
+      Object.keys(this.plugin).forEach((name) => {
+        this.plugin[name].enabled &&
+          this.plugin[name].onFrame &&
+          this.plugin[name].onFrame(data)
+      })
+      this.emit('data', data)
+    }
 
     // Emit event and loop again
-    this.emit('data', data)
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
 

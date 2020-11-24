@@ -36,7 +36,7 @@ export default {
   onUse() {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
-      $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-face')
+      $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-face', 'handsfree-hide-when-started-without-weboji')
       document.body.appendChild($pointer)
       this.$pointer = $pointer
     }
@@ -80,7 +80,7 @@ export default {
       y,
       overwrite: true,
       ease: 'linear.easeNone',
-      immediate: true
+      immediateRender: true
     })
 
     this.$pointer.style.left = `${this.tween.x}px`
