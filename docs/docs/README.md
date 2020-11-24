@@ -2,11 +2,11 @@
 
 ## Instantiating
 
-Once you've [included Handsfree.js](/#quickstart) into your project you'll have a global `Handsfree` class in the `window`'s scope. You'll want to create one instance for every webcam you intend to use, along with some configs.
+Once you've [included Handsfree.js](/#quickstart) into your project you'll have a global `Handsfree` class in the `window`'s scope. You'll want to create one instance for every webcam that you intend to use, along with some configs.
 
 ```js
-// Instantiate with the weboji face tracker with defaults
-let handsfree = new Handsfree({weboji: true})
+// Instantiate with the default face tracker
+let handsfree = new Handsfree({face: true})
 
 // ...or...
 
@@ -29,9 +29,9 @@ handsfree = new Handsfree({
   },
 
   /**
-   * Face tracker
+   * Face tracker settings
    */
-  weboji: {
+  face: {
     // All models are disabled by default!
     enabled: false,
     
@@ -78,7 +78,7 @@ handsfree = new Handsfree({
 Once you've instantiated `Handsfree` you can start and stop it with:
 
 ```js
-handsfree = new Handsfree({weboji: true})
+handsfree = new Handsfree({face: true})
 handsfree.start()
 
 // Currently this just reloads the page
@@ -87,12 +87,12 @@ handsfree.stop()
 
 ## Adding Functionality
 
-By default, the `weboji` face tracker comes bundled with a set of plugins. Plugins add functionality that can be toggled on/off, which is useful when working on complex applications that require different gestures for different views. Plugins can also be overwritten.
+By default, the face tracker comes bundled with a set of plugins. Plugins add functionality that can be toggled on/off, which is useful when working on complex applications that require different gestures for different views. Plugins can also be overwritten.
 
 Plugins are added with the `handsfree.use('myPlugin', opts)`:
 
 ```js
-handsfree = new Handsfree({weboji: true})
+handsfree = new Handsfree({face: true})
 
 handsfree.use('myPlugin', {
   // All plugins are true by default
@@ -122,32 +122,30 @@ You can also pass a function as the second argument, which is assigned to the `.
 ```js
 // This...
 handsfree.use('myPlugin', data => {
-  console.log(data.weboji.data.morphs)
+  console.log(data.face.morphs)
 })
 
 // ...is similar to this
 handsfree.use('myPlugin', {
   onFrame: data => {
-    console.log(data.weboji.data.morphs)
+    console.log(data.face.morphs)
   }
 })
 ```
 
-The `onFrame` method, which is called on every webcam frame, receives a `data` object containing data for each active model...`data.weboji` for Face Tracking and `data.posenet` for Pose Estimation. If you're only using one model, then it's usually easier to destructure:
+The `onFrame` method, which is called on every webcam frame, receives a `data` object containing data for each active model...`data.face` for Face Tracking, `data.hand` for Hand Tracking, and `data.pose` for Pose Estimation. If you're only using one model, then it's usually easier to destructure:
 
 ```js
 // This
-handsfree.use('myPlugin', {weboji} => {
-  console.log(weboji.data)
+handsfree.use('myPlugin', {face} => {
+  console.log(face.morphs)
 })
 
 // Instead of this
 handsfree.use('myPlugin', data => {
-  console.log(data.weboji.data)
+  console.log(data.face.morphs)
 })
 ```
-
-See `/src/demo` and `/src/handsfree/plugins` for examples (simpler ones will be made soon)!
 
 ## Toggling functionality on/off
 

@@ -2,7 +2,18 @@
 
 ![](https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif)
 
-Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`.
+Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`. The alias to `handpose` is `hand`:
+
+```js
+// Alias outside of plugins
+handsfree.handpose.api === handsfree.hand.api
+handsfree.handpose.data === handsfree.hand.data
+
+// Alias inside of plugins
+handsfree.use('myPlugin', data => {
+  data.handpose === data.hand
+})
+```
 
 ## Properties
 
@@ -11,12 +22,12 @@ Each of the following can be accessed either through `handsfree.handpose.data` o
  * How confident the model is that a hand is in view
  * [0 - 1]
  */
-handsfree.handpose.data.handInViewConfidence
+handsfree.hand.data.handInViewConfidence
 
 /**
  * The top left and bottom right pixels containing the hand in the iframe
  */
-handsfree.handpose.data.boundingBox = {
+handsfree.hand.data.boundingBox = {
   topLeft: [x, y],
   bottomRight: [x, y]
 }
@@ -24,12 +35,12 @@ handsfree.handpose.data.boundingBox = {
 /**
  * [x, y, z] of various hand landmarks
  */
-handsfree.handpose.data.landmarks[0..9] = [...[x, y, z]]
+handsfree.hand.data.landmarks[0..9] = [...[x, y, z]]
 
 /**
  * [x, y, z] of various hand landmarks
  */
-handsfree.handpose.data.annotations: {
+handsfree.hand.data.annotations: {
   thumb: [...[x, y, z]], // 4 landmarks
   indexFinger: [...[x, y, z]], // 4 landmarks
   middleFinger: [...[x, y, z]], // 4 landmarks

@@ -104,8 +104,10 @@ if (handsfree.isLooping) {
 }
 ```
 
-<button @click="calibrate()" class="handsfree-hide-when-loading"><Fa-Crosshairs /> Start Calibration</button>
-<button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading</button>
+<div>
+  <button class="handsfree-hide-when-loading" @click="calibrate"><Fa-Crosshairs /> Start Calibration</button>
+  <button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading</button>
+</div>
 
 > ⌚ More info coming soon
 
