@@ -291,7 +291,7 @@ class Handsfree {
           case 'face':
           case 'weboji':
             if (!this.weboji) {
-              this.weboji = new WebojiModel(
+              this.face = this.weboji = new WebojiModel(
                 {
                   name: 'weboji',
                   ...this.config.weboji,
@@ -310,7 +310,7 @@ class Handsfree {
           case 'pose':
           case 'posenet':
             if (!this.posenet) {
-              this.posenet = new PoseNetModel(
+              this.pose = this.posenet = new PoseNetModel(
                 {
                   name: 'posenet',
                   ...this.config.posenet,
@@ -329,7 +329,7 @@ class Handsfree {
           case 'hand':
           case 'handpose':
             if (!this.handpose) {
-              this.handpose = new HandposeModel({
+              this.hand = this.handpose = new HandposeModel({
                 name: 'handpose',
                 ...this.config.handpose,
                 deps: this.config.assetsPath + '/handpose-bundle.js'

@@ -2,7 +2,18 @@
 
 ![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
 
-Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji.data` when inside `onFrame`.
+Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji` when inside `onFrame(data => {})`. The alias to `weboji` is `face`:
+
+```js
+// Alias outside of plugins
+handsfree.weboji.api === handsfree.face.api
+handsfree.weboji.data === handsfree.face.data
+
+// Alias inside of plugins
+handsfree.use('myPlugin', data => {
+  data.weboji === data.face
+})
+```
 
 ## Properties
 
@@ -22,26 +33,26 @@ Each of the following can be accessed either through `handsfree.weboji.data` out
  * 9: eyeLeftClose → close left eye
  * 10: mouthNasty → nasty mouth (show teeth)
  */
-handsfree.weboji.data.morphs
+handsfree.face.data.morphs
 
 /**
  * {Array} Head rotation [pitch, yaw, roll]
  * - in radians where [0, 0, 0] is the head pointed directly at camera
  */
-handsfree.weboji.data.rotation
+handsfree.face.data.rotation
 
 /**
  * {Array} Head translation [x, y, s]
  * - These are each between 0 and 1
  * - Scale refers to the size of the head in relation to the webcam frame
  */
-handsfree.weboji.data.translation
+handsfree.face.data.translation
 
 /**
  * {Object} Where on the screen the head is pointed at {x, y}
  * - This is updated by: handsfree.plugin.facePointer
  */
-handsfree.weboji.data.pointer
+handsfree.face.data.pointer
 
 /**
  * {Object} Helper booleans checking if the morph has reached a threshold
@@ -67,14 +78,14 @@ handsfree.weboji.data.pointer
  * .mouthClosed
  * .mouthOpen
  */
-handsfree.weboji.data.state
+handsfree.face.data.state
 ```
 
 ## Methods
 
-Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.weboji.api`:
+Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.face.api`:
 
 ```js
 // Check if the head is detected or not
-handsfree.weboji.api.is_detected()
+handsfree.face.api.is_detected()
 ```

@@ -6,7 +6,7 @@ The PoseNet integration will be overhauled soon. It's not recommended to use it 
 
 ## Properties
 
-Each of the following can be accessed either through `handsfree.posenet.data` outside of a plugin, or through `data.posenet.data` when inside onFrame.
+Each of the following can be accessed either through `handsfree.posenet.data` outside of a plugin, or through `data.posenet` when inside `onFrame(data => {})`. The alias to `posenet` is `pose`:
 
 ```js
 /**
