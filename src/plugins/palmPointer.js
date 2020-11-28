@@ -4,8 +4,6 @@
 import { TweenMax } from 'gsap/all'
 
 export default {
-  enabled: false,
-  
   // The pointer element
   $pointer: null,
 
@@ -22,16 +20,12 @@ export default {
   config: {
     offset: {
       x: 0,
-      y: 0,
-      // A little nudge for when camera is above screen
-      pitch: -15,
-      yaw: -12,
-      roll: 0
+      y: -0.75
     },
 
     speed: {
-      x: 1,
-      y: 1
+      x: 1.5,
+      y: 1.5
     }
   },
 
@@ -53,26 +47,21 @@ export default {
     this.onUse()
   },
 
-  onFrame({ handpose }) {
-    if (!handpose || !handpose.annotations) return
+  onFrame({ hand }) {
+    if (!hand || !hand.annotations) return
 
-    this.handsfree.handpose.three.raycaster.set(this.handsfree.handpose.three.arrow.position, this.handsfree.handpose.three.arrow.direction.normalize())
-    const hits = this.handsfree.handpose.three.raycaster.intersectObject(this.handsfree.handpose.three.screen, true)
-
-    if (hits && hits.length) {
-      TweenMax.to(this.tween, 1, {
-        x: window.outerWidth - this.handsfree.normalize(this.handsfree.handpose.three.renderer.domElement.width - (hits[0].point.x + this.handsfree.handpose.three.renderer.domElement.width / 2), this.handsfree.handpose.three.renderer.domElement.width) * window.outerWidth,
-        y: this.handsfree.normalize(hits[0].point.y + this.handsfree.handpose.three.renderer.domElement.height / 2, this.handsfree.handpose.three.renderer.domElement.height) * window.outerHeight, 
-        overwrite: true,
-        ease: 'linear.easeNone',
-        immediate: true
-      })
-    }
+    TweenMax.to(this.tween, 1, {
+      x: this.handsfree.normalize(hand.annotations.palmBase[0][0], this.handsfree.feedback.$video.width * .85) * (window.outerWidth * this.config.speed.x) + this.config.offset.x,
+      y: this.handsfree.normalize(this.handsfree.feedback.$video.height * .85 - hand.annotations.palmBase[0][1], this.handsfree.feedback.$video.height * .85) * (window.outerHeight * this.config.speed.y) + (window.outerHeight * this.config.offset.y),
+      overwrite: true,
+      ease: 'linear.easeNone',
+      immediate: true
+    })
 
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
     
-    handpose.pointer = {
+    hand.pointer = {
       x: this.tween.x,
       y: this.tween.y
     }
