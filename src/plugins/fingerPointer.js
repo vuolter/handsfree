@@ -1,6 +1,8 @@
 import { TweenMax } from 'gsap/all'
 
 export default {
+  enabled: false,
+  
   // The pointer element
   $pointer: null,
 

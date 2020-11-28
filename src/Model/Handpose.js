@@ -17,6 +17,11 @@ export default class Handpose extends BaseModel {
       meshes: []
     }
 
+    // landmark indices that represent the palm
+    // 8 = Index finger tip
+    // 12 = Middle finger tip
+    this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
+
     this.fingerLookupIndices = {
       thumb: [0, 1, 2, 3, 4],
       indexFinger: [0, 5, 6, 7, 8],
@@ -94,7 +99,26 @@ export default class Handpose extends BaseModel {
       obj.add(mesh)
       this.three.scene.add(obj)
       this.three.meshes.push(obj)
+
+      // uncomment this to help identify joints
+      // if (i === 4) {
+      //   mesh.material.transparent = true
+      //   mesh.material.opacity = 0
+      // }
     }
+
+    // Create center of palm
+    const obj = new window.THREE.Object3D()
+    const geometry = new window.THREE.CylinderGeometry(5, 5, 1)
+    let material = new window.THREE.MeshNormalMaterial()
+  
+    const mesh = new window.THREE.Mesh(geometry, material)
+    mesh.rotation.x = Math.PI / 2
+  
+    this.three.centerPalmObj = obj
+    obj.add(mesh)
+    this.three.scene.add(obj)
+    this.three.meshes.push(obj)    
   }
 
   // compute some metadata given a landmark index
@@ -123,7 +147,7 @@ export default class Handpose extends BaseModel {
    * @param {*} hand 
    */
   updateMeshes (hand) {
-    for (let i = 0; i < this.three.meshes.length; i++) {
+    for (let i = 0; i < this.three.meshes.length - 1 /* palmbase */; i++) {
       const {next} = this.getLandmarkProperty(i)
   
       const p0 = this.webcam2space(...hand.landmarks[i])  // one end of the bone
@@ -141,12 +165,44 @@ export default class Handpose extends BaseModel {
 
       if (i === 8) {
         this.three.arrow.position.set(mid.x, mid.y, mid.z)
-        const direction = new window.THREE.Vector3().sub(p0, mid)
+        const direction = new window.THREE.Vector3().subVectors(p0, mid)
         this.three.arrow.setDirection(direction.normalize())
         this.three.arrow.setLength(800)
         this.three.arrow.direction = direction
       }
     }
+
+    this.updateCenterPalmMesh(hand)
+  }
+
+  /**
+   * Update the palm
+   */
+  updateCenterPalmMesh (hand) {
+    let points = []
+    let mid = {
+      x: 0,
+      y: 0,
+      z: 0
+    }
+
+    // Get position for the palm
+    this.palmPoints.forEach((i, n) => {
+      points.push(this.webcam2space(...hand.landmarks[i]))
+      mid.x += points[n].x
+      mid.y += points[n].y
+      mid.z += points[n].z
+    })
+
+    mid.x = mid.x / this.palmPoints.length
+    mid.y = mid.y / this.palmPoints.length
+    mid.z = mid.z / this.palmPoints.length
+    
+    this.three.centerPalmObj.position.set(mid.x, mid.y, mid.z)
+    this.three.centerPalmObj.scale.z = 10
+    this.three.centerPalmObj.rotation.x = this.three.meshes[12].rotation.x - Math.PI / 2
+    this.three.centerPalmObj.rotation.y = -this.three.meshes[12].rotation.y
+    this.three.centerPalmObj.rotation.z = this.three.meshes[12].rotation.z
   }
   
   // transform webcam coordinates to threejs 3d coordinates
@@ -163,6 +219,7 @@ export default class Handpose extends BaseModel {
    */
   async getData () {
     if (!this.handsfree.feedback.$video) return
+
     const predictions = await this.api.estimateHands(this.handsfree.feedback.$video)
 
     this.data = {
@@ -170,6 +227,11 @@ export default class Handpose extends BaseModel {
       meshes: this.three.meshes
     }
 
+    if (predictions[0]) {
+      this.handsfree.handpose.updateMeshes(this.data)
+    }
+    
+    this.handsfree.handpose.three.renderer.render(this.handsfree.handpose.three.scene, this.handsfree.handpose.three.camera)
     return this.data
   }
 }

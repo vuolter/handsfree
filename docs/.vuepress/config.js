@@ -69,12 +69,10 @@ module.exports = {
         children: [
           ['/examples/', 'Examples'],
           ['/examples/face-pointer', '😀 Face Pointer Playground'],
-          ['/examples/finger-pointer', '👆 Finger Pointer Playground']
+          ['/examples/hand-gestures', '🖐 Hand Gesture Playground']
         ]
       },
-      ['https://midiblocks.com', '💻 Gesture mapper'],
-      // ['/webhook/', '🔌 Connect to Webhook'],
-      // ['/community/', '💜 Get Involved']
+      ['https://midiblocks.com', '💻 Gesture mapper']
     ]
   }
 }

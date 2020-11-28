@@ -8,19 +8,25 @@ import HandposeModel from './Model/Handpose.js'
 import Plugin from './Plugin/index.js'
 
 // Core plugins
-import pluginFacePointer from './plugins/facePointer'
-import pluginFaceClick from './plugins/faceClick'
-import pluginFaceGhostedPointer from './plugins/faceGhostedPointer'
-import pluginFaceScroll from './plugins/faceScroll'
+import _facePointer from './plugins/facePointer'
+import _faceClick from './plugins/faceClick'
+import _faceGhostedPointer from './plugins/faceGhostedPointer'
+import _faceScroll from './plugins/faceScroll'
 
-import pluginFingerPointer from './plugins/fingerPointer'
+import _fingerPointer from './plugins/fingerPointer'
+import _palmPointer from './plugins/palmPointer'
+import _pinchClick from './plugins/pinchClick'
+import _handScroll from './plugins/handScroll'
 
 const defaultPlugins = {
-  facePointer: pluginFacePointer,
-  faceClick: pluginFaceClick,
-  faceGhostedPointer: pluginFaceGhostedPointer,
-  faceScroll: pluginFaceScroll,
-  fingerPointer: pluginFingerPointer
+  facePointer: _facePointer,
+  faceClick: _faceClick,
+  faceGhostedPointer: _faceGhostedPointer,
+  faceScroll: _faceScroll,
+  fingerPointer: _fingerPointer,
+  palmPointer: _palmPointer,
+  pinchClick: _pinchClick,
+  handScroll: _handScroll
 }
 
 let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : ''
