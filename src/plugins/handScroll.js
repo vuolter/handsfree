@@ -57,7 +57,7 @@ export default {
     // Set the original grab point
     if (this.thresholdMet) {
       if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
-        this.origScrollTop = this.getTargetScrollTop()
+        this.origScrollTop = this.getTargetScrollTop() + hand.pointer.y
       }
       this.framesSinceLastGrab = 0
     }
@@ -65,7 +65,7 @@ export default {
     
     // Scroll
     if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
-      this.$target.scrollTo(0, this.origScrollTop + (window.innerHeight - hand.pointer.y))
+      this.$target.scrollTo(0, this.origScrollTop - hand.pointer.y)
     }
     
     // // Check for hover
