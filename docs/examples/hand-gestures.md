@@ -8,6 +8,7 @@
       <ul>
         <li>🖐 With palm facing towards camera, move hand around to move pointer</li>
         <li>👌 Pinch your index and thumb to click or drag the page</li>
+        <li>✊ Close hand and move hand to scroll page up and down</li>
       </ul>
       <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Hand Gestures" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
       <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
