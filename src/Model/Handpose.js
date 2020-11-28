@@ -99,6 +99,12 @@ export default class Handpose extends BaseModel {
       obj.add(mesh)
       this.three.scene.add(obj)
       this.three.meshes.push(obj)
+
+      // uncomment this to help identify joints
+      // if (i === 4) {
+      //   mesh.material.transparent = true
+      //   mesh.material.opacity = 0
+      // }
     }
 
     // Create center of palm

@@ -1,5 +1,5 @@
 /**
- * Click on things with a gesture
+ * Click on things with a pinch gesture
  */
 export default {
   config: {
@@ -9,11 +9,8 @@ export default {
     // Max number of frames to keep down
     maxMouseDownedFrames: 1,
 
-    // Morphs to watch for and their required confidences
-    morphs: {
-      0: 0.25,
-      1: 0.25
-    }
+    // Number of pixels that the finger/thumb tips must be within to trigger a click
+    pinchDistance: 20
   },
 
   // Number of frames mouse has been downed
@@ -32,8 +29,8 @@ export default {
    */
   throttle(throttle) {
     this.maybeClick = this.handsfree.throttle(
-      function(weboji) {
-        this.click(weboji)
+      function(hand) {
+        this.click(hand)
       },
       throttle,
       { trailing: false }
@@ -43,18 +40,14 @@ export default {
   /**
    * Detect click state and trigger a real click event
    */
-  onFrame({ weboji }) {
-    if (!weboji) return
-
-    // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
-    if (!weboji.pointer.x && !weboji.pointer.y) return
+  onFrame({ hand }) {
+    if (!hand || !hand.annotations) return
 
     // Detect if the threshold for clicking is met with specific morphs
-    this.thresholdMet = false
-    Object.keys(this.config.morphs).forEach((key) => {
-      const morph = +this.config.morphs[key]
-      if (morph > 0 && weboji.morphs[key] >= morph) this.thresholdMet = true
-    })
+    const a = hand.annotations.indexFinger[3][0] - hand.annotations.thumb[3][0]
+    const b = hand.annotations.indexFinger[3][1] - hand.annotations.thumb[3][1]
+    const c = Math.sqrt(a*a + b*b)
+    this.thresholdMet = c < this.config.pinchDistance
 
     // Click/release and add body classes
     if (this.thresholdMet) {
@@ -67,34 +60,31 @@ export default {
     }
 
     // Set the state
-    if (
-      this.mouseDowned > 0 &&
-      this.mouseDowned <= this.config.maxMouseDownedFrames
-    )
-      weboji.pointer.state = 'mouseDown'
+    if (this.mouseDowned > 0 && this.mouseDowned <= this.config.maxMouseDownedFrames)
+      hand.pointer.state = 'mouseDown'
     else if (this.mouseDowned > this.config.maxMouseDownedFrames)
-      weboji.pointer.state = 'mouseDrag'
-    else if (this.mouseUp) weboji.pointer.state = 'mouseUp'
+      hand.pointer.state = 'mouseDrag'
+    else if (this.mouseUp) hand.pointer.state = 'mouseUp'
     else ''
 
     // Actually click something (or focus it)
-    if (weboji.pointer.state === 'mouseDown') {
-      this.maybeClick(weboji)
+    if (hand.pointer.state === 'mouseDown') {
+      this.maybeClick(hand)
     }
   },
 
   /**
    * The actual click method, this is what gets throttled
    */
-  click(weboji) {
-    const $el = document.elementFromPoint(weboji.pointer.x, weboji.pointer.y)
+  click(hand) {
+    const $el = document.elementFromPoint(hand.pointer.x, hand.pointer.y)
     if ($el) {
       $el.dispatchEvent(
         new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
-          clientX: weboji.pointer.x,
-          clientY: weboji.pointer.y
+          clientX: hand.pointer.x,
+          clientY: hand.pointer.y
         })
       )
 
@@ -102,7 +92,7 @@ export default {
       if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
         $el.focus()
 
-      weboji.pointer.$target = $el
+      hand.pointer.$target = $el
     }
   },
 
