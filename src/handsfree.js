@@ -14,13 +14,15 @@ import pluginFaceGhostedPointer from './plugins/faceGhostedPointer'
 import pluginFaceScroll from './plugins/faceScroll'
 
 import pluginFingerPointer from './plugins/fingerPointer'
+import pluginPalmPointer from './plugins/palmPointer'
 
 const defaultPlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
   faceGhostedPointer: pluginFaceGhostedPointer,
   faceScroll: pluginFaceScroll,
-  fingerPointer: pluginFingerPointer
+  fingerPointer: pluginFingerPointer,
+  palmPointer: pluginPalmPointer
 }
 
 let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : ''

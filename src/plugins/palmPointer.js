@@ -1,3 +1,6 @@
+/**
+ * Move a pointer with your palm
+ */
 import { TweenMax } from 'gsap/all'
 
 export default {
@@ -52,9 +55,6 @@ export default {
 
   onFrame({ handpose }) {
     if (!handpose || !handpose.annotations) return
-
-    this.handsfree.handpose.updateMeshes(handpose)
-    this.handsfree.handpose.three.renderer.render(this.handsfree.handpose.three.scene, this.handsfree.handpose.three.camera)
 
     this.handsfree.handpose.three.raycaster.set(this.handsfree.handpose.three.arrow.position, this.handsfree.handpose.three.arrow.direction.normalize())
     const hits = this.handsfree.handpose.three.raycaster.intersectObject(this.handsfree.handpose.three.screen, true)

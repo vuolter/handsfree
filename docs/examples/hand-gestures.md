@@ -1,4 +1,4 @@
-# Finger Pointer Playground
+# Hand Gesture Playground
 
 <table>
   <tr>
@@ -6,12 +6,12 @@
     <td class="col-6">
       <h2>Try it</h2>
       <ul>
-        <li>Point at the screen to move the pointer 👆</li>
-        <li>With palm towards screen 🖐, move hand up and down to scroll</li>
+        <li>Pinch your index and thumb 👌</li>
+        <li>Move hand up and down to scroll</li>
       </ul>
-      <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Finger Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+      <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Hand Gestures" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
       <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo">👆 Activate Finger Pointer</button>
+      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo">👆 Activate Hand Gestures</button>
     </td>
   </tr>
 </table>
@@ -96,7 +96,7 @@ export default {
      * Toggle plugins
      */
     onStarted () {
-      console.log('onStarted')
+      console.log('🖐 Hand Tracking started')
     }
   }
 }

@@ -141,7 +141,7 @@ export default class Handpose extends BaseModel {
 
       if (i === 8) {
         this.three.arrow.position.set(mid.x, mid.y, mid.z)
-        const direction = new window.THREE.Vector3().sub(p0, mid)
+        const direction = new window.THREE.Vector3().subVectors(p0, mid)
         this.three.arrow.setDirection(direction.normalize())
         this.three.arrow.setLength(800)
         this.three.arrow.direction = direction
@@ -163,6 +163,7 @@ export default class Handpose extends BaseModel {
    */
   async getData () {
     if (!this.handsfree.feedback.$video) return
+
     const predictions = await this.api.estimateHands(this.handsfree.feedback.$video)
 
     this.data = {
@@ -170,6 +171,11 @@ export default class Handpose extends BaseModel {
       meshes: this.three.meshes
     }
 
+    if (predictions[0]) {
+      this.handsfree.handpose.updateMeshes(this.data)
+    }
+    
+    this.handsfree.handpose.three.renderer.render(this.handsfree.handpose.three.scene, this.handsfree.handpose.three.camera)
     return this.data
   }
 }
