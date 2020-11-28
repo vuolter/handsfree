@@ -17,9 +17,6 @@
   </tr>
 </table>
 
-
-The finger pointer estimates a ray from your index/pointer finger onto the screen. It positions a pointer there and you can use the calculated values to all sorts of things which we'll explore!
-
 ```js
 const handsfree = new Handsfree({hand: true})
 handsfree.start()
@@ -30,24 +27,52 @@ handsfree.hand.data.pointer.y
 ```
 
 ## Plugins used
-- `fingerPointer` - calculates and positions a pointer on the screen
-- `palmScroll` - scrolls the window or active scroll area
+- `handPointer` - calculates and positions a pointer on the screen
+- `pinchClick` - click on things with a pinch gesture
+- `handScroll` - scrolls a scroll area
+
+## Clicky things
+Try clicking on these different elements with a pinch gesture:
+
+<table>
+  <thead>
+    <tr>
+      <th>Radios</th>
+      <th>Checkboxes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <input type="radio" name="radios" class="large">
+        <input type="radio" name="radios" class="large">
+        <input type="radio" name="radios" class="large">
+        <input type="radio" name="radios" class="large">
+      </td>
+      <td>
+        <input type="checkbox" class="large">
+        <input type="checkbox" class="large">
+        <input type="checkbox" class="large">
+        <input type="checkbox" class="large">
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Scroll focus
+With your pointer over the scroll areas, close your hand ✊ to try scrolling these individual scroll areas:
 
 <table>
   <tr>
     <td>
-      <div class="demo-focus-area">
+      <div class="demo-focus-area no-guides">
         <div><div></div></div>
       </div>
-      <p><button id="demo-toggle-scroll-speed" onclick="demo.toggleScrollSpeed()" class="block">🐢 Activate slow scrolling</button></p>
     </td>
     <td>
-      <div class="demo-focus-area">
+      <div class="demo-focus-area no-guides">
         <div><div></div></div>
       </div>
-      <p><button id="demo-toggle-scroll-zone" onclick="demo.toggleScrollZone()" class="block">↕ Decrease scroll zone</button></p>
     </td>
   </tr>
 </table>
@@ -64,7 +89,7 @@ handsfree.hand.data.pointer.y
 
 > ⌚ More info coming soon
 
-## Extending the Face Pointer
+## Extending the Hand Pointer
 
 > ⌚ More info coming soon
 

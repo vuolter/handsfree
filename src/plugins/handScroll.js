@@ -1,13 +1,9 @@
-import throttle from 'lodash/throttle'
-
 /**
  * Scrolls the page vertically by closing hand
  */
 export default {
   // Number of frames the current element is the same as the last
   numFramesFocused: 0,
-  // The last scrollable target focused
-  $lastTarget: null,
   // The current scrollable target
   $target: null,
 
@@ -57,6 +53,7 @@ export default {
     // Set the original grab point
     if (this.thresholdMet) {
       if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
+        this.checkForFocus(hand)
         this.origScrollTop = this.getTargetScrollTop() + hand.pointer.y
       }
       this.framesSinceLastGrab = 0
@@ -67,112 +64,33 @@ export default {
     if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
       this.$target.scrollTo(0, this.origScrollTop - hand.pointer.y)
     }
-    
-    // // Check for hover
-    // this.checkForFocus(hand)
-
-    // // Check on click
-    // if (hand.pointer.state === 'mouseDown') {
-    //   this.numFramesFocused = 0
-    //   this.maybeSetTarget(hand)
-    // }
-
-    // Scroll up
-    // if (hand.pointer.y < bounds.top + this.config.vertScroll.scrollZone) {
-    //   this.$target.scrollTo(
-    //     0,
-    //     scrollTop +
-    //       (hand.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
-    //         this.config.vertScroll.scrollSpeed
-    //   )
-
-    //   isScrolling = true
-    // }
-
-    // Scroll down
-    // if (hand.pointer.y > bounds.bottom - this.config.vertScroll.scrollZone) {
-    //   this.$target.scrollTo(
-    //     0,
-    //     scrollTop -
-    //       (bounds.bottom -
-    //         hand.pointer.y -
-    //         this.config.vertScroll.scrollZone) *
-    //         this.config.vertScroll.scrollSpeed
-    //   )
-
-    //   isScrolling = true
-    // }
-
-    // this.thresholdMet && this.maybeSelectNewTarget()
-  },
-
-  /**
-   * Check that the scroll is actually happening, otherwise traverse up the DOM
-   */
-  maybeSelectNewTarget() {
-    let curScrollTop = this.getTargetScrollTop()
-    let didNotScroll = false
-
-    // Check if we have scrolled up
-    this.$target.scrollTo(0, curScrollTop + 1)
-    if (curScrollTop === this.getTargetScrollTop()) {
-      didNotScroll = true
-    } else {
-      this.$target.scrollTo(0, curScrollTop - 1)
-      return
-    }
-
-    // Check if we have scrolled down
-    this.$target.scrollTo(0, curScrollTop - 1)
-    if (curScrollTop === this.getTargetScrollTop()) {
-      if (didNotScroll) {
-        this.numFramesFocused = 0
-
-        this.selectTarget(
-          this.recursivelyFindScrollbar(this.$target.parentElement)
-        )
-      }
-    } else {
-      this.$target.scrollTo(0, curScrollTop + 1)
-      return
-    }
   },
 
   /**
    * Gets the scrolltop, taking account the window object
    */
-  getTargetScrollTop() {
+  getTargetScrollTop () {
     return this.$target.scrollY || this.$target.scrollTop || 0
   },
 
   /**
    * Checks to see if we've hovered over an element for x turns
    */
-  checkForFocus: throttle(function(hand) {
+  checkForFocus (hand) {
     let $potTarget = document.elementFromPoint(
       hand.pointer.x,
       hand.pointer.y
     )
     if (!$potTarget) return
+
     $potTarget = this.recursivelyFindScrollbar($potTarget)
-
-    if ($potTarget === this.$lastTarget) {
-      ++this.numFramesFocused
-    } else {
-      this.numFramesFocused = 0
-    }
-
-    if (this.numFramesFocused > this.config.framesToFocus) {
-      this.selectTarget($potTarget)
-    }
-
-    this.$lastTarget = $potTarget
-  }, 100),
+    this.selectTarget($potTarget)
+  },
 
   /**
    * Select and style the element
    */
-  selectTarget($potTarget) {
+  selectTarget ($potTarget) {
     // Check required in case the window is the target
     if (this.$target.classList) {
       this.$target.classList.remove('handsfree-scroll-focus')
@@ -186,15 +104,6 @@ export default {
     }
 
     this.$target = $potTarget
-  },
-
-  /**
-   * Sets a new scroll target on click
-   */
-  maybeSetTarget(hand) {
-    if (hand.pointer.state === 'mouseDown' && hand.pointer.$target) {
-      this.selectTarget(this.recursivelyFindScrollbar(hand.pointer.$target))
-    }
   },
 
   /**

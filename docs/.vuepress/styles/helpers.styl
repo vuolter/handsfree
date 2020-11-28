@@ -55,9 +55,20 @@ html
     &:before
       bottom: 0
 
+    &.no-guides
+      &:after, &:before
+        display: none
+
   .demo-negative-scroll-zone
     .demo-focus-area
       &:after
         top: -100px
       &:before
         bottom: -100px
+
+// Make things large
+input[type="radio"].large,
+input[type="checkbox"].large
+  height 60px
+  width 60px
+  margin-right 1em
