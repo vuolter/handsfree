@@ -10,7 +10,7 @@ export default {
     maxMouseDownedFrames: 1,
 
     // Number of pixels that the finger/thumb tips must be within to trigger a click
-    pinchDistance: 20
+    pinchDistance: 40
   },
 
   // Number of frames mouse has been downed

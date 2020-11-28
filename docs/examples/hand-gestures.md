@@ -2,7 +2,9 @@
 
 <table>
   <tr>
-    <td class="col-6"><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif"></td>
+    <td class="col-6">
+    <a href="https://vimeo.com/484932006"><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></a>
+    <br><a href="https://vimeo.com/484932006">Watch video</a></td>
     <td class="col-6">
       <h2>Try it</h2>
       <ul>
@@ -80,6 +82,12 @@ With your pointer over the scroll areas, close your hand ✊ to try scrolling th
 ## Calibrating
 
 > ⌚ More info coming soon
+
+## Finger Laser Pointers
+
+![](https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif)
+
+coming soon
 
 ## Changing scroll speed
 

@@ -21,7 +21,7 @@ export default {
     framesToFocus: 10,
 
     // Number of pixels the middle and thumb tips must be near each other to drag
-    threshold: 40,
+    threshold: 60,
 
     // Number of frames where a hold is not registered before releasing a drag
     numThresholdErrorFrames: 5,
