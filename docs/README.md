@@ -53,19 +53,19 @@ Handsfree.js comes bundled with three computer vision models which can be combin
         <li>11 face morphs for eyes and mouth</li>
         <li>~1.4Mb filesize</li>
       </ul>
-      <div><strong>Featured Plugin:</strong> <a href="/examples/face-pointer">Face Pointer</a></div>
+      <div><strong>Featured Example:</strong> <a href="/examples/face-pointer">Face Pointer Sandbox</a></div>
     </td>
   </tr>
   <tr>
-    <td style="width: 50%"><a href="/examples/finger-pointer"><img src="https://media2.giphy.com/media/2vcbWI2ZAPeGvJVpII/giphy.gif"></a></td>
+    <td style="width: 50%"><a href="/examples/hand-gestures"><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></a></td>
     <td>
       <div><strong><a href="/docs/hand">Hand Tracking</a> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">Handpose</a>)</strong></div>
       <ul>
         <li>Detect 3D position of palm and fingers</li>
-        <li>Get vectors for where fingers are pointed</li>
+        <li>Get vectors for where palm/fingers are pointed</li>
         <li>~2.9Mb filesize</li>
       </ul>
-      <div><strong>Featured Plugin:</strong> <a href="/examples/finger-pointer">Finger Pointer</a></div>
+      <div><strong>Featured Example:</strong> <a href="/examples/hand-gestures">Hand Pointer Sandbox</a></div>
     </td>
   </tr>
   <tr>
@@ -87,8 +87,8 @@ Handsfree.js comes bundled with three computer vision models which can be combin
 ### Through CDN
 ```html
 <!-- Include Handsfree.js -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.11/build/lib/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.2.11/build/lib/handsfree.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.12/build/lib/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.2.12/build/lib/handsfree.js"></script>
 
 <!-- Instantiate and start it -->
 <script>

@@ -1,5 +1,9 @@
 # Hand Gesture Playground
 
+::: warning ⚠ Experimental
+This page is still experimental, may be buggy, and might not work on Firefox yet.
+:::
+
 <table>
   <tr>
     <td class="col-6">
