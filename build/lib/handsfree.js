@@ -3519,6 +3519,11 @@
         meshes: []
       };
 
+      // landmark indices that represent the palm
+      // 8 = Index finger tip
+      // 12 = Middle finger tip
+      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
+
       this.fingerLookupIndices = {
         thumb: [0, 1, 2, 3, 4],
         indexFinger: [0, 5, 6, 7, 8],
@@ -3596,7 +3601,26 @@
         obj.add(mesh);
         this.three.scene.add(obj);
         this.three.meshes.push(obj);
+
+        // uncomment this to help identify joints
+        // if (i === 4) {
+        //   mesh.material.transparent = true
+        //   mesh.material.opacity = 0
+        // }
       }
+
+      // Create center of palm
+      const obj = new window.THREE.Object3D();
+      const geometry = new window.THREE.CylinderGeometry(5, 5, 1);
+      let material = new window.THREE.MeshNormalMaterial();
+    
+      const mesh = new window.THREE.Mesh(geometry, material);
+      mesh.rotation.x = Math.PI / 2;
+    
+      this.three.centerPalmObj = obj;
+      obj.add(mesh);
+      this.three.scene.add(obj);
+      this.three.meshes.push(obj);    
     }
 
     // compute some metadata given a landmark index
@@ -3625,7 +3649,7 @@
      * @param {*} hand 
      */
     updateMeshes (hand) {
-      for (let i = 0; i < this.three.meshes.length; i++) {
+      for (let i = 0; i < this.three.meshes.length - 1 /* palmbase */; i++) {
         const {next} = this.getLandmarkProperty(i);
     
         const p0 = this.webcam2space(...hand.landmarks[i]);  // one end of the bone
@@ -3643,12 +3667,44 @@
 
         if (i === 8) {
           this.three.arrow.position.set(mid.x, mid.y, mid.z);
-          const direction = new window.THREE.Vector3().sub(p0, mid);
+          const direction = new window.THREE.Vector3().subVectors(p0, mid);
           this.three.arrow.setDirection(direction.normalize());
           this.three.arrow.setLength(800);
           this.three.arrow.direction = direction;
         }
       }
+
+      this.updateCenterPalmMesh(hand);
+    }
+
+    /**
+     * Update the palm
+     */
+    updateCenterPalmMesh (hand) {
+      let points = [];
+      let mid = {
+        x: 0,
+        y: 0,
+        z: 0
+      };
+
+      // Get position for the palm
+      this.palmPoints.forEach((i, n) => {
+        points.push(this.webcam2space(...hand.landmarks[i]));
+        mid.x += points[n].x;
+        mid.y += points[n].y;
+        mid.z += points[n].z;
+      });
+
+      mid.x = mid.x / this.palmPoints.length;
+      mid.y = mid.y / this.palmPoints.length;
+      mid.z = mid.z / this.palmPoints.length;
+      
+      this.three.centerPalmObj.position.set(mid.x, mid.y, mid.z);
+      this.three.centerPalmObj.scale.z = 10;
+      this.three.centerPalmObj.rotation.x = this.three.meshes[12].rotation.x - Math.PI / 2;
+      this.three.centerPalmObj.rotation.y = -this.three.meshes[12].rotation.y;
+      this.three.centerPalmObj.rotation.z = this.three.meshes[12].rotation.z;
     }
     
     // transform webcam coordinates to threejs 3d coordinates
@@ -3665,6 +3721,7 @@
      */
     async getData () {
       if (!this.handsfree.feedback.$video) return
+
       const predictions = await this.api.estimateHands(this.handsfree.feedback.$video);
 
       this.data = {
@@ -3672,6 +3729,11 @@
         meshes: this.three.meshes
       };
 
+      if (predictions[0]) {
+        this.handsfree.handpose.updateMeshes(this.data);
+      }
+      
+      this.handsfree.handpose.three.renderer.render(this.handsfree.handpose.three.scene, this.handsfree.handpose.three.camera);
       return this.data
     }
   }
@@ -8883,7 +8945,7 @@
   //export * from "./MotionPathHelper.js";
   //export * from "./SplitText.js";
 
-  var pluginFacePointer = {
+  var _facePointer = {
     // The pointer element
     $pointer: null,
 
@@ -8988,7 +9050,7 @@
   /**
    * Click on things with a gesture
    */
-  var pluginFaceClick = {
+  var _faceClick = {
     config: {
       // How often in milliseconds to trigger clicks
       throttle: 50,
@@ -9036,13 +9098,14 @@
       // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
       if (!weboji.pointer.x && !weboji.pointer.y) return
 
+      // Detect if the threshold for clicking is met with specific morphs
       this.thresholdMet = false;
-
       Object.keys(this.config.morphs).forEach((key) => {
         const morph = +this.config.morphs[key];
         if (morph > 0 && weboji.morphs[key] >= morph) this.thresholdMet = true;
       });
 
+      // Click/release and add body classes
       if (this.thresholdMet) {
         this.mouseDowned++;
         document.body.classList.add('handsfree-clicked');
@@ -9102,7 +9165,7 @@
   /**
    * Hides the pointer after numFramesToGhost frames
    */
-  var pluginFaceGhostedPointer = {
+  var _faceGhostedPointer = {
     // Disable by default
     enabled: false,
     // Number of frames held still
@@ -9161,7 +9224,7 @@
   /**
    * Scrolls the page vertically
    */
-  var pluginFaceScroll = {
+  var _faceScroll = {
     // Number of frames the current element is the same as the last
     numFramesFocused: 0,
     // The last scrollable target focused
@@ -9360,7 +9423,9 @@
     }
   };
 
-  var pluginFingerPointer = {
+  var _fingerPointer = {
+    enabled: false,
+    
     // The pointer element
     $pointer: null,
 
@@ -9448,14 +9513,336 @@
     }
   };
 
+  /**
+   * Move a pointer with your palm
+   */
+
+  var _palmPointer = {
+    // The pointer element
+    $pointer: null,
+
+    // Pointers position
+    pointer: { x: 0, y: 0 },
+
+    // Used to smoothen out the pointer
+    tween: {
+      x: 0,
+      y: 0,
+      positionList: []
+    },
+
+    config: {
+      offset: {
+        x: 0,
+        y: -0.75
+      },
+
+      speed: {
+        x: 1.5,
+        y: 1.5
+      }
+    },
+
+    /**
+     * Create a pointer for each user
+     */
+    onUse() {
+      if (!this.$pointer) {
+        const $pointer = document.createElement('div');
+        $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-handpose');
+        document.body.appendChild($pointer);
+        this.$pointer = $pointer;
+      }
+
+      this.pointer = { x: 0, y: 0 };
+    },
+
+    onEnable() {
+      this.onUse();
+    },
+
+    onFrame({ hand }) {
+      if (!hand || !hand.annotations) return
+
+      TweenMaxWithCSS.to(this.tween, 1, {
+        x: this.handsfree.normalize(hand.annotations.palmBase[0][0], this.handsfree.feedback.$video.width * .85) * (window.outerWidth * this.config.speed.x) + this.config.offset.x,
+        y: this.handsfree.normalize(this.handsfree.feedback.$video.height * .85 - hand.annotations.palmBase[0][1], this.handsfree.feedback.$video.height * .85) * (window.outerHeight * this.config.speed.y) + (window.outerHeight * this.config.offset.y),
+        overwrite: true,
+        ease: 'linear.easeNone',
+        immediate: true
+      });
+
+      this.$pointer.style.left = `${this.tween.x}px`;
+      this.$pointer.style.top = `${this.tween.y}px`;
+      
+      hand.pointer = {
+        x: this.tween.x,
+        y: this.tween.y
+      };
+    },
+
+    /**
+     * Toggle pointer
+     */
+    onDisable() {
+      this.$pointer.classList.add('handsfree-hidden');
+    },
+
+    onEnable() {
+      this.$pointer.classList.remove('handsfree-hidden');
+    }
+  };
+
+  /**
+   * Click on things with a pinch gesture
+   */
+  var _pinchClick = {
+    config: {
+      // How often in milliseconds to trigger clicks
+      throttle: 50,
+
+      // Max number of frames to keep down
+      maxMouseDownedFrames: 1,
+
+      // Number of pixels that the finger/thumb tips must be within to trigger a click
+      pinchDistance: 40
+    },
+
+    // Number of frames mouse has been downed
+    mouseDowned: 0,
+    // Is the mouse up?
+    mouseUp: false,
+    // Whether one of the morph confidences have been met
+    thresholdMet: false,
+
+    onUse() {
+      this.throttle(this.config.throttle);
+    },
+
+    /**
+     * Maps .maybeClick to a new throttled function
+     */
+    throttle(throttle) {
+      this.maybeClick = this.handsfree.throttle(
+        function(hand) {
+          this.click(hand);
+        },
+        throttle,
+        { trailing: false }
+      );
+    },
+
+    /**
+     * Detect click state and trigger a real click event
+     */
+    onFrame({ hand }) {
+      if (!hand || !hand.annotations) return
+
+      // Detect if the threshold for clicking is met with specific morphs
+      const a = hand.annotations.indexFinger[3][0] - hand.annotations.thumb[3][0];
+      const b = hand.annotations.indexFinger[3][1] - hand.annotations.thumb[3][1];
+      const c = Math.sqrt(a*a + b*b);
+      this.thresholdMet = c < this.config.pinchDistance;
+
+      // Click/release and add body classes
+      if (this.thresholdMet) {
+        this.mouseDowned++;
+        document.body.classList.add('handsfree-clicked');
+      } else {
+        this.mouseUp = this.mouseDowned;
+        this.mouseDowned = 0;
+        document.body.classList.remove('handsfree-clicked');
+      }
+
+      // Set the state
+      if (this.mouseDowned > 0 && this.mouseDowned <= this.config.maxMouseDownedFrames)
+        hand.pointer.state = 'mouseDown';
+      else if (this.mouseDowned > this.config.maxMouseDownedFrames)
+        hand.pointer.state = 'mouseDrag';
+      else if (this.mouseUp) hand.pointer.state = 'mouseUp';
+      else ;
+
+      // Actually click something (or focus it)
+      if (hand.pointer.state === 'mouseDown') {
+        this.maybeClick(hand);
+      }
+    },
+
+    /**
+     * The actual click method, this is what gets throttled
+     */
+    click(hand) {
+      const $el = document.elementFromPoint(hand.pointer.x, hand.pointer.y);
+      if ($el) {
+        $el.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            clientX: hand.pointer.x,
+            clientY: hand.pointer.y
+          })
+        );
+
+        // Focus
+        if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+          $el.focus();
+
+        hand.pointer.$target = $el;
+      }
+    },
+
+    /**
+     * Throttles the click event
+     * - Defined in onuse
+     */
+    maybeClick: function() {}
+  };
+
+  /**
+   * Scrolls the page vertically by closing hand
+   */
+  var _handScroll = {
+    // Number of frames the current element is the same as the last
+    numFramesFocused: 0,
+    // The current scrollable target
+    $target: null,
+
+    // The original grab point
+    origScrollTop: {
+      x: 0,
+      y: 0
+    },
+
+    // Number of frames that has passed since the last grab
+    framesSinceLastGrab: 0,
+
+    config: {
+      // Number of frames over the same element before activating that element
+      framesToFocus: 10,
+
+      // Number of pixels the middle and thumb tips must be near each other to drag
+      threshold: 60,
+
+      // Number of frames where a hold is not registered before releasing a drag
+      numThresholdErrorFrames: 5,
+
+      vertScroll: {
+        // The multiplier to scroll by. Lower numbers are slower
+        scrollSpeed: 0.15,
+        // How many pixels from the the edge to scroll
+        scrollZone: 100
+      }
+    },
+
+    onUse () {
+      this.$target = window;
+    },
+
+    /**
+     * Scroll the page when the cursor goes above/below the threshold
+     */
+    onFrame({hand}) {
+      if (!hand || !hand.annotations) return
+
+      // Detect if the threshold for clicking is met with specific morphs
+      const a = hand.annotations.middleFinger[3][0] - hand.annotations.thumb[3][0];
+      const b = hand.annotations.middleFinger[3][1] - hand.annotations.thumb[3][1];
+      const c = Math.sqrt(a*a + b*b);
+      this.thresholdMet = c < this.config.threshold;
+
+      // Set the original grab point
+      if (this.thresholdMet) {
+        if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
+          this.checkForFocus(hand);
+          this.origScrollTop = this.getTargetScrollTop() + hand.pointer.y;
+        }
+        this.framesSinceLastGrab = 0;
+      }
+      ++this.framesSinceLastGrab;
+      
+      // Scroll
+      if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
+        this.$target.scrollTo(0, this.origScrollTop - hand.pointer.y);
+      }
+    },
+
+    /**
+     * Gets the scrolltop, taking account the window object
+     */
+    getTargetScrollTop () {
+      return this.$target.scrollY || this.$target.scrollTop || 0
+    },
+
+    /**
+     * Checks to see if we've hovered over an element for x turns
+     */
+    checkForFocus (hand) {
+      let $potTarget = document.elementFromPoint(
+        hand.pointer.x,
+        hand.pointer.y
+      );
+      if (!$potTarget) return
+
+      $potTarget = this.recursivelyFindScrollbar($potTarget);
+      this.selectTarget($potTarget);
+    },
+
+    /**
+     * Select and style the element
+     */
+    selectTarget ($potTarget) {
+      // Check required in case the window is the target
+      if (this.$target.classList) {
+        this.$target.classList.remove('handsfree-scroll-focus');
+      }
+      if ($potTarget && $potTarget.classList) {
+        $potTarget.classList.add('handsfree-scroll-focus');
+      }
+
+      if ($potTarget.nodeName === 'HTML' || !$potTarget.nodeName) {
+        $potTarget = window;
+      }
+
+      this.$target = $potTarget;
+    },
+
+    /**
+     * Traverses up the DOM until a scrollbar is found, or until we hit the body/window
+     */
+    recursivelyFindScrollbar($target) {
+      const styles =
+        $target && $target.getBoundingClientRect ? getComputedStyle($target) : {};
+
+      if (
+        $target &&
+        $target.scrollHeight > $target.clientHeight &&
+        (styles.overflow === 'auto' ||
+          styles.overflow === 'auto scroll' ||
+          styles.overflowY === 'auto' ||
+          styles.overflowY === 'auto scroll')
+      ) {
+        return $target
+      } else {
+        if ($target && $target.parentElement) {
+          return this.recursivelyFindScrollbar($target.parentElement)
+        } else {
+          return window
+        }
+      }
+    }
+  };
+
   // import './assets/handsfree.scss'
 
   const defaultPlugins = {
-    facePointer: pluginFacePointer,
-    faceClick: pluginFaceClick,
-    faceGhostedPointer: pluginFaceGhostedPointer,
-    faceScroll: pluginFaceScroll,
-    fingerPointer: pluginFingerPointer
+    facePointer: _facePointer,
+    faceClick: _faceClick,
+    faceGhostedPointer: _faceGhostedPointer,
+    faceScroll: _faceScroll,
+    fingerPointer: _fingerPointer,
+    palmPointer: _palmPointer,
+    pinchClick: _pinchClick,
+    handScroll: _handScroll
   };
 
   let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : '';
@@ -9726,7 +10113,7 @@
             case 'face':
             case 'weboji':
               if (!this.weboji) {
-                this.weboji = new WebojiModel(
+                this.face = this.weboji = new WebojiModel(
                   {
                     name: 'weboji',
                     ...this.config.weboji,
@@ -9745,7 +10132,7 @@
             case 'pose':
             case 'posenet':
               if (!this.posenet) {
-                this.posenet = new PoseNet(
+                this.pose = this.posenet = new PoseNet(
                   {
                     name: 'posenet',
                     ...this.config.posenet,
@@ -9764,7 +10151,7 @@
             case 'hand':
             case 'handpose':
               if (!this.handpose) {
-                this.handpose = new Handpose({
+                this.hand = this.handpose = new Handpose({
                   name: 'handpose',
                   ...this.config.handpose,
                   deps: this.config.assetsPath + '/handpose-bundle.js'
