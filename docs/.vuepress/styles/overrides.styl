@@ -3,9 +3,34 @@ html
   .navbar .links
     background $panelBg
 
+  // Buttons
   button
     color $color
     padding 1em
 
     &:hover, &:active
       background inherit
+
+  // Code areas
+  div[class*="language-"],
+  .theme-default-content pre, .theme-default-content pre[class*="language-"]
+    border-radius 0
+
+  .theme-default-content code
+    color $color
+    background-color darken($panelBg, 10%)
+
+  // Message blocks
+  .custom-block.warning
+    background-color rgba(255,229,100,0.7)
+
+  // Blockquotes
+  blockquote
+    background #dfdfdf
+    padding-top 2em
+    padding-bottom 2em
+
+  // Tables
+  tr:nth-child(2n)
+    background darken($panelBg, 8%)
+    
