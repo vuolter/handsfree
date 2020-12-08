@@ -1,40 +1,20 @@
-<template>
-  <header class="navbar">
-    <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
+<template lang="pug">
+div.navbar-wrap
+  .titlebar
+    span(v-if='$siteTitle' ref='siteName' class='site-name' :class='{"can-hide": $site.themeConfig.logo}') {{ $siteTitle }}
+    
+  header.navbar
+    SidebarButton(@toggle-sidebar='$emit("toggle-sidebar")')
 
-    <RouterLink
-      :to="$localePath"
-      class="home-link"
-    >
-      <img
-        v-if="$site.themeConfig.logo"
-        class="logo"
-        :src="$withBase($site.themeConfig.logo)"
-        :alt="$siteTitle"
-      >
-      <span
-        v-if="$siteTitle"
-        ref="siteName"
-        class="site-name"
-        :class="{ 'can-hide': $site.themeConfig.logo }"
-      >{{ $siteTitle }}</span>
-    </RouterLink>
+    RouterLink.home-link(:to='$localePath')
+      img.logo(v-if='$site.themeConfig.logo' :src='$withBase($site.themeConfig.logo)' :alt='$siteTitle')
+      span(v-if='$siteTitle' ref='siteName' class='site-name' :class='{"can-hide": $site.themeConfig.logo}') {{ $siteTitle }}
 
-    <div
-      class="links"
-      :style="linksWrapMaxWidth ? {
-        'max-width': linksWrapMaxWidth + 'px'
-      } : {}"
-    >
-      <AlgoliaSearchBox
-        v-if="isAlgoliaSearch"
-        :options="algolia"
-      />
-      <SearchBox v-else-if="$site.themeConfig.search !== false && $page.frontmatter.search !== false" />
-      <NavLinks class="can-hide" />
-      <HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
-    </div>
-  </header>
+    div.links(:style='linksWrapMaxWidth ? {"max-width": linksWrapMaxWidth + "px"} : {}')
+      AlgoliaSearchBox(v-if='isAlgoliaSearch' :options='algolia')
+      SearchBox(v-else-if='$site.themeConfig.search !== false && $page.frontmatter.search !== false')
+      NavLinks.can-hide
+      HandsfreeToggle(text-off='Activate Face Pointer' text-on='Stop Handsfree')
 </template>
 
 <script>
@@ -46,6 +26,7 @@ import HandsfreeToggle from '@components/HandsfreeToggle'
 
 export default {
   name: 'Navbar',
+  
   components: {
     SidebarButton,
     NavLinks,
@@ -53,11 +34,13 @@ export default {
     AlgoliaSearchBox,
     HandsfreeToggle
   },
+
   data () {
     return {
       linksWrapMaxWidth: null
     }
   },
+  
   computed: {
     algolia () {
       return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}
@@ -66,6 +49,7 @@ export default {
       return this.algolia && this.algolia.apiKey && this.algolia.indexName
     }
   },
+  
   mounted () {
     const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
     const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
@@ -81,6 +65,7 @@ export default {
     window.addEventListener('resize', handleLinksWrapWidth, false)
   }
 }
+
 function css (el, property) {
   // NOTE: Known bug, will return 'auto' if style value is 'auto'
   const win = el.ownerDocument.defaultView
@@ -92,6 +77,7 @@ function css (el, property) {
 <style lang="stylus">
 $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
+
 .navbar
   padding $navbar-vertical-padding $navbar-horizontal-padding
   line-height $navbarHeight - 1.4rem
