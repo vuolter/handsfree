@@ -10,10 +10,6 @@ html
       width 100%
       overflow auto
   
-  .navbar, .sidebar,
-  .navbar .links
-    background $panelBg
-
   a.sidebar-link.active
     border-left-color transparent
 
@@ -40,6 +36,13 @@ html
 
   .sidebar > .sidebar-links > li:not(:first-child)
     margin-top 0
+
+  // Navbar
+  .navbar, .sidebar,
+  .navbar .links
+    background $panelBg
+  .navbar .site-name
+    color $link
 
   // Buttons
   button
