@@ -7,6 +7,33 @@ html
   .navbar .links
     background $panelBg
 
+  a.sidebar-link.active
+    border-left-color transparent
+
+  a.sidebar-link.active + ul .sidebar-link.active
+    background none
+    color $color
+    font-weight 700
+    outline: -webkit-focus-ring-color auto 1px
+    outline-color: $link
+    outline-style: dotted
+    outline-width: 1px
+
+  .sidebar > .sidebar-links > li > a.sidebar-link,
+  .sidebar-heading
+    font-weight normal
+    font-size 1em
+    
+  .sidebar-links.sidebar-group-items
+    overflow visible
+
+  a.sidebar-link,
+  .sidebar-heading
+    padding-left .5em
+
+  .sidebar > .sidebar-links > li:not(:first-child)
+    margin-top 0
+
   // Buttons
   button
     color $color

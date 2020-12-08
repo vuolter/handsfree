@@ -452,6 +452,7 @@ html
     &:focus
       outline 1px dotted var(--link-blue)
 
+  // Sidebar
   .sidebar > ul
     &.tree-view,
     &.sidebar-links
@@ -465,7 +466,7 @@ html
       a
         text-decoration none
         color #000
-        &:focus
+        &.active
           background-color var(--dialog-blue)
           color var(--button-highlight)
       ul
@@ -479,7 +480,7 @@ html
             display block
             position absolute
             left -16px
-            top 6px
+            top 14px
             width 12px
             border-bottom 1px dotted #808080
           &:last-child
@@ -488,7 +489,7 @@ html
               display block
               position absolute
               left -20px
-              top 7px
+              top 16px
               bottom 0px
               width 8px
               background var(--button-highlight)
