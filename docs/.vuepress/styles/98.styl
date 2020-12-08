@@ -63,6 +63,7 @@ html
   select,
   option,
   ul.tree-view,
+  .sidebar > ul.sidebar-links,
   .window,
   .title-bar
     -webkit-font-smoothing none
@@ -451,8 +452,9 @@ html
     &:focus
       outline 1px dotted var(--link-blue)
 
-  ul
-    &.tree-view
+  .sidebar > ul
+    &.tree-view,
+    &.sidebar-links
       display block
       background var(--button-highlight)
       box-shadow var(--border-field)
@@ -518,8 +520,8 @@ html
           &:before
             content "-"
 
-  ul.tree-view ul,
-  ul.tree-view li
+  ul.tree-view ul, .sidebar > ul.sidebar-links ul,
+  ul.tree-view li, .sidebar > ul.sidebar-links li
     margin-top 3px
 
   pre
