@@ -52,23 +52,8 @@
     inset 1px 1px var(--button-shadow), inset -2px -2px var(--button-face),
     inset 2px 2px var(--window-frame)
 
-@font-face
-  font-family "Pixelated MS Sans Serif"
-  src url("/fonts/converted/ms_sans_serif.woff") format("woff")
-  src url("/fonts/converted/ms_sans_serif.woff2") format("woff2")
-  font-weight normal
-  font-style normal
-
-@font-face
-  font-family "Pixelated MS Sans Serif"
-  src url("/fonts/converted/ms_sans_serif_bold.woff") format("woff")
-  src url("/fonts/converted/ms_sans_serif_bold.woff2") format("woff2")
-  font-weight bold
-  font-style normal
-
 html
   body
-    font-family Arial
     color $color
 
   button,
@@ -80,7 +65,6 @@ html
   ul.tree-view,
   .window,
   .title-bar
-    font-family "Pixelated MS Sans Serif", Arial
     -webkit-font-smoothing none
 
   u
@@ -544,10 +528,6 @@ html
     box-shadow var(--border-field)
     padding 12px 8px
     margin 0
-
-  code,
-  code *
-    font-family monospace
 
   summary
     &:focus
