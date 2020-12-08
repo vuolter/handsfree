@@ -49,13 +49,13 @@ Try clicking on these different elements with a pinch gesture:
   </thead>
   <tbody>
     <tr>
-      <td>
+      <td class="normal-fields">
         <input type="radio" name="radios" class="large">
         <input type="radio" name="radios" class="large">
         <input type="radio" name="radios" class="large">
         <input type="radio" name="radios" class="large">
       </td>
-      <td>
+      <td class="normal-fields">
         <input type="checkbox" class="large">
         <input type="checkbox" class="large">
         <input type="checkbox" class="large">

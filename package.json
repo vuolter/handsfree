@@ -5,13 +5,11 @@
   "main": "src/handsfree.js",
   "scripts": {
     "start": "vuepress dev docs",
-    
     "build": "rm -rf build/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
     "build:lib": "rm -rf build/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config",
     "build:docs": "vuepress build docs",
     "build:serve": "npm run build:docs && npx http-server build/docs",
     "fa:build": "node node_modules/vuepress-plugin-font-awesome/index.js --dest=docs",
-
     "serve:cdn": "http-server public/cdn.html"
   },
   "repository": {
@@ -28,6 +26,8 @@
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "clippyjs": "0.0.3",
+    "pug": "^3.0.0",
+    "pug-plain-loader": "^1.0.0",
     "rollup": "^2.32.0",
     "rollup-plugin-copy": "^3.3.0",
     "vuepress": "^1.7.1",

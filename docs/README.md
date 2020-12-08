@@ -3,7 +3,7 @@
 <p class="verticle-middle-children space-children">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
-  <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"></a>
+  <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg"></a>
 </p>
 
