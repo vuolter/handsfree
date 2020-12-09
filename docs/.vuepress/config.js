@@ -72,14 +72,13 @@ module.exports = {
         ]
       },
       {
-        title: '🎮 Examples',
+        title: '🎮 Playgrounds',
         collapsable: true,
         sidebarDepth: 1,
-        path: '/examples/',
+        path: '/playgrounds/',
         children: [
-          ['/examples/', 'Examples'],
-          ['/examples/face-pointer', '😀 Face Pointer Playground'],
-          ['/examples/hand-gestures', '🖐 Hand Gesture Playground']
+          ['/playgrounds/face', '😀 Face Pointer Playground'],
+          ['/playgrounds/hand', '🖐 Hand Gesture Playground']
         ]
       },
       ['https://midiblocks.com', '💻 Gesture mapper']
