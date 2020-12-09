@@ -1,5 +1,7 @@
 # Pose Estimation
 > **Model used:** [Google's PoseNet](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
+>
+> **License:** [MIT](https://github.com/ml5js/ml5-library/blob/main/LICENSE)
 
 ::: danger 🚨 Please note
 The PoseNet integration will be overhauled soon. It's not recommended to use it in production in it's current state

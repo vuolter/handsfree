@@ -1,5 +1,7 @@
 # Face Tracking
 > **Model used:** [Jeeliz's Weboji](https://github.com/jeeliz/jeelizWeboji)
+>
+> **License:** [Apache 2.0](https://github.com/jeeliz/jeelizWeboji/blob/master/LICENSE)
 
 ![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
 
