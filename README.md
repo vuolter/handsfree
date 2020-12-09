@@ -1,8 +1,8 @@
-> # 📅 I'm working on [new documentation](https://handsfree.js.org) which should be ready by December 1st 2020
+> # 📅 I'm working on [new documentation](https://handsfree.js.org) which should be ready by December 10th 2020
 
 <div align="center">
   <p><img src="https://media2.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" alt="handsfree.js"></p>
-  <p><img src="https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif" alt="handsfree.js"></p>
+  <p><img src="https://media1.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif" alt="handsfree.js"></p>
   <br>
   <h1>Handsfree.js</h1>
   <p>Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap 👌✨</p>
@@ -41,19 +41,19 @@ For more code examples, check out the `/demo/` folder or try them out on Glitch:
 <!-- Require dependencies, which adds Handsfree to global namespace -->
 <link
   rel="stylesheet"
-  href="https://unpkg.com/handsfree@7.2.12/build/lib/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.2.12/build/lib/handsfree.js"></script>
+  href="https://unpkg.com/handsfree@7.2.13/build/lib/assets/handsfree.css" />
+<script src="https://unpkg.com/handsfree@7.2.13/build/lib/handsfree.js"></script>
 
 <!-- Instantiate Handsfree.js -->
 <script>
   // Create a new instance. Use one instance for each camera
-  const handsfree = new Handsfree({ weboji: true })
+  const handsfree = new Handsfree({ face: true })
 
   // Create a plugin that logs head rotation
-  handsfree.use('consoleLogger', ({ weboji }) => {
-    if (weboji.pointer.state === 'mousedown') {
-      console.log(`Clicked at: (${weboji.pointer.x}, ${weboji.pointer.y})`)
-      console.log('Clicked on:', weboji.pointer.$target)
+  handsfree.use('consoleLogger', ({ face }) => {
+    if (face.pointer.state === 'mousedown') {
+      console.log(`Clicked at: (${face.pointer.x}, ${face.pointer.y})`)
+      console.log('Clicked on:', face.pointer.$target)
     }
   })
 </script>
@@ -75,7 +75,7 @@ I switched over from Parcel to Rollup for package management and am still new to
 ```js
 import Handsfree from 'handsfree'
 const handsfree = new Handsfree({
-  weboji: true,
+  face: true,
   assetsPath: '/public/assets/'
 })
 ```
@@ -94,7 +94,7 @@ Once you've included Handsfree.js into your project you'll have a global `Handsf
 
 ```js
 // Instantiate with the weboji face tracker with defaults
-let handsfree = new Handsfree({weboji: true})
+let handsfree = new Handsfree({face: true})
 
 // ...or...
 
@@ -119,7 +119,7 @@ handsfree = new Handsfree({
   /**
    * Face tracker
    */
-  weboji: {
+  face: {
     // All models are disabled by default!
     enabled: false,
     
@@ -166,7 +166,7 @@ handsfree = new Handsfree({
 Once you've instantiated `Handsfree` you can start and stop it with:
 
 ```js
-handsfree = new Handsfree({weboji: true})
+handsfree = new Handsfree({face: true})
 handsfree.start()
 
 // Currently this just reloads the page
@@ -175,12 +175,12 @@ handsfree.stop()
 
 ## Adding Functionality
 
-By default, the `weboji` face tracker comes bundled with a set of plugins. Plugins add functionality that can be toggled on/off, which is useful when working on complex applications that require different gestures for different views. Plugins can also be overwritten.
+By default, the `face` tracker comes bundled with a set of plugins. Plugins add functionality that can be toggled on/off, which is useful when working on complex applications that require different gestures for different views. Plugins can also be overwritten.
 
 Plugins are added with the `handsfree.use('myPlugin', opts)`:
 
 ```js
-handsfree = new Handsfree({weboji: true})
+handsfree = new Handsfree({face: true})
 
 handsfree.use('myPlugin', {
   // All plugins are true by default
@@ -210,28 +210,28 @@ You can also pass a function as the second argument, which is assigned to the `.
 ```js
 // This...
 handsfree.use('myPlugin', data => {
-  console.log(data.weboji.data.morphs)
+  console.log(data.face.data.morphs)
 })
 
 // ...is similar to this
 handsfree.use('myPlugin', {
   onFrame: data => {
-    console.log(data.weboji.data.morphs)
+    console.log(data.face.data.morphs)
   }
 })
 ```
 
-The `onFrame` method, which is called on every webcam frame, receives a `data` object containing data for each active model...`data.weboji` for Face Tracking and `data.posenet` for Pose Estimation. If you're only using one model, then it's usually easier to destructure:
+The `onFrame` method, which is called on every webcam frame, receives a `data` object containing data for each active model...`data.face` for Face Tracking and `data.posenet` for Pose Estimation. If you're only using one model, then it's usually easier to destructure:
 
 ```js
 // This
-handsfree.use('myPlugin', {weboji} => {
-  console.log(weboji.data)
+handsfree.use('myPlugin', {face} => {
+  console.log(face.data)
 })
 
 // Instead of this
 handsfree.use('myPlugin', data => {
-  console.log(data.weboji.data)
+  console.log(data.face.data)
 })
 ```
 
@@ -274,7 +274,7 @@ You can also just delete the plugin with `delete handsfree.plugin['pluginName']`
 
 ![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
 
-Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji.data` when inside `onFrame`.
+Each of the following can be accessed either through `handsfree.face.data` outside of a plugin, or through `data.face.data` when inside `onFrame`.
 
 ### Properties
 
@@ -294,26 +294,26 @@ Each of the following can be accessed either through `handsfree.weboji.data` out
  * 9: eyeLeftClose → close left eye
  * 10: mouthNasty → nasty mouth (show teeth)
  */
-handsfree.weboji.data.morphs
+handsfree.face.data.morphs
 
 /**
  * {Array} Head rotation [pitch, yaw, roll]
  * - in radians where [0, 0, 0] is the head pointed directly at camera
  */
-handsfree.weboji.data.rotation
+handsfree.face.data.rotation
 
 /**
  * {Array} Head translation [x, y, s]
  * - These are each between 0 and 1
  * - Scale refers to the size of the head in relation to the webcam frame
  */
-handsfree.weboji.data.translation
+handsfree.face.data.translation
 
 /**
  * {Object} Where on the screen the head is pointed at {x, y}
  * - This is updated by: handsfree.plugin.facePointer
  */
-handsfree.weboji.data.pointer
+handsfree.face.data.pointer
 
 /**
  * {Object} Helper booleans checking if the morph has reached a threshold
@@ -339,16 +339,16 @@ handsfree.weboji.data.pointer
  * .mouthClosed
  * .mouthOpen
  */
-handsfree.weboji.data.state
+handsfree.face.data.state
 ```
 
 ### Methods
 
-Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.weboji.api`:
+Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.face.api`:
 
 ```js
 // Check if the head is detected or not
-handsfree.weboji.api.is_detected()
+handsfree.face.api.is_detected()
 ```
 
 ## PoseNet - Pose Estimation
