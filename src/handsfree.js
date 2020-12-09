@@ -42,6 +42,10 @@ const configDefaults = {
   weboji: {
     enabled: false,
     throttle: 0,
+    
+    // Custom video settings
+    videoSettings: null,
+    
     // Represents the calibrator settings
     calibrator: {
       // (optional) The target element to act as the calibrator wrapping div

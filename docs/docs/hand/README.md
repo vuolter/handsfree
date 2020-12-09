@@ -1,5 +1,7 @@
 # Hand Tracking
 > **Model used:** [Google's Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose)
+>
+> **License:** [Apache 2.0](https://github.com/tensorflow/tfjs-models/blob/master/LICENSE)
 
 ![](https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif)
 

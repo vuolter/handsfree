@@ -1,5 +1,6 @@
 import BaseModel from './index.js'
 import Calibrator from '../Calibrator/index.js'
+import { merge } from 'lodash'
 
 /**
  * @see https://github.com/jeeliz/jeelizWeboji
@@ -109,6 +110,12 @@ export default class WebojiModel extends BaseModel {
         this.apiHelper.size_canvas({
           canvasId: `handsfree-canvas-${this.handsfree.id}`,
           callback: (videoSettings) => {
+            if (typeof videoSettings === 'object') {
+              videoSettings = merge(videoSettings, this.handsfree.config.weboji.videoSettings)
+            } else {
+              videoSettings = this.handsfree.config.weboji.videoSettings
+            }
+            
             this.api.init({
               canvasId: `handsfree-canvas-${this.handsfree.id}`,
               NNC: JSON.stringify(model),
