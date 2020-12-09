@@ -33,8 +33,8 @@ handsfree.start()
 
 <blockquote class="verticle-middle-children space-children text-center">
   <strong>Powered by:</strong>
-  <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
-  <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a> <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a>
+  <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="/branding/jeeliz.png"></a>
+  <a href="https://github.com/tensorflow/tfjs-models/"><img src='/branding/tensorflow.png' height=30></a> <a href="https://ml5js.org/"><img src="/branding/ml5.png" height=30></a>
 </blockquote>
 
 ## Available Models

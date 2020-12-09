@@ -50,12 +50,20 @@ module.exports = {
   
   themeConfig: {
     logo: '/branding/handsfree.png',
+    displayAllHeaders: true,
+    lastUpdated: 'Last Updated',
+
+    repo: 'midiblocks/handsfree',
+    docsDir: 'docs',
+    editLinks: true,
+    
     sidebar: [
       ['/', '🏠 Home'],
       {
         title: '📚 Documentation',
-        collapsable: true,
+        collapsable: false,
         sidebarDepth: 1,
+        path: '/docs/',
         children: [
           ['/docs/', 'Getting Started'],
           ['/docs/face/', '😀 Face Tracking'],
@@ -65,8 +73,9 @@ module.exports = {
       },
       {
         title: '🎮 Examples',
-        collapsable: true,
+        collapsable: false,
         sidebarDepth: 1,
+        path: '/examples/',
         children: [
           ['/examples/', 'Examples'],
           ['/examples/face-pointer', '😀 Face Pointer Playground'],

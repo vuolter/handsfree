@@ -1,5 +1,7 @@
 html
-  .site-name.can-hide
+  // Hide things
+  .site-name.can-hide,
+  .nav-links.can-hide
     display none
 
   // Sidebar
@@ -13,7 +15,8 @@ html
       width 100%
       overflow auto
   
-  a.sidebar-link.active
+  a.sidebar-link.active,
+  .sidebar-heading.clickable.active
     border-left-color transparent
 
   a.sidebar-link.active + ul .sidebar-link.active
@@ -24,6 +27,13 @@ html
     outline-color: $link
     outline-style: dotted
     outline-width: 1px
+
+  .sidebar-heading.clickable
+    background none
+    
+  .sidebar-heading.clickable.active
+    font-weight normal
+    color $color
 
   .sidebar > .sidebar-links > li > a.sidebar-link,
   .sidebar-heading
@@ -66,6 +76,9 @@ html
     &:hover, &:active
       background inherit
 
+    &:not(:disabled):active
+      padding 1em
+
   // Code areas
   div[class*="language-"],
   .theme-default-content pre, .theme-default-content pre[class*="language-"]
@@ -89,3 +102,16 @@ html
   tr:nth-child(2n)
     background darken($panelBg, 8%)
     
+  // Content
+  .page-edit .edit-link a
+    color $link
+
+  .page-edit .last-updated .prefix
+    color $color
+  .page-edit .last-updated .time
+    color $color
+    opacity 0.75
+
+  .icon.outbound
+    color $link
+    opacity 0.45
