@@ -1,6 +1,6 @@
 # Hand Tracking (through [Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose))
 
-![](https://media.giphy.com/media/2vcbWI2ZAPeGvJVpII/source.gif)
+![](https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif)
 
 Each of the following can be accessed either through `handsfree.handpose.data` outside of a plugin, or through `data.handpose.data` when inside `onFrame(data => {})`. The alias to `handpose` is `hand`:
 

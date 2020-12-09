@@ -1,4 +1,4 @@
-<h1 class="mb-0"><a href="https://github.com/midiblocks/handsfree">Handsfree.js</a></h1>
+<h1 class="mb-0"><a href="https://github.com/midiblocks/handsfree"><img src="/branding/handsfree.png"></a></h1>
 <h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
 <p class="verticle-middle-children space-children">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
@@ -14,24 +14,22 @@ const handsfree = new Handsfree({face: true})
 handsfree.start()
 ```
 
-<table>
-  <tr>
-    <td class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></td>
-    <td class="col-6">
-      <h2>Try it!</h2>
-      <ul>
-        <li>Move head to move red pointer</li>
-        <li>Smile to the left or right to click on things</li>
-        <li>Move pointer above/or below page to scroll</li>
-      </ul>
-      <HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
-    </td>
-  </tr>
-</table>
-
-::: warning 📅 Coming Soon!
-These docs should be finished by December 1st 2020
-:::
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></div>
+      <div class="col-6">
+        <h2>Try it!</h2>
+        <ul>
+          <li>Move head to move red pointer</li>
+          <li>Smile to the left or right to click on things</li>
+          <li>Move pointer above/or below page to scroll</li>
+        </ul>
+        <HandsfreeToggle class="block-children" text-off="Activate Face Pointer" text-on="Stop Handsfree" />
+      </div>
+    </div>
+  </div>
+</div>
 
 <blockquote class="verticle-middle-children space-children text-center">
   <strong>Powered by:</strong>

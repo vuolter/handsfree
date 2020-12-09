@@ -49,8 +49,9 @@ module.exports = {
   globalUIComponents: ['Handsfree'],
   
   themeConfig: {
+    logo: '/branding/handsfree.png',
     sidebar: [
-      ['/', 'Home'],
+      ['/', '🏠 Home'],
       {
         title: '📚 Documentation',
         collapsable: true,

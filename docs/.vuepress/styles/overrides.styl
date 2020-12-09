@@ -1,4 +1,7 @@
 html
+  .site-name.can-hide
+    display none
+
   // Sidebar
   .sidebar
     padding 10px
@@ -31,7 +34,8 @@ html
     overflow visible
 
   a.sidebar-link,
-  .sidebar-heading
+  .sidebar-heading,
+  .sidebar-group a.sidebar-link
     padding-left .5em
 
   .sidebar > .sidebar-links > li:not(:first-child)
@@ -43,6 +47,16 @@ html
     background $panelBg
   .navbar .site-name
     color $link
+
+  .search-box input
+    background-position 7px 7px
+    color $color
+    font-size 1em
+    padding-left 2em
+
+  // Suggestions
+  .suggestions
+    border-radius 0
 
   // Buttons
   button

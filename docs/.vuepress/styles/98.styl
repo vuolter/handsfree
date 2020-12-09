@@ -310,6 +310,7 @@ html
       &::after
         background url("/icon/checkmark-disabled.svg")
 
+  input[aria-label="Search"],
   input[type="text"],
   input[type="password"],
   input[type="email"],
@@ -325,12 +326,14 @@ html
     appearance none
     border-radius 0
 
+  input[aria-label="Search"],
   input[type="text"],
   input[type="password"],
   input[type="email"],
   select
-    height 21px
+    height 2em
 
+  input[aria-label="Search"],
   input[type="text"],
   input[type="password"],
   input[type="email"]
@@ -356,6 +359,7 @@ html
       background-image url("/icon/button-down-active.svg")
 
   select:focus,
+  input[aria-label="Search"]:focus,
   input[type="text"]:focus,
   input[type="password"]:focus,
   input[type="email"]:focus,
