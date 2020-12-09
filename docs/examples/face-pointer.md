@@ -1,21 +1,25 @@
 # Face Pointer Playground
 
-<table>
-  <tr>
-    <td class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></td>
-    <td class="col-6">
-      <h2>Try it</h2>
-      <ul>
-        <li>Move head to move red pointer</li>
-        <li>Smile to the left or right to click on things</li>
-        <li>Move pointer above/or below page to scroll</li>
-      </ul>
-      <HandsfreeToggle class="handsfree-hide-when-started-without-weboji" text-off="Activate Face Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
-      <button class="large handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-      <button class="large handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo">👆 Activate Face Pointer</button>
-    </td>
-  </tr>
-</table>
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></div>
+      <div class="col-6">
+        <h2>Try it!</h2>
+        <ul>
+          <li>Move head to move red pointer</li>
+          <li>Smile to the left or right to click on things</li>
+          <li>Move pointer above/or below page to scroll</li>
+        </ul>
+        <div class="block-children">
+          <HandsfreeToggle class="block-children handsfree-hide-when-started-without-weboji" text-off="Activate Face Pointer" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+          <button class="full-width handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="full-width handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo">👆 Activate Face Pointer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 The face pointer detects your heads rotation and position in space and from that (very roughly) determines where your forehead is pointed towards on the screen. It positions a pointer there and you can use the calculated values to all sorts of things which we'll explore!
 

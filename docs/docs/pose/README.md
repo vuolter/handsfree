@@ -1,4 +1,5 @@
-# Pose Estimation (through [PoseNet](https://github.com/tensorflow/tfjs-models/tree/master/posenet))
+# Pose Estimation
+> **Model used:** [Google's PoseNet](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
 
 ::: danger 🚨 Please note
 The PoseNet integration will be overhauled soon. It's not recommended to use it in production in it's current state

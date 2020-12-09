@@ -61,7 +61,7 @@ module.exports = {
       ['/', '🏠 Home'],
       {
         title: '📚 Documentation',
-        collapsable: false,
+        collapsable: true,
         sidebarDepth: 1,
         path: '/docs/',
         children: [
@@ -73,7 +73,7 @@ module.exports = {
       },
       {
         title: '🎮 Examples',
-        collapsable: false,
+        collapsable: true,
         sidebarDepth: 1,
         path: '/examples/',
         children: [

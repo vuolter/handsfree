@@ -84,15 +84,19 @@ Handsfree.js comes bundled with three computer vision models which can be combin
 
 ### Through CDN
 ```html
-<!-- Include Handsfree.js -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.12/build/lib/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.2.12/build/lib/handsfree.js"></script>
+<head>
+  <!-- Include Handsfree.js -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.12/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@7.2.12/build/lib/handsfree.js"></script>
+</head>
 
-<!-- Instantiate and start it -->
-<script>
-  const handsfree = new Handsfree({face: true})
-  handsfree.start()
-</script>
+<body>
+  <!-- Instantiate and start it -->
+  <script>
+    const handsfree = new Handsfree({face: true})
+    handsfree.start()
+  </script>
+</body>
 ```
 
 ### Through NPM
@@ -117,7 +121,7 @@ handsfree.start()
 
 ## Example Workflow
 
-The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
+The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around hooks/plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
 
 ```js
 // Let's enable face tracking with the default Face Pointer

@@ -2,7 +2,7 @@
 
 ## Instantiating
 
-Once you've [included Handsfree.js](/#quickstart) into your project you'll have a global `Handsfree` class in the `window`'s scope. You'll want to create one instance for every webcam that you intend to use, along with some configs.
+Once you've [included Handsfree.js](/#installing) into your project you'll have a global `Handsfree` class in the `window`'s scope. You'll want to create one instance for every webcam that you intend to use, along with some configs.
 
 ```js
 // Instantiate with the default face tracker
@@ -17,9 +17,10 @@ handsfree = new Handsfree({
   assetsPath: document.currentScript.getAttribute('src') + '/assets/',
 
   /**
-   * Used to show the webcam feed along with basic debug info
-   * @param {Boolean|Object} feedback if boolean,
-   *  then this is converted to the default below
+   * Used to show the webcam feed along with basic debug info like skeletons
+   * and bounding boxes
+   * 
+   * @param {Boolean|Object} feedback if true then the default $target below is used
    */
   feedback: {
     enabled: false,

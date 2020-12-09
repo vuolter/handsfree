@@ -1,4 +1,5 @@
-# Face Tracking (through [Weboji](https://github.com/jeeliz/jeelizWeboji))
+# Face Tracking
+> **Model used:** [Jeeliz's Weboji](https://github.com/jeeliz/jeelizWeboji)
 
 ![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
 

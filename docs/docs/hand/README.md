@@ -1,4 +1,5 @@
-# Hand Tracking (through [Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose))
+# Hand Tracking
+> **Model used:** [Google's Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose)
 
 ![](https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif)
 
