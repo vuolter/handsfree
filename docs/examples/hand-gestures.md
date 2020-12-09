@@ -4,24 +4,31 @@
 This page is still experimental, may be buggy, and might not work on Firefox yet.
 :::
 
-<table>
-  <tr>
-    <td class="col-6">
-    <a href="https://vimeo.com/484932006"><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></a>
-    <br><a href="https://vimeo.com/484932006">Watch video</a></td>
-    <td class="col-6">
-      <h2>Try it</h2>
-      <ul>
-        <li>🖐 With palm facing towards camera, move hand around to move pointer</li>
-        <li>👌 Pinch your index and thumb to click or drag the page</li>
-        <li>✊ Close hand and move hand to scroll page up and down</li>
-      </ul>
-      <HandsfreeToggle class="handsfree-hide-when-started-without-handpose" text-off="Activate Hand Gestures" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
-      <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-      <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo">👆 Activate Hand Gestures</button>
-    </td>
-  </tr>
-</table>
+
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <a href="https://vimeo.com/484932006"><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></a>
+        <br><a href="https://vimeo.com/484932006">Watch video</a>
+      </div>
+      <div class="col-6">
+        <h2>Try it</h2>
+        <ul>
+          <li>🖐 With palm facing towards camera, move hand around to move pointer</li>
+          <li>👌 Pinch your index and thumb to click or drag the page</li>
+          <li>✊ Close hand and move hand to scroll page up and down</li>
+        </ul>
+        <div class="block-children">
+          <HandsfreeToggle class="block-children handsfree-hide-when-started-without-handpose" text-off="Activate Hand Gestures" text-on="Stop Handsfree" :opts="demoOpts" @started="onStarted" />
+          <button class="large handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="large handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo">👆 Activate Hand Gestures</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 ```js
 const handsfree = new Handsfree({hand: true})

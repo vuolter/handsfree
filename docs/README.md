@@ -1,4 +1,4 @@
-<h1 class="mb-0"><a href="https://github.com/midiblocks/handsfree">Handsfree.js</a></h1>
+<h1 class="mb-0"><a href="https://github.com/midiblocks/handsfree"><img src="/branding/handsfree.png"></a></h1>
 <h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
 <p class="verticle-middle-children space-children">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
@@ -14,29 +14,27 @@ const handsfree = new Handsfree({face: true})
 handsfree.start()
 ```
 
-<table>
-  <tr>
-    <td class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></td>
-    <td class="col-6">
-      <h2>Try it!</h2>
-      <ul>
-        <li>Move head to move red pointer</li>
-        <li>Smile to the left or right to click on things</li>
-        <li>Move pointer above/or below page to scroll</li>
-      </ul>
-      <HandsfreeToggle text-off="Activate Face Pointer" text-on="Stop Handsfree" />
-    </td>
-  </tr>
-</table>
-
-::: warning 📅 Coming Soon!
-These docs should be finished by December 1st 2020
-:::
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></div>
+      <div class="col-6">
+        <h2>Try it!</h2>
+        <ul>
+          <li>Move head to move red pointer</li>
+          <li>Smile to the left or right to click on things</li>
+          <li>Move pointer above/or below page to scroll</li>
+        </ul>
+        <HandsfreeToggle class="block-children" text-off="Activate Face Pointer" text-on="Stop Handsfree" />
+      </div>
+    </div>
+  </div>
+</div>
 
 <blockquote class="verticle-middle-children space-children text-center">
   <strong>Powered by:</strong>
-  <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
-  <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/KqlnNuA.png' height=30></a> <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a>
+  <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="/branding/jeeliz.png"></a>
+  <a href="https://github.com/tensorflow/tfjs-models/"><img src='/branding/tensorflow.png' height=30></a> <a href="https://ml5js.org/"><img src="/branding/ml5.png" height=30></a>
 </blockquote>
 
 ## Available Models
@@ -86,15 +84,19 @@ Handsfree.js comes bundled with three computer vision models which can be combin
 
 ### Through CDN
 ```html
-<!-- Include Handsfree.js -->
-<link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.12/build/lib/assets/handsfree.css" />
-<script src="https://unpkg.com/handsfree@7.2.12/build/lib/handsfree.js"></script>
+<head>
+  <!-- Include Handsfree.js -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.12/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@7.2.12/build/lib/handsfree.js"></script>
+</head>
 
-<!-- Instantiate and start it -->
-<script>
-  const handsfree = new Handsfree({face: true})
-  handsfree.start()
-</script>
+<body>
+  <!-- Instantiate and start it -->
+  <script>
+    const handsfree = new Handsfree({face: true})
+    handsfree.start()
+  </script>
+</body>
 ```
 
 ### Through NPM
@@ -119,7 +121,7 @@ handsfree.start()
 
 ## Example Workflow
 
-The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
+The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around hooks/plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
 
 ```js
 // Let's enable face tracking with the default Face Pointer

@@ -1,4 +1,9 @@
 html
+  // Hide things
+  .site-name.can-hide,
+  .nav-links.can-hide
+    display none
+
   // Sidebar
   .sidebar
     padding 10px
@@ -10,7 +15,8 @@ html
       width 100%
       overflow auto
   
-  a.sidebar-link.active
+  a.sidebar-link.active,
+  .sidebar-heading.clickable.active
     border-left-color transparent
 
   a.sidebar-link.active + ul .sidebar-link.active
@@ -22,6 +28,15 @@ html
     outline-style: dotted
     outline-width: 1px
 
+  .sidebar-heading.clickable
+    background none
+    
+  .sidebar-heading.clickable.active,
+  .sidebar-heading.clickable:hover,
+  .sidebar-heading.clickable:active
+    font-weight normal
+    color $color
+
   .sidebar > .sidebar-links > li > a.sidebar-link,
   .sidebar-heading
     font-weight normal
@@ -31,7 +46,8 @@ html
     overflow visible
 
   a.sidebar-link,
-  .sidebar-heading
+  .sidebar-heading,
+  .sidebar-group a.sidebar-link
     padding-left .5em
 
   .sidebar > .sidebar-links > li:not(:first-child)
@@ -44,6 +60,16 @@ html
   .navbar .site-name
     color $link
 
+  .search-box input
+    background-position 7px 7px
+    color $color
+    font-size 1em
+    padding-left 2em
+
+  // Suggestions
+  .suggestions
+    border-radius 0
+
   // Buttons
   button
     color $color
@@ -51,6 +77,9 @@ html
 
     &:hover, &:active
       background inherit
+
+    &:not(:disabled):active
+      padding 1em
 
   // Code areas
   div[class*="language-"],
@@ -75,3 +104,16 @@ html
   tr:nth-child(2n)
     background darken($panelBg, 8%)
     
+  // Content
+  .page-edit .edit-link a
+    color $link
+
+  .page-edit .last-updated .prefix
+    color $color
+  .page-edit .last-updated .time
+    color $color
+    opacity 0.75
+
+  .icon.outbound
+    color $link
+    opacity 0.45
