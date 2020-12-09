@@ -4,68 +4,6 @@ html
   .nav-links.can-hide
     display none
 
-  // Sidebar
-  .sidebar
-    padding 10px
-    display flex
-    flex-direction columns
-    overflow hidden
-
-    > .sidebar-links
-      width 100%
-      overflow auto
-  
-  a.sidebar-link.active,
-  .sidebar-heading.clickable.active
-    border-left-color transparent
-
-  a.sidebar-link.active + ul .sidebar-link.active
-    background none
-    color $color
-    font-weight 700
-    outline: -webkit-focus-ring-color auto 1px
-    outline-color: $link
-    outline-style: dotted
-    outline-width: 1px
-
-  .sidebar-heading.clickable
-    background none
-    
-  .sidebar-heading.clickable.active,
-  .sidebar-heading.clickable:hover,
-  .sidebar-heading.clickable:active
-    font-weight normal
-    color $color
-
-  .sidebar > .sidebar-links > li > a.sidebar-link,
-  .sidebar-heading
-    font-weight normal
-    font-size 1em
-    
-  .sidebar-links.sidebar-group-items
-    overflow visible
-
-  a.sidebar-link,
-  .sidebar-heading,
-  .sidebar-group a.sidebar-link
-    padding-left .5em
-
-  .sidebar > .sidebar-links > li:not(:first-child)
-    margin-top 0
-
-  // Navbar
-  .navbar, .sidebar,
-  .navbar .links
-    background $panelBg
-  .navbar .site-name
-    color $link
-
-  .search-box input
-    background-position 7px 7px
-    color $color
-    font-size 1em
-    padding-left 2em
-
   // Suggestions
   .suggestions
     border-radius 0
@@ -117,3 +55,4 @@ html
   .icon.outbound
     color $link
     opacity 0.45
+

@@ -1,3 +1,17 @@
+html
+  .navbar, .sidebar,
+  .navbar .links
+    background $panelBg
+  .navbar .site-name
+    color $link
+
+  .search-box input
+    background-position 7px 7px
+    color $color
+    font-size 1em
+    padding-left 2em
+
+
 @media (max-width: $MQMobile)
   .search-box
     margin-right: 2rem !important
@@ -7,3 +21,13 @@
     button
       span:last-child
         display: none
+
+    .home-link.router-link-active
+      background url('/favicon.png') 36px no-repeat
+      background-position top left
+      display inline-block
+      width 100px
+      height 35px
+      
+      img
+        display none

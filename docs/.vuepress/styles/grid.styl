@@ -5,5 +5,15 @@
   justify-content space-between
   margin 0 -10px
 
+  .col-6
+    width 50%
+
   [class^='col']
     padding 0 10px
+
+@media (max-width: $MQMobile)
+  .row
+    display block
+
+    > [class^='col']
+      width auto
