@@ -44,15 +44,15 @@ Handsfree.js comes bundled with three computer vision models which can be combin
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><a href="/playgrounds/face"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></a></div>
+      <div class="col-6"><router-link to="/playgrounds/face"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></router-link></div>
       <div class="col-6">
-        <div><strong><a href="/docs/face">Face Tracking</a> (through <a href="https://github.com/jeeliz/jeelizWeboji">Weboji</a>)</strong></div>
+        <div><strong><router-link to="/docs/face">Face Tracking</router-link> (through <a href="https://github.com/jeeliz/jeelizWeboji">Weboji</a>)</strong></div>
         <ul>
           <li>Detect 3D head position and rotation</li>
           <li>11 face morphs for eyes and mouth</li>
           <li>~1.4Mb filesize</li>
         </ul>
-        <div><strong>Featured Example:</strong> <a href="/examples/face-pointer">Face Playground</a></div>
+        <div><strong>Featured Example:</strong> <router-link to="/examples/face-pointer">Face Playground</router-link></div>
       </div>
     </div>
   </div>
@@ -61,15 +61,15 @@ Handsfree.js comes bundled with three computer vision models which can be combin
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><a href="/playgrounds/hand"><img src="https://media.giphy.com/media/FxLUuTSxXjJPx8K9L4/source.gif"></a></div>
+      <div class="col-6"><router-link to="/playgrounds/hand"><img src="https://media.giphy.com/media/FxLUuTSxXjJPx8K9L4/source.gif"></router-link></div>
       <div class="col-6">
-        <div><strong><a href="/docs/hand">Hand Tracking</a> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">Handpose</a>)</strong></div>
+        <div><strong><router-link to="/docs/hand">Hand Tracking</router-link> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">Handpose</a>)</strong></div>
         <ul>
           <li>Detect 3D position of palm and fingers</li>
           <li>Get vectors for where palm/fingers are pointed</li>
           <li>~2.9Mb filesize</li>
         </ul>
-        <div><strong>Featured Example:</strong> <a href="/playgrounds/hand">Hand Playground</a></div>
+        <div><strong>Featured Example:</strong> <router-link to="/playgrounds/hand">Hand Playground</router-link></div>
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@ Handsfree.js comes bundled with three computer vision models which can be combin
     <div class="row">
       <div class="col-6"><a href="https://flappy-pose.glitch.me/"><img src="https://media1.giphy.com/media/gUHHKdnuOW4OGOXcrI/giphy.gif"></a></div>
       <div class="col-6">
-        <div><strong><a href="/docs/pose">Pose Estimation</a> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet">PoseNet/ml5.js</a>)</strong></div>
+        <div><strong><router-link to="/docs/pose">Pose Estimation</router-link> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet">PoseNet/ml5.js</a>)</strong></div>
         <ul>
           <li>Detect 2D keypoints for face, arms, and legs</li>
           <li>Detect many people at the same time</li>
