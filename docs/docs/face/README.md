@@ -3,6 +3,76 @@
 
 ![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
 
+## Setup
+
+By default, setting `{face: true}` adds a new `<video>` element to the DOM to grab the webcam: 
+
+```js
+handsfree = new Handsfree({face: true})
+```
+
+To use a pre-recorded video or video stream, a canvas, or an image instead of a webcam set the `face.videoSettings.videoElement` property:
+
+```js
+handsfree = new Handsfree({
+  face: {
+    enabled: true,
+    videoSettings: {
+      videoElement: document.querySelector('#my-video')
+    }
+  }
+})
+```
+
+## Config
+
+```js
+// Customize defaults
+handsfree = new Handsfree({
+  face: {
+    // Whether the model is enabled or not
+    enabled: false,
+
+    // How many milliseconds to wait between each inference
+    throttle: 0,
+    
+    // Custom video settings
+    videoSettings: {
+      // The video, canvas, or image element
+      // Omit this to auto create a <VIDEO> with the webcam
+      videoElement: null,
+
+      // ID of the device to use
+      deviceId: null,
+
+      // Which camera to use on the device
+      // Possible values: 'user' (front), 'environment' (back)
+      facingMode: 'user',
+
+      // Video dimensions
+      idealWidth: 320,
+      idealHeight: 240,
+      minWidth: 240,
+      maxWidth: 1280,
+      minHeight: 240,
+      maxHeight: 1280
+    },
+    
+    // Represents the calibrator settings
+    calibrator: {
+      // (optional) The target element to act as the calibrator wrapping div
+      target: null,
+      // The message to display over the marker, can be HTML
+      instructions: 'Point head towards center of circle below',
+      // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
+      marker: null
+    }
+  }
+})
+```
+
+## Accessing data
+
 Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji` when inside `onFrame(data => {})`. The alias to `weboji` is `face`:
 
 ```js

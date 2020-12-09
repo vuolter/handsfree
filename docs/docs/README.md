@@ -1,6 +1,6 @@
 # Getting Started
 
-## Instantiating
+## Setup
 
 Once you've [included Handsfree.js](/#installing) into your project you'll have a global `Handsfree` class in the `window`'s scope. You'll want to create one instance for every webcam that you intend to use, along with some configs.
 
