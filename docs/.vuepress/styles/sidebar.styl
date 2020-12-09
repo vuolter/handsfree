@@ -1,0 +1,71 @@
+html
+  .sidebar
+    padding 10px
+    display flex
+    flex-direction columns
+    overflow hidden
+    border-right none
+
+    > .sidebar-links
+      width 100%
+      overflow auto
+
+    .nav-links
+      display: none
+  
+  a.sidebar-link.active,
+  .sidebar-heading.clickable.active
+    border-left-color transparent
+
+  a.sidebar-link.active + ul .sidebar-link.active
+    background none
+    color $color
+    font-weight 700
+    outline: -webkit-focus-ring-color auto 1px
+    outline-color: $link
+    outline-style: dotted
+    outline-width: 1px
+
+  .sidebar-heading.clickable
+    background none
+    
+  .sidebar-heading.clickable.active,
+  .sidebar-heading.clickable:hover,
+  .sidebar-heading.clickable:active
+    font-weight normal
+    color $color
+
+  .sidebar > .sidebar-links > li > a.sidebar-link,
+  .sidebar-heading
+    font-weight normal
+    font-size 1em
+    
+  .sidebar-links.sidebar-group-items
+    overflow visible
+
+  a.sidebar-link,
+  .sidebar-heading,
+  .sidebar-group a.sidebar-link
+    padding-left .5em
+
+  .sidebar > .sidebar-links > li:not(:first-child)
+    margin-top 0
+
+  .sidebar-mask
+    background url('/icon/scrollbar-background.svg')
+
+    &:before
+      content ''
+      position fixed
+      opacity .5
+      background $color
+      height 100%
+      width 100%
+      left 0
+      top 0
+
+@media (max-width: $MQMobile)
+  html body .sidebar
+    padding-top 70px
+    border-right-width 1px
+    border-right: 1px solid #eaecef;
