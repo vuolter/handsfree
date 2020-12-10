@@ -1,11 +1,12 @@
-<template>
-<div id="handsfree-container">
-  <div id="handsfree-debugger"></div>
-</div>
-
+<template lang="pug">
+#handsfree-container
+  #handsfree-debugger
 </template>
 
 <script>
+/**
+ * A global component designed to setup Handsfree.js
+ */
 export default {
   name: 'HandsfreeContainer',
 

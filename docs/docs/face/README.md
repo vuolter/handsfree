@@ -3,7 +3,24 @@
 >
 > **License:** [Apache 2.0](https://github.com/jeeliz/jeelizWeboji/blob/master/LICENSE)
 
-![](https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif)
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <p><strong>Face Pointers</strong></p>
+        <p><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></p>
+        <p><strong>Head-tracked Motion Parallax Display</strong></p>
+        <p><img src="https://media4.giphy.com/media/8sCpFH9JCws8iWsaoj/giphy.gif"></p>
+      </div>
+      <div class="col-6">
+        <p><strong>Puppeteering Industrial Robots</strong></p>
+        <p><img src="https://media0.giphy.com/media/1XE2rnMPk6BFu8VQRr/giphy.gif"></p>
+        <p><strong>Controlling Desktop Pointer</strong></p>
+        <p><img src="https://media3.giphy.com/media/YATR9GZSSHKeNw3fht/giphy.gif"></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 ## Setup
 
@@ -29,7 +46,7 @@ handsfree = new Handsfree({
 ## Config
 
 ```js
-// Customize defaults
+// These are all the default values
 handsfree = new Handsfree({
   face: {
     // Whether the model is enabled or not
@@ -45,6 +62,7 @@ handsfree = new Handsfree({
       videoElement: null,
 
       // ID of the device to use
+      // Omit this to use the system default
       deviceId: null,
 
       // Which camera to use on the device
@@ -75,16 +93,15 @@ handsfree = new Handsfree({
 
 ## Accessing data
 
-Each of the following can be accessed either through `handsfree.weboji.data` outside of a plugin, or through `data.weboji` when inside `onFrame(data => {})`. The alias to `weboji` is `face`:
+Each of the following can be accessed either through `handsfree.face.data` outside of a plugin, or through `data.face` when inside `onFrame(data => {})`:
 
 ```js
-// Alias outside of plugins
-handsfree.weboji.api === handsfree.face.api
-handsfree.weboji.data === handsfree.face.data
+// Outside of a plugin
+console.log(handsfree.face.data)
 
-// Alias inside of plugins
+// Inside of a plugin
 handsfree.use('myPlugin', data => {
-  data.weboji === data.face
+  console.log(data.face)
 })
 ```
 

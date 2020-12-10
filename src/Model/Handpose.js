@@ -40,8 +40,8 @@ export default class Handpose extends BaseModel {
    */
    onDepsLoaded () {
     this.handsfree.getUserMedia(async () => {
-      await tf.setBackend('webgl');
-      this.api = await handpose.load()
+      await tf.setBackend('webgl')
+      this.api = await handpose.load(this.handsfree.config.handpose.model)
 
       this.setup3D()
 
