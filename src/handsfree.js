@@ -55,6 +55,8 @@ const configDefaults = {
       // (optional if .target === null, otherwise required) The target element to act as the calibrator target (should be inside target)
       marker: null
     },
+
+    // Thresholds needed before these are considered "activated"
     morphs: {
       threshold: {
         smileRight: 0.7,
@@ -87,7 +89,28 @@ const configDefaults = {
   },
 
   handpose: {
-    enabled: false
+    enabled: false,
+    
+    // How many milliseconds to wait between each inference
+    throttle: 0,
+
+    // Model config
+    model: {
+      // How many frames to go without running the bounding box detector.
+      // - Set to a lower value if you want a safety net in case the mesh
+      //   detector produces consistently flawed predictions
+      maxContinuousChecks: Infinity,
+
+      // Threshold for discarding a prediction
+      detectionConfidence: 0.8,
+
+      // A float representing the threshold for deciding whether boxes overlap
+      // too much in non-maximum suppression. Must be between [0, 1]
+      iouThreshold: 0.3,
+
+      // A threshold for deciding when to remove boxes based on score in non-maximum suppression
+      scoreThreshold: 0.75
+    }
   },
 
   feedback: {
