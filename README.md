@@ -114,8 +114,8 @@
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.14/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@7.2.14/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.15/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@7.2.15/build/lib/handsfree.js"></script>
 </head>
 
 <body>
