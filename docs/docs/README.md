@@ -88,7 +88,7 @@ handsfree.stop()
 
 ## Adding Functionality
 
-By default, the face tracker comes bundled with a set of plugins. Plugins add functionality that can be toggled on/off, which is useful when working on complex applications that require different gestures for different views. Plugins can also be overwritten.
+By default, the face tracker comes bundled with a set of plugins. Plugins add functionality that can be toggled on/off, which is useful when working on complex applications that require different gestures for different views.
 
 Plugins are added with the `handsfree.use('myPlugin', opts)`:
 

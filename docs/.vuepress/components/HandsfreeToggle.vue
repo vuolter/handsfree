@@ -1,9 +1,14 @@
-<template>
-<div>
-  <button class="handsfree-show-when-stopped handsfree-hide-when-loading" @click='start'><Fa-Video /> <span>{{textOff}}</span></button>
-  <button class="handsfree-show-when-loading" disabled><Fa-Spinner :spin='true' /> <span>Loading...</span></button>
-  <button class="handsfree-hide-when-loading handsfree-show-when-started negative" @click='stop'><Fa-VideoSlash /> <span>{{textOn}}</span></button>
-</div>
+<template lang="pug">
+div
+  button.handsfree-show-when-stopped.handsfree-hide-when-loading(@click='start')
+    Fa-Video
+    span {{textOff}}
+  button.handsfree-show-when-loading(disabled)
+    Fa-Spinner(:spin='true')
+    span Loading...
+  button.handsfree-hide-when-loading.handsfree-show-when-started.negative(@click='stop')
+    Fa-VideoSlash
+    span {{textOn}}
 </template>
 
 <script>

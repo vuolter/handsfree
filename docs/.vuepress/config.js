@@ -58,7 +58,12 @@ module.exports = {
     editLinks: true,
     
     sidebar: [
-      ['/', '🏠 Home'],
+      {
+        title: '🏠 Home',
+        collapsable: true,
+        sidebarDepth: 1,
+        path: '/'
+      },
       {
         title: '📚 Documentation',
         collapsable: true,
