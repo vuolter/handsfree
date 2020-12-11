@@ -28,6 +28,9 @@
 import merge from 'lodash/merge'
 import trim from 'lodash/trim'
 
+// Used to separate video, canvas, etc ID's
+let id = 0
+
 /**
  * The Handsfree class
  * @see https://handsfree.js.org/getting-started
@@ -38,7 +41,11 @@ class Handsfree {
    * @param {Object} config The initial config to use
    */
   constructor (config = {}) {
+    // Assign the instance ID
+    this.id = ++id
+    
     this.config = this.cleanConfig(config)
+    this.setup()
 
     this.hasLoadedDependencies = false
 
@@ -96,6 +103,46 @@ class Handsfree {
   }
 
   /**
+   * Sets up the video and camera
+   */
+  setup () {
+    this.debug = {}
+    
+    // Feedback wrap
+    if (!this.config.setup.wrap.$el) {
+      const $wrap = document.createElement('DIV')
+      $wrap.classList.add('handsfree-feedback')
+      this.config.setup.wrap.$el = $wrap
+    }
+    this.debug.$wrap = this.config.setup.wrap.$el
+
+    // Main canvas
+    if (!this.config.setup.canvas.$el) {
+      const $canvas = document.createElement('CANVAS')
+      $canvas.classList.add('handsfree-canvas')
+      $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
+      this.config.setup.canvas.$el = $canvas
+    }
+    this.debug.$canvas = this.config.setup.canvas.$el
+    this.debug.$wrap.appendChild(this.debug.$canvas)
+
+    // Create video element
+    if (!this.config.setup.video.$el) {
+      const $video = document.createElement('VIDEO')
+      $video.setAttribute('playsinline', true)
+      $video.classList.add('handsfree-video')
+      $video.setAttribute('id', `handsfree-video-${this.id}`)
+      this.config.setup.video.$el = $video
+    }
+    this.debug.$video = this.config.setup.video.$el
+    this.debug.$video.width = this.config.setup.video.width
+    this.debug.$video.height = this.config.setup.video.height
+    this.debug.$wrap.appendChild(this.debug.$video)
+
+    this.config.setup.wrap.$target.appendChild(this.debug.$wrap)
+  }
+
+  /**
    * Cleans and sanitizes the config, setting up defaults
    * @see https://handsfree.js.org/ref/method/cleanConfig
    * 
@@ -103,6 +150,8 @@ class Handsfree {
    * @returns {Object} The cleaned config
    */
   cleanConfig (config) {
+    defaultConfig.setup.wrap.$target = document.body
+    
     return merge({}, defaultConfig, config)
   }
 
@@ -146,6 +195,10 @@ const defaultConfig = {
       $el: null,
       width: 1280,
       height: 720
+    },
+    // The wrapping element
+    wrap: {
+      $el: null
     }
   },
 
