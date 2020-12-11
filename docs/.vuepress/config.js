@@ -65,28 +65,14 @@ module.exports = {
         path: '/'
       },
       {
-        title: '📚 Documentation',
+        title: '📚 Reference',
+        path: '/ref/',
         collapsable: true,
-        sidebarDepth: 1,
-        path: '/docs/',
+        sidebarDepth: 2,
         children: [
-          ['/docs/', 'Getting Started'],
-          ['/docs/face/', '😀 Face Tracking'],
-          ['/docs/hand/', '🖖 Hand Tracking'],
-          ['/docs/pose/', '🤺 Pose Tracking']    
+          ['/ref/event/', '⚡ Events']
         ]
-      },
-      {
-        title: '🎮 Playgrounds',
-        collapsable: true,
-        sidebarDepth: 1,
-        path: '/playgrounds/',
-        children: [
-          ['/playgrounds/face', '😀 Face Pointer Playground'],
-          ['/playgrounds/hand', '🖐 Hand Gesture Playground']
-        ]
-      },
-      ['https://midiblocks.com', '💻 Gesture mapper']
+      }
     ]
   },
 

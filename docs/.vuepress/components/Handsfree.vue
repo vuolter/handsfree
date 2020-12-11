@@ -13,6 +13,7 @@ export default {
   mounted () {
     import('@handsfree/handsfree.js').then(module => {
       const Handsfree = module.default
+      window.Handsfree = Handsfree
       window.handsfree = this.$root.handsfree = new Handsfree({
         assetsPath: '/handsfree/',
         weboji: true
