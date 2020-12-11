@@ -75,7 +75,8 @@ class Handsfree {
         // Load the holistic camera module
         this.loadDependency(`${this.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
           this.camera = new Camera(this.debug.$video, {
-            onFrame: () => {
+            onFrame: async () => {
+              await this.holistic.send({image: this.debug.$video})
               console.log('onFrame')
             },
             width: this.debug.$video.width,
