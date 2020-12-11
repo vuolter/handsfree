@@ -68,28 +68,73 @@ class Handsfree {
       // Load holistic
       this.loadDependency(`${this.config.assetsPath}/@mediapipe/holistic/holistic.js`, () => {
         this.holistic = new Holistic({locateFile: file => {
-          console.log('file', file)
           return `${this.config.assetsPath}/@mediapipe/holistic/${file}`
         }})
 
         // Load the holistic camera module
-        this.loadDependency(`${this.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
-          this.camera = new Camera(this.debug.$video, {
-            onFrame: async () => {
-              await this.holistic.send({image: this.debug.$video})
-              console.log('onFrame')
-            },
-            width: this.debug.$video.width,
-            height: this.debug.$video.height
+        this.loadDependency(`${this.config.assetsPath}/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+          this.loadDependency(`${this.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
+            this.camera = new Camera(this.debug.$video, {
+              // Run inference
+              onFrame: async () => {
+                await this.holistic.send({image: this.debug.$video})
+              },
+              width: this.debug.$video.width,
+              height: this.debug.$video.height
+            })
+            this.camera.start()
           })
-          this.camera.start()
         })
 
         this.holistic.setOptions(this.config.model)
+        this.holistic.onResults(results => this.onLoop(results))
       })
     }
     
     callback && callback()
+  }
+
+  /**
+   * Called on every webcam frame
+   */
+  onLoop (results) {
+    this.debug.context.drawImage(results.image, 0, 0, this.debug.$canvas.width, this.debug.$canvas.height)
+
+    console.log(results)
+    drawConnectors(this.debug.context, results.poseLandmarks, POSE_CONNECTIONS, {
+      color: '#00FF00',
+      lineWidth: 4
+    })
+    
+    drawLandmarks(this.debug.context, results.poseLandmarks, {
+      color: '#FF0000',
+      lineWidth: 2
+    })
+    
+    drawConnectors(this.debug.context, results.faceLandmarks, FACEMESH_TESSELATION, {
+      color: '#C0C0C070',
+      lineWidth: 1
+    })
+    
+    drawConnectors(this.debug.context, results.leftHandLandmarks, HAND_CONNECTIONS, {
+      color: '#CC0000',
+      lineWidth: 5
+    })
+    
+    drawLandmarks(this.debug.context, results.leftHandLandmarks, {
+      color: '#00FF00',
+      lineWidth: 2
+    })
+    
+    drawConnectors(this.debug.context, results.rightHandLandmarks, HAND_CONNECTIONS, {
+      color: '#00CC00',
+      lineWidth: 5
+    })
+
+    drawLandmarks(this.debug.context, results.rightHandLandmarks, {
+      color: '#FF0000',
+      lineWidth: 2
+    })    
   }
 
   /**
@@ -118,16 +163,6 @@ class Handsfree {
     }
     this.debug.$wrap = this.config.setup.wrap.$el
 
-    // Main canvas
-    if (!this.config.setup.canvas.$el) {
-      const $canvas = document.createElement('CANVAS')
-      $canvas.classList.add('handsfree-canvas')
-      $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
-      this.config.setup.canvas.$el = $canvas
-    }
-    this.debug.$canvas = this.config.setup.canvas.$el
-    this.debug.$wrap.appendChild(this.debug.$canvas)
-
     // Create video element
     if (!this.config.setup.video.$el) {
       const $video = document.createElement('VIDEO')
@@ -141,6 +176,18 @@ class Handsfree {
     this.debug.$video.height = this.config.setup.video.height
     this.debug.$wrap.appendChild(this.debug.$video)
 
+    // Main canvas
+    if (!this.config.setup.canvas.$el) {
+      const $canvas = document.createElement('CANVAS')
+      $canvas.classList.add('handsfree-canvas')
+      $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
+      this.config.setup.canvas.$el = $canvas
+    }
+    this.debug.$canvas = this.config.setup.canvas.$el
+    this.debug.$wrap.appendChild(this.debug.$canvas)
+    this.debug.context = this.debug.$canvas.getContext('2d')
+
+    // Append everything to the body
     this.config.setup.wrap.$target.appendChild(this.debug.$wrap)
   }
 
