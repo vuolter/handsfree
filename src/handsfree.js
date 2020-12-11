@@ -26,6 +26,7 @@
   Newsletter: http://eepurl.com/hhD7S1
 */
 import merge from 'lodash/merge'
+import trim from 'lodash/trim'
 
 /**
  * The Handsfree class
@@ -38,6 +39,10 @@ class Handsfree {
    */
   constructor (config = {}) {
     this.config = this.cleanConfig(config)
+
+    this.hasLoadedDependencies = false
+
+    this.holistic = null
     
     this.emit('init', this)
   }
@@ -52,6 +57,19 @@ class Handsfree {
     document.body.classList.add('handsfree-loading')
     this.emit('loading', this)
 
+    if (!this.hasLoadedDependencies) {
+      // Load holistic
+      this.loadDependency(`${this.config.assetsPath}/@mediapipe/holistic/holistic.js`, () => {
+        console.log('yo', Holistic)
+        this.holistic = new Holistic({locateFile: file => {
+          console.log('file', file)
+          return `${this.config.assetsPath}/@mediapipe/holistic/${file}`
+        }})
+
+        this.holistic.setOptions(this.config.model)
+      })
+    }
+    
     callback && callback()
   }
 
@@ -75,21 +93,49 @@ class Handsfree {
    * @returns {Object} The cleaned config
    */
   cleanConfig (config) {
-    return merge(config, defaultConfig)
+    return merge({}, defaultConfig, config)
+  }
+
+  /**
+   * Loads a script and runs a callback
+   * @param {string} src The absolute path of the source file
+   * @param {*} callback The callback to call after the file is loaded
+   */
+  loadDependency (src, callback) {
+    const $script = document.createElement('script')
+    $script.async = true
+
+    $script.onload = () => {
+      callback()
+    }
+
+    $script.src = src
+    document.body.appendChild($script)
   }
 }
 
 /**
  * Default Config
  */
+let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : ''
+assetsPath = trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/handsfree/'
+
 const defaultConfig = {
+  assetsPath,
+  
   // Setup config. Ignore this to have everything done for you automatically
   setup: {
     // The video source to use. If not present, one will be created to capture webcam
     video: null,
     // The canvas element to use for rendering debug info like skeletons and keypoints
     canvas: null
+  },
+
+  model: {
+    upperBodyOnly: false,
+    smoothLandmarks: true,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
   }
 }
-
 export default Handsfree

@@ -15,8 +15,7 @@ export default {
       const Handsfree = module.default
       window.Handsfree = Handsfree
       window.handsfree = this.$root.handsfree = new Handsfree({
-        assetsPath: '/handsfree/',
-        weboji: true
+        assetsPath: '/handsfree/'
       })
       window.app = this.$root
     })
