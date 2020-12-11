@@ -60,11 +60,21 @@ class Handsfree {
     if (!this.hasLoadedDependencies) {
       // Load holistic
       this.loadDependency(`${this.config.assetsPath}/@mediapipe/holistic/holistic.js`, () => {
-        console.log('yo', Holistic)
         this.holistic = new Holistic({locateFile: file => {
           console.log('file', file)
           return `${this.config.assetsPath}/@mediapipe/holistic/${file}`
         }})
+
+        // Load the holistic camera module
+        this.loadDependency(`${this.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
+          this.camera = new Camera(this.setup.video.$el, {
+            onFrame: () => {
+              console.log('onFrame')
+            },
+            width: this.setup.video.width,
+            height: this.setup.video.height
+          })
+        })
 
         this.holistic.setOptions(this.config.model)
       })
@@ -126,9 +136,17 @@ const defaultConfig = {
   // Setup config. Ignore this to have everything done for you automatically
   setup: {
     // The video source to use. If not present, one will be created to capture webcam
-    video: null,
+    video: {
+      $el: null,
+      width: 1280,
+      height: 720
+    },
     // The canvas element to use for rendering debug info like skeletons and keypoints
-    canvas: null
+    canvas: {
+      $el: null,
+      width: 1280,
+      height: 720
+    }
   },
 
   model: {

@@ -36,7 +36,6 @@
     "vuepress-plugin-font-awesome": "^1.90.6"
   },
   "dependencies": {
-    "@mediapipe/holistic": "^0.1.1607486640",
     "gsap": "^3.5.1",
     "lodash": "^4.17.20"
   }
