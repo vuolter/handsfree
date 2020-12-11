@@ -27,6 +27,7 @@
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "clippyjs": "0.0.3",
+    "markdown-it-deflist": "^2.1.0",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",
     "rollup": "^2.32.0",
@@ -35,6 +36,7 @@
     "vuepress-plugin-font-awesome": "^1.90.6"
   },
   "dependencies": {
+    "@mediapipe/holistic": "^0.1.1607486640",
     "gsap": "^3.5.1",
     "lodash": "^4.17.20"
   }

@@ -39,7 +39,8 @@ handsfree.start()
   <hr style="margin: 20px auto">
   <ul class="text-center" style="list-style: none">
     <li><strong>GitHub:</strong> <a href="https://github.com/midiblocks/handsfree">https://github.com/midiblocks/handsfree</a></li>
-    <li><strong>Discord:</strong> <a href="Discord:  https://discord.gg/TWemTd85">https://discord.gg/TWemTd85</a></li>
+    <li><strong>Discord:</strong> <a href="https://discord.gg/TWemTd85">https://discord.gg/TWemTd85</a></li>
+    <li><strong>Newsletter:</strong> <a href="http://eepurl.com/hhD7S1">http://eepurl.com/hhD7S1</a></li>
   </ul>
   <hr style="margin: 20px auto">
   <div class="text-center">

@@ -60,17 +60,18 @@ module.exports = {
     sidebar: [
       {
         title: '🏠 Home',
-        collapsable: true,
+        collapsable: false,
         sidebarDepth: 1,
         path: '/'
       },
       {
         title: '📚 Reference',
         path: '/ref/',
-        collapsable: true,
+        collapsable: false,
         sidebarDepth: 2,
         children: [
           ['/ref/event/', '⚡ Events'],
+          ['/ref/method/', '👩‍💻 Methods'],
           ['/ref/prop/', '🧬 Properties']
         ]
       }
@@ -84,5 +85,11 @@ module.exports = {
       .use('pug-plain-loader')
         .loader('pug-plain-loader')
         .end()
+  },
+
+  markdown: {
+    extendMarkdown: md => {
+      md.use(require('markdown-it-deflist'))
+    }
   }
 }
