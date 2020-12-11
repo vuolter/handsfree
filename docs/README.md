@@ -31,9 +31,20 @@ handsfree.start()
   </div>
 </div>
 
-<blockquote class="verticle-middle-children space-children text-center">
-  <strong>Powered by</strong>
-  <a href="https://google.github.io/mediapipe/solutions/holistic"><img src='/branding/tensorflow.png' height=30></a>
+<blockquote>
+  <div class="verticle-middle-children space-children text-center">
+    <strong>Powered by</strong>
+    <a href="https://google.github.io/mediapipe/solutions/holistic"><img src='/branding/tensorflow.png' height=30></a>
+  </div>
+  <hr style="margin: 20px auto">
+  <ul class="text-center" style="list-style: none">
+    <li><strong>GitHub:</strong> <a href="https://github.com/midiblocks/handsfree">https://github.com/midiblocks/handsfree</a></li>
+    <li><strong>Discord:</strong> <a href="Discord:  https://discord.gg/TWemTd85">https://discord.gg/TWemTd85</a></li>
+  </ul>
+  <hr style="margin: 20px auto">
+  <div class="text-center">
+    <strong>Special thanks to:</strong> <a href="https://studioforcreativeinquiry.org/">The STUDIO for Creative Inquiry</a>, <a href="https://glitch.com">Glitch.com</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!
+  </div>
 </blockquote>
 
 ## Installing

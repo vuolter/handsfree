@@ -22,6 +22,7 @@ import AlgoliaSearchBox from '@AlgoliaSearchBox'
 import SearchBox from '@SearchBox'
 import SidebarButton from '@theme/components/SidebarButton.vue'
 import NavLinks from '@theme/components/NavLinks.vue'
+// @FIXME add this with JavaScript so that we don't need to modify this whole component
 import HandsfreeToggle from '@components/HandsfreeToggle'
 
 export default {

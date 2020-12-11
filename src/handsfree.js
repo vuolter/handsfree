@@ -41,7 +41,7 @@ class Handsfree {
    * Starts the trackers
    */
   start (callback) {
-
+    
   }
 
   /**
