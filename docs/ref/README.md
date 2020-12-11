@@ -1,5 +1,3 @@
-# Reference
+<Content :page-key="$site.pages.find(p => p.path === '/ref/event/').key"/>
 
-## Events
-
-- [handsfree-init](/ref/event/handsfree-init) - Called after Handsfree has been instantiated
+<Content :page-key="$site.pages.find(p => p.path === '/ref/prop/').key"/>

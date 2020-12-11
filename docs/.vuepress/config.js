@@ -70,7 +70,8 @@ module.exports = {
         collapsable: true,
         sidebarDepth: 2,
         children: [
-          ['/ref/event/', '⚡ Events']
+          ['/ref/event/', '⚡ Events'],
+          ['/ref/prop/', '🧬 Properties']
         ]
       }
     ]

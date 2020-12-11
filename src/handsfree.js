@@ -32,7 +32,16 @@
  */
 class Handsfree {
   constructor (config = {}) {
+    this.config = config
+    
     this.emit('init', this)
+  }
+
+  /**
+   * Starts the trackers
+   */
+  start (callback) {
+
   }
 
   /**
