@@ -2,6 +2,11 @@
 
 This event is triggered on the `document` after Handsfree is instantiated with `new Handsfree()`. It receives the `handsfree` instance, configured and ready to go.
 
+## Receives
+
+handsfree
+: The handsfree instance that was initialized
+
 ## Example
 
 ```js

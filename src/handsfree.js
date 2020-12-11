@@ -25,6 +25,7 @@
   Discord:    https://discord.gg/TWemTd85
   Newsletter: http://eepurl.com/hhD7S1
 */
+import merge from 'lodash/merge'
 
 /**
  * The Handsfree class
@@ -43,15 +44,21 @@ class Handsfree {
 
   /**
    * Starts the trackers
-   * @param {Function} callback The callback to run before the very first frame
    * @see https://handsfree.js.org/ref/method/start
+   * 
+   * @param {Function} callback The callback to run before the very first frame
    */
   start (callback) {
-    
+    document.body.classList.add('handsfree-loading')
+    this.emit('loading', this)
+
+    callback && callback()
   }
 
   /**
    * Triggers a document event with `handsfree-${eventName}`
+   * @see https://handsfree.js.org/ref/method/emit
+   * 
    * @param {String} eventName The name of the event
    * @param {*} detail (optional) Data to send with the event
    */
@@ -62,11 +69,13 @@ class Handsfree {
 
   /**
    * Cleans and sanitizes the config, setting up defaults
-   * @param config
    * @see https://handsfree.js.org/ref/method/cleanConfig
+   * 
+   * @param config
+   * @returns {Object} The cleaned config
    */
   cleanConfig (config) {
-    console.log('config', config)
+    return merge(config, defaultConfig)
   }
 }
 

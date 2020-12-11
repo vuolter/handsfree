@@ -61,7 +61,7 @@ module.exports = {
       {
         title: '🏠 Home',
         collapsable: false,
-        sidebarDepth: 1,
+        sidebarDepth: 0,
         path: '/'
       },
       {
