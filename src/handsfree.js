@@ -28,6 +28,7 @@
 import merge from 'lodash/merge'
 import trim from 'lodash/trim'
 import HolisticModel from './model/holistic'
+import WebojiModel from './model/weboji'
 
 // Used to separate video, canvas, etc ID's
 let id = 0
@@ -75,11 +76,15 @@ class Handsfree {
     this.emit('loading', this)
 
     // Load dependencies
+    this.numModelsLoaded = 0
     Object.keys(this.model).forEach(modelName => {
       const model = this.model[modelName]
       
       if (!model.dependenciesLoaded) {
         model.loadDependencies()
+      } else {
+        this.emit('modelLoaded')
+        this.emit('holisticModelReady')
       }
     })
     
@@ -132,6 +137,9 @@ class Handsfree {
     if (this.config.holistic.enabled) {
       this.model.holistic = new HolisticModel(this)
     }
+    if (this.config.weboji.enabled) {
+      this.model.weboji = new WebojiModel(this)
+    }
   }
 
   /**
@@ -161,7 +169,14 @@ class Handsfree {
     this.debug.$video.height = this.config.setup.video.height
     this.debug.$wrap.appendChild(this.debug.$video)
 
-    // Main canvas
+    // WebGL canvas (used by weboji)
+    const $canvasWebGL = document.createElement('CANVAS')
+    $canvasWebGL.classList.add('handsfree-canvas', 'handsfree-canvas-webgl')
+    $canvasWebGL.setAttribute('id', `handsfree-canvas-webgl-${this.id}`)
+    this.debug.$canvasWebGL = $canvasWebGL
+    this.debug.$wrap.appendChild(this.debug.$canvasWebGL)
+
+    // Context 2D canvas
     if (!this.config.setup.canvas.$el) {
       const $canvas = document.createElement('CANVAS')
       $canvas.classList.add('handsfree-canvas')
@@ -169,6 +184,8 @@ class Handsfree {
       this.config.setup.canvas.$el = $canvas
     }
     this.debug.$canvas = this.config.setup.canvas.$el
+    this.debug.$canvas.width = this.config.setup.canvas.width
+    this.debug.$canvas.height = this.config.setup.canvas.height
     this.debug.$wrap.appendChild(this.debug.$canvas)
     this.debug.context = this.debug.$canvas.getContext('2d')
 
@@ -193,6 +210,9 @@ class Handsfree {
     // Map booleans to objects
     if (typeof config.holistic === 'boolean') {
       config.holistic = {enabled: config.holistic}
+    }
+    if (typeof config.weboji === 'boolean') {
+      config.weboji = {enabled: config.weboji}
     }
 
     return merge({}, defaultConfig, config)
@@ -236,6 +256,35 @@ const defaultConfig = {
     smoothLandmarks: true,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
+  },
+
+  // Weboji model
+  weboji: {
+    enabled: false,
+    videoSettings: null,
+    throttle: 0,
+
+    videoSettings: {
+      // The video, canvas, or image element
+      // Omit this to auto create a <VIDEO> with the webcam
+      videoElement: null,
+
+      // ID of the device to use
+      // Omit this to use the system default
+      deviceId: null,
+
+      // Which camera to use on the device
+      // Possible values: 'user' (front), 'environment' (back)
+      facingMode: 'user',
+
+      // Video dimensions
+      idealWidth: 320,
+      idealHeight: 240,
+      minWidth: 240,
+      maxWidth: 1280,
+      minHeight: 240,
+      maxHeight: 1280
+    }
   }
 }
 export default Handsfree
