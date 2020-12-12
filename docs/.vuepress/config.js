@@ -71,8 +71,10 @@ module.exports = {
         sidebarDepth: 2,
         children: [
           ['/ref/event/', '⚡ Events'],
-          ['/ref/method/', '👩‍💻 Methods'],
-          ['/ref/prop/', '🧬 Properties']
+          ['/ref/model/', '📦 Models'],
+          ['/ref/method/', '💻 Methods'],
+          ['/ref/plugin/', '🔌 Plugins'],
+          ['/ref/prop/', '🧬 Properties'],
         ]
       }
     ]
