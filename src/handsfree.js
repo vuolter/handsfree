@@ -185,7 +185,7 @@ class Handsfree {
     }
     
     // Create the plugin
-    this.plugin[name] = new Plugin(config, this)
+    this.plugin[name] = new PluginBase(config, this)
     this.plugin[name].enabled &&
       this.plugin[name].onUse &&
       this.plugin[name].onUse()
