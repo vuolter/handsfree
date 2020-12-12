@@ -44,8 +44,8 @@ export default {
           window.Handsfree = Handsfree
           window.handsfree = this.$root.handsfree = new Handsfree({
             // holistic: true,
-            weboji: true,
-            // handpose: true,
+            // weboji: true,
+            handpose: true,
             showDebug: true,
             setup: {
               wrap: {
@@ -59,7 +59,7 @@ export default {
       }
 
       // Move toggle and window
-      this.$nextTick(() => {
+      setTimeout(() => {
         document.querySelector('header.navbar > .links').appendChild(
           document.querySelector('#navbar-handsfree-toggle')
         )
@@ -68,7 +68,7 @@ export default {
         document.querySelector('aside.sidebar').appendChild(
           this.$refs.window
         )
-      })
+      }, 1)
 
       this.hasMovedToggle = true
     }

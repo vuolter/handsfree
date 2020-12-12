@@ -215,7 +215,7 @@ class Handsfree {
     // Store a reference to the plugin to simplify things
     if (config.models.length) {
       config.models.forEach(modelName => {
-        this.model[modelName].plugin.push(name)
+        this.model[modelName].plugins.push(name)
       })
     } else {
       this.globalPlugins.push(name)
@@ -260,6 +260,13 @@ class Handsfree {
     this.model.holistic = new HolisticModel(this, this.config.holistic)
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.handpose = new HandposeModel(this, this.config.handpose)
+  }
+
+  /**
+   * Helper to normalze a value within a max range
+   */
+  normalize (value, max) {
+    return (max - value) / max
   }
 
   /**

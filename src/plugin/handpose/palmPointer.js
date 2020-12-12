@@ -34,7 +34,7 @@ export default {
   /**
    * Create a pointer for each user
    */
-  onUse() {
+  onUse () {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
       $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-handpose')
@@ -45,16 +45,14 @@ export default {
     this.pointer = { x: 0, y: 0 }
   },
 
-  onEnable() {
+  onEnable () {
     this.onUse()
   },
 
-  onFrame({ hand }) {
-    if (!hand || !hand.annotations) return
-
+  onFrame (data) {
     TweenMax.to(this.tween, 1, {
-      x: this.handsfree.normalize(hand.annotations.palmBase[0][0], this.handsfree.feedback.$video.width * .85) * (window.outerWidth * this.config.speed.x) + this.config.offset.x,
-      y: this.handsfree.normalize(this.handsfree.feedback.$video.height * .85 - hand.annotations.palmBase[0][1], this.handsfree.feedback.$video.height * .85) * (window.outerHeight * this.config.speed.y) + (window.outerHeight * this.config.offset.y),
+      x: this.handsfree.normalize(data.annotations.palmBase[0][0], this.handsfree.debug.$canvas.width * .85) * (window.outerWidth * this.config.speed.x) + this.config.offset.x,
+      y: this.handsfree.normalize(this.handsfree.debug.$canvas.height * .85 - data.annotations.palmBase[0][1], this.handsfree.debug.$canvas.height * .85) * (window.outerHeight * this.config.speed.y) + (window.outerHeight * this.config.offset.y),
       overwrite: true,
       ease: 'linear.easeNone',
       immediate: true
@@ -63,7 +61,7 @@ export default {
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
     
-    hand.pointer = {
+    data.pointer = {
       x: this.tween.x,
       y: this.tween.y
     }

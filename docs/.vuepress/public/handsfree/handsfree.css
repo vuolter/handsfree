@@ -204,7 +204,7 @@
 } */
 
 /* Click animation */
-/* body.handsfree-clicked .handsfree-pointer {
+body.handsfree-clicked .handsfree-pointer {
   background: #ff0;
   animation: shadow-pulse 0.15s 1;
 }
@@ -215,4 +215,4 @@
   100% {
     box-shadow: 0 0 0 75px rgba(255, 0, 0, 0);
  }
-} */
+}

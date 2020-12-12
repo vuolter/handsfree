@@ -3,6 +3,7 @@ import BaseModel from './base.js'
 export default class HolisticModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
+    this.name = 'handpose'
 
     // Various THREE variables
     this.three = {

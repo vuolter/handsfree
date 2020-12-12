@@ -94,10 +94,10 @@ export default {
   /**
    * Toggle pointer
    */
-  onDisable() {
+  onDisable () {
     this.$pointer.classList.add('handsfree-hidden')
   },
-  onEnable() {
+  onEnable () {
     this.$pointer.classList.remove('handsfree-hidden')
   }
 }

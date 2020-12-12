@@ -11,7 +11,7 @@ export default class BaseModel {
     this.enabled = config.enabled
 
     // Collection of plugins
-    this.plugin = []
+    this.plugins = []
 
     setTimeout(() => {
       const getData = this.getData
@@ -49,8 +49,15 @@ export default class BaseModel {
    * Run all the plugins attached to this model
    */
   runPlugins () {
-    this.plugin.forEach(name => {
-      Object.keys(this.data).length && this.handsfree.plugin[name].enabled && this.handsfree.plugin[name]?.onFrame(this.data)
-    })
+    // Exit if no data
+    if (this.name === 'handpose' && !this.data.annotations) {
+      return
+    }
+    
+    if (Object.keys(this.data).length) {
+      this.plugins.forEach(name => {
+        this.handsfree.plugin[name].enabled && this.handsfree.plugin[name]?.onFrame(this.data)
+      })
+    }
   }
 }

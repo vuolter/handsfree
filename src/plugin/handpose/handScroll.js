@@ -43,20 +43,18 @@ export default {
   /**
    * Scroll the page when the cursor goes above/below the threshold
    */
-  onFrame({hand}) {
-    if (!hand || !hand.annotations) return
-
+  onFrame (data) {
     // Detect if the threshold for clicking is met with specific morphs
-    const a = hand.annotations.middleFinger[3][0] - hand.annotations.thumb[3][0]
-    const b = hand.annotations.middleFinger[3][1] - hand.annotations.thumb[3][1]
+    const a = data.annotations.middleFinger[3][0] - data.annotations.thumb[3][0]
+    const b = data.annotations.middleFinger[3][1] - data.annotations.thumb[3][1]
     const c = Math.sqrt(a*a + b*b)
     this.thresholdMet = c < this.config.threshold
 
     // Set the original grab point
     if (this.thresholdMet) {
       if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
-        this.checkForFocus(hand)
-        this.origScrollTop = this.getTargetScrollTop() + hand.pointer.y
+        this.checkForFocus(data)
+        this.origScrollTop = this.getTargetScrollTop() + data.pointer.y
       }
       this.framesSinceLastGrab = 0
     }
@@ -64,7 +62,7 @@ export default {
     
     // Scroll
     if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
-      this.$target.scrollTo(0, this.origScrollTop - hand.pointer.y)
+      this.$target.scrollTo(0, this.origScrollTop - data.pointer.y)
     }
   },
 
@@ -78,10 +76,10 @@ export default {
   /**
    * Checks to see if we've hovered over an element for x turns
    */
-  checkForFocus (hand) {
+  checkForFocus (data) {
     let $potTarget = document.elementFromPoint(
-      hand.pointer.x,
-      hand.pointer.y
+      data.pointer.x,
+      data.pointer.y
     )
     if (!$potTarget) return
 

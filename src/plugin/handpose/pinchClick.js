@@ -29,10 +29,10 @@ export default {
   /**
    * Maps .maybeClick to a new throttled function
    */
-  throttle(throttle) {
+  throttle (throttle) {
     this.maybeClick = this.handsfree.throttle(
-      function(hand) {
-        this.click(hand)
+      function (data) {
+        this.click(data)
       },
       throttle,
       { trailing: false }
@@ -42,12 +42,10 @@ export default {
   /**
    * Detect click state and trigger a real click event
    */
-  onFrame({ hand }) {
-    if (!hand || !hand.annotations) return
-
+  onFrame (data) {
     // Detect if the threshold for clicking is met with specific morphs
-    const a = hand.annotations.indexFinger[3][0] - hand.annotations.thumb[3][0]
-    const b = hand.annotations.indexFinger[3][1] - hand.annotations.thumb[3][1]
+    const a = data.annotations.indexFinger[3][0] - data.annotations.thumb[3][0]
+    const b = data.annotations.indexFinger[3][1] - data.annotations.thumb[3][1]
     const c = Math.sqrt(a*a + b*b)
     this.thresholdMet = c < this.config.pinchDistance
 
@@ -63,30 +61,30 @@ export default {
 
     // Set the state
     if (this.mouseDowned > 0 && this.mouseDowned <= this.config.maxMouseDownedFrames)
-      hand.pointer.state = 'mouseDown'
+      data.pointer.state = 'mouseDown'
     else if (this.mouseDowned > this.config.maxMouseDownedFrames)
-      hand.pointer.state = 'mouseDrag'
-    else if (this.mouseUp) hand.pointer.state = 'mouseUp'
+      data.pointer.state = 'mouseDrag'
+    else if (this.mouseUp) data.pointer.state = 'mouseUp'
     else ''
 
     // Actually click something (or focus it)
-    if (hand.pointer.state === 'mouseDown') {
-      this.maybeClick(hand)
+    if (data.pointer.state === 'mouseDown') {
+      this.maybeClick(data)
     }
   },
 
   /**
    * The actual click method, this is what gets throttled
    */
-  click(hand) {
-    const $el = document.elementFromPoint(hand.pointer.x, hand.pointer.y)
+  click(data) {
+    const $el = document.elementFromPoint(data.pointer.x, data.pointer.y)
     if ($el) {
       $el.dispatchEvent(
         new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
-          clientX: hand.pointer.x,
-          clientY: hand.pointer.y
+          clientX: data.pointer.x,
+          clientY: data.pointer.y
         })
       )
 
@@ -94,7 +92,7 @@ export default {
       if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
         $el.focus()
 
-      hand.pointer.$target = $el
+      data.pointer.$target = $el
     }
   },
 

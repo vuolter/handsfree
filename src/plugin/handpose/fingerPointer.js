@@ -37,7 +37,7 @@ export default {
   /**
    * Create a pointer for each user
    */
-  onUse() {
+  onUse () {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
       $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-handpose')
@@ -48,14 +48,12 @@ export default {
     this.pointer = { x: 0, y: 0 }
   },
 
-  onEnable() {
+  onEnable () {
     this.onUse()
   },
 
-  onFrame({ handpose }) {
-    if (!handpose || !handpose.annotations) return
-
-    this.handsfree.handpose.updateMeshes(handpose)
+  onFrame (data) {
+    this.handsfree.handpose.updateMeshes(data)
     this.handsfree.handpose.three.renderer.render(this.handsfree.handpose.three.scene, this.handsfree.handpose.three.camera)
 
     this.handsfree.handpose.three.raycaster.set(this.handsfree.handpose.three.arrow.position, this.handsfree.handpose.three.arrow.direction.normalize())
@@ -74,7 +72,7 @@ export default {
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
     
-    handpose.pointer = {
+    data.pointer = {
       x: this.tween.x,
       y: this.tween.y
     }

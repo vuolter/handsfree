@@ -4,6 +4,7 @@ import merge from 'lodash/merge'
 export default class HolisticModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
+    this.name = 'weboji'
   }
 
   loadDependencies () {
