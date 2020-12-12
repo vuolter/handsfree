@@ -1,8 +1,8 @@
 import BaseModel from './base.js'
 
 export default class HolisticModel extends BaseModel {
-  constructor (handsfree) {
-    super(handsfree)
+  constructor (handsfree, config) {
+    super(handsfree, config)
   }
 
   loadDependencies () {

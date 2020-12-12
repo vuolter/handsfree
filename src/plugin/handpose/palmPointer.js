@@ -4,6 +4,8 @@
 import { TweenMax } from 'gsap/all'
 
 export default {
+  models: 'handpose',
+
   // The pointer element
   $pointer: null,
 

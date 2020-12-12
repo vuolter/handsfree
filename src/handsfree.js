@@ -25,12 +25,33 @@
   Discord:    https://discord.gg/TWemTd85
   Newsletter: http://eepurl.com/hhD7S1
 */
-import merge from 'lodash/merge'
-import trim from 'lodash/trim'
 import HolisticModel from './model/holistic'
 import WebojiModel from './model/weboji'
 import HandposeModel from './model/handpose'
 import PluginBase from './Plugin/base.js'
+import merge from 'lodash/merge'
+import trim from 'lodash/trim'
+import throttle from 'lodash/throttle'
+
+// Core plugins
+import _facePointer from './plugin/weboji/facePointer'
+import _faceClick from './plugin/weboji/faceClick'
+import _faceScroll from './plugin/weboji/faceScroll'
+
+import _fingerPointer from './plugin/handpose/fingerPointer'
+import _palmPointer from './plugin/handpose/palmPointer'
+import _pinchClick from './plugin/handpose/pinchClick'
+import _handScroll from './plugin/handpose/handScroll'
+
+const corePlugins = {
+  facePointer: _facePointer,
+  faceClick: _faceClick,
+  faceScroll: _faceScroll,
+  fingerPointer: _fingerPointer,
+  palmPointer: _palmPointer,
+  pinchClick: _pinchClick,
+  handScroll: _handScroll
+}
 
 // Used to separate video, canvas, etc ID's
 let id = 0
@@ -59,6 +80,7 @@ class Handsfree {
     this.gotUserMedia = false
     this.setupDebugger()
     this.prepareModels()
+    this.loadCorePlugins()
 
     // Start tracking when all models are loaded
     this.numModelsLoaded = 0
@@ -193,7 +215,7 @@ class Handsfree {
     // Store a reference to the plugin to simplify things
     if (config.models.length) {
       config.models.forEach(modelName => {
-        this.model[modelName].plugins.push(name)
+        this.model[modelName].plugin.push(name)
       })
     } else {
       this.globalPlugins.push(name)
@@ -235,16 +257,9 @@ class Handsfree {
       weboji: {},
       handpose: {}
     }
-    
-    if (this.config.holistic.enabled) {
-      this.model.holistic = new HolisticModel(this)
-    }
-    if (this.config.weboji.enabled) {
-      this.model.weboji = new WebojiModel(this)
-    }
-    if (this.config.handpose.enabled) {
-      this.model.handpose = new HandposeModel(this)
-    }
+    this.model.holistic = new HolisticModel(this, this.config.holistic)
+    this.model.weboji = new WebojiModel(this, this.config.weboji)
+    this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
 
   /**
@@ -351,7 +366,24 @@ class Handsfree {
       this.debug.$video.play()
       callback && callback()
     }
-  }  
+  }
+
+  loadCorePlugins () {
+    Object.keys(corePlugins).forEach(name => {
+      this.use(name, corePlugins[name])
+    })    
+  }
+
+    /**
+   * Throttles callback to run timeInMilliseconds
+   *
+   * @param {function} callback The callback to run
+   * @param {Integer} time How many milliseconds to throttle (in other words, run this method at most ever x milliseconds)
+   * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
+   */
+  throttle(cb, time, opts) {
+    return throttle(cb, time, opts)
+  }
 }
 
 /**

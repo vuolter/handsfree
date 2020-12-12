@@ -2,6 +2,8 @@
  * Click on things with a gesture
  */
 export default {
+  models: 'weboji',
+
   config: {
     // How often in milliseconds to trigger clicks
     throttle: 50,

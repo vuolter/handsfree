@@ -1,10 +1,8 @@
 import BaseModel from './base.js'
 
 export default class HolisticModel extends BaseModel {
-  constructor (handsfree) {
-    super(handsfree)
-
-    this.data = {}
+  constructor (handsfree, config) {
+    super(handsfree, config)
 
     // Various THREE variables
     this.three = {

@@ -4,6 +4,8 @@ import throttle from 'lodash/throttle'
  * Scrolls the page vertically
  */
 export default {
+  models: 'weboji',
+
   // Number of frames the current element is the same as the last
   numFramesFocused: 0,
   // The last scrollable target focused

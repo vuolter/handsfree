@@ -2,10 +2,8 @@ import BaseModel from './base.js'
 import merge from 'lodash/merge'
 
 export default class HolisticModel extends BaseModel {
-  constructor (handsfree) {
-    super(handsfree)
-
-    this.data = {}
+  constructor (handsfree, config) {
+    super(handsfree, config)
   }
 
   loadDependencies () {

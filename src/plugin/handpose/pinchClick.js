@@ -2,6 +2,8 @@
  * Click on things with a pinch gesture
  */
 export default {
+  models: 'handpose',
+
   config: {
     // How often in milliseconds to trigger clicks
     throttle: 50,

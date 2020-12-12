@@ -16,7 +16,7 @@ export default class Plugin {
     })
 
     // handsfree.config.plugin[name] overwrites plugin.config
-    let handsfreePluginConfig = handsfree.config.plugin[plugin.name]
+    let handsfreePluginConfig = handsfree.config?.plugin?.[plugin.name]
     if (typeof handsfreePluginConfig === 'boolean') {
       handsfreePluginConfig = { enabled: handsfreePluginConfig }
     }

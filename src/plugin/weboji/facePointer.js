@@ -1,6 +1,8 @@
 import { TweenMax } from 'gsap/all'
 
 export default {
+  models: 'weboji',
+
   // The pointer element
   $pointer: null,
 
@@ -33,7 +35,7 @@ export default {
   /**
    * Create a pointer for each user
    */
-  onUse() {
+  onUse () {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
       $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-face', 'handsfree-hide-when-started-without-weboji')
@@ -44,28 +46,26 @@ export default {
     this.pointer = { x: 0, y: 0 }
   },
 
-  onEnable() {
+  onEnable () {
     this.onUse()
   },
 
-  onFrame({ weboji }) {
-    if (!weboji) return
-
+  onFrame (data) {
     // Get X/Y as if looking straight aweboji
-    let x = weboji.translation[0] * window.outerWidth
-    let y = window.outerHeight - weboji.translation[1] * window.outerHeight
-    let z = (1 - weboji.translation[2]) * window.outerWidth * 2.5
+    let x = data.translation[0] * window.outerWidth
+    let y = window.outerHeight - data.translation[1] * window.outerHeight
+    let z = (1 - data.translation[2]) * window.outerWidth * 2.5
 
     // Add pitch/yaw
     x +=
       z *
-      Math.tan(weboji.rotation[1] + (this.config.offset.yaw * Math.PI) / 180) *
+      Math.tan(data.rotation[1] + (this.config.offset.yaw * Math.PI) / 180) *
       this.config.speed.x
 
     y +=
       z *
         Math.tan(
-          weboji.rotation[0] + (this.config.offset.pitch * Math.PI) / 180
+          data.rotation[0] + (this.config.offset.pitch * Math.PI) / 180
         ) *
         this.config.speed.y -
       window.outerHeight
@@ -85,7 +85,7 @@ export default {
 
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
-    weboji.pointer = {
+    data.pointer = {
       x: this.tween.x,
       y: this.tween.y
     }

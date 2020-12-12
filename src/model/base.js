@@ -1,15 +1,17 @@
 export default class BaseModel {
-  constructor (handsfree) {
+  constructor (handsfree, config) {
     this.handsfree = handsfree
+    this.config = config
+    this.data = {}
     
     // Whether we've loaded dependencies or not
     this.dependenciesLoaded = false
 
     // Whether the model is enabled or not
-    this.enabled = true
+    this.enabled = config.enabled
 
     // Collection of plugins
-    this.plugins = []
+    this.plugin = []
 
     setTimeout(() => {
       const getData = this.getData
@@ -47,8 +49,8 @@ export default class BaseModel {
    * Run all the plugins attached to this model
    */
   runPlugins () {
-    this.plugins.forEach(name => {
-      this.handsfree.plugin[name].enabled && this.plugin[name]?.onFrame(this.data)
+    this.plugin.forEach(name => {
+      Object.keys(this.data).length && this.handsfree.plugin[name].enabled && this.handsfree.plugin[name]?.onFrame(this.data)
     })
   }
 }
