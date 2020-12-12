@@ -6,12 +6,13 @@
   HandsfreeToggle#navbar-handsfree-toggle(text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
-  #handsfree-debug-window.window.handsfree-show-when-started
+  #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
     .title-bar
       .title-bar-text Debugger
       .title-bar-controls
-        button(aria-label='Minimize')
-        button(aria-label='Maximize')
+        button(aria-label='Minimize' @click='minimize')
+        button(aria-label='Restore' @click='restore')
+        button(aria-label='Maximize' @click='maximize')
     .window-body
 </template>
 
@@ -28,7 +29,9 @@ export default {
 
   data () {
     return {
-      hasMovedToggle: false
+      hasMovedToggle: false,
+      isMaximized: false,
+      isMinimized: false
     }
   },
 
@@ -40,9 +43,9 @@ export default {
           const Handsfree = module.default
           window.Handsfree = Handsfree
           window.handsfree = this.$root.handsfree = new Handsfree({
-            holistic: true,
+            // holistic: true,
             // weboji: true,
-            // handpose: true,
+            handpose: true,
             showDebug: true,
             setup: {
               wrap: {
@@ -63,11 +66,42 @@ export default {
         
         // Move the sidebar
         document.querySelector('aside.sidebar').appendChild(
-          document.querySelector('#handsfree-debug-window')
+          this.$refs.window
         )
       })
 
       this.hasMovedToggle = true
+    }
+  },
+
+  methods: {
+    /**
+     * Minimize the debugger
+     */
+    minimize () {
+      this.$refs.window.classList.add('minimized')
+      this.$refs.window.classList.remove('maximized')
+      this.isMinimized = true
+      this.isMaximized = false
+    },
+
+    /**
+     * Maximize the debugger
+     */
+    maximize () {
+      this.$refs.window.classList.add('maximized')
+      this.$refs.window.classList.remove('minimized')
+      this.isMinimized = false
+      this.isMaximized = true
+    },
+
+    /**
+     * Restore the debugger to its normal size
+     */
+    restore () {
+      this.$refs.window.classList.remove('maximized', 'minimized')
+      this.isMinimized = false
+      this.isMaximized = false      
     }
   }
 }

@@ -1,0 +1,41 @@
+html
+  .window
+    .title-bar
+      button
+        margin-left 3px
+        &:active
+          padding 0 !important
+        &:hover
+          background-color silver !important
+
+#handsfree-debug-window
+  margin-top .5em
+
+  button[aria-label='Restore']
+    display none
+
+  .window-body
+    overflow hidden
+
+  &.minimized
+    .window-body
+      display none !important
+
+    button[aria-label='Minimize']
+      display none
+    button[aria-label='Restore']
+      display inline-block
+  
+  &.maximized
+    position fixed
+    top 58px
+    margin-top 0
+    left 0
+    right 0
+    bottom 0
+    z-index 100
+
+    button[aria-label='Maximize']
+      display none
+    button[aria-label='Restore']
+      display inline-block
