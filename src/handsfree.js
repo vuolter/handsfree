@@ -107,14 +107,16 @@ class Handsfree {
    */
   loop () {
     // Get model data
+    const data = {}
     Object.keys(this.model).forEach(modelName => {
       const model = this.model[modelName]
       
       if (model.enabled === true && model.dependenciesLoaded) {
-        const data = model.getData()
-        console.log(data)
+        model.getData()
+        data[modelName] = model.data
       }
     })
+    this.emit('data', data)
 
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
@@ -330,6 +332,23 @@ const defaultConfig = {
       maxWidth: 1280,
       minHeight: 240,
       maxHeight: 1280
+    },
+
+    // Thresholds needed before these are considered "activated"
+    morphs: {
+      threshold: {
+        smileRight: 0.7,
+        smileLeft: 0.7,
+        browLeftDown: 0.8,
+        browRightDown: 0.8,
+        browLeftUp: 0.8,
+        browRightUp: 0.8,
+        eyeLeftClosed: 0.4,
+        eyeRightClosed: 0.4,
+        mouthOpen: 0.3,
+        mouthRound: 0.8,
+        upperLip: 0.5
+      }
     }
   },
 
