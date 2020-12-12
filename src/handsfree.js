@@ -60,6 +60,9 @@ class Handsfree {
       if (++this.numModelsLoaded === Object.keys(this.model).length) {
         document.body.classList.remove('handsfree-loading')
         document.body.classList.add('handsfree-started')
+
+        this.isLooping = true
+        this.loop()
       }
     })
 
@@ -85,7 +88,7 @@ class Handsfree {
         model.loadDependencies()
       } else {
         this.emit('modelLoaded')
-        this.emit('holisticModelReady')
+        this.emit(`${modelName}ModelReady`)
       }
     })
     
@@ -102,7 +105,18 @@ class Handsfree {
   /**
    * Called on every webcam frame
    */
-  onLoop (results) {
+  loop () {
+    // Get model data
+    Object.keys(this.model).forEach(modelName => {
+      const model = this.model[modelName]
+      
+      if (model.enabled === true && model.dependenciesLoaded) {
+        const data = model.getData()
+        console.log(data)
+      }
+    })
+
+    this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
 
   /**
@@ -123,7 +137,7 @@ class Handsfree {
    * @param {String} eventName The `handsfree-${eventName}` to listen to
    * @param {Function} callback The callback to call
    */
-  on(eventName, callback) {
+  on (eventName, callback) {
     document.addEventListener(`handsfree-${eventName}`, (ev) => {
       callback(ev.detail)
     })

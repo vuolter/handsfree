@@ -30,7 +30,7 @@ export default class HolisticModel extends BaseModel {
                 NNC: JSON.stringify(model),
                 videoSettings,
                 callbackReady: () => {
-                  this.isReady = true
+                  this.dependenciesLoaded = true
                   this.handsfree.emit('modelLoaded')
                   this.handsfree.emit('webojiModelLoaded')
                   this.handsfree.emit('wbeojiModelReady')

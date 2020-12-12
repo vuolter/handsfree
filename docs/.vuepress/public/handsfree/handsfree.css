@@ -14,7 +14,7 @@
 }
 
 
-/* feedback */
+/* Debug */
 .handsfree-feedback {
   position: relative;
 }
@@ -31,12 +31,16 @@
   width: 100%;
   height: auto;
 }
-.handsfree-canvas {
+.handsfree-canvas,
+.handsfree-handpose-canvas {
   position: relative;
   left: 0;
   top: 0;
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: auto !important;
+}
+.handsfree-handpose-canvas {
+  position: absolute;
 }
 .handsfree-canvas-webgl {
   position: absolute;

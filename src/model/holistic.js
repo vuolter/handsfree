@@ -25,9 +25,11 @@ export default class HolisticModel extends BaseModel {
           })
 
           this.camera.start()
+          this.dependenciesLoaded = true
           this.handsfree.emit('modelLoaded')
           this.handsfree.emit('holisticModelLoaded')
           this.handsfree.emit('holisticModelReady')
+          document.body.classList.add('handsfree-model-holistic')
         })
       })
 

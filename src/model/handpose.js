@@ -3,6 +3,42 @@ import BaseModel from './base.js'
 export default class HolisticModel extends BaseModel {
   constructor (handsfree) {
     super(handsfree)
+
+    this.data = {}
+
+    // Various THREE variables
+    this.three = {
+      scene: null,
+      camera: null,
+      renderer: null,
+      meshes: []
+    }
+
+    // landmark indices that represent the palm
+    // 8 = Index finger tip
+    // 12 = Middle finger tip
+    this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
+  }
+
+  /**
+   * Runs inference and sets up other data
+   */
+  async getData () {
+    if (!this.handsfree.debug.$video) return
+
+    const predictions = await this.api.estimateHands(this.handsfree.debug.$video)
+
+    this.data = {
+      ...predictions[0],
+      meshes: this.three.meshes
+    }
+
+    if (predictions[0]) {
+      this.updateMeshes(this.data)
+    }
+    
+    this.three.renderer.render(this.three.scene, this.three.camera)
+    return this.data
   }
 
   loadDependencies () {
@@ -14,7 +50,7 @@ export default class HolisticModel extends BaseModel {
   
         this.setup3D()
   
-        this.isReady = true
+        this.dependenciesLoaded = true
         this.handsfree.emit('modelLoaded')
         this.handsfree.emit('handposeModelLoaded')
         this.handsfree.emit('handposeModelReady')
