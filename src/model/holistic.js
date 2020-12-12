@@ -18,7 +18,9 @@ export default class HolisticModel extends BaseModel {
           this.camera = new Camera(this.handsfree.debug.$video, {
             // Run inference
             onFrame: async () => {
-              await this.api.send({image: this.handsfree.debug.$video})
+              if (this.handsfree.isLooping) {
+                await this.api.send({image: this.handsfree.debug.$video})
+              }
             },
             width: this.handsfree.debug.$video.width,
             height: this.handsfree.debug.$video.height
@@ -38,7 +40,10 @@ export default class HolisticModel extends BaseModel {
     })
   }
 
+  getData () {}
+  
   updateData (results) {
+    this.data = results
     if (this.handsfree.config.showDebug) {
       this.debug(results)
     }

@@ -51,6 +51,7 @@ class Handsfree {
     this.config = this.cleanConfig(config)
 
     // Setup
+    this.gotUserMedia = false
     this.setupDebugger()
     this.prepareModels()
 
@@ -117,6 +118,7 @@ class Handsfree {
       }
     })
     this.emit('data', data)
+    console.log('data', data)
 
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }
@@ -254,6 +256,8 @@ class Handsfree {
           this.debug.$video.srcObject = stream
           this.debug.$video.onloadedmetadata = () => {
             this.debug.$video.play()
+            this.emit('gotUserMedia', stream)
+            this.gotUserMedia = true
             callback && callback()
           }
         })
