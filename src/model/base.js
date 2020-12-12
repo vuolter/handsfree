@@ -11,7 +11,7 @@ export default class BaseModel {
 
   // Implement in the model class
   loadDependencies () {}
-  getData () {}
+  updateData () {}
 
   /**
    * Loads a script and runs a callback

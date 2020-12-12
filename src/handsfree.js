@@ -85,43 +85,6 @@ class Handsfree {
    * Called on every webcam frame
    */
   onLoop (results) {
-    this.debug.context.drawImage(results.image, 0, 0, this.debug.$canvas.width, this.debug.$canvas.height)
-
-    console.log(results)
-    drawConnectors(this.debug.context, results.poseLandmarks, POSE_CONNECTIONS, {
-      color: '#00FF00',
-      lineWidth: 4
-    })
-    
-    drawLandmarks(this.debug.context, results.poseLandmarks, {
-      color: '#FF0000',
-      lineWidth: 2
-    })
-    
-    drawConnectors(this.debug.context, results.faceLandmarks, FACEMESH_TESSELATION, {
-      color: '#C0C0C070',
-      lineWidth: 1
-    })
-    
-    drawConnectors(this.debug.context, results.leftHandLandmarks, HAND_CONNECTIONS, {
-      color: '#CC0000',
-      lineWidth: 5
-    })
-    
-    drawLandmarks(this.debug.context, results.leftHandLandmarks, {
-      color: '#00FF00',
-      lineWidth: 2
-    })
-    
-    drawConnectors(this.debug.context, results.rightHandLandmarks, HAND_CONNECTIONS, {
-      color: '#00CC00',
-      lineWidth: 5
-    })
-
-    drawLandmarks(this.debug.context, results.rightHandLandmarks, {
-      color: '#FF0000',
-      lineWidth: 2
-    })    
   }
 
   /**

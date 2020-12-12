@@ -16,6 +16,7 @@ export default {
       window.Handsfree = Handsfree
       window.handsfree = this.$root.handsfree = new Handsfree({
         holistic: true,
+        showFeed: true,
         assetsPath: '/handsfree/'
       })
       window.app = this.$root

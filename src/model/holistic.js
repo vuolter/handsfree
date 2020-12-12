@@ -28,7 +28,55 @@ export default class HolisticModel extends BaseModel {
       })
 
       this.holistic.setOptions(this.handsfree.config.holistic)
-      this.holistic.onResults(results => this.handsfree.onLoop(results))
+      this.holistic.onResults(results => this.updateData(results))
     })
+  }
+
+  updateData (results) {
+    if (this.handsfree.config.showFeed) {
+      this.debug(results)
+    }
+  }
+
+  /**
+   * Debugs the holistic model
+   */
+  debug (results) {
+    this.handsfree.debug.context.drawImage(results.image, 0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
+
+    drawConnectors(this.handsfree.debug.context, results.poseLandmarks, POSE_CONNECTIONS, {
+      color: '#00FF00',
+      lineWidth: 4
+    })
+    
+    drawLandmarks(this.handsfree.debug.context, results.poseLandmarks, {
+      color: '#FF0000',
+      lineWidth: 2
+    })
+    
+    drawConnectors(this.handsfree.debug.context, results.faceLandmarks, FACEMESH_TESSELATION, {
+      color: '#C0C0C070',
+      lineWidth: 1
+    })
+    
+    drawConnectors(this.handsfree.debug.context, results.leftHandLandmarks, HAND_CONNECTIONS, {
+      color: '#CC0000',
+      lineWidth: 5
+    })
+    
+    drawLandmarks(this.handsfree.debug.context, results.leftHandLandmarks, {
+      color: '#00FF00',
+      lineWidth: 2
+    })
+    
+    drawConnectors(this.handsfree.debug.context, results.rightHandLandmarks, HAND_CONNECTIONS, {
+      color: '#00CC00',
+      lineWidth: 5
+    })
+
+    drawLandmarks(this.handsfree.debug.context, results.rightHandLandmarks, {
+      color: '#FF0000',
+      lineWidth: 2
+    })    
   }
 }
