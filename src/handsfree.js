@@ -29,6 +29,7 @@ import merge from 'lodash/merge'
 import trim from 'lodash/trim'
 import HolisticModel from './model/holistic'
 import WebojiModel from './model/weboji'
+import HandposeModel from './model/handpose'
 
 // Used to separate video, canvas, etc ID's
 let id = 0
@@ -140,6 +141,9 @@ class Handsfree {
     if (this.config.weboji.enabled) {
       this.model.weboji = new WebojiModel(this)
     }
+    if (this.config.handpose.enabled) {
+      this.model.handpose = new HandposeModel(this)
+    }
   }
 
   /**
@@ -214,9 +218,37 @@ class Handsfree {
     if (typeof config.weboji === 'boolean') {
       config.weboji = {enabled: config.weboji}
     }
+    if (typeof config.handpose === 'boolean') {
+      config.handpose = {enabled: config.handpose}
+    }
 
     return merge({}, defaultConfig, config)
   }
+
+  /**
+   * Gets the webcam media stream into handsfree.feedback.stream
+   * @param {Object} callback The callback to call after the stream is received
+   */
+  getUserMedia (callback) {
+    if (!this.debug.stream) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: false, video: true })
+        .then((stream) => {
+          this.debug.stream = stream
+          this.debug.$video.srcObject = stream
+          this.debug.$video.onloadedmetadata = () => {
+            this.debug.$video.play()
+            callback && callback()
+          }
+        })
+        .catch((err) => {
+          console.error(`Error loading models: ${err}`)
+        })
+    } else {
+      this.debug.$video.play()
+      callback && callback()
+    }
+  }  
 }
 
 /**
@@ -284,6 +316,31 @@ const defaultConfig = {
       maxWidth: 1280,
       minHeight: 240,
       maxHeight: 1280
+    }
+  },
+
+  handpose: {
+    enabled: false,
+    
+    // How many milliseconds to wait between each inference
+    throttle: 0,
+
+    // Model config
+    model: {
+      // How many frames to go without running the bounding box detector.
+      // - Set to a lower value if you want a safety net in case the mesh
+      //   detector produces consistently flawed predictions
+      maxContinuousChecks: Infinity,
+
+      // Threshold for discarding a prediction
+      detectionConfidence: 0.8,
+
+      // A float representing the threshold for deciding whether boxes overlap
+      // too much in non-maximum suppression. Must be between [0, 1]
+      iouThreshold: 0.3,
+
+      // A threshold for deciding when to remove boxes based on score in non-maximum suppression
+      scoreThreshold: 0.75
     }
   }
 }

@@ -32,8 +32,8 @@ export default class HolisticModel extends BaseModel {
                 callbackReady: () => {
                   this.isReady = true
                   this.handsfree.emit('modelLoaded')
-                  this.handsfree.emit('holistiModelLoaded')
-                  this.handsfree.emit('holisticModelReady')
+                  this.handsfree.emit('webojiModelLoaded')
+                  this.handsfree.emit('wbeojiModelReady')
                   document.body.classList.add('handsfree-model-weboji')
                 }
               })
