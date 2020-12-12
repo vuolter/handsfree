@@ -7,6 +7,19 @@ export default class BaseModel {
 
     // Whether the model is enabled or not
     this.enabled = true
+
+    // Collection of plugins
+    this.plugins = []
+
+    setTimeout(() => {
+      const getData = this.getData
+      
+      this.getData = () => {
+        const data = getData.apply(this, arguments)
+        this.runPlugins()
+        return data
+      }
+    }, 0)
   }
 
   // Implement in the model class
@@ -28,5 +41,14 @@ export default class BaseModel {
 
     $script.src = src
     document.body.appendChild($script)
+  }
+
+  /**
+   * Run all the plugins attached to this model
+   */
+  runPlugins () {
+    this.plugins.forEach(name => {
+      this.handsfree.plugin[name].enabled && this.plugin[name]?.onFrame(this.data)
+    })
   }
 }

@@ -30,6 +30,7 @@ import trim from 'lodash/trim'
 import HolisticModel from './model/holistic'
 import WebojiModel from './model/weboji'
 import HandposeModel from './model/handpose'
+import PluginBase from './Plugin/base.js'
 
 // Used to separate video, canvas, etc ID's
 let id = 0
@@ -46,6 +47,10 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
+
+    // Props
+    this.plugin = {}
+    this.globalPlugins = []
     
     // Clean config and set defaults
     this.config = this.cleanConfig(config)
@@ -58,7 +63,12 @@ class Handsfree {
     // Start tracking when all models are loaded
     this.numModelsLoaded = 0
     this.on('modelLoaded', () => {
-      if (++this.numModelsLoaded === Object.keys(this.model).length) {
+      let numActiveModels = 0
+      Object.keys(this.model).forEach(modelName => {
+        this.model[modelName].enabled && ++numActiveModels
+      })
+      
+      if (++this.numModelsLoaded === numActiveModels) {
         document.body.classList.remove('handsfree-loading')
         document.body.classList.add('handsfree-started')
 
@@ -85,9 +95,9 @@ class Handsfree {
     Object.keys(this.model).forEach(modelName => {
       const model = this.model[modelName]
       
-      if (!model.dependenciesLoaded) {
+      if (model.enabled && !model.dependenciesLoaded) {
         model.loadDependencies()
-      } else {
+      } else if (model.enabled) {
         this.emit('modelLoaded')
         this.emit(`${modelName}ModelReady`)
       }
@@ -118,9 +128,78 @@ class Handsfree {
       }
     })
     this.emit('data', data)
-    console.log('data', data)
+
+    // Run global plugins
+    this.globalPlugins.forEach(pluginName => {
+      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
+    })
 
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
+  }
+
+  /**
+   * Adds a callback (we call it a plugin) to be called after every tracked frame
+   *
+   * @param {String} name The plugin name
+   * @param {Object|Function} config The config object, or a callback to run on every fram
+   * @returns {Plugin} The plugin object
+   */
+  use (name, config) {
+    // Make sure we have an options object
+    if (typeof config === 'function') {
+      config = {
+        onFrame: config
+      }
+    }
+
+    config = Object.assign(
+      {
+        // Stores the plugins name for internal use
+        name,
+        // The model to apply this plugin to
+        models: [],
+        // Plugin tags for quickly turning things on/off
+        tags: [],
+        // Whether the plugin is enabled by default
+        enabled: true,
+        // A set of default config values the user can override during instanciation
+        config: {},
+        // (instance) => Called on every frame
+        onFrame: null,
+        // (instance) => Called when the plugin is first used
+        onUse: null,
+        // (instance) => Called when the plugin is enabled
+        onEnable: null,
+        // (instance) => Called when the plugin is disabled
+        onDisable: null
+      },
+      config
+    )
+
+    // Sanitize
+    if (typeof config.tags === 'string') {
+      config.tags = [config.tags]
+    }
+    if (typeof config.models === 'string') {
+      config.models = [config.models]
+    }
+    
+    // Create the plugin
+    this.plugin[name] = new Plugin(config, this)
+    this.plugin[name].enabled &&
+      this.plugin[name].onUse &&
+      this.plugin[name].onUse()
+
+    // Store a reference to the plugin to simplify things
+    if (config.models.length) {
+      config.models.forEach(modelName => {
+        this.model[modelName].plugins.push(name)
+      })
+    } else {
+      this.globalPlugins.push(name)
+    }
+  
+    return this.plugin[name]
   }
 
   /**
@@ -151,7 +230,11 @@ class Handsfree {
    * Prepares the selected models
    */
   prepareModels () {
-    this.model = {}
+    this.model = {
+      holistic: {},
+      weboji: {},
+      handpose: {}
+    }
     
     if (this.config.holistic.enabled) {
       this.model.holistic = new HolisticModel(this)
