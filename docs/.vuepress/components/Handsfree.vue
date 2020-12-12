@@ -15,6 +15,7 @@ export default {
       const Handsfree = module.default
       window.Handsfree = Handsfree
       window.handsfree = this.$root.handsfree = new Handsfree({
+        holistic: true,
         assetsPath: '/handsfree/'
       })
       window.app = this.$root

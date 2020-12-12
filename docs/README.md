@@ -37,9 +37,9 @@ handsfree.start()
     <a href="https://google.github.io/mediapipe/solutions/holistic"><img src='/branding/tensorflow.png' height=30></a>
   </div>
   <hr style="margin: 20px auto">
-  <ul style="list-style: none; width: 400px; margin: auto; max-width: 100%">
+  <ul style="list-style: none; width: 450px; margin: auto; max-width: 100%; padding-left: 0">
     <li><strong>👩‍💻 GitHub:</strong> <a href="https://github.com/midiblocks/handsfree">https://github.com/midiblocks/handsfree</a></li>
-    <li><strong>💬 Discord:</strong> <a href="https://discord.gg/TWemTd85">https://discord.gg/TWemTd85</a></li>
+    <li><strong>💬 Google Group:</strong> <a href="https://groups.google.com/g/handsfreejs">https://groups.google.com/g/handsfreejs</a></li>
     <li><strong>📧 Newsletter:</strong> <a href="http://eepurl.com/hhD7S1">http://eepurl.com/hhD7S1</a></li>
   </ul>
   <hr style="margin: 20px auto">

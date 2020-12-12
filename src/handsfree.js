@@ -27,6 +27,7 @@
 */
 import merge from 'lodash/merge'
 import trim from 'lodash/trim'
+import HolisticModel from './model/holistic'
 
 // Used to separate video, canvas, etc ID's
 let id = 0
@@ -44,8 +45,12 @@ class Handsfree {
     // Assign the instance ID
     this.id = ++id
     
+    // Clean config and set defaults
     this.config = this.cleanConfig(config)
-    this.setup()
+
+    // Setup
+    this.setupDebugger()
+    this.prepareModels()
 
     this.hasLoadedDependencies = false
 
@@ -64,32 +69,14 @@ class Handsfree {
     document.body.classList.add('handsfree-loading')
     this.emit('loading', this)
 
-    if (!this.hasLoadedDependencies) {
-      // Load holistic
-      this.loadDependency(`${this.config.assetsPath}/@mediapipe/holistic/holistic.js`, () => {
-        this.holistic = new Holistic({locateFile: file => {
-          return `${this.config.assetsPath}/@mediapipe/holistic/${file}`
-        }})
-
-        // Load the holistic camera module
-        this.loadDependency(`${this.config.assetsPath}/@mediapipe/drawing_utils/drawing_utils.js`, () => {
-          this.loadDependency(`${this.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
-            this.camera = new Camera(this.debug.$video, {
-              // Run inference
-              onFrame: async () => {
-                await this.holistic.send({image: this.debug.$video})
-              },
-              width: this.debug.$video.width,
-              height: this.debug.$video.height
-            })
-            this.camera.start()
-          })
-        })
-
-        this.holistic.setOptions(this.config.model)
-        this.holistic.onResults(results => this.onLoop(results))
-      })
-    }
+    // Load dependencies
+    Object.keys(this.model).forEach(modelName => {
+      const model = this.model[modelName]
+      
+      if (!model.dependenciesLoaded) {
+        model.loadDependencies()
+      }
+    })
     
     callback && callback()
   }
@@ -150,9 +137,20 @@ class Handsfree {
   }
 
   /**
-   * Sets up the video and camera
+   * Prepares the selected models
    */
-  setup () {
+  prepareModels () {
+    this.model = {}
+    
+    if (this.config.holistic.enabled) {
+      this.model.holistic = new HolisticModel(this)
+    }
+  }
+
+  /**
+   * Sets up the video and canvas
+   */
+  setupDebugger () {
     this.debug = {}
     
     // Feedback wrap
@@ -200,25 +198,13 @@ class Handsfree {
    */
   cleanConfig (config) {
     defaultConfig.setup.wrap.$target = document.body
-    
-    return merge({}, defaultConfig, config)
-  }
 
-  /**
-   * Loads a script and runs a callback
-   * @param {string} src The absolute path of the source file
-   * @param {*} callback The callback to call after the file is loaded
-   */
-  loadDependency (src, callback) {
-    const $script = document.createElement('script')
-    $script.async = true
-
-    $script.onload = () => {
-      callback()
+    // Map booleans to objects
+    if (typeof config.holistic === 'boolean') {
+      config.holistic = {enabled: config.holistic}
     }
 
-    $script.src = src
-    document.body.appendChild($script)
+    return merge({}, defaultConfig, config)
   }
 }
 
@@ -251,7 +237,9 @@ const defaultConfig = {
     }
   },
 
-  model: {
+  // Holistic model
+  holistic: {
+    enabled: false,
     upperBodyOnly: false,
     smoothLandmarks: true,
     minDetectionConfidence: 0.5,
