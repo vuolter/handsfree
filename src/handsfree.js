@@ -87,6 +87,13 @@ class Handsfree {
   }
 
   /**
+   * Stops tracking
+   */
+  stop () {
+    location.reload()
+  }
+
+  /**
    * Called on every webcam frame
    */
   onLoop (results) {

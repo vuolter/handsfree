@@ -18,7 +18,6 @@ export default {
         window.handsfree = this.$root.handsfree = new Handsfree({
           holistic: true,
           showDebug: true,
-          showVideo: true,
           setup: {
             wrap: {
               $target: document.querySelector('aside.sidebar')
