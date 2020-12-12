@@ -2,17 +2,18 @@ html
   .sidebar
     padding 10px
     display flex
-    flex-direction columns
+    flex-direction column
     overflow hidden
     border-right none
 
     > .sidebar-links
-      width 100%
+      width auto
       overflow auto
+      flex 1 0 auto
 
     .nav-links
       display: none
-  
+
   a.sidebar-link.active,
   .sidebar-heading.clickable.active
     border-left-color transparent

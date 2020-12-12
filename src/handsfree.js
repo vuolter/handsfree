@@ -52,10 +52,15 @@ class Handsfree {
     this.setupDebugger()
     this.prepareModels()
 
-    this.hasLoadedDependencies = false
+    // Start tracking when all models are loaded
+    this.numModelsLoaded = 0
+    this.on('modelLoaded', () => {
+      if (++this.numModelsLoaded === Object.keys(this.model).length) {
+        document.body.classList.remove('handsfree-loading')
+        document.body.classList.add('handsfree-started')
+      }
+    })
 
-    this.holistic = null
-    
     this.emit('init', this)
   }
 
@@ -97,6 +102,18 @@ class Handsfree {
   emit (eventName, detail = null) {
     const event = new CustomEvent(`handsfree-${eventName}`, {detail})
     document.dispatchEvent(event)
+  }
+
+  /**
+   * Calls a callback on `document` when an event is triggered
+   *
+   * @param {String} eventName The `handsfree-${eventName}` to listen to
+   * @param {Function} callback The callback to call
+   */
+  on(eventName, callback) {
+    document.addEventListener(`handsfree-${eventName}`, (ev) => {
+      callback(ev.detail)
+    })
   }
 
   /**
@@ -150,6 +167,10 @@ class Handsfree {
 
     // Append everything to the body
     this.config.setup.wrap.$target.appendChild(this.debug.$wrap)
+
+    // Add classes
+    this.config.showDebug && document.body.classList.add('handsfree-show-debug')
+    this.config.showVideo && document.body.classList.add('handsfree-show-video')
   }
 
   /**
@@ -196,7 +217,8 @@ const defaultConfig = {
     },
     // The wrapping element
     wrap: {
-      $el: null
+      $el: null,
+      $target: null
     }
   },
 

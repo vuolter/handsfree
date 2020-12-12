@@ -11,16 +11,24 @@ export default {
   name: 'HandsfreeContainer',
 
   mounted () {
-    import('@handsfree/handsfree.js').then(module => {
-      const Handsfree = module.default
-      window.Handsfree = Handsfree
-      window.handsfree = this.$root.handsfree = new Handsfree({
-        holistic: true,
-        showFeed: true,
-        assetsPath: '/handsfree/'
+    if (!window.Handsfree) {
+      import('@handsfree/handsfree.js').then(module => {
+        const Handsfree = module.default
+        window.Handsfree = Handsfree
+        window.handsfree = this.$root.handsfree = new Handsfree({
+          holistic: true,
+          showDebug: true,
+          showVideo: true,
+          setup: {
+            wrap: {
+              $target: document.querySelector('aside.sidebar')
+            }
+          },
+          assetsPath: '/handsfree/'
+        })
+        window.app = this.$root
       })
-      window.app = this.$root
-    })
+    }
   }
 }
 </script>

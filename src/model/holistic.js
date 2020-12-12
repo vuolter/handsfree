@@ -23,7 +23,10 @@ export default class HolisticModel extends BaseModel {
             width: this.handsfree.debug.$video.width,
             height: this.handsfree.debug.$video.height
           })
+
           this.camera.start()
+          this.handsfree.emit('modelLoaded')
+          this.handsfree.emit('holistiModelLoaded')
         })
       })
 
@@ -33,7 +36,7 @@ export default class HolisticModel extends BaseModel {
   }
 
   updateData (results) {
-    if (this.handsfree.config.showFeed) {
+    if (this.handsfree.config.showDebug) {
       this.debug(results)
     }
   }
@@ -42,40 +45,41 @@ export default class HolisticModel extends BaseModel {
    * Debugs the holistic model
    */
   debug (results) {
-    this.handsfree.debug.context.drawImage(results.image, 0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
+    // this.handsfree.debug.context.drawImage(results.image, 0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
+    this.handsfree.debug.context.clearRect(0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
 
     drawConnectors(this.handsfree.debug.context, results.poseLandmarks, POSE_CONNECTIONS, {
-      color: '#00FF00',
+      color: '#0f0',
       lineWidth: 4
     })
     
     drawLandmarks(this.handsfree.debug.context, results.poseLandmarks, {
-      color: '#FF0000',
+      color: '#f00',
       lineWidth: 2
     })
     
     drawConnectors(this.handsfree.debug.context, results.faceLandmarks, FACEMESH_TESSELATION, {
-      color: '#C0C0C070',
+      color: '#00f',
       lineWidth: 1
     })
     
     drawConnectors(this.handsfree.debug.context, results.leftHandLandmarks, HAND_CONNECTIONS, {
-      color: '#CC0000',
+      color: '#0f0',
       lineWidth: 5
     })
     
     drawLandmarks(this.handsfree.debug.context, results.leftHandLandmarks, {
-      color: '#00FF00',
+      color: '#f0f',
       lineWidth: 2
     })
     
     drawConnectors(this.handsfree.debug.context, results.rightHandLandmarks, HAND_CONNECTIONS, {
-      color: '#00CC00',
+      color: '#0f0',
       lineWidth: 5
     })
 
     drawLandmarks(this.handsfree.debug.context, results.rightHandLandmarks, {
-      color: '#FF0000',
+      color: '#f0f',
       lineWidth: 2
     })    
   }
