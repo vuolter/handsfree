@@ -22,7 +22,7 @@ export default {
   config: {
     offset: {
       x: 0,
-      y: -0.75
+      y: 0
     },
 
     speed: {
@@ -51,8 +51,8 @@ export default {
 
   onFrame (data) {
     TweenMax.to(this.tween, 1, {
-      x: this.handsfree.normalize(data.annotations.palmBase[0][0], this.handsfree.debug.$canvas.width * .85) * (window.outerWidth * this.config.speed.x) + this.config.offset.x,
-      y: this.handsfree.normalize(this.handsfree.debug.$canvas.height * .85 - data.annotations.palmBase[0][1], this.handsfree.debug.$canvas.height * .85) * (window.outerHeight * this.config.speed.y) + (window.outerHeight * this.config.offset.y),
+      x: window.outerWidth - this.handsfree.normalize(data.annotations.palmBase[0][0], this.handsfree.debug.$video.videoWidth * .75) * window.outerWidth + this.config.offset.x,
+      y: this.handsfree.normalize(data.annotations.palmBase[0][1], this.handsfree.debug.$video.videoHeight * .75) * window.outerHeight - window.outerHeight * .5 + this.config.offset.y,
       overwrite: true,
       ease: 'linear.easeNone',
       immediate: true
