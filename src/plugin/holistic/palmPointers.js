@@ -33,8 +33,8 @@ export default {
     },
 
     speed: {
-      x: 1.5,
-      y: 1.5
+      x: 2,
+      y: 2
     }
   },
 
@@ -75,6 +75,7 @@ export default {
         mid.x = mid.x / this.palmPoints.length
         mid.y = mid.y / this.palmPoints.length
 
+        // Tween
         TweenMax.to(this.tween[n], 1, {
           x: window.outerWidth - mid.x * window.outerWidth + this.config.offset.x,
           y: mid.y * window.outerHeight + this.config.offset.y,

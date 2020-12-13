@@ -61,7 +61,7 @@ module.exports = {
       {
         title: '🏠 Home',
         collapsable: false,
-        sidebarDepth: 1,
+        sidebarDepth: 2,
         path: '/'
       },
       {
@@ -140,6 +140,15 @@ module.exports = {
               ['/ref/prop/isLooping.md', '.isLooping'],
               ['/ref/prop/model.md', '.model'],
               ['/ref/prop/plugin.md', '.plugin'],
+            ]
+          },
+          {
+            title: '🧰 Utilities',
+            path: '/ref/util/',
+            collapsable: true,
+            sidebarDepth: 0,
+            children: [
+              ['/ref/util/classes.md', '🎨 Classes']
             ]
           }
         ]
