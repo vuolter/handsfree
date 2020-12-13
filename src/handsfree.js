@@ -34,23 +34,15 @@ import trim from 'lodash/trim'
 import throttle from 'lodash/throttle'
 
 // Core plugins
-import _facePointer from './plugin/weboji/facePointer'
-import _faceClick from './plugin/weboji/faceClick'
-import _faceScroll from './plugin/weboji/faceScroll'
-
-import _fingerPointer from './plugin/handpose/fingerPointer'
-import _palmPointer from './plugin/handpose/palmPointer'
-import _pinchClick from './plugin/handpose/pinchClick'
-import _handScroll from './plugin/handpose/handScroll'
-
 const corePlugins = {
-  facePointer: _facePointer,
-  faceClick: _faceClick,
-  faceScroll: _faceScroll,
-  fingerPointer: _fingerPointer,
-  palmPointer: _palmPointer,
-  pinchClick: _pinchClick,
-  handScroll: _handScroll
+  facePointer: require('./plugin/weboji/facePointer').default,
+  faceClick: require('./plugin/weboji/faceClick').default,
+  faceScroll: require('./plugin/weboji/faceScroll').default,
+  fingerPointer: require('./plugin/handpose/palmPointer').default,
+  palmPointer: require('./plugin/handpose/fingerPointer').default,
+  pinchClick: require('./plugin/handpose/pinchClick').default,
+  handScroll: require('./plugin/handpose/handScroll').default,
+  palmPointers: require('./plugin/holistic/palmPointers').default
 }
 
 // Used to separate video, canvas, etc ID's
@@ -174,7 +166,7 @@ class Handsfree {
       }
     }
 
-    config = Object.assign(
+    config = merge({},
       {
         // Stores the plugins name for internal use
         name,

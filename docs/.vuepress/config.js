@@ -61,7 +61,7 @@ module.exports = {
       {
         title: '🏠 Home',
         collapsable: false,
-        sidebarDepth: 0,
+        sidebarDepth: 1,
         path: '/'
       },
       {
@@ -148,7 +148,13 @@ module.exports = {
         title: '🤝 Community',
         collapsable: false,
         sidebarDepth: 0,
-        path: '/community/'
+        path: '/community/',
+        children: [
+          ['https://groups.google.com/g/handsfreejs', '💬 Google Groups'],
+          ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
+          ['https://github.com/midiblocks/handsfree', 'GitHub'],
+          ['https://twitter.com/midiblocks', 'Twitter'],
+        ]
       }
     ]
   },

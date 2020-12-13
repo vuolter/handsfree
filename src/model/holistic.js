@@ -68,7 +68,7 @@ export default class HolisticModel extends BaseModel {
     })
     
     drawConnectors(this.handsfree.debug.context, results.faceLandmarks, FACEMESH_TESSELATION, {
-      color: '#00f',
+      color: '#f0f',
       lineWidth: 1
     })
     

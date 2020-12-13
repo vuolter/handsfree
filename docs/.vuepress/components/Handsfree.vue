@@ -43,10 +43,11 @@ export default {
           const Handsfree = module.default
           window.Handsfree = Handsfree
           window.handsfree = this.$root.handsfree = new Handsfree({
-            // holistic: true,
+            holistic: true,
             // weboji: true,
-            handpose: true,
+            // handpose: true,
             showDebug: true,
+            // showVideo: true,
             setup: {
               wrap: {
                 $target: document.querySelector('#handsfree-debug-window .window-body')
@@ -68,7 +69,9 @@ export default {
         document.querySelector('aside.sidebar').appendChild(
           this.$refs.window
         )
-      }, 1)
+      // @fixme Occasionally the DOM isn't ready, let's figure out why and banish setTimeout
+      //        out of this realm and sub with nextTick
+      }, 50)
 
       this.hasMovedToggle = true
     }
