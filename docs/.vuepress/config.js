@@ -155,15 +155,23 @@ module.exports = {
       },
       {
         title: '🤝 Community',
-        collapsable: false,
+        collapsable: true,
         sidebarDepth: 0,
         path: '/community/',
         children: [
-          ['https://groups.google.com/g/handsfreejs', '💬 Google Groups'],
-          ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
           ['https://github.com/midiblocks/handsfree', 'GitHub'],
+          ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
+          ['https://groups.google.com/g/handsfreejs', 'Google Groups'],
+          ['https://discord.gg/TDJEaTp7', 'Discord'],
           ['https://twitter.com/midiblocks', 'Twitter'],
+          ['http://eepurl.com/hhD7S1', '📧 Newsletter']
         ]
+      },
+      {
+        title: 'About',
+        collapsable: false,
+        sidebarDepth: 0,
+        path: '/about/'
       }
     ]
   },
