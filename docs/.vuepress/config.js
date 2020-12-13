@@ -102,14 +102,14 @@ module.exports = {
             collapsable: true,
             sidebarDepth: 0,
             children: [
+              ['/ref/method/emit.md', '.emit()'],
+              ['/ref/method/getUserMedia.md', '.getUserMedia()'],
+              ['/ref/method/normalize.md', '.normalize()'],
+              ['/ref/method/on.md', '.on()'],
               ['/ref/method/start.md', '.start()'],
               ['/ref/method/stop.md', '.stop()'],
-              ['/ref/method/use.md', '.use()'],
-              ['/ref/method/emit.md', '.emit()'],
-              ['/ref/method/on.md', '.on()'],
-              ['/ref/method/normalize.md', '.normalize()'],
-              ['/ref/method/getUserMedia.md', '.getUserMedia()'],
               ['/ref/method/throttle.md', '.throttle()'],
+              ['/ref/method/use.md', '.use()'],
             ]
           },
           {
@@ -118,9 +118,13 @@ module.exports = {
             collapsable: true,
             sidebarDepth: 0,
             children: [
-              ['/ref/model/handpose.md', '🖐 Handpose'],
-              ['/ref/model/holistic.md', '🤺 Holistic'],
-              ['/ref/model/weboji.md', '😉 Weboji'],
+              ['/ref/plugin/fingerPointer.md', 'fingerPointer'],
+              ['/ref/plugin/handScroll.md', 'handScroll'],
+              ['/ref/plugin/palmPointer.md', 'palmPointer'],
+              ['/ref/plugin/pinchClick.md', 'pinchClick'],
+              ['/ref/plugin/faceClick.md', 'faceClick'],
+              ['/ref/plugin/facePointer.md', 'facePointer'],
+              ['/ref/plugin/faceScroll.md', 'faceScroll'],
             ]
           },
           {
@@ -129,9 +133,13 @@ module.exports = {
             collapsable: true,
             sidebarDepth: 0,
             children: [
-              ['/ref/model/handpose.md', '🖐 Handpose'],
-              ['/ref/model/holistic.md', '🤺 Holistic'],
-              ['/ref/model/weboji.md', '😉 Weboji']
+              ['/ref/prop/config.md', '.config'],
+              ['/ref/prop/debug.md', '.debug'],
+              ['/ref/prop/globalPlugins.md', '.globalPlugins'],
+              ['/ref/prop/id.md', '.id'],
+              ['/ref/prop/isLooping.md', '.isLooping'],
+              ['/ref/prop/model.md', '.model'],
+              ['/ref/prop/plugin.md', '.plugin'],
             ]
           }
         ]
