@@ -68,13 +68,72 @@ module.exports = {
         title: '📚 Reference',
         path: '/ref/',
         collapsable: false,
-        sidebarDepth: 2,
+        sidebarDepth: 0,
         children: [
-          ['/ref/event/', '⚡ Events'],
-          ['/ref/model/', '📦 Models'],
-          ['/ref/method/', '💻 Methods'],
-          ['/ref/plugin/', '🔌 Plugins'],
-          ['/ref/prop/', '🧬 Properties'],
+          {
+            title: '⚡ Events',
+            path: '/ref/event/',
+            collapsable: true,
+            sidebarDepth: 0,
+            children: [
+              ['/ref/event/handsfree-init.md', 'handsfree-init'],
+              ['/ref/event/handsfree-data.md', 'handsfree-data'],
+              ['/ref/event/handsfree-gotUserMedia.md', 'handsfree-gotUserMedia'],
+              ['/ref/event/handsfree-loading.md', 'handsfree-loading'],
+              ['/ref/event/handsfree-modelData.md', 'handsfree-modelData'],
+              ['/ref/event/handsfree-modelError.md', 'handsfree-modelError'],
+              ['/ref/event/handsfree-modelReady.md', 'handsfree-modelReady'],
+            ]
+          },
+          {
+            title: '📦 Models',
+            path: '/ref/model/',
+            collapsable: true,
+            sidebarDepth: 2,
+            children: [
+              ['/ref/model/handpose.md', '🖐 Handpose'],
+              ['/ref/model/holistic.md', '🤺 Holistic'],
+              ['/ref/model/weboji.md', '😉 Weboji'],
+            ]
+          },
+          {
+            title: '💻 Methods',
+            path: '/ref/method/',
+            collapsable: true,
+            sidebarDepth: 0,
+            children: [
+              ['/ref/method/start.md', '.start()'],
+              ['/ref/method/stop.md', '.stop()'],
+              ['/ref/method/use.md', '.use()'],
+              ['/ref/method/emit.md', '.emit()'],
+              ['/ref/method/on.md', '.on()'],
+              ['/ref/method/normalize.md', '.normalize()'],
+              ['/ref/method/getUserMedia.md', '.getUserMedia()'],
+              ['/ref/method/throttle.md', '.throttle()'],
+            ]
+          },
+          {
+            title: '🔌 Plugins',
+            path: '/ref/plugin/',
+            collapsable: true,
+            sidebarDepth: 0,
+            children: [
+              ['/ref/model/handpose.md', '🖐 Handpose'],
+              ['/ref/model/holistic.md', '🤺 Holistic'],
+              ['/ref/model/weboji.md', '😉 Weboji'],
+            ]
+          },
+          {
+            title: '🧬 Properties',
+            path: '/ref/prop/',
+            collapsable: true,
+            sidebarDepth: 0,
+            children: [
+              ['/ref/model/handpose.md', '🖐 Handpose'],
+              ['/ref/model/holistic.md', '🤺 Holistic'],
+              ['/ref/model/weboji.md', '😉 Weboji']
+            ]
+          }
         ]
       }
     ]

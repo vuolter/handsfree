@@ -367,7 +367,7 @@ class Handsfree {
           }
         })
         .catch((err) => {
-          console.error(`Error loading models: ${err}`)
+          console.error(`Error getting user media: ${err}`)
         })
     } else {
       this.debug.$video.play()
