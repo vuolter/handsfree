@@ -418,7 +418,7 @@ const defaultConfig = {
   // Holistic model
   holistic: {
     enabled: false,
-    upperBodyOnly: false,
+    upperBodyOnly: true,
     smoothLandmarks: true,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5

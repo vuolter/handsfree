@@ -10,7 +10,7 @@ export default {
   $pointer: null,
 
   // Pointers position
-  pointer: { x: 0, y: 0 },
+  pointer: { x: -20, y: -20 },
 
   // Used to smoothen out the pointer
   tween: {
@@ -42,7 +42,7 @@ export default {
       this.$pointer = $pointer
     }
 
-    this.pointer = { x: 0, y: 0 }
+    this.pointer = { x: -20, y: -20 }
   },
 
   onEnable () {

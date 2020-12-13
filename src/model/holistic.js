@@ -4,6 +4,8 @@ export default class HolisticModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
     this.name = 'holistic'
+
+    this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
   }
 
   loadDependencies () {

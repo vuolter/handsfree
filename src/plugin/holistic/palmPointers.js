@@ -7,13 +7,13 @@ export default {
   models: 'holistic',
 
   // The pointer elements
-  $pointers: [],
+  $pointer: [],
 
   // Pointers position
-  pointers: [{ x: -100, y: -100 }, { x: -100, y: -100 }],
+  pointer: [{ x: -20, y: -20 }, { x: -20, y: -20 }],
 
   // Used to smoothen out the pointer
-  tweens: [
+  tween: [
     {
       x: 0,
       y: 0,
@@ -38,18 +38,22 @@ export default {
     }
   },
 
+  palmPoints: [0, 1, 2, 5, 9, 13, 17],
+
   /**
    * Create a pointer for each user
    */
   onUse () {
-    // if (!this.$pointer) {
-    //   const $pointer = document.createElement('div')
-    //   $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-handpose')
-    //   document.body.appendChild($pointer)
-    //   this.$pointer = $pointer
-    // }
+    if (!this.$pointer.length) {
+      for (let n = 0; n < 2; n++) {
+        const $pointer = document.createElement('div')
+        $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-holistic')
+        document.body.appendChild($pointer)
+        this.$pointer[n] = $pointer
+      }
+    }
 
-    // this.pointer = { x: 0, y: 0 }
+    this.pointer = [{ x: 0, y: 0 }, { x: 0, y: 0 }]
   },
 
   onEnable () {
@@ -57,21 +61,37 @@ export default {
   },
 
   onFrame (data) {
-    // TweenMax.to(this.tween, 1, {
-    //   x: window.outerWidth - this.handsfree.normalize(data.annotations.palmBase[0][0], this.handsfree.debug.$video.videoWidth * .75) * window.outerWidth + this.config.offset.x,
-    //   y: this.handsfree.normalize(data.annotations.palmBase[0][1], this.handsfree.debug.$video.videoHeight * .75) * window.outerHeight - window.outerHeight * .5 + this.config.offset.y,
-    //   overwrite: true,
-    //   ease: 'linear.easeNone',
-    //   immediate: true
-    // })
+    for (let n = 0; n < 2; n++) {
+      const hand = n ? 'rightHandLandmarks' : 'leftHandLandmarks'
 
-    // this.$pointer.style.left = `${this.tween.x}px`
-    // this.$pointer.style.top = `${this.tween.y}px`
+      if (data[hand]) {
+        const mid = {x: 0, y: 0}
+
+        // Get position for the palm
+        this.palmPoints.forEach((i, n) => {
+          mid.x += data[hand][n].x
+          mid.y += data[hand][n].y
+        })
+        mid.x = mid.x / this.palmPoints.length
+        mid.y = mid.y / this.palmPoints.length
+
+        TweenMax.to(this.tween[n], 1, {
+          x: window.outerWidth - mid.x * window.outerWidth + this.config.offset.x,
+          y: mid.y * window.outerHeight + this.config.offset.y,
+          overwrite: true,
+          ease: 'linear.easeNone',
+          immediate: true
+        })
     
-    // data.pointer = {
-    //   x: this.tween.x,
-    //   y: this.tween.y
-    // }
+        this.$pointer[n].style.left = `${this.tween[n].x}px`
+        this.$pointer[n].style.top = `${this.tween[n].y}px`
+        
+        data.pointer = {
+          x: this.tween[n].x,
+          y: this.tween[n].y
+        }
+      }
+    }
   },
 
   /**
