@@ -143,6 +143,12 @@ module.exports = {
             ]
           }
         ]
+      },
+      {
+        title: '🤝 Community',
+        collapsable: false,
+        sidebarDepth: 0,
+        path: '/community/'
       }
     ]
   },
