@@ -1,0 +1,4 @@
+---
+next: /ref/method/
+---
+# 😉 Weboji
