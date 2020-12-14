@@ -1,4 +1,8 @@
-# Methods
+---
+next: /ref/plugin/
+prev: /ref/model/
+---
+# 💻 Methods
 
 - [.start()](/ref/method/start/) - Loads dependencies and starts the trackers
 - [.emit()](/ref/method/emit/) - Triggers an event on the `document` with a `handsfree-` namespace
