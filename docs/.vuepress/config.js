@@ -120,7 +120,7 @@ module.exports = {
             path: '/ref/plugin/',
             collapsable: true,
             children: [
-              ['/ref/plugin/fingerPointer.md', 'fingerPointer'],
+              // ['/ref/plugin/fingerPointer.md', 'fingerPointer'],
               ['/ref/plugin/handScroll.md', 'handScroll'],
               ['/ref/plugin/palmPointer.md', 'palmPointer'],
               ['/ref/plugin/pinchClick.md', 'pinchClick'],
