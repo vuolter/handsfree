@@ -1,3 +1,6 @@
+---
+prev: /ref/prop/
+---
 # Prop: `handsfree.config`
 
 Contains a sanitized copy of the object you instantiated Handsfree with:
