@@ -7,20 +7,16 @@ module.exports = {
 
   // Meta
   title: 'Handsfree.js',
-  description: 'Handsfree.js is a library that helps you add face tracking, hand tracking, and pose estimation to your JavaScript projects in a snap.',
+  description: 'Add face, hand, and pose tracking to your projects, create handsfree user experiences, and tap into our growing library of plugins and integrations ✨👌',
   head: [
     ['link', {rel: 'icon', href: '/favicon.png'}],
 
     ['meta', {property: 'og:type', content: 'website'}],
     ['meta', {property: 'og:url', content: 'https://handsfree.js.org/'}],
-    ['meta', {property: 'og:title', content: 'Handsfree.js'}],
-    ['meta', {property: 'og:description', content: 'Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap!'}],
     ['meta', {property: 'og:image', content: ''}],
 
     ['meta', {property: 'twitter:card', content: 'summary_large_image'}],
     ['meta', {property: 'twitter:url', content: 'https://handsfree.js.org/'}],
-    ['meta', {property: 'twitter:title', content: 'Handsfree.js'}],
-    ['meta', {property: 'twitter:description', content: 'Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap!'}],
     ['meta', {property: 'twitter:image', content: 'https://i.imgur.com/WbfpozB.jpg'}]
   ],
 
@@ -68,8 +64,10 @@ module.exports = {
         collapsable: true,
         path: '/guide/',
         children: [
-          ['/guide/multiple-models.md', '🎭 Working with multiple models'],
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
+          ['/guide/multiple-models.md', '🎭 Updating and switching models'],
+          ['/guide/desktop.md', '💻 Interacting with the desktop'],
+          ['/guide/changing-video-source.md', "🎦 Tracking pre-recorded videos and images"],
           ['/guide/new-models.md', '📦 Adding new models']
         ]
       },

@@ -1,5 +1,9 @@
 ---
 sidebarDepth: 1
+meta:
+  - name: description
+    content: Add face, hand, and pose tracking to your projects, create handsfree user experiences, and tap into our growing library of plugins and integrations ✨👌
+next: /guide/the-loop.html
 ---
 
 <h1 class="mb-0"><img src="/branding/handsfree.png"></h1>
@@ -14,7 +18,7 @@ sidebarDepth: 1
 ---
 
 ```js
-// Enable Mediapipe's "Holistic" model (550+ keypoints for face, hands, pose)
+// Enable Mediapipe's "Holistic" model (550+ landmarks for face, hands, pose)
 const handsfree = new Handsfree({holistic: true})
 // Enable plugins tagged with "browsing"
 handsfree.enablePlugins('browsing')
@@ -25,7 +29,7 @@ handsfree.start()
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></div>
+      <div class="col-6"><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></div>
       <div class="col-6">
         <h2>Run the above code!</h2>
         <ul>
@@ -49,11 +53,6 @@ handsfree.start()
   <div class="text-center">
     <p><a href="https://github.com/sponsors/midiblocks">Become a sponsor 💜</a></p>
   </div>
-  <!-- <ul style="list-style: none; width: 450px; margin: auto; max-width: 100%; padding-left: 0">
-    <li><strong>👩‍💻 GitHub:</strong> <a href="https://github.com/midiblocks/handsfree">https://github.com/midiblocks/handsfree</a></li>
-    <li><strong>💬 Google Group:</strong> <a href="https://groups.google.com/g/handsfreejs">https://groups.google.com/g/handsfreejs</a></li>
-    <li><strong>📧 Newsletter:</strong> <a href="http://eepurl.com/hhD7S1">http://eepurl.com/hhD7S1</a></li>
-  </ul> -->
   <hr style="margin: 20px auto">
   <div class="text-center">
     <strong>Special thanks to:</strong> <a href="https://studioforcreativeinquiry.org/">The STUDIO for Creative Inquiry</a>, <a href="https://glitch.com">Glitch.com</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!
@@ -106,4 +105,132 @@ const handsfree = new Handsfree({
 })
 handsfree.enablePlugins('browsing')
 handsfree.start()
+```
+
+## Models
+<br>
+
+<div class="window mb-md">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <router-link to="/model/weboji.html">
+          <img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif">
+        </router-link>
+      </div>
+      <div class="col-6">
+        <h2><router-link to="/model/weboji.html">Jeeliz Weboji</router-link></h2>
+        <ul>
+          <li>6DOF head pose estimations</li>
+          <li>11 face morphs</li>
+          <li>16 helper states</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="window mb-md">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <router-link to="/model/hanpose.html">
+          <img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif">
+        </router-link>
+      </div>
+      <div class="col-6">
+        <h2><router-link to="/model/hanpose.html">TensorFlow.js Handpose</router-link></h2>
+        <ul>
+          <li>20 3D landmarks for 1 hand</li>
+          <li>A Three.js scene with a hand skeleton</li>
+          <li>Finger tip vector for pointing at things</li>
+        </ul>
+        <p><small><strong>Note:</strong> This will be changed to <a href="https://google.github.io/mediapipe/solutions/hands">MediaPipe Hands</a> soon so that you can use 2 hands. The API will remain the same.</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <router-link to="/model/holistic.html">
+          <img src="https://media3.giphy.com/media/mssf4vZa4gO5rZyItA/giphy.gif">
+        </router-link>
+      </div>
+      <div class="col-6">
+        <h2><router-link to="/model/holistic.html">MediaPipe Holistic</router-link></h2>
+        <ul>
+          <li>468 2D face landmarks</li>
+          <li>21 2D hand landmarks per hand</li>
+          <li>33 2D pose landmarks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+## Quickstart Workflow
+
+The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/TDJEaTp7) if you get stuck!
+
+```js
+// Let's enable face tracking with the default Face Pointer
+const handsfree = new Handsfree({weboji: true})
+handsfree.enablePlugins('browsing')
+
+// Now let's start things up
+handsfree.start()
+
+// Let's create a plugin called "logger"
+// - Plugins run on every frame and is how you "plug in" to the main loop
+// - "this" context is the plugin itself. In this case, handsfree.plugin.logger
+handsfree.use('logger', data => {
+  console.log(data.morphs, data.rotation, data.pointer, data, this)
+})
+
+// Let's switch to hand tracking now. To demonstrate that you can do this live,
+// let's create a plugin that switches to hand tracking when both eyebrows go up
+handsfree.use('handTrackingSwitcher', data => {
+  if (data.state.browsUp) {
+    // Disable this plugin
+    // Same as handsfree.plugin.handTrackingSwitcher.disable()
+    this.disable()
+
+    // Turn off face tracking and enable hand tracking
+    handsfree.start({
+      face: false,
+      hand: true
+    })
+  }
+})
+
+// You can enable and disable any combination of models and plugins
+handsfree.update({
+  // Disable weboji which is currently running
+  weboji: false,
+  // Start the holistic model
+  holistic: true,
+
+  // This is also how you configure (or pre-configure) a bunch of plugins at once
+  plugin: {
+    fingerPointer: {enabled: false},
+    faceScroll: {
+      vertScroll: {
+        scrollSpeed: 0.01
+      }
+    }
+  }
+})
+
+// Disable all plugins
+handsfree.disablePlugins()
+// Enable only the plugins for making music (not actually implemented yet)
+handsfree.enablePlugins('music')
+
+// Overwrite our logger to display the original model APIs
+handsfree.plugin.logger.onFrame = (data) => {
+  console.log(handsfree.model.holistic?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
+}
 ```
