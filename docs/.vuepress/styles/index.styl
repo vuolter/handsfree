@@ -24,6 +24,15 @@ html
     table-layout fixed
     width 100%
 
+  // Fixes issue where home link pagers shows up as just "/" instead of "🏠 Home"
+  .prev[href='/']
+    color transparent
+    &:after
+      color $link
+      content '🏠 Home'
+      position relative
+      left -.85em
+
 /**
  * @TODO Organize the following better
  */

@@ -111,6 +111,7 @@ module.exports = {
               ['/ref/method/start.md', '.start()'],
               ['/ref/method/stop.md', '.stop()'],
               ['/ref/method/throttle.md', '.throttle()'],
+              ['/ref/method/update.md', '.update()'],
               ['/ref/method/use.md', '.use()'],
             ]
           },
