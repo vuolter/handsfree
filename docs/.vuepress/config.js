@@ -81,11 +81,10 @@ module.exports = {
             path: '/ref/event/',
             collapsable: true,
             children: [
-              ['/ref/event/handsfree-init.md', 'handsfree-init'],
               ['/ref/event/handsfree-data.md', 'handsfree-data'],
               ['/ref/event/handsfree-gotUserMedia.md', 'handsfree-gotUserMedia'],
+              ['/ref/event/handsfree-init.md', 'handsfree-init'],
               ['/ref/event/handsfree-loading.md', 'handsfree-loading'],
-              ['/ref/event/handsfree-modelData.md', 'handsfree-modelData'],
               ['/ref/event/handsfree-modelError.md', 'handsfree-modelError'],
               ['/ref/event/handsfree-modelReady.md', 'handsfree-modelReady'],
             ]
