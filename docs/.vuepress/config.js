@@ -50,31 +50,38 @@ module.exports = {
   
   themeConfig: {
     logo: '/branding/handsfree.png',
-    displayAllHeaders: true,
     lastUpdated: 'Last Updated',
 
     repo: 'midiblocks/handsfree',
     docsDir: 'docs',
     editLinks: true,
     
+    sidebarDepth: 1,
     sidebar: [
       {
         title: '🏠 Home',
-        collapsable: false,
-        sidebarDepth: 2,
+        collapsable: true,
         path: '/'
+      },
+      {
+        title: '📋 Guides',
+        collapsable: true,
+        path: '/guide/',
+        children: [
+          ['/guide/multiple-models.md', '🎭 Working with multiple models'],
+          ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
+          ['/guide/new-models.md', '📦 Adding new models']
+        ]
       },
       {
         title: '📚 Reference',
         path: '/ref/',
-        collapsable: false,
-        sidebarDepth: 0,
+        collapsable: true,
         children: [
           {
             title: '⚡ Events',
             path: '/ref/event/',
             collapsable: true,
-            sidebarDepth: 0,
             children: [
               ['/ref/event/handsfree-init.md', 'handsfree-init'],
               ['/ref/event/handsfree-data.md', 'handsfree-data'],
@@ -89,7 +96,6 @@ module.exports = {
             title: '📦 Models',
             path: '/ref/model/',
             collapsable: true,
-            sidebarDepth: 2,
             children: [
               ['/ref/model/handpose.md', '🖐 Handpose'],
               ['/ref/model/holistic.md', '🤺 Holistic'],
@@ -100,7 +106,6 @@ module.exports = {
             title: '💻 Methods',
             path: '/ref/method/',
             collapsable: true,
-            sidebarDepth: 0,
             children: [
               ['/ref/method/emit.md', '.emit()'],
               ['/ref/method/getUserMedia.md', '.getUserMedia()'],
@@ -116,7 +121,6 @@ module.exports = {
             title: '🔌 Plugins',
             path: '/ref/plugin/',
             collapsable: true,
-            sidebarDepth: 0,
             children: [
               ['/ref/plugin/fingerPointer.md', 'fingerPointer'],
               ['/ref/plugin/handScroll.md', 'handScroll'],
@@ -131,7 +135,6 @@ module.exports = {
             title: '🧬 Properties',
             path: '/ref/prop/',
             collapsable: true,
-            sidebarDepth: 0,
             children: [
               ['/ref/prop/config.md', '.config'],
               ['/ref/prop/debug.md', '.debug'],
@@ -146,7 +149,6 @@ module.exports = {
             title: '🧰 Utilities',
             path: '/ref/util/',
             collapsable: true,
-            sidebarDepth: 0,
             children: [
               ['/ref/util/classes.md', '🎨 Classes']
             ]
@@ -156,7 +158,6 @@ module.exports = {
       {
         title: '🤝 Community',
         collapsable: true,
-        sidebarDepth: 0,
         path: '/community/',
         children: [
           ['https://github.com/midiblocks/handsfree', 'GitHub'],
@@ -169,8 +170,7 @@ module.exports = {
       },
       {
         title: 'About',
-        collapsable: false,
-        sidebarDepth: 0,
+        collapsable: true,
         path: '/about/'
       }
     ]

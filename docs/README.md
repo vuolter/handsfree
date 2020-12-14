@@ -1,3 +1,7 @@
+---
+sidebarDepth: 1
+---
+
 <h1 class="mb-0"><img src="/branding/handsfree.png"></h1>
 <h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
 <p class="verticle-middle-children space-children">
@@ -43,7 +47,7 @@ handsfree.start()
   </div>
   <hr style="margin: 20px auto">
   <div class="text-center">
-    <p><a href="https://github.com/sponsors/midiblocks">Become a sponsor 💚</a></p>
+    <p><a href="https://github.com/sponsors/midiblocks">Become a sponsor 💜</a></p>
   </div>
   <!-- <ul style="list-style: none; width: 450px; margin: auto; max-width: 100%; padding-left: 0">
     <li><strong>👩‍💻 GitHub:</strong> <a href="https://github.com/midiblocks/handsfree">https://github.com/midiblocks/handsfree</a></li>
@@ -85,7 +89,7 @@ npm install handsfree
 # Move the models into your project's public directory
 # - change PUBLIC below to where you keep your project's assets
 
-# WINDOWS ONLY
+# ON WINDOWS
 move node_modules/handsfree/build/lib/assets PUBLIC
 # EVERYWHERE ELSE
 mv node_modules/handsfree/build/lib/assets PUBLIC
@@ -98,7 +102,7 @@ import Handsfree from 'handsfree'
 const handsfree = new Handsfree({
   holistic: true,
   // Set this to your where you moved the models into
-  assetsPath: '/public',
+  assetsPath: '/PUBLIC/assets',
 })
 handsfree.enablePlugins('browsing')
 handsfree.start()
