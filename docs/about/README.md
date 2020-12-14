@@ -1,3 +1,7 @@
+---
+prev: /community/
+next: false
+---
 # About Handsfree.js.org
 
 ## Master Plan
@@ -6,11 +10,6 @@
 2. Use the library to build a repository of custom handsfree plugins, components, and gestures
 3. Grow a community of handsfree users and developers around the library and repository
 4. Bridge the assistive and creative tech communities and solve accessibility
-
-
-<!-- 1. Create a library to help creative technologists and frontend developers to add face, hand, eye, and pose tracking as well as voice and mind control to their projects in the least amount of code
-2. Create a tool and repository that helps developers create and share custom gestures and plugins
-3. Use these tools to create a handsfree gesture mapper to help people who don't code or can't use a keyboard/mouse to map gestures to the native mouse, keyboard, virtual MIDI device and game controller, robots, and basically anything else -->
 
 ## History of Handsfree.js
 

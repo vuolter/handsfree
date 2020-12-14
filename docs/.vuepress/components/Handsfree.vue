@@ -36,31 +36,31 @@ export default {
   },
 
   updated () {
-    if (!this.hasMovedToggle) {
-      // Import Handsfree
-      if (!window.Handsfree) {
-        import('@handsfree/handsfree.js').then(module => {
-          const Handsfree = module.default
-          window.Handsfree = Handsfree
-          window.handsfree = this.$root.handsfree = new Handsfree({
-            holistic: true,
-            // weboji: true,
-            // handpose: true,
-            showDebug: true,
-            // showVideo: true,
-            setup: {
-              wrap: {
-                $target: document.querySelector('#handsfree-debug-window .window-body')
-              }
-            },
-            assetsPath: '/handsfree/'
+    this.$nextTick(() => {
+      if (!this.hasMovedToggle) {
+        // Import Handsfree
+        if (!window.Handsfree) {
+          import('@handsfree/handsfree.js').then(module => {
+            const Handsfree = module.default
+            window.Handsfree = Handsfree
+            window.handsfree = this.$root.handsfree = new Handsfree({
+              holistic: true,
+              // weboji: true,
+              // handpose: true,
+              showDebug: true,
+              // showVideo: true,
+              setup: {
+                wrap: {
+                  $target: document.querySelector('#handsfree-debug-window .window-body')
+                }
+              },
+              assetsPath: '/handsfree/'
+            })
+            window.app = this.$root
           })
-          window.app = this.$root
-        })
-      }
-
-      // Move toggle and window
-      setTimeout(() => {
+        }
+  
+        // Move toggle and window
         document.querySelector('header.navbar > .links').appendChild(
           document.querySelector('#navbar-handsfree-toggle')
         )
@@ -69,12 +69,9 @@ export default {
         document.querySelector('aside.sidebar').appendChild(
           this.$refs.window
         )
-      // @fixme Occasionally the DOM isn't ready, let's figure out why and banish setTimeout
-      //        out of this realm and sub with nextTick
-      }, 50)
-
-      this.hasMovedToggle = true
-    }
+        this.hasMovedToggle = true
+      }
+    })
   },
 
   methods: {
