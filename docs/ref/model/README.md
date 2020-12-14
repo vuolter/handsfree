@@ -1,9 +1,8 @@
 ---
-next: /ref/method/
-prev: /ref/event/
+next: /ref/event/
+prev: /ref/
 ---
 # 📦 Models
-<br>
 
 <div class="window mb-md">
   <div class="window-body">

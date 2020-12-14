@@ -1,4 +1,4 @@
 ---
-next: /ref/model/
+next: /ref/method/
 ---
 # Event: `handsfree-modelReady`

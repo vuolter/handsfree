@@ -77,6 +77,16 @@ module.exports = {
         collapsable: true,
         children: [
           {
+            title: '📦 Models',
+            path: '/ref/model/',
+            collapsable: true,
+            children: [
+              ['/ref/model/handpose.md', '🖐 Handpose'],
+              ['/ref/model/holistic.md', '🤺 Holistic'],
+              ['/ref/model/weboji.md', '😉 Weboji'],
+            ]
+          },
+          {
             title: '⚡ Events',
             path: '/ref/event/',
             collapsable: true,
@@ -87,16 +97,6 @@ module.exports = {
               ['/ref/event/handsfree-loading.md', 'handsfree-loading'],
               ['/ref/event/handsfree-modelError.md', 'handsfree-modelError'],
               ['/ref/event/handsfree-modelReady.md', 'handsfree-modelReady'],
-            ]
-          },
-          {
-            title: '📦 Models',
-            path: '/ref/model/',
-            collapsable: true,
-            children: [
-              ['/ref/model/handpose.md', '🖐 Handpose'],
-              ['/ref/model/holistic.md', '🤺 Holistic'],
-              ['/ref/model/weboji.md', '😉 Weboji'],
             ]
           },
           {

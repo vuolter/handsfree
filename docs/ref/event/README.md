@@ -1,6 +1,6 @@
 ---
-next: /ref/model/
-prev: /ref/
+next: /ref/method/
+prev: /ref/model/
 ---
 # ⚡ Events
 

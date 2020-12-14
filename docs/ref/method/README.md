@@ -1,6 +1,6 @@
 ---
 next: /ref/plugin/
-prev: /ref/model/
+prev: /ref/event/
 ---
 # 💻 Methods
 
