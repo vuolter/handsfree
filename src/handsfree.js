@@ -48,9 +48,9 @@ import WebojiModel from './model/weboji'
 import HandposeModel from './model/handpose'
 import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
-import trim from 'lodash/trim'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
+import { thirdPartyComponents } from '../docs/.vuepress/config'
 
 
 
@@ -63,11 +63,12 @@ let id = 0
 
 /**
  * The Handsfree class
- * @see https://handsfree.js.org/getting-started
  */
 class Handsfree {
   /**
    * Let's do this 🖐
+   * @see https://handsfree.js.org/ref/prop/config
+   * 
    * @param {Object} config The initial config to use
    */
   constructor (config = {}) {
@@ -109,7 +110,7 @@ class Handsfree {
   }
 
   /**
-   * Prepares the selected models
+   * Prepares the models
    */
   prepareModels () {
     this.model = {
@@ -124,7 +125,7 @@ class Handsfree {
   
 
   /**
-   * Sets up the video and canvas
+   * Sets up the video and canvas elements
    */
   setupDebugger () {
     this.debug = {}
@@ -182,11 +183,17 @@ class Handsfree {
    * Cleans and sanitizes the config, setting up defaults
    * @see https://handsfree.js.org/ref/method/cleanConfig
    * 
-   * @param config
+   * @param config {Object} The config object to use
+   * @param defaults {Object} (Optional) The defaults to use.
+   *    If null, then the original Handsfree.js defaults will be used
+   * 
    * @returns {Object} The cleaned config
    */
-  cleanConfig (config) {
-    defaultConfig.setup.wrap.$target = document.body
+  cleanConfig (config, defaults) {
+    // Set default
+    if (!defaults) defaults = Object.assign({}, defaultConfig)
+    
+    defaults.setup.wrap.$target = document.body
 
     // Map booleans to objects
     if (typeof config.holistic === 'boolean') {
@@ -199,8 +206,34 @@ class Handsfree {
       config.handpose = {enabled: config.handpose}
     }
 
-    return merge({}, defaultConfig, config)
+    return merge({}, defaults, config)
   }
+
+  /**
+   * Updates the instance, loading required dependencies
+   * @see https://handsfree.js.org./ref/method/update
+   * 
+   * @param {Object} config The changes to apply
+   * @param {Function} callback Called after
+   */
+  update (config, callback) {
+    config = this.cleanConfig(config, this.config)
+
+    // Update models
+    this.model.holistic.enabled = config.holistic.enabled
+    this.model.holistic.config = config.holistic.config
+    
+    this.model.weboji.enabled = config.weboji.enabled
+    this.model.weboji.config = config.weboji.config
+
+    this.model.handpose.enabled = config.handpose.enabled
+    this.model.handpose.config = config.handpose.config
+
+    // Start
+    this.config = config
+    this.start(callback)
+  }
+
 
 
 
@@ -221,6 +254,9 @@ class Handsfree {
     document.body.classList.add('handsfree-loading')
     this.emit('loading', this)
 
+    // Call the callback once things are loaded
+    callback && document.addEventListener('handsfree-modelLoaded', callback, {once: true})
+    
     // Load dependencies
     this.numModelsLoaded = 0
     Object.keys(this.model).forEach(modelName => {
@@ -233,12 +269,11 @@ class Handsfree {
         this.emit(`${modelName}ModelReady`)
       }
     })
-    
-    callback && callback()
   }
 
   /**
    * Stops tracking
+   * @see https://handsfree.js.org/ref/method/stop
    */
   stop () {
     location.reload()
@@ -246,6 +281,7 @@ class Handsfree {
 
   /**
    * Called on every webcam frame
+   * @see https://handsfree.js.org/ref/method/loop
    */
   loop () {
     // Get model data
@@ -282,6 +318,7 @@ class Handsfree {
 
   /**
    * Adds a callback (we call it a plugin) to be called after every tracked frame
+   * @see https://handsfree.js.org/ref/method/use
    *
    * @param {String} name The plugin name
    * @param {Object|Function} config The config object, or a callback to run on every fram
@@ -335,9 +372,7 @@ class Handsfree {
     
     // Create the plugin
     this.plugin[name] = new PluginBase(config, this)
-    this.plugin[name].enabled &&
-      this.plugin[name].onUse &&
-      this.plugin[name].onUse()
+    this.plugin[name].onUse && this.plugin[name].onUse()
 
     // Store a reference to the plugin to simplify things
     if (config.models.length) {
@@ -353,10 +388,9 @@ class Handsfree {
 
   /**
    * Enable plugins by tags
+   * @see https://handsfree.js.org/ref/method/enablePlugins
    * 
    * @param {string|object} tags (Optional) The plugins with tags to enable. Enables all if null
-   * 
-   * @see https://handsfree.js.org/ref/method/enablePlugins
    */
   enablePlugins (tags) {
     // Sanitize
@@ -372,10 +406,9 @@ class Handsfree {
 
   /**
    * Disable plugins by tags
+   * @see https://handsfree.js.org/ref/method/disablePlugins
    * 
    * @param {string|object} tags (Optional) The plugins with tags to disable. Disables all if null
-   * 
-   * @see https://handsfree.js.org/ref/method/disablePlugins
    */
   disablePlugins (tags) {
     // Sanitize
@@ -414,6 +447,7 @@ class Handsfree {
 
   /**
    * Calls a callback on `document` when an event is triggered
+   * @see https://handsfree.js.org/ref/method/on
    *
    * @param {String} eventName The `handsfree-${eventName}` to listen to
    * @param {Function} callback The callback to call
@@ -434,6 +468,7 @@ class Handsfree {
 
   /**
    * Helper to normalze a value within a max range
+   * @see https://handsfree.js.org/ref/method/normalize
    */
   normalize (value, max, min = 0) {
     return (value - min) / (max - min)
@@ -441,6 +476,8 @@ class Handsfree {
 
   /**
    * Gets the webcam media stream into handsfree.feedback.stream
+   * @see https://handsfree.js.org/ref/method/getUserMedia
+   * 
    * @param {Object} callback The callback to call after the stream is received
    */
   getUserMedia (callback) {
@@ -472,8 +509,9 @@ class Handsfree {
     })    
   }
 
-    /**
+  /**
    * Throttles callback to run timeInMilliseconds
+   * @see https://handsfree.js.org/ref/method/throttle
    *
    * @param {function} callback The callback to run
    * @param {Integer} time How many milliseconds to throttle (in other words, run this method at most ever x milliseconds)

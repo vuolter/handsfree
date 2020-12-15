@@ -10,7 +10,7 @@ export default class HolisticModel extends BaseModel {
   loadDependencies () {
     // Load holistic
     this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
-      const url = this.handsfree.config.assetsPath + 'jeeliz/jeelizFaceTransferNNC.json'
+      const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json'
       this.api = window.JEEFACETRANSFERAPI
 
       fetch(url)
