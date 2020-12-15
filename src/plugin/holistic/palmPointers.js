@@ -5,6 +5,7 @@ import { TweenMax } from 'gsap/all'
 
 export default {
   models: 'holistic',
+  enabled: false,
 
   tags: ['browser'],
 

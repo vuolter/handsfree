@@ -3,6 +3,7 @@
  */
 export default {
   models: 'weboji',
+  enabled: false,
 
   tags: ['browser'],
 

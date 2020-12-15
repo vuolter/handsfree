@@ -19,6 +19,8 @@ handsfree.use('consoleLogger', data => {
 })
 ```
 
+The above will create a new plugin that can now be accessed with `handsfree.plugin.consoleLogger` and will be run on every frame.
+
 ## Toggling plugins on and off
 
 ## Complex plugins

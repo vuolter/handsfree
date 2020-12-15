@@ -2,6 +2,7 @@ import { TweenMax } from 'gsap/all'
 
 export default {
   models: 'weboji',
+  enabled: false,
 
   tags: ['browser'],
 

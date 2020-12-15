@@ -4,6 +4,7 @@
 export default {
   models: 'handpose',
   tags: ['browser'],
+  enabled: false,
 
   // Number of frames the current element is the same as the last
   numFramesFocused: 0,

@@ -3,6 +3,7 @@
  */
 export default {
   models: 'handpose',
+  enabled: false,
 
   tags: ['browser'],
 
