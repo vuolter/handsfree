@@ -37,6 +37,26 @@ export default {
 
   updated () {
     this.$nextTick(() => {
+      console.log(`
+        ✨
+        (\\.   \\      ,/)
+          \\(   |\\     )/
+          //\\  | \\   /\\\\
+        (/ /\\_#oo#_/\\ \\)
+          \\/\\  ####  /\\/
+              \`##'
+
+
+         🧙‍♂️ Presenting 🧙‍♀️
+
+            Handsfree.js
+              8.0.0
+
+  Repo:       https://github.com/midiblocks/handsfree
+  Discord:    https://discord.gg/TWemTd85
+  Newsletter: http://eepurl.com/hhD7S1
+`)
+      
       if (!this.hasMovedToggle) {
         // Import Handsfree
         if (!window.Handsfree) {

@@ -6,7 +6,18 @@ When you run [handsfree.start()](/ref/method/start) a loop is started that does 
 2. Triggers a `handsfree-data` event on the `document` with an object containing all the data
 3. Runs all active plugins stored in `handsfree.plugin[pluginName]`
 
+"Plugins" are the recommended way of working with Handsfree. All enabled plugins run their logic on every frame, can be attached to specific models, toggled on/off by tag, and can even manipulate your `handsfree` instance and other plugins.
+
 ## Basic plugins
+
+Basic plugins are created with [handsfree.use(pluginName, callback)](/ref/method/use):
+
+```js
+// A plugin that console logs your data on every frame
+handsfree.use('consoleLogger', data => {
+  console.log(data)
+})
+```
 
 ## Toggling plugins on and off
 
