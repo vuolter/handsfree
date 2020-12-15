@@ -144,6 +144,7 @@ module.exports = {
               ['/ref/prop/isLooping.md', '.isLooping'],
               ['/ref/prop/model.md', '.model'],
               ['/ref/prop/plugin.md', '.plugin'],
+              ['/ref/prop/taggedPlugins.md', '.taggedPlugins'],
             ]
           },
           {

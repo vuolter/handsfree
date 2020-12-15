@@ -24,7 +24,25 @@
   Repo:       https://github.com/midiblocks/handsfree
   Discord:    https://discord.gg/TWemTd85
   Newsletter: http://eepurl.com/hhD7S1
+
+  
+
+
+  /////////////////////////////////////////////////////////////
+  ///////////////////// Table of Contents /////////////////////
+  /////////////////////////////////////////////////////////////
+
+  Use "CTRL+F + #1" to hop around in this file
+  
+  #1 Setup
+  #2 Loop
+  #3 Plugins
+  #4 Events
+  #5 Helpers
+  #6 Core Plugin Imports
+
 */
+
 import HolisticModel from './model/holistic'
 import WebojiModel from './model/weboji'
 import HandposeModel from './model/handpose'
@@ -32,18 +50,11 @@ import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import trim from 'lodash/trim'
 import throttle from 'lodash/throttle'
+import defaultConfig from './defaultConfig.js'
 
-// Core plugins
-const corePlugins = {
-  facePointer: require('./plugin/weboji/facePointer').default,
-  faceClick: require('./plugin/weboji/faceClick').default,
-  faceScroll: require('./plugin/weboji/faceScroll').default,
-  fingerPointer: require('./plugin/handpose/palmPointer').default,
-  palmPointer: require('./plugin/handpose/fingerPointer').default,
-  pinchClick: require('./plugin/handpose/pinchClick').default,
-  handScroll: require('./plugin/handpose/handScroll').default,
-  palmPointers: require('./plugin/holistic/palmPointers').default
-}
+/////////////////////////////////////////////////////////////
+////////////////////////// #1 SETUP /////////////////////////
+/////////////////////////////////////////////////////////////
 
 // Used to separate video, canvas, etc ID's
 let id = 0
@@ -61,9 +72,10 @@ class Handsfree {
     // Assign the instance ID
     this.id = ++id
 
-    // Props
+    // Plugins
     this.plugin = {}
     this.globalPlugins = []
+    this.taggedPlugins = {}
     
     // Clean config and set defaults
     this.config = this.cleanConfig(config)
@@ -95,152 +107,6 @@ class Handsfree {
   }
 
   /**
-   * Starts the trackers
-   * @see https://handsfree.js.org/ref/method/start
-   * 
-   * @param {Function} callback The callback to run before the very first frame
-   */
-  start (callback) {
-    document.body.classList.add('handsfree-loading')
-    this.emit('loading', this)
-
-    // Load dependencies
-    this.numModelsLoaded = 0
-    Object.keys(this.model).forEach(modelName => {
-      const model = this.model[modelName]
-      
-      if (model.enabled && !model.dependenciesLoaded) {
-        model.loadDependencies()
-      } else if (model.enabled) {
-        this.emit('modelLoaded')
-        this.emit(`${modelName}ModelReady`)
-      }
-    })
-    
-    callback && callback()
-  }
-
-  /**
-   * Stops tracking
-   */
-  stop () {
-    location.reload()
-  }
-
-  /**
-   * Called on every webcam frame
-   */
-  loop () {
-    // Get model data
-    const data = {}
-    Object.keys(this.model).forEach(modelName => {
-      const model = this.model[modelName]
-      
-      if (model.enabled === true && model.dependenciesLoaded) {
-        model.getData()
-        data[modelName] = model.data
-      }
-    })
-    this.emit('data', data)
-
-    // Run global plugins
-    this.globalPlugins.forEach(pluginName => {
-      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
-    })
-
-    this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
-  }
-
-  /**
-   * Adds a callback (we call it a plugin) to be called after every tracked frame
-   *
-   * @param {String} name The plugin name
-   * @param {Object|Function} config The config object, or a callback to run on every fram
-   * @returns {Plugin} The plugin object
-   */
-  use (name, config) {
-    // Make sure we have an options object
-    if (typeof config === 'function') {
-      config = {
-        onFrame: config
-      }
-    }
-
-    config = merge({},
-      {
-        // Stores the plugins name for internal use
-        name,
-        // The model to apply this plugin to
-        models: [],
-        // Plugin tags for quickly turning things on/off
-        tags: [],
-        // Whether the plugin is enabled by default
-        enabled: true,
-        // A set of default config values the user can override during instanciation
-        config: {},
-        // (instance) => Called on every frame
-        onFrame: null,
-        // (instance) => Called when the plugin is first used
-        onUse: null,
-        // (instance) => Called when the plugin is enabled
-        onEnable: null,
-        // (instance) => Called when the plugin is disabled
-        onDisable: null
-      },
-      config
-    )
-
-    // Sanitize
-    if (typeof config.tags === 'string') {
-      config.tags = [config.tags]
-    }
-    if (typeof config.models === 'string') {
-      config.models = [config.models]
-    }
-    
-    // Create the plugin
-    this.plugin[name] = new PluginBase(config, this)
-    this.plugin[name].enabled &&
-      this.plugin[name].onUse &&
-      this.plugin[name].onUse()
-
-    // Store a reference to the plugin to simplify things
-    if (config.models.length) {
-      config.models.forEach(modelName => {
-        this.model[modelName].plugins.push(name)
-      })
-    } else {
-      this.globalPlugins.push(name)
-    }
-  
-    return this.plugin[name]
-  }
-
-  /**
-   * Triggers a document event with `handsfree-${eventName}`
-   * @see https://handsfree.js.org/ref/method/emit
-   * 
-   * @param {String} eventName The name of the event
-   * @param {*} detail (optional) Data to send with the event
-   */
-  emit (eventName, detail = null) {
-    const event = new CustomEvent(`handsfree-${eventName}`, {detail})
-    document.dispatchEvent(event)
-  }
-
-  /**
-   * Calls a callback on `document` when an event is triggered
-   *
-   * @param {String} eventName The `handsfree-${eventName}` to listen to
-   * @param {Function} callback The callback to call
-   */
-  on (eventName, callback) {
-    document.addEventListener(`handsfree-${eventName}`, (ev) => {
-      callback(ev.detail)
-    })
-  }
-
-  /**
    * Prepares the selected models
    */
   prepareModels () {
@@ -253,13 +119,7 @@ class Handsfree {
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
-
-  /**
-   * Helper to normalze a value within a max range
-   */
-  normalize (value, max, min = 0) {
-    return (value - min) / (max - min)
-  }
+  
 
   /**
    * Sets up the video and canvas
@@ -340,6 +200,204 @@ class Handsfree {
     return merge({}, defaultConfig, config)
   }
 
+
+
+  /////////////////////////////////////////////////////////////
+  /////////////////////////// #2 LOOP /////////////////////////
+  /////////////////////////////////////////////////////////////
+
+
+  
+
+  /**
+   * Starts the trackers
+   * @see https://handsfree.js.org/ref/method/start
+   * 
+   * @param {Function} callback The callback to run before the very first frame
+   */
+  start (callback) {
+    document.body.classList.add('handsfree-loading')
+    this.emit('loading', this)
+
+    // Load dependencies
+    this.numModelsLoaded = 0
+    Object.keys(this.model).forEach(modelName => {
+      const model = this.model[modelName]
+      
+      if (model.enabled && !model.dependenciesLoaded) {
+        model.loadDependencies()
+      } else if (model.enabled) {
+        this.emit('modelLoaded')
+        this.emit(`${modelName}ModelReady`)
+      }
+    })
+    
+    callback && callback()
+  }
+
+  /**
+   * Stops tracking
+   */
+  stop () {
+    location.reload()
+  }
+
+  /**
+   * Called on every webcam frame
+   */
+  loop () {
+    // Get model data
+    const data = {}
+    Object.keys(this.model).forEach(modelName => {
+      const model = this.model[modelName]
+      
+      if (model.enabled === true && model.dependenciesLoaded) {
+        model.getData()
+        data[modelName] = model.data
+      }
+    })
+    this.emit('data', data)
+
+    // Run global plugins
+    this.globalPlugins.forEach(pluginName => {
+      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
+    })
+
+    this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
+  }
+
+  
+  
+
+
+  /////////////////////////////////////////////////////////////
+  //////////////////////// #3 PLUGINS /////////////////////////
+  /////////////////////////////////////////////////////////////
+
+
+  
+
+
+  /**
+   * Adds a callback (we call it a plugin) to be called after every tracked frame
+   *
+   * @param {String} name The plugin name
+   * @param {Object|Function} config The config object, or a callback to run on every fram
+   * @returns {Plugin} The plugin object
+   */
+  use (name, config) {
+    // Make sure we have an options object
+    if (typeof config === 'function') {
+      config = {
+        onFrame: config
+      }
+    }
+
+    config = merge({},
+      {
+        // Stores the plugins name for internal use
+        name,
+        // The model to apply this plugin to
+        models: [],
+        // Plugin tags for quickly turning things on/off
+        tags: [],
+        // Whether the plugin is enabled by default
+        enabled: true,
+        // A set of default config values the user can override during instanciation
+        config: {},
+        // (instance) => Called on every frame
+        onFrame: null,
+        // (instance) => Called when the plugin is first used
+        onUse: null,
+        // (instance) => Called when the plugin is enabled
+        onEnable: null,
+        // (instance) => Called when the plugin is disabled
+        onDisable: null
+      },
+      config
+    )
+
+    // Sanitize
+    if (typeof config.models === 'string') {
+      config.models = [config.models]
+    }
+
+    // Setup plugin tags
+    if (typeof config.tags === 'string') {
+      config.tags = [config.tags]
+    }
+    config.tags.forEach(tag => {
+      this.taggedPlugins[tag].push(name)
+    })
+    
+    // Create the plugin
+    this.plugin[name] = new PluginBase(config, this)
+    this.plugin[name].enabled &&
+      this.plugin[name].onUse &&
+      this.plugin[name].onUse()
+
+    // Store a reference to the plugin to simplify things
+    if (config.models.length) {
+      config.models.forEach(modelName => {
+        this.model[modelName].plugins.push(name)
+      })
+    } else {
+      this.globalPlugins.push(name)
+    }
+  
+    return this.plugin[name]
+  }
+
+
+
+
+  /////////////////////////////////////////////////////////////
+  ///////////////////////// #4 EVENTS /////////////////////////
+  /////////////////////////////////////////////////////////////
+
+
+  
+
+
+  /**
+   * Triggers a document event with `handsfree-${eventName}`
+   * @see https://handsfree.js.org/ref/method/emit
+   * 
+   * @param {String} eventName The name of the event
+   * @param {*} detail (optional) Data to send with the event
+   */
+  emit (eventName, detail = null) {
+    const event = new CustomEvent(`handsfree-${eventName}`, {detail})
+    document.dispatchEvent(event)
+  }
+
+  /**
+   * Calls a callback on `document` when an event is triggered
+   *
+   * @param {String} eventName The `handsfree-${eventName}` to listen to
+   * @param {Function} callback The callback to call
+   */
+  on (eventName, callback) {
+    document.addEventListener(`handsfree-${eventName}`, (ev) => {
+      callback(ev.detail)
+    })
+  }
+
+
+
+  /////////////////////////////////////////////////////////////
+  //////////////////////// #5 HELPERS /////////////////////////
+  /////////////////////////////////////////////////////////////
+
+
+
+  /**
+   * Helper to normalze a value within a max range
+   */
+  normalize (value, max, min = 0) {
+    return (value - min) / (max - min)
+  }
+
   /**
    * Gets the webcam media stream into handsfree.feedback.stream
    * @param {Object} callback The callback to call after the stream is received
@@ -385,114 +443,26 @@ class Handsfree {
   }
 }
 
-/**
- * Default Config
- */
-let assetsPath = document.currentScript ? document.currentScript.getAttribute('src') : ''
-assetsPath = trim(assetsPath.substr(0, assetsPath.lastIndexOf('/') + 1), '/') + '/handsfree/'
 
-const defaultConfig = {
-  assetsPath,
-  
-  // Setup config. Ignore this to have everything done for you automatically
-  setup: {
-    // The video source to use. If not present, one will be created to capture webcam
-    video: {
-      $el: null,
-      width: 1280,
-      height: 720
-    },
-    // The canvas element to use for rendering debug info like skeletons and keypoints
-    canvas: {
-      $el: null,
-      width: 1280,
-      height: 720
-    },
-    // The wrapping element
-    wrap: {
-      $el: null,
-      $target: null
-    }
-  },
 
-  // Holistic model
-  holistic: {
-    enabled: false,
-    upperBodyOnly: true,
-    smoothLandmarks: true,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
-  },
+/////////////////////////////////////////////////////////////
+///////////////// #6 Core Plugin Imports ////////////////////
+/////////////////////////////////////////////////////////////
 
-  // Weboji model
-  weboji: {
-    enabled: false,
-    videoSettings: null,
-    throttle: 0,
 
-    videoSettings: {
-      // The video, canvas, or image element
-      // Omit this to auto create a <VIDEO> with the webcam
-      videoElement: null,
 
-      // ID of the device to use
-      // Omit this to use the system default
-      deviceId: null,
-
-      // Which camera to use on the device
-      // Possible values: 'user' (front), 'environment' (back)
-      facingMode: 'user',
-
-      // Video dimensions
-      idealWidth: 320,
-      idealHeight: 240,
-      minWidth: 240,
-      maxWidth: 1280,
-      minHeight: 240,
-      maxHeight: 1280
-    },
-
-    // Thresholds needed before these are considered "activated"
-    morphs: {
-      threshold: {
-        smileRight: 0.7,
-        smileLeft: 0.7,
-        browLeftDown: 0.8,
-        browRightDown: 0.8,
-        browLeftUp: 0.8,
-        browRightUp: 0.8,
-        eyeLeftClosed: 0.4,
-        eyeRightClosed: 0.4,
-        mouthOpen: 0.3,
-        mouthRound: 0.8,
-        upperLip: 0.5
-      }
-    }
-  },
-
-  handpose: {
-    enabled: false,
-    
-    // How many milliseconds to wait between each inference
-    throttle: 0,
-
-    // Model config
-    model: {
-      // How many frames to go without running the bounding box detector.
-      // - Set to a lower value if you want a safety net in case the mesh
-      //   detector produces consistently flawed predictions
-      maxContinuousChecks: Infinity,
-
-      // Threshold for discarding a prediction
-      detectionConfidence: 0.8,
-
-      // A float representing the threshold for deciding whether boxes overlap
-      // too much in non-maximum suppression. Must be between [0, 1]
-      iouThreshold: 0.3,
-
-      // A threshold for deciding when to remove boxes based on score in non-maximum suppression
-      scoreThreshold: 0.75
-    }
-  }
+const corePlugins = {
+  facePointer: require('./plugin/weboji/facePointer').default,
+  faceClick: require('./plugin/weboji/faceClick').default,
+  faceScroll: require('./plugin/weboji/faceScroll').default,
+  fingerPointer: require('./plugin/handpose/palmPointer').default,
+  palmPointer: require('./plugin/handpose/fingerPointer').default,
+  pinchClick: require('./plugin/handpose/pinchClick').default,
+  handScroll: require('./plugin/handpose/handScroll').default,
+  palmPointers: require('./plugin/holistic/palmPointers').default
 }
+
+
+
+
 export default Handsfree

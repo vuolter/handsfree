@@ -9,7 +9,7 @@ next: false
 1. Create a library that makes face, hand, eye, and pose tracking and voice and mind control easy to use 
 2. Use the library to build a repository of custom handsfree plugins, components, and gestures
 3. Grow a community of handsfree users and developers around the library and repository
-4. Bridge the assistive and creative tech communities and solve accessibility
+5. Start "The Handsfree Foundation" to promote creative expression
 
 ## History of Handsfree.js
 

@@ -54,7 +54,7 @@ export default {
                   $target: document.querySelector('#handsfree-debug-window .window-body')
                 }
               },
-              assetsPath: '/handsfree/'
+              assetsPath: '/handsfree'
             })
             window.app = this.$root
           })
