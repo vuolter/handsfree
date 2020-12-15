@@ -107,7 +107,9 @@ module.exports = {
             path: '/ref/method/',
             collapsable: true,
             children: [
+              ['/ref/method/disablePlugins.md', '.disablePlugins()'],
               ['/ref/method/emit.md', '.emit()'],
+              ['/ref/method/enablePlugins.md', '.enablePlugins()'],
               ['/ref/method/getUserMedia.md', '.getUserMedia()'],
               ['/ref/method/normalize.md', '.normalize()'],
               ['/ref/method/on.md', '.on()'],
@@ -139,8 +141,6 @@ module.exports = {
             children: [
               ['/ref/prop/config.md', '.config'],
               ['/ref/prop/debug.md', '.debug'],
-              ['/ref/prop/disablePlugins.md', '.disablePlugins'],
-              ['/ref/prop/enablePlugins.md', '.enablePlugins'],
               ['/ref/prop/globalPlugins.md', '.globalPlugins'],
               ['/ref/prop/id.md', '.id'],
               ['/ref/prop/isLooping.md', '.isLooping'],
