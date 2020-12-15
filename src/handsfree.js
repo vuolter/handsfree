@@ -289,7 +289,7 @@ class Handsfree {
     Object.keys(this.model).forEach(modelName => {
       const model = this.model[modelName]
       
-      if (model.enabled === true && model.dependenciesLoaded) {
+      if (model.enabled && model.dependenciesLoaded) {
         model.getData()
         data[modelName] = model.data
       }
