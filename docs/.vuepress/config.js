@@ -42,7 +42,10 @@ module.exports = {
     }
   },
   
-  globalUIComponents: ['Handsfree'],
+  globalUIComponents: [
+    'Handsfree',
+    // 'Clippy'
+  ],
   
   themeConfig: {
     logo: '/branding/handsfree.png',
