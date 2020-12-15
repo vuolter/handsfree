@@ -34,10 +34,7 @@ export default {
     }
   },
 
-  /**
-   * Create a pointer for each user
-   */
-  onUse () {
+  onEnable () {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
       $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-face', 'handsfree-hide-when-started-without-weboji')
@@ -45,11 +42,7 @@ export default {
       this.$pointer = $pointer
     }
 
-    this.pointer = { x: -20, y: -20 }
-  },
-
-  onEnable () {
-    this.onUse()
+    this.$pointer?.classList.remove('handsfree-hidden')
   },
 
   onFrame (data) {
@@ -97,9 +90,6 @@ export default {
    * Toggle pointer
    */
   onDisable () {
-    this.$pointer.classList.add('handsfree-hidden')
-  },
-  onEnable () {
-    this.$pointer.classList.remove('handsfree-hidden')
+    this.$pointer?.classList.add('handsfree-hidden')
   }
 }

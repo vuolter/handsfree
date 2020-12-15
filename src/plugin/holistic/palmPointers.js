@@ -45,7 +45,7 @@ export default {
   /**
    * Create a pointer for each user
    */
-  onUse () {
+  onEnable () {
     if (!this.$pointer.length) {
       for (let n = 0; n < 2; n++) {
         const $pointer = document.createElement('div')
@@ -56,10 +56,8 @@ export default {
     }
 
     this.pointer = [{ x: 0, y: 0 }, { x: 0, y: 0 }]
-  },
-
-  onEnable () {
-    this.onUse()
+    this.$pointer?.[0].classList.remove('handsfree-hidden')
+    this.$pointer?.[1].classList.remove('handsfree-hidden')
   },
 
   onFrame (data) {
@@ -101,12 +99,7 @@ export default {
    * Toggle pointer
    */
   onDisable() {
-    this.$pointer[0].classList.add('handsfree-hidden')
-    this.$pointer[1].classList.add('handsfree-hidden')
-  },
-
-  onEnable() {
-    this.$pointer[0].classList.remove('handsfree-hidden')
-    this.$pointer[1].classList.remove('handsfree-hidden')
+    this.$pointer?.[0].classList.add('handsfree-hidden')
+    this.$pointer?.[1].classList.add('handsfree-hidden')
   }
 }

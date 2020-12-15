@@ -80,11 +80,25 @@ handsfree.start()
 
 ## Installing from NPM
 
-### 1) Install and move assets into your public folder
-```bash
-# Add handsfree to your project
-npm install handsfree
+```bash 
+# From your projects root
+npm i handsfree
+```
 
+```js
+// Inside your app
+import Handsfree from 'handsfree'
+
+const handsfree = new Handsfree({holistic: true})
+handsfree.enablePlugins('browsing')
+handsfree.start()
+```
+
+### Hosting the models yourself
+
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+
+```bash
 # Move the models into your project's public directory
 # - change PUBLIC below to where you keep your project's assets
 
@@ -94,7 +108,6 @@ move node_modules/handsfree/build/lib/assets PUBLIC
 mv node_modules/handsfree/build/lib/assets PUBLIC
 ```
 
-### 2) Tell Handsfree where to look for the models
 ```js
 import Handsfree from 'handsfree'
 

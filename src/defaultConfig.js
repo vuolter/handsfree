@@ -5,7 +5,7 @@
  */
 export default {
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.0.0/build/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.0.0/build/lib/assets',
   
   // Setup config. Ignore this to have everything done for you automatically
   setup: {

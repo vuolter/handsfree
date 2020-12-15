@@ -304,7 +304,7 @@ class Handsfree {
         // Plugin tags for quickly turning things on/off
         tags: [],
         // Whether the plugin is enabled by default
-        enabled: true,
+        enabled: false,
         // A set of default config values the user can override during instanciation
         config: {},
         // (instance) => Called on every frame

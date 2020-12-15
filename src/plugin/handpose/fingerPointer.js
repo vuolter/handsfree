@@ -34,10 +34,7 @@ export default {
     }
   },
 
-  /**
-   * Create a pointer for each user
-   */
-  onUse () {
+  onEnable () {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
       $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-handpose')
@@ -46,10 +43,7 @@ export default {
     }
 
     this.pointer = { x: 0, y: 0 }
-  },
-
-  onEnable () {
-    this.onUse()
+    this.$pointer?.classList.remove('handsfree-hidden')
   },
 
   onFrame (data) {
@@ -82,10 +76,6 @@ export default {
    * Toggle pointer
    */
   onDisable() {
-    this.$pointer.classList.add('handsfree-hidden')
-  },
-
-  onEnable() {
-    this.$pointer.classList.remove('handsfree-hidden')
+    this.$pointer?.classList.add('handsfree-hidden')
   }
 }
