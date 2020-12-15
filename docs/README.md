@@ -139,13 +139,13 @@ handsfree.start()
 // - Plugins run on every frame and is how you "plug in" to the main loop
 // - "this" context is the plugin itself. In this case, handsfree.plugin.logger
 handsfree.use('logger', data => {
-  console.log(data.morphs, data.rotation, data.pointer, data, this)
+  console.log(data.weboji.morphs, data.weboji.rotation, data.weboji.pointer, data, this)
 })
 
 // Let's switch to hand tracking now. To demonstrate that you can do this live,
 // let's create a plugin that switches to hand tracking when both eyebrows go up
-handsfree.use('handTrackingSwitcher', data => {
-  if (data.state.browsUp) {
+handsfree.use('handTrackingSwitcher', {weboji} => {
+  if (weboji.state.browsUp) {
     // Disable this plugin
     // Same as handsfree.plugin.handTrackingSwitcher.disable()
     this.disable()
