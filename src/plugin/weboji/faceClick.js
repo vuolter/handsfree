@@ -4,6 +4,8 @@
 export default {
   models: 'weboji',
 
+  tags: ['browser'],
+
   config: {
     // How often in milliseconds to trigger clicks
     throttle: 50,

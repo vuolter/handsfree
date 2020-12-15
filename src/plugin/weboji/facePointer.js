@@ -3,6 +3,8 @@ import { TweenMax } from 'gsap/all'
 export default {
   models: 'weboji',
 
+  tags: ['browser'],
+
   // The pointer element
   $pointer: null,
 

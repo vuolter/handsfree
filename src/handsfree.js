@@ -52,6 +52,8 @@ import trim from 'lodash/trim'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
 
+
+
 /////////////////////////////////////////////////////////////
 ////////////////////////// #1 SETUP /////////////////////////
 /////////////////////////////////////////////////////////////
@@ -327,6 +329,7 @@ class Handsfree {
       config.tags = [config.tags]
     }
     config.tags.forEach(tag => {
+      if (!this.taggedPlugins[tag]) this.taggedPlugins[tag] = []
       this.taggedPlugins[tag].push(name)
     })
     
@@ -346,6 +349,44 @@ class Handsfree {
     }
   
     return this.plugin[name]
+  }
+
+  /**
+   * Enable plugins by tags
+   * 
+   * @param {string|object} tags (Optional) The plugins with tags to enable. Enables all if null
+   * 
+   * @see https://handsfree.js.org/ref/method/enablePlugins
+   */
+  enablePlugins (tags) {
+    // Sanitize
+    if (typeof tags === 'string') tags = [tags]
+    if (!tags) tags = Object.keys(this.taggedPlugins)
+
+    tags.forEach(tag => {
+      this.taggedPlugins[tag].forEach(pluginName => {
+        this.plugin[pluginName].enable()
+      })
+    })
+  }
+
+  /**
+   * Disable plugins by tags
+   * 
+   * @param {string|object} tags (Optional) The plugins with tags to disable. Disables all if null
+   * 
+   * @see https://handsfree.js.org/ref/method/disablePlugins
+   */
+  disablePlugins (tags) {
+    // Sanitize
+    if (typeof tags === 'string') tags = [tags]
+    if (!tags) tags = Object.keys(this.taggedPlugins)
+
+    tags.forEach(tag => {
+      this.taggedPlugins[tag].forEach(pluginName => {
+        this.plugin[pluginName].disable()
+      })
+    })
   }
 
 

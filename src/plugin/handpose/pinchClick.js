@@ -4,6 +4,8 @@
 export default {
   models: 'handpose',
 
+  tags: ['browser'],
+
   config: {
     // How often in milliseconds to trigger clicks
     throttle: 50,

@@ -139,6 +139,8 @@ module.exports = {
             children: [
               ['/ref/prop/config.md', '.config'],
               ['/ref/prop/debug.md', '.debug'],
+              ['/ref/prop/disablePlugins.md', '.disablePlugins'],
+              ['/ref/prop/enablePlugins.md', '.enablePlugins'],
               ['/ref/prop/globalPlugins.md', '.globalPlugins'],
               ['/ref/prop/id.md', '.id'],
               ['/ref/prop/isLooping.md', '.isLooping'],

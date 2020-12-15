@@ -6,6 +6,8 @@ import { TweenMax } from 'gsap/all'
 export default {
   models: 'holistic',
 
+  tags: ['browser'],
+
   // The pointer elements
   $pointer: [],
 
@@ -99,10 +101,12 @@ export default {
    * Toggle pointer
    */
   onDisable() {
-    this.$pointer.classList.add('handsfree-hidden')
+    this.$pointer[0].classList.add('handsfree-hidden')
+    this.$pointer[1].classList.add('handsfree-hidden')
   },
 
   onEnable() {
-    this.$pointer.classList.remove('handsfree-hidden')
+    this.$pointer[0].classList.remove('handsfree-hidden')
+    this.$pointer[1].classList.remove('handsfree-hidden')
   }
 }
