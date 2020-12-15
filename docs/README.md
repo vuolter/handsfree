@@ -3,7 +3,7 @@ sidebarDepth: 1
 meta:
   - name: description
     content: Add face, hand, and pose tracking to your projects, create handsfree user experiences, and tap into our growing library of plugins and integrations ✨👌
-next: /guide/the-loop.html
+next: /guide/
 ---
 
 <h1 class="mb-0"><img src="/branding/handsfree.png"></h1>

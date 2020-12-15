@@ -123,7 +123,7 @@ export default {
    * Gets the scrolltop, taking account the window object
    */
   getTargetScrollTop() {
-    return this.$target.scrollY || this.$target.scrollTop || 0
+    return this.$target?.scrollY || this.$target?.scrollTop || 0
   },
 
   /**

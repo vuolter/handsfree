@@ -68,10 +68,10 @@ module.exports = {
         path: '/guide/',
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
-          ['/guide/updating.md', '🎭 Updating and switching models'],
+          ['/guide/updating-configs.md', '🎭 Updating and switching models'],
           ['/guide/desktop.md', '💻 Interacting with the desktop'],
-          ['/guide/changing-video-source.md', "🎦 Tracking pre-recorded videos and images"],
-          ['/guide/new-models.md', '📦 Adding new models']
+          // ['/guide/changing-video-source.md', "🎦 Tracking pre-recorded videos and images"],
+          // ['/guide/new-models.md', '📦 Adding new models']
         ]
       },
       {
