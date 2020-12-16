@@ -77,7 +77,6 @@ class Handsfree {
     this.config = this.cleanConfig(config)
 
     // Setup
-    this.gotUserMedia = false
     this.setupDebugger()
     this.prepareModels()
     this.loadCorePlugins()
@@ -483,7 +482,6 @@ class Handsfree {
           this.debug.$video.onloadedmetadata = () => {
             this.debug.$video.play()
             this.emit('gotUserMedia', stream)
-            this.gotUserMedia = true
             callback && callback()
           }
         })
@@ -492,6 +490,7 @@ class Handsfree {
         })
     } else {
       this.debug.$video.play()
+      this.emit('gotUserMedia', stream)
       callback && callback()
     }
   }

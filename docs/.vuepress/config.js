@@ -69,7 +69,7 @@ module.exports = {
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
           ['/guide/updating-configs.md', '🎭 Updating and switching models'],
-          ['/guide/desktop.md', '💻 Interacting with the desktop'],
+          // ['/guide/desktop.md', '💻 Interacting with the desktop'],
           // ['/guide/changing-video-source.md', "🎦 Tracking pre-recorded videos and images"],
           // ['/guide/new-models.md', '📦 Adding new models']
         ]
