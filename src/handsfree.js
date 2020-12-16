@@ -528,7 +528,7 @@ const corePlugins = {
   faceClick: require('./plugin/weboji/faceClick').default,
   faceScroll: require('./plugin/weboji/faceScroll').default,
   fingerPointer: require('./plugin/handpose/palmPointer').default,
-  palmPointer: require('./plugin/handpose/fingerPointer').default,
+  palmPointer: require('./plugin/handpose/palmPointer').default,
   pinchClick: require('./plugin/handpose/pinchClick').default,
   handScroll: require('./plugin/handpose/handScroll').default,
   palmPointers: require('./plugin/holistic/palmPointers').default

@@ -5,9 +5,8 @@ import { TweenMax } from 'gsap/all'
 
 export default {
   models: 'handpose',
-  enabled: false,
-
   tags: ['browser'],
+  enabled: false,
 
   // The pointer element
   $pointer: null,
@@ -44,6 +43,10 @@ export default {
 
     this.$pointer?.classList.remove('handsfree-hidden')
     this.pointer = { x: -20, y: -20 }
+  },
+
+  onUse () {
+    this.onEnable()
   },
 
   onFrame (data) {

@@ -33,11 +33,11 @@ export default class Plugin {
   /**
    * Toggle plugins
    */
-  enable() {
+  enable () {
     !this.enabled && this.onEnable && this.onEnable(this.handsfree)
     this.enabled = true
   }
-  disable() {
+  disable () {
     this.enabled && this.onDisable && this.onDisable(this.handsfree)
     this.enabled = false
   }
