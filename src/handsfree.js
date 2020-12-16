@@ -287,6 +287,7 @@ class Handsfree {
       }
     })
     this.emit('data', data)
+    this.data = data
 
     // Run global plugins
     this.globalPlugins.forEach(pluginName => {

@@ -4,6 +4,8 @@ prev: /ref/model/
 ---
 # ⚡ Events
 
+You can listen to each of the following on the document, `document.addEventListener('handsfree-data', ev => {})` or with `handsfree.on('data', ev => {})` (without the `handsfree-` prefix)
+
 - [handsfree-data](/ref/event/handsfree-data/) - Called anytime a model updates it's data
 - [handsfree-gotUserMedia](/ref/event/gotUserMedia/) - Called when the webcam stream is started
 - [handsfree-init](/ref/event/handsfree-init/) - Called after Handsfree has been instantiated with `new Handsfree()`

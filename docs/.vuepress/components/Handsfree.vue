@@ -64,9 +64,9 @@ export default {
             const Handsfree = module.default
             window.Handsfree = Handsfree
             window.handsfree = this.$root.handsfree = new Handsfree({
-              holistic: true,
+              // holistic: true,
               // weboji: true,
-              // handpose: true,
+              handpose: true,
               showDebug: true,
               // showVideo: true,
               setup: {
@@ -77,6 +77,9 @@ export default {
               assetsPath: '/handsfree'
             })
             window.app = this.$root
+
+            handsfree.plugin.palmPointer.enable()
+            handsfree.plugin.handScroll.enable()
           })
         }
   

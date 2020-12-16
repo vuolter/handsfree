@@ -3,7 +3,9 @@ prev: /ref/event/
 ---
 # Event: `handsfree-data`
 
-This event is triggered on the `document` on each frame after [handsfree.start()](/ref/method/start). It receives an object containing data for each active model. This is a great
+This event is triggered on the `document` on each frame after [handsfree.start()](/ref/method/start). It receives an object containing data for each active model. This is a great way to work with the data in situations where you don't have access to your handsfree instance (for example, inside modules).
+
+The data is available on [handsfree.data](/ref/prop/data) or in the individual models at [handsfree.model.weboji.data](/ref/model/weboji), [handsfree.model.holistic.data](/ref/model/holistic), [handsfree.model.handpose.data](/ref/model/handpose)
 
 ## Receives
 
@@ -14,7 +16,7 @@ event
 
 ```js
 // Listen for the event
-document.addEventListener('handsfree-modelData', event => {
+document.addEventListener('handsfree-data', event => {
   const data = event.detail
   console.log(data.weboji, data.handpose)
 })
