@@ -1,10 +1,11 @@
 # 🔌 Plugins and the main loop
 
-When you run [handsfree.start()](/ref/method/start) a loop is started that does 3 things:
+When you run [handsfree.start(callback)](/ref/method/start) a loop is started that does 4 things:
 
 1. Synchronously updates all models and stores their data in `handsfree.model[modelName].data`
 2. Triggers a `handsfree-data` event on the `document` with an object containing all the data
 3. Runs all active plugins stored in `handsfree.plugin[pluginName]`
+4. Runs the callback after all models have been loaded
 
 "Plugins" are the recommended way of working with Handsfree. All enabled plugins run their logic on every frame, can be attached to specific models, toggled on/off by tag, and can even manipulate your `handsfree` instance and other plugins.
 
@@ -45,6 +46,9 @@ handsfree.use('pluginName', {
   // - If omitted, this will default to true
   enabled: true,
 
+  // A list of strings that can be used to toggle this plugin on/off (see below)
+  tags: [],
+
   // A set of config values that can be overwritten
   // - These can be set during instantiation (see below)
   config: {},
@@ -67,8 +71,6 @@ handsfree.use('pluginName', {
 })
 ```
 
-The `onEnable` and `onDisable` methods makes it easy to run code when you run `.enable()` or `.disable()` on the plugin. A common use case is to show/hide DOM elements (for example, to toggle the face and palm pointers).
-
 Since the basic plugin above simply maps the callback to an `onFrame` method, another way of writing it is:
 
 ```js
@@ -77,6 +79,35 @@ handsfree.use('consoleLogger', {
     console.log(weboji.rotation, weboji.translation, weboji.morphs)
   }
 })
+```
+
+The `onEnable` and `onDisable` methods makes it easy to run code when you run `.enable()` or `.disable()` on the plugin. A common use case is to show/hide DOM elements (for example, to toggle the face and palm pointers).
+
+You can add tags to the plugin through the `.tags` prop to bulk disable/enable plugins with the [handsfree.enablePlugins(tags)](/ref/method/enablePlugins) and [handsfree.disablePlugins(tags)](/ref/method/disablePlugins). `.tags` can be a string or array of strings:
+
+```js
+handsfree.use('consoleLogger', {
+  // This can be a string or array of strings
+  tags: ['debugging'],
+  onFrame (data) {
+    console.log(data)
+  }
+})
+
+// Toggle the core "browser" plugins that come with Handsfree.js
+// - These help you use webpages handsfree
+// - Note that the consoleLogger will still be active since it doesn't have a browser tag
+handsfree.enablePlugins('browser')
+handsfree.disablePlugins('browser')
+```
+
+Calling these methods without tags enables or disables all the plugins. This provides a powerful way to swap out plugins based on the route:
+
+```js
+// Disable all the plugins
+handsfree.disablePlugins()
+// Enable only the plugins for the current route
+handsfree.enablePlugins('homepage')
 ```
 
 > **Note:** `.onEnable()` is only called when you run `handsfree.plugin[pluginName].enable()`. It doesn't run immediately when you `.use()` the plugin even if `.enabled === true`. Use `onUse()` instead. 
@@ -93,7 +124,7 @@ document.addEventListener('handsfree-data', event => {
 
 ## Checking your data
 
-Because you have the ability to swap out models and configs on the fly, it's highly recommended to first check that the model has data:
+Because you have the ability to swap out models and configs on the fly, it's highly recommended to first check that the model has data. Due to the synchronous way that data is received it's possible that the data is not present the frame immediately after enabling the plugin:
 
 ```js
 handfree.use('consoleLogger', data => {
@@ -103,7 +134,9 @@ handfree.use('consoleLogger', data => {
 })
 ```
 
-In some models properties are only available if detected. For example, if the face is not visible in the [holistic model](/ref/model/holistic) then the `.rightHandLandmarks` doesn't exist. In these cases it might be necessary to check if the property also exists by using the [Optional Chaining operator](https://www.joshwcomeau.com/operator-lookup?match=optional-chaining):
+In some models, properties are only available if detected. For example, if the right hand is not visible in the [holistic model](/ref/model/holistic) then the `.rightHandLandmarks` won't exist. Without checks, this could lead to undefined errors.
+
+In these cases it might be necessary to check if the property also exists by using the [Optional Chaining operator](https://www.joshwcomeau.com/operator-lookup?match=optional-chaining):
 
 ```js
 handsfree.use('consoleLogger', data => {
