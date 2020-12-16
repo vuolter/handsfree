@@ -7,7 +7,7 @@ The stream is also available in [handsfree.debug.stream](/ref/prop/debug)
 ## Receives
 
 event
-: An object the webcam stream. Because this is an event the data is stored in `event.detail`
+: An object the webcam stream. Because this is an event the stream is stored in `event.detail`
 
 ## Example
 

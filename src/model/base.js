@@ -40,6 +40,9 @@ export default class BaseModel {
     $script.onload = () => {
       callback()
     }
+    $script.onerror = () => {
+      this.handsfree.emit('modelError', `Error loading ${src}`)
+    }
 
     $script.src = src
     document.body.appendChild($script)

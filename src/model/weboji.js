@@ -44,7 +44,7 @@ export default class HolisticModel extends BaseModel {
         .catch((ev) => {
           console.log(ev)
           console.error(`Couldn't load weboji tracking model at ${url}`)
-          this.handsfree.emit('modelError', this)
+          this.handsfree.emit('modelError', ev)
         })
     })
   }

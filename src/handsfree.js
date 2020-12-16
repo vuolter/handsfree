@@ -25,7 +25,7 @@
   ///////////////////// Table of Contents /////////////////////
   /////////////////////////////////////////////////////////////
 
-  Use "CTRL+F + #1" to hop around in this file
+  Use "CTRL+F + #n" to hop around in this file
   
   #1 Setup
   #2 Loop
