@@ -13,7 +13,6 @@ const handsfree = new Handsfree({hands: true})
 console.log(handsfree.version)
 ```
 
-- [assetsPath](/ref/prop/assetsPath/) - A relative or absolute URL pointing to where the Handsfree.js models are stored
 - [config](/ref/prop/config/) - Contains the sanitized object you passed into `new Handsfree(config)`
 - [data](/ref/prop/data/) - Contains data for all the active models
 - [debug](/ref/prop/debug/) - Contains references to the video and canvas elements that contain the webcam stream and skeleton and keypoint overlays

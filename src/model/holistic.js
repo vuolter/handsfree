@@ -8,7 +8,7 @@ export default class HolisticModel extends BaseModel {
     this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
   }
 
-  loadDependencies () {
+  loadDependencies (callback) {
     // Load holistic
     this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/holistic.js`, () => {
       this.api = new window.Holistic({locateFile: file => {
@@ -30,6 +30,9 @@ export default class HolisticModel extends BaseModel {
           })
 
           this.camera.start()
+
+          callback && callback(this)
+          
           this.dependenciesLoaded = true
           this.handsfree.emit('modelReady', this)
           this.handsfree.emit('holisticModelReady', this)

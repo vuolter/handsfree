@@ -16,8 +16,8 @@ export default class BaseModel {
     setTimeout(() => {
       const getData = this.getData
       
-      this.getData = () => {
-        const data = getData.apply(this, arguments)
+      this.getData = async () => {
+        const data = await getData.apply(this, arguments)
         this.runPlugins()
         return data
       }
@@ -25,8 +25,18 @@ export default class BaseModel {
   }
 
   // Implement in the model class
-  loadDependencies () {}
+  loadDependencies (callback) {}
   updateData () {}
+
+  // Toggle the model on/off
+  enable () {
+    this.enabled = true
+
+    if (!this.dependenciesLoaded) {
+      this.loadDependencies()
+    }
+  }
+  disable () {this.enabled = false}
 
   /**
    * Loads a script and runs a callback

@@ -40,7 +40,7 @@ export default class HolisticModel extends BaseModel {
     return this.data
   }
 
-  loadDependencies () {
+  loadDependencies (callback) {
     // Load holistic
     this.loadDependency(`${this.handsfree.config.assetsPath}/tfjs-models/handpose-bundle.js`, () => {
       this.handsfree.getUserMedia(async () => {
@@ -49,6 +49,7 @@ export default class HolisticModel extends BaseModel {
   
         this.setup3D()
   
+        callback && callback(this)
         this.dependenciesLoaded = true
         this.handsfree.emit('modelReady', this)
         this.handsfree.emit('handposeModelReady', this)

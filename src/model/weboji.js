@@ -7,7 +7,7 @@ export default class HolisticModel extends BaseModel {
     this.name = 'weboji'
   }
 
-  loadDependencies () {
+  loadDependencies (callback) {
     // Load holistic
     this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
       const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json'
@@ -31,6 +31,8 @@ export default class HolisticModel extends BaseModel {
                 NNC: JSON.stringify(model),
                 videoSettings,
                 callbackReady: () => {
+                  callback && callback(this)
+                  
                   this.dependenciesLoaded = true
                   this.handsfree.emit('modelReady', this)
                   this.handsfree.emit('webojiModelReady', this)
