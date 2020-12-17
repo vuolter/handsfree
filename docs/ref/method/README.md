@@ -4,7 +4,18 @@ prev: /ref/event/
 ---
 # 💻 Methods
 
+Each of the following are accessed through your instance, for example:
+
+```js
+const handsfree = new Handsfree({hands: true})
+
+// Accessing the start method
+handsfree.start()
+```
+
+- [.disablePlugins()](/ref/method/disablePlugins/) - Disables plugins by plugin tag
 - [.emit()](/ref/method/emit/) - Triggers an event on the `document` with a `handsfree-` namespace
+- [.enablePlugins()](/ref/method/enablePlugins/) - Enables plugins by plugin tag
 - [.cleanConfig()](/ref/method/cleanConfig/) - Cleans and sanitizes the config, setting up defaults
 - [.normalize()](/ref/method/normalize/) - A helper method to normalize values between 0 and 1
 - [.on()](/ref/method/on/) - A helper method for listening to `.emit()` or browser events prefixed with `handsfree-`

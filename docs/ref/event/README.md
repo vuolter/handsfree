@@ -4,7 +4,19 @@ prev: /ref/model/
 ---
 # ⚡ Events
 
-You can listen to each of the following on the document, `document.addEventListener('handsfree-data', ev => {})` or with `handsfree.on('data', ev => {})` (without the `handsfree-` prefix)
+You can listen to each of the following on the document. Because these are events the data will be in `event.detail`:
+
+```js
+// Listen on the document...
+document.addEventListener('handsfree-data', event => {
+  console.log(event.detail)
+})
+
+// ...or through the .on() method (without the 'handsfree-' prefix)
+handsfree.on('data', {detail} => {
+  console.log(detail)
+})
+```
 
 - [handsfree-data](/ref/event/handsfree-data/) - Called anytime a model updates it's data
 - [handsfree-gotUserMedia](/ref/event/gotUserMedia/) - Called when the webcam stream is started
