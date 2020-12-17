@@ -110,7 +110,6 @@ module.exports = {
               ['/ref/method/disablePlugins.md', '.disablePlugins()'],
               ['/ref/method/emit.md', '.emit()'],
               ['/ref/method/enablePlugins.md', '.enablePlugins()'],
-              ['/ref/method/getUserMedia.md', '.getUserMedia()'],
               ['/ref/method/normalize.md', '.normalize()'],
               ['/ref/method/on.md', '.on()'],
               ['/ref/method/start.md', '.start()'],

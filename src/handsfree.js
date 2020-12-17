@@ -462,6 +462,10 @@ class Handsfree {
   /**
    * Helper to normalze a value within a max range
    * @see https://handsfree.js.org/ref/method/normalize
+   * 
+   * @param {Number} value The value to normalize
+   * @param {Number} max The maximum value to normalize to, or the upper bound
+   * @param {Number} min The minimum value to normalize to, or the lower bound
    */
   normalize (value, max, min = 0) {
     return (value - min) / (max - min)
