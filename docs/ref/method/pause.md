@@ -10,6 +10,8 @@ In complex apps with multiple routes, loading screens, or processing heavy workf
 
 Pausing can also be used in combination with start as a sort of "preloader" to load all dependencies for all models, making switching between models instant.
 
+This is different from [handsfree.stop()](/ref/method/stop/), which ends the webcam stream completely.
+
 ## Example
 
 ```js
@@ -23,5 +25,5 @@ handsfree.start(() => {
 
 ## See also
 
-- [handsfree.unpause()](/ref/method/unpause/)
 - [handsfree.isLooping](/ref/prop/isLooping/)
+- [handsfree.unpause()](/ref/method/unpause/)
