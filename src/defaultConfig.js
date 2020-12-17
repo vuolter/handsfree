@@ -9,22 +9,26 @@ export default {
   
   // Setup config. Ignore this to have everything done for you automatically
   setup: {
-    // The video source to use. If not present, one will be created to capture webcam
-    video: {
+    // The canvas element to use for rendering debug info like skeletons and keypoints
+    canvas: {
+      // The canvas element to hold the skeletons and keypoints
       $el: null,
       width: 1280,
       height: 720
     },
-    // The canvas element to use for rendering debug info like skeletons and keypoints
-    canvas: {
+    // The video source to use. If not present, one will be created to capture webcam
+    video: {
+      // The video element to hold the webcam stream
       $el: null,
       width: 1280,
       height: 720
     },
     // The wrapping element
     wrap: {
+      // The element to put the video and canvas inside of
       $el: null,
-      $target: null
+      // The parent element
+      $parent: null
     }
   },
 
@@ -40,7 +44,6 @@ export default {
   // Weboji model
   weboji: {
     enabled: false,
-    videoSettings: null,
     throttle: 0,
 
     videoSettings: {
@@ -66,6 +69,7 @@ export default {
     },
 
     // Thresholds needed before these are considered "activated"
+    // - Ranges from 0 (not active) to 1 (fully active)
     morphs: {
       threshold: {
         smileRight: 0.7,

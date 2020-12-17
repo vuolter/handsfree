@@ -43,8 +43,7 @@ import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
-import { thirdPartyComponents } from '../docs/.vuepress/config'
-
+import pkg from '../package.json'
 
 
 /////////////////////////////////////////////////////////////
@@ -67,6 +66,7 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
+    this.version = pkg.version
 
     // Plugins
     this.plugin = {}
@@ -164,7 +164,7 @@ class Handsfree {
     this.debug.context = this.debug.$canvas.getContext('2d')
 
     // Append everything to the body
-    this.config.setup.wrap.$target.appendChild(this.debug.$wrap)
+    this.config.setup.wrap.$parent.appendChild(this.debug.$wrap)
 
     // Add classes
     this.config.showDebug && document.body.classList.add('handsfree-show-debug')
@@ -185,7 +185,7 @@ class Handsfree {
     // Set default
     if (!defaults) defaults = Object.assign({}, defaultConfig)
     
-    defaults.setup.wrap.$target = document.body
+    defaults.setup.wrap.$parent = document.body
 
     // Map booleans to objects
     if (typeof config.holistic === 'boolean') {

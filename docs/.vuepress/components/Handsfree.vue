@@ -71,7 +71,7 @@ export default {
               // showVideo: true,
               setup: {
                 wrap: {
-                  $target: document.querySelector('#handsfree-debug-window .window-body')
+                  $parent: document.querySelector('#handsfree-debug-window .window-body')
                 }
               },
               assetsPath: '/handsfree'

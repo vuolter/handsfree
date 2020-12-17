@@ -147,6 +147,7 @@ module.exports = {
               ['/ref/prop/model.md', '.model'],
               ['/ref/prop/plugin.md', '.plugin'],
               ['/ref/prop/taggedPlugins.md', '.taggedPlugins'],
+              ['/ref/prop/version.md', '.version'],
             ]
           },
           {
