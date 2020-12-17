@@ -50,9 +50,8 @@ export default class HolisticModel extends BaseModel {
         this.setup3D()
   
         this.dependenciesLoaded = true
-        this.handsfree.emit('modelLoaded')
-        this.handsfree.emit('handposeModelLoaded')
-        this.handsfree.emit('handposeModelReady')
+        this.handsfree.emit('modelReady', this)
+        this.handsfree.emit('handposeModelReady', this)
         document.body.classList.add('handsfree-model-handpose')
       })
     })

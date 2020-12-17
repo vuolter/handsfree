@@ -5,7 +5,7 @@ This event is triggered on the `document` after Handsfree is instantiated with `
 ## Receives
 
 event
-: An object containing the handsfree instance that was initialized. Because this is an event the instance is stored in `event.detail`
+: An event object containing the handsfree instance that was initialized. Because this is an event the instance is stored in `event.detail`
 
 ## Examples
 

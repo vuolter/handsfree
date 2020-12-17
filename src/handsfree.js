@@ -83,7 +83,7 @@ class Handsfree {
 
     // Start tracking when all models are loaded
     this.numModelsLoaded = 0
-    this.on('modelLoaded', () => {
+    this.on('modelReady', () => {
       let numActiveModels = 0
       Object.keys(this.model).forEach(modelName => {
         this.model[modelName].enabled && ++numActiveModels
@@ -247,7 +247,7 @@ class Handsfree {
     this.emit('loading', this)
 
     // Call the callback once things are loaded
-    callback && document.addEventListener('handsfree-modelLoaded', callback, {once: true})
+    callback && document.addEventListener('handsfree-modelReady', callback, {once: true})
     
     // Load dependencies
     this.numModelsLoaded = 0
@@ -257,8 +257,8 @@ class Handsfree {
       if (model.enabled && !model.dependenciesLoaded) {
         model.loadDependencies()
       } else if (model.enabled) {
-        this.emit('modelLoaded')
-        this.emit(`${modelName}ModelReady`)
+        this.emit('modelReady', model)
+        this.emit(`${modelName}ModelReady`, model)
       }
     })
   }

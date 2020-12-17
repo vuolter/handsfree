@@ -7,18 +7,21 @@ The stream is also available in [handsfree.debug.stream](/ref/prop/debug)
 ## Receives
 
 event
-: An object the webcam stream. Because this is an event the stream is stored in `event.detail`
+: An event object the webcam stream. Because this is an event the stream is stored in `event.detail`
 
 ## Example
 
 ```js
+// Instantiate
+const handsfree = new Handsfree({handpose: true})
+
 // Listen for the event
 document.addEventListener('handsfree-gotUserMedia', event => {
   console.log(event.detail)
 })
-
-// Instantiate
-const handsfree = new Handsfree({handpose: true})
+handsfree.on('gotUserMedia', event => {
+  console.log(event.detail)
+})
 
 // Start handpose so that it gets the media stream
 handsfree.start()

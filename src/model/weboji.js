@@ -32,9 +32,8 @@ export default class HolisticModel extends BaseModel {
                 videoSettings,
                 callbackReady: () => {
                   this.dependenciesLoaded = true
-                  this.handsfree.emit('modelLoaded')
-                  this.handsfree.emit('webojiModelLoaded')
-                  this.handsfree.emit('wbeojiModelReady')
+                  this.handsfree.emit('modelReady', this)
+                  this.handsfree.emit('webojiModelReady', this)
                   document.body.classList.add('handsfree-model-weboji')
                 }
               })

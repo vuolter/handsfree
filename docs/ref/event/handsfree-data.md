@@ -10,19 +10,23 @@ The data is available on [handsfree.data](/ref/prop/data) or in the individual m
 ## Receives
 
 event
-: An object containing {[weboji](/ref/model/weboji), [holistic](/ref/model/holistic), [handpose](/ref/model/handpose)} with data for each. Because this is an event the data is stored in `event.detail`
+: An event object containing {[weboji](/ref/model/weboji), [holistic](/ref/model/holistic), [handpose](/ref/model/handpose)} with data for each. Because this is an event the data is stored in `event.detail`
 
 ## Example
 
 ```js
+// Instantiate
+const handsfree = new Handsfree({weboji: true, handpose: true})
+
 // Listen for the event
 document.addEventListener('handsfree-data', event => {
   const data = event.detail
   console.log(data.weboji, data.handpose)
 })
-
-// Instantiate
-const handsfree = new Handsfree({weboji: true, handpose: true})
+handsfree.on('data', event => {
+  const data = event.detail
+  console.log(data.weboji, data.handpose)
+})
 
 // Start collecting data
 handsfree.start()
