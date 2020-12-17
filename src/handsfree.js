@@ -289,7 +289,7 @@ class Handsfree {
     this.data = data
 
     // Run untagged plugins
-    this.taggedPlugins.untagged.forEach(pluginName => {
+    this.taggedPlugins.untagged?.forEach(pluginName => {
       this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
     })
 
