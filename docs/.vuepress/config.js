@@ -112,10 +112,12 @@ module.exports = {
               ['/ref/method/enablePlugins.md', '.enablePlugins()'],
               ['/ref/method/normalize.md', '.normalize()'],
               ['/ref/method/on.md', '.on()'],
+              ['/ref/method/pause.md', '.pause()'],
               ['/ref/method/start.md', '.start()'],
               ['/ref/method/stop.md', '.stop()'],
               // ['/ref/method/throttle.md', '.throttle()'],
               ['/ref/method/update.md', '.update()'],
+              ['/ref/method/unpause.md', '.unpause()'],
               ['/ref/method/use.md', '.use()'],
             ]
           },

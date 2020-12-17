@@ -22,6 +22,8 @@ data: any
 ## Example
 
 ```js
+const handsfree = new Handsfree({weboji: true})
+
 // Listen to the event
 document.addEventListener('handsfree-myEvent', event => {
   // logs: 123

@@ -113,7 +113,6 @@ class Handsfree {
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
-  
 
   /**
    * Sets up the video and canvas elements
@@ -264,10 +263,34 @@ class Handsfree {
 
   /**
    * Stops tracking
+   * - Currently this just stops the tracker
+   * 
    * @see https://handsfree.js.org/ref/method/stop
    */
   stop () {
     location.reload()
+  }
+
+  /**
+   * Pauses inference to free up resources but maintains the
+   * webcam stream so that it can be unpaused instantly
+   * 
+   * @see https://handsfree.js.org/ref/method/pause
+   */
+  pause () {
+    this.isLooping = false
+  }
+
+  /**
+   * Resumes the loop from an unpaused state
+   * 
+   * @see https://handsfree.js.org/ref/method/pause
+   */
+  unpause () {
+    if (!this.isLooping) {
+      this.isLooping = true
+      this.loop()
+    }
   }
 
   /**
