@@ -12,3 +12,12 @@ The document `body` receives `.handsfree-loading` before the models are actually
 
 callback: function
 : (optional) A function to call after dependencies are loaded but just before the first frame
+
+## Example
+
+```js
+const handsfree = new Handsfree({weboji: true})
+handsfree.start(() => {
+  console.log('weboji started!')
+})
+```

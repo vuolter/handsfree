@@ -500,6 +500,9 @@ class Handsfree {
     }
   }
 
+  /**
+   * Loads all the core plugins (see #6)
+   */
   loadCorePlugins () {
     Object.keys(corePlugins).forEach(name => {
       this.use(name, corePlugins[name])
