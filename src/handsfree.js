@@ -36,9 +36,10 @@
 
 */
 
-import HolisticModel from './model/holistic'
 import WebojiModel from './model/weboji'
-import HandposeModel from './model/handpose'
+import HandsModel from './model/hands'
+import HolisticModel from './model/holistic'
+// import HandposeModel from './model/handpose'
 import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
@@ -105,13 +106,15 @@ class Handsfree {
    */
   prepareModels () {
     this.model = {
-      holistic: {},
       weboji: {},
-      handpose: {}
+      hands: {},
+      holistic: {},
+      // handpose: {}
     }
-    this.model.holistic = new HolisticModel(this, this.config.holistic)
     this.model.weboji = new WebojiModel(this, this.config.weboji)
-    this.model.handpose = new HandposeModel(this, this.config.handpose)
+    this.model.hands = new HandsModel(this, this.config.hands)
+    this.model.holistic = new HolisticModel(this, this.config.holistic)
+    // this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
 
   /**
@@ -186,15 +189,18 @@ class Handsfree {
     defaults.setup.wrap.$parent = document.body
 
     // Map booleans to objects
-    if (typeof config.holistic === 'boolean') {
-      config.holistic = {enabled: config.holistic}
-    }
     if (typeof config.weboji === 'boolean') {
       config.weboji = {enabled: config.weboji}
     }
-    if (typeof config.handpose === 'boolean') {
-      config.handpose = {enabled: config.handpose}
+    if (typeof config.hands === 'boolean') {
+      config.hands = {enabled: config.hands}
     }
+    if (typeof config.holistic === 'boolean') {
+      config.holistic = {enabled: config.holistic}
+    }
+    // if (typeof config.handpose === 'boolean') {
+    //   config.handpose = {enabled: config.handpose}
+    // }
 
     return merge({}, defaults, config)
   }
@@ -210,14 +216,17 @@ class Handsfree {
     config = this.cleanConfig(config, this.config)
 
     // Update models
-    this.model.holistic.enabled = config.holistic.enabled
-    this.model.holistic.config = config.holistic.config
-    
     this.model.weboji.enabled = config.weboji.enabled
     this.model.weboji.config = config.weboji.config
 
-    this.model.handpose.enabled = config.handpose.enabled
-    this.model.handpose.config = config.handpose.config
+    this.model.hands.enabled = config.hands.enabled
+    this.model.hands.config = config.hands.config
+    
+    this.model.holistic.enabled = config.holistic.enabled
+    this.model.holistic.config = config.holistic.config
+    
+    // this.model.handpose.enabled = config.handpose.enabled
+    // this.model.handpose.config = config.handpose.config
 
     // Start
     this.config = config
@@ -556,10 +565,10 @@ const corePlugins = {
   facePointer: require('./plugin/weboji/facePointer').default,
   faceClick: require('./plugin/weboji/faceClick').default,
   faceScroll: require('./plugin/weboji/faceScroll').default,
-  fingerPointer: require('./plugin/handpose/palmPointer').default,
-  palmPointer: require('./plugin/handpose/palmPointer').default,
-  pinchClick: require('./plugin/handpose/pinchClick').default,
-  handScroll: require('./plugin/handpose/handScroll').default,
+  // fingerPointer: require('./plugin/handpose/palmPointer').default,
+  // palmPointer: require('./plugin/handpose/palmPointer').default,
+  // pinchClick: require('./plugin/handpose/pinchClick').default,
+  // handScroll: require('./plugin/handpose/handScroll').default,
   palmPointers: require('./plugin/holistic/palmPointers').default
 }
 

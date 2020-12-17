@@ -64,9 +64,9 @@ export default {
             const Handsfree = module.default
             window.Handsfree = Handsfree
             window.handsfree = this.$root.handsfree = new Handsfree({
-              holistic: true,
               // weboji: true,
-              // handpose: true,
+              hands: true,
+              // holistic: true,
               showDebug: true,
               // showVideo: true,
               setup: {
