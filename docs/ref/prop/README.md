@@ -17,7 +17,6 @@ console.log(handsfree.version)
 - [config](/ref/prop/config/) - Contains the sanitized object you passed into `new Handsfree(config)`
 - [data](/ref/prop/data/) - Contains data for all the active models
 - [debug](/ref/prop/debug/) - Contains references to the video and canvas elements that contain the webcam stream and skeleton and keypoint overlays
-- [globalPlugins](/ref/prop/globalPlugins) - A collection of all the plugins that don't have a tag
 - [id](/ref/prop/id) - The ID for the current `Handsfree` instance
 - [isLooping](/ref/prop/isLooping) - Whether the main loop is looping
 - [model](/ref/prop/model) - A collection of all the models

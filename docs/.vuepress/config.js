@@ -141,7 +141,6 @@ module.exports = {
               ['/ref/prop/config.md', '.config'],
               ['/ref/prop/data.md', '.data'],
               ['/ref/prop/debug.md', '.debug'],
-              ['/ref/prop/globalPlugins.md', '.globalPlugins'],
               ['/ref/prop/id.md', '.id'],
               ['/ref/prop/isLooping.md', '.isLooping'],
               ['/ref/prop/model.md', '.model'],

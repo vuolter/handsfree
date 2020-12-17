@@ -70,7 +70,6 @@ class Handsfree {
 
     // Plugins
     this.plugin = {}
-    this.globalPlugins = []
     this.taggedPlugins = {}
     
     // Clean config and set defaults
@@ -289,8 +288,8 @@ class Handsfree {
     this.emit('data', data)
     this.data = data
 
-    // Run global plugins
-    this.globalPlugins.forEach(pluginName => {
+    // Run untagged plugins
+    this.taggedPlugins.untagged.forEach(pluginName => {
       this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
     })
 
@@ -373,7 +372,7 @@ class Handsfree {
         this.model[modelName].plugins.push(name)
       })
     } else {
-      this.globalPlugins.push(name)
+      this.taggedPlugins.untagged.push(name)
     }
   
     return this.plugin[name]
