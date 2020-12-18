@@ -18,7 +18,7 @@ div.mt-md
       .row
         .col-6
           router-link(to='/model/hands.html')
-            img(src='https://media3.giphy.com/media/mssf4vZa4gO5rZyItA/giphy.gif')
+            img(src='https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif')
         .col-6
           h3
             router-link(to='/model/hands.html') MediaPipe Hands
@@ -31,7 +31,7 @@ div.mt-md
       .row
         .col-6
           router-link(to='/model/facemesh.html')
-            img(src='https://media3.giphy.com/media/mssf4vZa4gO5rZyItA/giphy.gif')
+            img(src='https://media0.giphy.com/media/g2msiDwoLqabEMrmaL/giphy.gif')
         .col-6
           h3
             router-link(to='/model/facemesh.html') MediaPipe FaceMesh
@@ -44,7 +44,7 @@ div.mt-md
       .row
         .col-6
           router-link(to='/model/pose.html')
-            img(src='https://media3.giphy.com/media/mssf4vZa4gO5rZyItA/giphy.gif')
+            img(src='https://media2.giphy.com/media/VJ7aDV6F5id8wY2Ff0/giphy.gif')
         .col-6
           h3
             router-link(to='/model/pose.html') MediaPipe Pose
@@ -57,7 +57,7 @@ div.mt-md
       .row
         .col-6
           router-link(to='/model/holistic.html')
-            img(src='https://media3.giphy.com/media/mssf4vZa4gO5rZyItA/giphy.gif')
+            img(src='https://media3.giphy.com/media/9wXxXyUldVNKADnpwn/giphy.gif')
         .col-6
           h3
             router-link(to='/model/holistic.html') MediaPipe Holistic

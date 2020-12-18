@@ -66,9 +66,9 @@ export default {
             window.handsfree = this.$root.handsfree = new Handsfree({
               // weboji: true,
               // hands: true,
-              // holistic: true,
+              holistic: true,
               // facemesh: true,
-              pose: true,
+              // pose: true,
               showDebug: true,
               // showVideo: true,
               setup: {
@@ -102,8 +102,10 @@ export default {
      * Minimize the debugger
      */
     minimize () {
-      this.$refs.window.classList.add('minimized')
-      this.$refs.window.classList.remove('maximized')
+      const $window = document.querySelector('#handsfree-debug-window')
+      
+      $window.classList.add('minimized')
+      $window.classList.remove('maximized')
       this.isMinimized = true
       this.isMaximized = false
     },
@@ -112,8 +114,10 @@ export default {
      * Maximize the debugger
      */
     maximize () {
-      this.$refs.window.classList.add('maximized')
-      this.$refs.window.classList.remove('minimized')
+      const $window = document.querySelector('#handsfree-debug-window')
+      
+      $window.classList.add('maximized')
+      $window.classList.remove('minimized')
       this.isMinimized = false
       this.isMaximized = true
     },
@@ -122,7 +126,9 @@ export default {
      * Restore the debugger to its normal size
      */
     restore () {
-      this.$refs.window.classList.remove('maximized', 'minimized')
+      const $window = document.querySelector('#handsfree-debug-window')
+      
+      $window.classList.remove('maximized', 'minimized')
       this.isMinimized = false
       this.isMaximized = false      
     }
