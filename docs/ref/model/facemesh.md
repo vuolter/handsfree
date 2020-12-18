@@ -1,5 +1,6 @@
 ---
 prev: /ref/model/
+sidebarDepth: 2
 ---
 
 # 😏 FaceMesh

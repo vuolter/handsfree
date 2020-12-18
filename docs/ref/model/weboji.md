@@ -1,4 +1,6 @@
 ---
-next: /ref/method/
+next: /ref/event/
+sidebarDepth: 2
 ---
+
 # 😉 Weboji

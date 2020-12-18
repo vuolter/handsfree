@@ -1,6 +1,9 @@
+---
+sidebarDepth: 2
+---
 # 🤺 Holistic
 
-> **Technical documentation:** [https://google.github.io/mediapipe/solutions/hands](https://google.github.io/mediapipe/solutions/hands)
+> **Technical documentation:** [https://google.github.io/mediapipe/solutions/holistic.html](https://google.github.io/mediapipe/solutions/holistic.html)
 
 <div class="window mb-md">
   <div class="window-body">
@@ -30,7 +33,7 @@
 ### With defaults
 
 ```js
-const handsfree = new Handsfree({hands: true})
+const handsfree = new Handsfree({holistic: true})
 handsfree.start()
 ```
 
@@ -38,15 +41,21 @@ handsfree.start()
 
 ```js
 const handsfree = new Handsfree({
-  hands: {
+  holistic: {
     enabled: false,
-    // The maximum number of hands to detect [0 - 4]
-    maxNumHands: 2,
+    
+    // Outputs only the top 25 pose landmarks if true,
+    // otherwise shows all 33 full body pose landmarks
+    // - Note: Setting this to true may result in better accuracy 
+    upperBodyOnly: true,
 
-    // Minimum confidence [0 - 1] for a hand to be considered detected
+    // Helps reduce jitter over multiple frames if true
+    smoothLandmarks: true,
+
+    // Minimum confidence [0 - 1] for a person detection to be considered detected
     minDetectionConfidence: 0.5,
-
-    // Minimum confidence [0 - 1] for the landmark tracker to be considered detected
+        
+    // Minimum confidence [0 - 1] for the pose tracker to be considered detected
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
   }
@@ -57,14 +66,14 @@ handsfree.start()
 
 ## Data
 
+### Left Hand Landmarks
+
 ![](https://google.github.io/mediapipe/images/mobile/hand_landmarks.png)
 <br><small>Image source, MediaPipe: [https://google.github.io/mediapipe/solutions/hands#hand-landmark-model](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model)</small>
 
-### Hand Landmarks
-
 ```js
-// handIndex [0 - 3] An array of landmark points for each detected hands
-handsfree.data.hands.multiHandLandmarks[handIndex] == [
+// An array of landmark points for the left hand
+handsfree.data.holistic.leftHandLandmarks == [
   // Landmark 0
   {x, y},
   // Landmark 1
@@ -74,27 +83,70 @@ handsfree.data.hands.multiHandLandmarks[handIndex] == [
   {x, y}
 ]
 
-// hand 0, landmark 0
-handsfree.data.hands.multiHandLandmarks[0][0].x
-handsfree.data.hands.multiHandLandmarks[0][0].y
+// landmark 0
+handsfree.data.holistic.leftHandLandmarks[0].x
+handsfree.data.holistic.leftHandLandmarks[0].y
 ```
 
-### Is it the right or left hand?
+### Right Hand Landmarks
 
 ```js
-// handIndex [0 - 3] An array of landmark points for each detected hands
-handsfree.data.hands.multiHandedness[handIndex] == {
-  // "right" or "left"
-  label,
-  // The probability that it is "right" or "left"
-  score
-}
+// An array of landmark points for the right hand
+handsfree.data.holistic.rightHandLandmarks == [
+  // Landmark 0
+  {x, y},
+  // Landmark 1
+  {x, y},
+  // ...
+  // Landmark 20
+  {x, y}
+]
 
-// hand 0
-handsfree.data.hands.multiHandLandmarks[0].label
-handsfree.data.hands.multiHandLandmarks[0].score
+// landmark 0
+handsfree.data.holistic.rightHandLandmarks[0].x
+handsfree.data.holistic.rightHandLandmarks[0].y
 ```
 
+### Face Landmarks
+```js
+// An array of landmark points for the face
+handsfree.data.holistic.faceLandmarks == [
+  // Landmark 0
+  {x, y},
+  // Landmark 1
+  {x, y},
+  // ...
+  // Landmark 467
+  {x, y}
+]
+
+// landmark 0
+handsfree.data.holistic.faceLandmarks[0].x
+handsfree.data.holistic.faceLandmarks[0].y
+```
+
+### Pose Landmarks
+![](https://google.github.io/mediapipe/images/mobile/pose_tracking_full_body_landmarks.png)
+<br><small>Image source, MediaPipe: [https://google.github.io/mediapipe/solutions/pose#pose-landmark-model-blazepose-tracker](https://google.github.io/mediapipe/solutions/pose#pose-landmark-model-blazepose-tracker)</small>
+
+```js
+// An array of landmark points for the face
+handsfree.data.holistic.poseLandmarks == [
+  // Landmark 0
+  {x, y, visibility},
+  // Landmark 1
+  {x, y, visibility},
+  // ...
+  // Landmark 24
+  {x, y, visibility}
+]
+
+// landmark 0
+handsfree.data.holistic.poseLandmarks[0].x
+handsfree.data.holistic.poseLandmarks[0].y
+// The confidence in this pose landmark
+handsfree.data.holistic.poseLandmarks[0].visibility
+```
 
 
 

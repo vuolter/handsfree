@@ -106,21 +106,43 @@ export default {
     minTrackingConfidence: 0.5
   },
 
-  // Facemesh model
+  // Pose model
   pose: {
     enabled: false,
+    
+    // Outputs only the top 25 pose landmarks if true,
+    // otherwise shows all 33 full body pose landmarks
+    // - Note: Setting this to true may result in better accuracy 
     upperBodyOnly: false,
+
+    // Helps reduce jitter over multiple frames if true
     smoothLandmarks: true,
+
+    // Minimum confidence [0 - 1] for a person detection to be considered detected
     minDetectionConfidence: 0.5,
+
+    // Minimum confidence [0 - 1] for the pose tracker to be considered detected
+    // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
   },
 
   // Holistic model
   holistic: {
     enabled: false,
+    
+    // Outputs only the top 25 pose landmarks if true,
+    // otherwise shows all 33 full body pose landmarks
+    // - Note: Setting this to true may result in better accuracy 
     upperBodyOnly: true,
+
+    // Helps reduce jitter over multiple frames if true
     smoothLandmarks: true,
+
+    // Minimum confidence [0 - 1] for a person detection to be considered detected
     minDetectionConfidence: 0.5,
+        
+    // Minimum confidence [0 - 1] for the pose tracker to be considered detected
+    // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
   },
 }
