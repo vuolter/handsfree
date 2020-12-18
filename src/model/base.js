@@ -40,6 +40,9 @@ export default class BaseModel {
   disable () {
     this.enabled = false
     document.body.classList.remove(`handsfree-model-${this.name}`)
+    setTimeout(() => {
+      this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height)
+    })
   }
 
   /**

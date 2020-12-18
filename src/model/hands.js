@@ -3,7 +3,7 @@ import BaseModel from './base.js'
 export default class HandsModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
-    this.name = 'hand'
+    this.name = 'hands'
 
     // Without this the loading event will happen before the first frame
     this.hasLoadedAndRun = false
