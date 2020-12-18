@@ -88,7 +88,7 @@ module.exports = {
               ['/ref/model/hands.md', '🖐 Hands'],
               ['/ref/model/holistic.md', '🤺 Holistic'],
               ['/ref/model/pose.md', '🤸‍♀️ Pose'],
-              ['/ref/model/weboji.md', '🥴 Weboji'],
+              ['/ref/model/weboji.md', '😉 Weboji'],
             ]
           },
           {

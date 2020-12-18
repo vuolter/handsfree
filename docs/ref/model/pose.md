@@ -3,7 +3,7 @@ sidebarDepth: 2
 ---
 # 🤸‍♀️ Pose
 
-> **Technical documentation:** [https://google.github.io/mediapipe/solutions/hands](https://google.github.io/mediapipe/solutions/hands)
+> **Technical documentation:** [https://google.github.io/mediapipe/solutions/pose](https://google.github.io/mediapipe/solutions/pose)
 
 <div class="window mb-md">
   <div class="window-body">
