@@ -31,12 +31,16 @@ export default class BaseModel {
   // Toggle the model on/off
   enable () {
     this.enabled = true
+    document.body.classList.add(`handsfree-model-${this.name}`)
 
     if (!this.dependenciesLoaded) {
       this.loadDependencies()
     }
   }
-  disable () {this.enabled = false}
+  disable () {
+    this.enabled = false
+    document.body.classList.remove(`handsfree-model-${this.name}`)
+  }
 
   /**
    * Loads a script and runs a callback

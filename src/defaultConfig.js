@@ -11,10 +11,30 @@ export default {
   setup: {
     // The canvas element to use for rendering debug info like skeletons and keypoints
     canvas: {
-      // The canvas element to hold the skeletons and keypoints
-      $el: null,
-      width: 1280,
-      height: 720
+      hands: {
+        // The canvas element to hold the skeletons and keypoints for hand model
+        $el: null,
+        width: 1280,
+        height: 720
+      },
+      holistic: {
+        // The canvas element to hold the skeletons and keypoints for holistic model
+        $el: null,
+        width: 1280,
+        height: 720
+      },
+      pose: {
+        // The canvas element to hold the skeletons and keypoints for pose model
+        $el: null,
+        width: 1280,
+        height: 720
+      },
+      facemesh: {
+        // The canvas element to hold the skeletons and keypoints for facemesh model
+        $el: null,
+        width: 1280,
+        height: 720
+      }
     },
     // The video source to use. If not present, one will be created to capture webcam
     video: {

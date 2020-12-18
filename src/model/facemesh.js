@@ -71,17 +71,17 @@ export default class FacemeshModel extends BaseModel {
     // this.handsfree.debug.$canvasWebGL.style.opacity = '.2'
     // videoContext.drawImage(results.image, 0, 0, this.handsfree.debug.$canvasWebGL.width, this.handsfree.debug.$canvasWebGL.height)    
 
-    this.handsfree.debug.context.clearRect(0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
+    this.handsfree.debug.context.facemesh.clearRect(0, 0, this.handsfree.debug.$canvas.facemesh.width, this.handsfree.debug.$canvas.facemesh.height)
 
     if (results.multiFaceLandmarks) {
       for (const landmarks of results.multiFaceLandmarks) {
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_TESSELATION, {color: '#C0C0C070', lineWidth: 1})
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'})
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'})
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'})
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'})
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'})
-        drawConnectors(this.handsfree.debug.context, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_TESSELATION, {color: '#C0C0C070', lineWidth: 1})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'})
+        drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'})
       }
     }
   }

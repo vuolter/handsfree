@@ -72,11 +72,11 @@ export default class PoseModel extends BaseModel {
     // this.handsfree.debug.$canvasWebGL.style.opacity = '.2'
     // videoContext.drawImage(results.image, 0, 0, this.handsfree.debug.$canvasWebGL.width, this.handsfree.debug.$canvasWebGL.height)    
 
-    this.handsfree.debug.context.clearRect(0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
+    this.handsfree.debug.context.pose.clearRect(0, 0, this.handsfree.debug.$canvas.pose.width, this.handsfree.debug.$canvas.pose.height)
 
     if (results.poseLandmarks) {
-      drawConnectors(this.handsfree.debug.context, results.poseLandmarks, POSE_CONNECTIONS, {color: '#00FF00', lineWidth: 4})
-      drawLandmarks(this.handsfree.debug.context, results.poseLandmarks, {color: '#FF0000', lineWidth: 2})
+      drawConnectors(this.handsfree.debug.context.pose, results.poseLandmarks, POSE_CONNECTIONS, {color: '#00FF00', lineWidth: 4})
+      drawLandmarks(this.handsfree.debug.context.pose, results.poseLandmarks, {color: '#FF0000', lineWidth: 2})
     }
   }
 }

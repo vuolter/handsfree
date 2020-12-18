@@ -71,39 +71,39 @@ export default class HolisticModel extends BaseModel {
     // this.handsfree.debug.$canvasWebGL.style.opacity = '.2'
     // videoContext.drawImage(results.image, 0, 0, this.handsfree.debug.$canvasWebGL.width, this.handsfree.debug.$canvasWebGL.height)    
 
-    this.handsfree.debug.context.clearRect(0, 0, this.handsfree.debug.$canvas.width, this.handsfree.debug.$canvas.height)
+    this.handsfree.debug.context.holistic.clearRect(0, 0, this.handsfree.debug.$canvas.holistic.width, this.handsfree.debug.$canvas.holistic.height)
 
-    drawConnectors(this.handsfree.debug.context, results.poseLandmarks, POSE_CONNECTIONS, {
+    drawConnectors(this.handsfree.debug.context.holistic, results.poseLandmarks, POSE_CONNECTIONS, {
       color: '#0f0',
       lineWidth: 4
     })
     
-    drawLandmarks(this.handsfree.debug.context, results.poseLandmarks, {
+    drawLandmarks(this.handsfree.debug.context.holistic, results.poseLandmarks, {
       color: '#f00',
       lineWidth: 2
     })
     
-    drawConnectors(this.handsfree.debug.context, results.faceLandmarks, FACEMESH_TESSELATION, {
+    drawConnectors(this.handsfree.debug.context.holistic, results.faceLandmarks, FACEMESH_TESSELATION, {
       color: '#f0f',
       lineWidth: 1
     })
     
-    drawConnectors(this.handsfree.debug.context, results.leftHandLandmarks, HAND_CONNECTIONS, {
+    drawConnectors(this.handsfree.debug.context.holistic, results.leftHandLandmarks, HAND_CONNECTIONS, {
       color: '#0f0',
       lineWidth: 5
     })
     
-    drawLandmarks(this.handsfree.debug.context, results.leftHandLandmarks, {
+    drawLandmarks(this.handsfree.debug.context.holistic, results.leftHandLandmarks, {
       color: '#f0f',
       lineWidth: 2
     })
     
-    drawConnectors(this.handsfree.debug.context, results.rightHandLandmarks, HAND_CONNECTIONS, {
+    drawConnectors(this.handsfree.debug.context.holistic, results.rightHandLandmarks, HAND_CONNECTIONS, {
       color: '#0f0',
       lineWidth: 5
     })
 
-    drawLandmarks(this.handsfree.debug.context, results.rightHandLandmarks, {
+    drawLandmarks(this.handsfree.debug.context.holistic, results.rightHandLandmarks, {
       color: '#f0f',
       lineWidth: 2
     })    

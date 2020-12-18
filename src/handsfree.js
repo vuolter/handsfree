@@ -154,19 +154,23 @@ class Handsfree {
     this.debug.$canvasWebGL = $canvasWebGL
     this.debug.$wrap.appendChild(this.debug.$canvasWebGL)
 
-    // Context 2D canvas
-    if (!this.config.setup.canvas.$el) {
-      const $canvas = document.createElement('CANVAS')
-      $canvas.classList.add('handsfree-canvas')
-      $canvas.setAttribute('id', `handsfree-canvas-${this.id}`)
-      this.config.setup.canvas.$el = $canvas
-    }
-    this.debug.$canvas = this.config.setup.canvas.$el
-    this.debug.$canvas.width = this.config.setup.canvas.width
-    this.debug.$canvas.height = this.config.setup.canvas.height
-    this.debug.$wrap.appendChild(this.debug.$canvas)
-    this.debug.context = this.debug.$canvas.getContext('2d')
-
+    // Context 2D canvases
+    this.debug.$canvas = {}
+    this.debug.context = {}
+    ;['hands', 'pose', 'facemesh', 'holistic'].forEach(model => {
+      if (!this.config.setup.canvas[model].$el) {
+        const $canvas = document.createElement('CANVAS')
+        $canvas.classList.add('handsfree-canvas', `handsfree-canvas-${model}`, `handsfree-hide-when-started-without-${model}`)
+        $canvas.setAttribute('id', `handsfree-canvas-${model}-${this.id}`)
+        this.config.setup.canvas[model].$el = $canvas
+      }
+      this.debug.$canvas[model] = this.config.setup.canvas[model].$el
+      this.debug.$canvas[model].width = this.config.setup.canvas[model].width
+      this.debug.$canvas[model].height = this.config.setup.canvas[model].height
+      this.debug.$wrap.appendChild(this.debug.$canvas[model])
+      this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
+    })
+    
     // Append everything to the body
     this.config.setup.wrap.$parent.appendChild(this.debug.$wrap)
 
