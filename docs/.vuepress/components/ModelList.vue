@@ -4,19 +4,6 @@ div.mt-md
     .window-body
       .row
         .col-6
-          router-link(to='/ref/model/weboji.html')
-            img(src='https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif')
-        .col-6
-          h3
-            router-link(to='/ref/model/weboji.html') Jeeliz Weboji
-          ul
-            li 6DOF head pose estimations
-            li 11 face morphs and 16 helper states
-            li Comes with "Face Pointer" based plugins
-  .window.mb-md
-    .window-body
-      .row
-        .col-6
           router-link(to='/ref/model/hands.html')
             img(src='https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif')
         .col-6
@@ -52,7 +39,7 @@ div.mt-md
             li Full body mode with 33 2D pose landmarks
             li Upper body mode with 25 2D upper pose landmarks
             li 📅 Extra helpers and plugins coming soon
-  .window
+  .window.mb-md
     .window-body
       .row
         .col-6
@@ -66,4 +53,17 @@ div.mt-md
             li 21 2D hand landmarks per hand with up to 4 hands
             li 33 2D pose landmarks
             li 📅 Extra helpers and plugins coming soon
+  .window.mb-md
+    .window-body
+      .row
+        .col-6
+          router-link(to='/ref/model/weboji.html')
+            img(src='https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif')
+        .col-6
+          h3
+            router-link(to='/ref/model/weboji.html') Jeeliz Weboji
+          ul
+            li 6DOF head pose estimations
+            li 11 face morphs and 16 helper states
+            li Comes with "Face Pointer" based plugins
 </template>
