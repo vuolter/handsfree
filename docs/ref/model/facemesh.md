@@ -20,8 +20,8 @@ prev: /ref/model/
         </ul>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-facemesh" text-off="Try FaceMesh" text-on="Stop FaceMesh" :opts="demoOpts" />
-          <!-- <button class="full-width handsfree-show-when-started-without-facemesh handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="full-width handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo">👆 Activate Face Pointer</button> -->
+          <button class="handsfree-show-when-started-without-facemesh handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try FaceMesh</button>
         </div>
       </div>
     </div>
