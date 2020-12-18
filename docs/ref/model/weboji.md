@@ -2,7 +2,7 @@
 next: /ref/event/
 sidebarDepth: 2
 ---
-# 😉 Weboji
+# Plugin: Weboji
 
 > **Technical documentation:** [https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf)
 

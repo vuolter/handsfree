@@ -1,7 +1,7 @@
 ---
 sidebarDepth: 2
 ---
-# 🤺 Holistic
+# Model: Holistic
 
 > **Technical documentation:** [https://google.github.io/mediapipe/solutions/holistic.html](https://google.github.io/mediapipe/solutions/holistic.html)
 

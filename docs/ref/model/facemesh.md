@@ -3,7 +3,7 @@ prev: /ref/model/
 sidebarDepth: 2
 ---
 
-# 😏 FaceMesh
+# Model: FaceMesh
 
 > **Technical documentation:** [https://google.github.io/mediapipe/solutions/face_mesh.html](https://google.github.io/mediapipe/solutions/face_mesh.html)
 

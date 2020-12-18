@@ -1,7 +1,7 @@
 ---
 sidebarDepth: 2
 ---
-# 🖐 Hands
+# Model: Hands
 
 > **Technical documentation:** [https://google.github.io/mediapipe/solutions/hands](https://google.github.io/mediapipe/solutions/hands)
 
