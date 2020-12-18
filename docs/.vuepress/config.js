@@ -84,9 +84,11 @@ module.exports = {
             path: '/ref/model/',
             collapsable: true,
             children: [
-              ['/ref/model/handpose.md', '🖐 Handpose'],
+              ['/ref/model/facemesh.md', '😏 FaceMesh'],
+              ['/ref/model/hands.md', '🖐 Hands'],
               ['/ref/model/holistic.md', '🤺 Holistic'],
-              ['/ref/model/weboji.md', '😉 Weboji'],
+              ['/ref/model/pose.md', '🤸‍♀️ Pose'],
+              ['/ref/model/weboji.md', '🥴 Weboji'],
             ]
           },
           {

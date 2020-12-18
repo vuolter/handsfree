@@ -1,4 +1,3 @@
 ---
 prev: /ref/model/
 ---
-# 🖐 Handpose
