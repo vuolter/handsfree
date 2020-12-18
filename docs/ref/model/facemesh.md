@@ -10,7 +10,7 @@ prev: /ref/model/
   <div class="window-body">
     <div class="row">
       <div class="col-6">
-        <router-link to="/ref/model/hands.html"><img src="https://media0.giphy.com/media/g2msiDwoLqabEMrmaL/giphy.gif" /></router-link>
+        <img src="https://media0.giphy.com/media/g2msiDwoLqabEMrmaL/giphy.gif" />
       </div>
       <div class="col-6">
         <ul>
@@ -61,7 +61,7 @@ handsfree.start()
 ## Data
 ```js
 // faceIndex [0 - 3] An array of landmark points for each detected face
-handsfree.model.facemesh.data.multiFaceLandmarks[faceIndex] == [
+handsfree.data.facemesh.multiFaceLandmarks[faceIndex] == [
   // Landmark 0
   {x, y},
   // Landmark 1
@@ -71,9 +71,9 @@ handsfree.model.facemesh.data.multiFaceLandmarks[faceIndex] == [
   {x, y}
 ]
 
-// Landmark 0 and face 0
-handsfree.model.facemesh.data.multiFaceLandmarks[0][0].x
-handsfree.model.facemesh.data.multiFaceLandmarks[0][0].y
+// face 0, landmark 0
+handsfree.data.facemesh.multiFaceLandmarks[0][0].x
+handsfree.data.facemesh.multiFaceLandmarks[0][0].y
 ```
 
 
