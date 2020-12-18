@@ -36,7 +36,7 @@ export default {
   },
 
   updated () {
-    this.$nextTick(() => {
+    setTimeout(() => {
       console.log(`
         ✨
         (\\.   \\      ,/)
@@ -93,7 +93,7 @@ export default {
         )
         this.hasMovedToggle = true
       }
-    })
+    }, 50)
   },
 
   methods: {

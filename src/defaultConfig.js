@@ -78,10 +78,18 @@ export default {
     }
   },
 
-  // Holistic model
+  // Hands model
   hands: {
     enabled: false,
     maxNumHands: 2,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
+  },
+
+  // Facemesh model
+  facemesh: {
+    enabled: false,
+    maxNumFaces: 1,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
   },
