@@ -94,6 +94,15 @@ export default {
     minTrackingConfidence: 0.5
   },
 
+  // Facemesh model
+  pose: {
+    enabled: false,
+    upperBodyOnly: false,
+    smoothLandmarks: true,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
+  },
+
   // Holistic model
   holistic: {
     enabled: false,

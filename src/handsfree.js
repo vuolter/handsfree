@@ -39,6 +39,7 @@
 import WebojiModel from './model/weboji'
 import HandsModel from './model/hands'
 import FacemeshModel from './model/facemesh'
+import PoseModel from './model/pose'
 import HolisticModel from './model/holistic'
 import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
@@ -109,14 +110,15 @@ class Handsfree {
       weboji: {},
       hands: {},
       facemesh: {},
+      pose: {},
       holistic: {},
       // handpose: {}
     }
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.hands = new HandsModel(this, this.config.hands)
+    this.model.pose = new PoseModel(this, this.config.pose)
     this.model.facemesh = new FacemeshModel(this, this.config.facemesh)
     this.model.holistic = new HolisticModel(this, this.config.holistic)
-    // this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
 
   /**
@@ -200,6 +202,9 @@ class Handsfree {
     if (typeof config.facemesh === 'boolean') {
       config.facemesh = {enabled: config.facemesh}
     }
+    if (typeof config.pose === 'boolean') {
+      config.pose = {enabled: config.pose}
+    }
     if (typeof config.holistic === 'boolean') {
       config.holistic = {enabled: config.holistic}
     }
@@ -229,6 +234,9 @@ class Handsfree {
 
     this.model.facemesh.enabled = config.facemesh.enabled
     this.model.facemesh.config = config.facemesh.config
+    
+    this.model.pose.enabled = config.pose.enabled
+    this.model.pose.config = config.pose.config
     
     this.model.holistic.enabled = config.holistic.enabled
     this.model.holistic.config = config.holistic.config

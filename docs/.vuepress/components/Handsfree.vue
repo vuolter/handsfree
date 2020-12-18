@@ -67,7 +67,8 @@ export default {
               // weboji: true,
               // hands: true,
               // holistic: true,
-              facemesh: true,
+              // facemesh: true,
+              pose: true,
               showDebug: true,
               // showVideo: true,
               setup: {
