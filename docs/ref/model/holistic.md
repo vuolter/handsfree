@@ -137,7 +137,7 @@ handsfree.data.holistic.poseLandmarks == [
   // Landmark 1
   {x, y, visibility},
   // ...
-  // Landmark 24
+  // Landmark 32
   {x, y, visibility}
 ]
 

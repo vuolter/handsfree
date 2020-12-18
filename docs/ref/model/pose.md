@@ -65,65 +65,6 @@ handsfree.start()
 
 ## Data
 
-### Left Hand Landmarks
-
-![](https://google.github.io/mediapipe/images/mobile/hand_landmarks.png)
-<br><small>Image source, MediaPipe: [https://google.github.io/mediapipe/solutions/hands#hand-landmark-model](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model)</small>
-
-```js
-// An array of landmark points for the left hand
-handsfree.data.holistic.leftHandLandmarks == [
-  // Landmark 0
-  {x, y},
-  // Landmark 1
-  {x, y},
-  // ...
-  // Landmark 20
-  {x, y}
-]
-
-// landmark 0
-handsfree.data.holistic.leftHandLandmarks[0].x
-handsfree.data.holistic.leftHandLandmarks[0].y
-```
-
-### Right Hand Landmarks
-
-```js
-// An array of landmark points for the right hand
-handsfree.data.holistic.rightHandLandmarks == [
-  // Landmark 0
-  {x, y},
-  // Landmark 1
-  {x, y},
-  // ...
-  // Landmark 20
-  {x, y}
-]
-
-// landmark 0
-handsfree.data.holistic.rightHandLandmarks[0].x
-handsfree.data.holistic.rightHandLandmarks[0].y
-```
-
-### Face Landmarks
-```js
-// An array of landmark points for the face
-handsfree.data.holistic.faceLandmarks == [
-  // Landmark 0
-  {x, y},
-  // Landmark 1
-  {x, y},
-  // ...
-  // Landmark 467
-  {x, y}
-]
-
-// landmark 0
-handsfree.data.holistic.faceLandmarks[0].x
-handsfree.data.holistic.faceLandmarks[0].y
-```
-
 ### Pose Landmarks
 ![](https://google.github.io/mediapipe/images/mobile/pose_tracking_full_body_landmarks.png)
 <br><small>Image source, MediaPipe: [https://google.github.io/mediapipe/solutions/pose#pose-landmark-model-blazepose-tracker](https://google.github.io/mediapipe/solutions/pose#pose-landmark-model-blazepose-tracker)</small>
@@ -136,7 +77,7 @@ handsfree.data.holistic.poseLandmarks == [
   // Landmark 1
   {x, y, visibility},
   // ...
-  // Landmark 24
+  // Landmark 32
   {x, y, visibility}
 ]
 
