@@ -18,7 +18,7 @@ export default class HolisticModel extends BaseModel {
         // Next, let's initialize the weboji tracker API
         .then(model => {
           window.JEELIZ_RESIZER.size_canvas({
-            canvasId: `handsfree-canvas-${this.handsfree.id}`,
+            canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
             callback: (videoSettings) => {
               if (typeof videoSettings === 'object') {
                 videoSettings = merge(videoSettings, this.handsfree.config.weboji.videoSettings)
@@ -27,7 +27,7 @@ export default class HolisticModel extends BaseModel {
               }
 
               this.api.init({
-                canvasId: `handsfree-canvas-webgl-${this.handsfree.id}`,
+                canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
                 NNC: JSON.stringify(model),
                 videoSettings,
                 callbackReady: () => {

@@ -34,7 +34,7 @@ handsfree.start()
 ```
 If there's an error, a [modelError event](/ref/event/modelError/) will be triggered and along with console message which you can use to zero in on the correct folder.
 
-## `.setup.canvas`
+## `.setup.canvas[modelName]`
 
 **Default**:
 ```js

@@ -147,28 +147,35 @@ class Handsfree {
     this.debug.$video.height = this.config.setup.video.height
     this.debug.$wrap.appendChild(this.debug.$video)
 
-    // WebGL canvas (used by weboji)
-    const $canvasWebGL = document.createElement('CANVAS')
-    $canvasWebGL.classList.add('handsfree-canvas', 'handsfree-canvas-webgl')
-    $canvasWebGL.setAttribute('id', `handsfree-canvas-webgl-${this.id}`)
-    this.debug.$canvasWebGL = $canvasWebGL
-    this.debug.$wrap.appendChild(this.debug.$canvasWebGL)
-
     // Context 2D canvases
     this.debug.$canvas = {}
     this.debug.context = {}
-    ;['hands', 'pose', 'facemesh', 'holistic'].forEach(model => {
-      if (!this.config.setup.canvas[model].$el) {
-        const $canvas = document.createElement('CANVAS')
-        $canvas.classList.add('handsfree-canvas', `handsfree-canvas-${model}`, `handsfree-hide-when-started-without-${model}`)
-        $canvas.setAttribute('id', `handsfree-canvas-${model}-${this.id}`)
+    ;['weboji', 'hands', 'pose', 'facemesh', 'holistic'].forEach(model => {
+      this.debug.$canvas[model] = {}
+      this.debug.context[model] = {}
+      
+      let $canvas = this.config.setup.canvas[model].$el
+      if (!$canvas) {
+        $canvas = document.createElement('CANVAS')
         this.config.setup.canvas[model].$el = $canvas
       }
+      
+      // Classes
+      $canvas.classList.add('handsfree-canvas', `handsfree-canvas-${model}`, `handsfree-hide-when-started-without-${model}`)
+      $canvas.setAttribute('id', `handsfree-canvas-${model}-${this.id}`)
+
+      // Dimensions
       this.debug.$canvas[model] = this.config.setup.canvas[model].$el
       this.debug.$canvas[model].width = this.config.setup.canvas[model].width
       this.debug.$canvas[model].height = this.config.setup.canvas[model].height
       this.debug.$wrap.appendChild(this.debug.$canvas[model])
-      this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
+
+      // Context
+      if (model === 'weboji') {
+        this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
+      } else {
+        this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
+      }
     })
     
     // Append everything to the body

@@ -36,12 +36,23 @@ export default class BaseModel {
     if (!this.dependenciesLoaded) {
       this.loadDependencies()
     }
+
+    // Weboji uses a webgl context
+    if (this.name === 'weboji') {
+      this.handsfree.debug.$canvas.weboji.style.display = 'block'
+    }
   }
+
   disable () {
     this.enabled = false
     document.body.classList.remove(`handsfree-model-${this.name}`)
     setTimeout(() => {
-      this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height)
+      // Weboji uses a webgl context so let's just hide it
+      if (this.name === 'weboji') {
+        this.handsfree.debug.$canvas.weboji.style.display = 'none'
+      } else {
+        this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height)
+      }
     })
   }
 

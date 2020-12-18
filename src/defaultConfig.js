@@ -11,6 +11,12 @@ export default {
   setup: {
     // The canvas element to use for rendering debug info like skeletons and keypoints
     canvas: {
+      weboji: {
+        // The canvas element to hold the skeletons and keypoints for weboji model
+        $el: null,
+        width: 1280,
+        height: 720
+      },
       hands: {
         // The canvas element to hold the skeletons and keypoints for hand model
         $el: null,

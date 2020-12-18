@@ -63,15 +63,6 @@ export default class PoseModel extends BaseModel {
    * Debugs the pose model
    */
   debug (results) {
-    // Uncomment for quick demo purposes
-    // const videoContext = this.handsfree.debug.$canvasWebGL.getContext('2d')
-    // this.handsfree.debug.$canvasWebGL.width = this.handsfree.debug.$canvas.width
-    // this.handsfree.debug.$canvasWebGL.height = this.handsfree.debug.$canvas.height
-    // this.handsfree.debug.$canvasWebGL.style.width = '100%'
-    // this.handsfree.debug.$canvasWebGL.style.height = 'auto'
-    // this.handsfree.debug.$canvasWebGL.style.opacity = '.2'
-    // videoContext.drawImage(results.image, 0, 0, this.handsfree.debug.$canvasWebGL.width, this.handsfree.debug.$canvasWebGL.height)    
-
     this.handsfree.debug.context.pose.clearRect(0, 0, this.handsfree.debug.$canvas.pose.width, this.handsfree.debug.$canvas.pose.height)
 
     if (results.poseLandmarks) {
