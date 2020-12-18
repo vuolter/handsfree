@@ -1,3 +1,0 @@
----
-prev: /ref/plugin/
----

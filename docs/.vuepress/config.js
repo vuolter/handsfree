@@ -68,10 +68,7 @@ module.exports = {
         path: '/guide/',
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
-          ['/guide/updating-configs.md', '🎭 Updating and switching models'],
-          // ['/guide/desktop.md', '💻 Interacting with the desktop'],
-          // ['/guide/changing-video-source.md', "🎦 Tracking pre-recorded videos and images"],
-          // ['/guide/new-models.md', '📦 Adding new models']
+          ['/guide/updating-configs.md', '🎭 Updating and switching models']
         ]
       },
       {
@@ -117,7 +114,6 @@ module.exports = {
               ['/ref/method/pause.md', '.pause()'],
               ['/ref/method/start.md', '.start()'],
               ['/ref/method/stop.md', '.stop()'],
-              // ['/ref/method/throttle.md', '.throttle()'],
               ['/ref/method/update.md', '.update()'],
               ['/ref/method/unpause.md', '.unpause()'],
               ['/ref/method/use.md', '.use()'],
@@ -128,10 +124,6 @@ module.exports = {
             path: '/ref/plugin/',
             collapsable: true,
             children: [
-              // ['/ref/plugin/fingerPointer.md', 'fingerPointer'],
-              ['/ref/plugin/handScroll.md', 'handScroll'],
-              ['/ref/plugin/palmPointer.md', 'palmPointer'],
-              ['/ref/plugin/pinchClick.md', 'pinchClick'],
               ['/ref/plugin/faceClick.md', 'faceClick'],
               ['/ref/plugin/facePointer.md', 'facePointer'],
               ['/ref/plugin/faceScroll.md', 'faceScroll'],

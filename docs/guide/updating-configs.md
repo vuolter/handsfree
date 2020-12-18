@@ -1,8 +1,8 @@
 # 🎭 Updating and switching models
 
-[handsfree.update(config, callback)](/ref/method/update) can be used to update Handsfree in real time, even as it's actively running. The passed [config](/ref/prop/config) will override the existing one, and the `callback` will get called after all new models are loaded (or immediately if all models are already loaded).
+[handsfree.update(config, callback)](/ref/method/update/) can be used to update Handsfree in real time, even as it's actively running. The passed [config](/ref/prop/config/) will override the existing one, and the `callback` will get called after all new models are loaded (or immediately if all models are already loaded).
 
-In addition to reconfiguring models you can also [enable/disable them](/ref/prop/model/#toggling-models-on-off), as well as reconfigure plugins. Below is an example of switching off the [holistic model](/ref/model/holistic) for the [weboji model](/ref/model/weboji) and configuring the the [facePointer plugin](/ref/plugin/facePointer):
+In addition to reconfiguring models you can also [enable/disable them](/ref/prop/model/#toggling-models-on-off/), as well as reconfigure plugins. Below is an example of switching off the [holistic model](/ref/model/holistic/) for the [weboji model](/ref/model/weboji/) and configuring the the [facePointer plugin](/ref/plugin/facePointer/):
 
 ```js
 // Start the holistic model with "browsing" plugins

@@ -21,4 +21,4 @@ console.log(handsfree.version)
 - [model](/ref/prop/model) - A collection of all the models
 - [plugin](/ref/prop/plugin) - A collection of all the plugins
 - [taggedPlugins](/ref/prop/taggedPlugins) - A collection of all tagged plugins by tag
-- [version](/ref/prop/version) - Your version of Handsfree.js
+- [version](/ref/prop/version/) - Your version of Handsfree.js

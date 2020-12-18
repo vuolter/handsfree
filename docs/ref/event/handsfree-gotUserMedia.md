@@ -1,8 +1,8 @@
 # Event: `handsfree-gotUserMedia`
 
-This event is triggered on the `document` when the webcam's media stream is received. Currently this is only used for the [handpose model](/ref/model/handpose) but will be applied to other models as well to unify the APIs.
+This event is triggered on the `document` when the webcam's media stream is received. Currently this is only used for the [handpose model](/ref/model/handpose/) but will be applied to other models as well to unify the APIs.
 
-The stream is also available in [handsfree.debug.stream](/ref/prop/debug)
+The stream is also available in [handsfree.debug.stream](/ref/prop/debug/)
 
 ## Receives
 

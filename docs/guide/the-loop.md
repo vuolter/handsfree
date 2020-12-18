@@ -1,6 +1,6 @@
 # 🔌 Plugins and the main loop
 
-When you run [handsfree.start(callback)](/ref/method/start) a loop is started that does 4 things:
+When you run [handsfree.start(callback)](/ref/method/start/) a loop is started that does 4 things:
 
 1. Synchronously updates all models and stores their data in `handsfree.model[modelName].data`
 2. Triggers a `handsfree-data` event on the `document` with an object containing all the data
@@ -11,7 +11,7 @@ When you run [handsfree.start(callback)](/ref/method/start) a loop is started th
 
 ## Basic plugins
 
-Basic plugins are created with [handsfree.use(pluginName, callback)](/ref/method/use):
+Basic plugins are created with [handsfree.use(pluginName, callback)](/ref/method/use/):
 
 ```js
 // A plugin that console logs your data on every frame
@@ -38,7 +38,7 @@ handsfree.use('consoleLogger', {weboji} => {
 
 ## Complex plugins
 
-Instead of passing a function you can pass an object into [handsfree.use(pluginName, opts)](/ref/method/use). `opts` can contain anything, but the following lists special properties and methods:
+Instead of passing a function you can pass an object into [handsfree.use(pluginName, opts)](/ref/method/use/). `opts` can contain anything, but the following lists special properties and methods:
 
 ```js
 handsfree.use('pluginName', {
@@ -83,7 +83,7 @@ handsfree.use('consoleLogger', {
 
 The `onEnable` and `onDisable` methods makes it easy to run code when you run `.enable()` or `.disable()` on the plugin. A common use case is to show/hide DOM elements (for example, to toggle the face and palm pointers).
 
-You can add tags to the plugin through the `.tags` prop to bulk disable/enable plugins with the [handsfree.enablePlugins(tags)](/ref/method/enablePlugins) and [handsfree.disablePlugins(tags)](/ref/method/disablePlugins). `.tags` can be a string or array of strings:
+You can add tags to the plugin through the `.tags` prop to bulk disable/enable plugins with the [handsfree.enablePlugins(tags)](/ref/method/enablePlugins/) and [handsfree.disablePlugins(tags)](/ref/method/disablePlugins/). `.tags` can be a string or array of strings:
 
 ```js
 handsfree.use('consoleLogger', {
@@ -134,7 +134,7 @@ handfree.use('consoleLogger', data => {
 })
 ```
 
-In some models, properties are only available if detected. For example, if the right hand is not visible in the [holistic model](/ref/model/holistic) then the `.rightHandLandmarks` won't exist. Without checks, this could lead to undefined errors.
+In some models, properties are only available if detected. For example, if the right hand is not visible in the [holistic model](/ref/model/holistic/) then the `.rightHandLandmarks` won't exist. Without checks, this could lead to undefined errors.
 
 In these cases it might be necessary to check if the property also exists by using the [Optional Chaining operator](https://www.joshwcomeau.com/operator-lookup?match=optional-chaining):
 

@@ -7,9 +7,9 @@ prev: /ref/method/
 handsfree.disablePlugins(tags)
 ```
 
-When you [handsfree.use()](/ref/method/use) you'll have the option of setting its tags. When running `handsfree.disablePlugins()` it will search through all plugins and disable the ones that contain any of those tags. If no tags are passed then all plugins are disabled.
+When you [handsfree.use()](/ref/method/use/) you'll have the option of setting its tags. When running `handsfree.disablePlugins()` it will search through all plugins and disable the ones that contain any of those tags. If no tags are passed then all plugins are disabled.
 
-This can be used along with [handsfree.enablePlugins()](/ref/method/enablePlugins) to instantly swap out entire user experiences by tag.
+This can be used along with [handsfree.enablePlugins()](/ref/method/enablePlugins/) to instantly swap out entire user experiences by tag.
 
 ## Parameters
 

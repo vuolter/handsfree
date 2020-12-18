@@ -71,7 +71,7 @@ handsfree.start()
 <body>
   <!-- Instantiate and start it -->
   <script>
-    const handsfree = new Handsfree({holistic: true})
+    const handsfree = new Handsfree({hands: true})
     handsfree.enablePlugins('browsing')
     handsfree.start()
   </script>
@@ -89,7 +89,7 @@ npm i handsfree
 // Inside your app
 import Handsfree from 'handsfree'
 
-const handsfree = new Handsfree({holistic: true})
+const handsfree = new Handsfree({hands: true})
 handsfree.enablePlugins('browsing')
 handsfree.start()
 ```
@@ -112,7 +112,7 @@ mv node_modules/handsfree/build/lib/assets PUBLIC
 import Handsfree from 'handsfree'
 
 const handsfree = new Handsfree({
-  holistic: true,
+  hands: true,
   // Set this to your where you moved the models into
   assetsPath: '/PUBLIC/assets',
 })

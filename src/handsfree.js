@@ -578,7 +578,7 @@ const corePlugins = {
   // palmPointer: require('./plugin/handpose/palmPointer').default,
   // pinchClick: require('./plugin/handpose/pinchClick').default,
   // handScroll: require('./plugin/handpose/handScroll').default,
-  palmPointers: require('./plugin/holistic/palmPointers').default
+  // palmPointers: require('./plugin/holistic/palmPointers').default
 }
 
 

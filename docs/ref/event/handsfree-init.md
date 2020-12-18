@@ -1,6 +1,6 @@
 # Event: `handsfree-init`
 
-This event is triggered on the `document` after Handsfree is instantiated with `new Handsfree()`. It receives the `handsfree` instance, configured and ready to go. This is the only event that you can't listen to with [handsfree.on()](/ref/method/on).
+This event is triggered on the `document` after Handsfree is instantiated with `new Handsfree()`. It receives the `handsfree` instance, configured and ready to go. This is the only event that you can't listen to with [handsfree.on()](/ref/method/on/).
 
 ## Receives
 

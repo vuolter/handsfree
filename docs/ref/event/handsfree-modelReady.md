@@ -8,7 +8,7 @@ This event is triggered on the `document` when a model is ready to be used. In a
 ## Receives
 
 event
-: An event object containing the [model](/ref/prop/model). Because this is an event the model is stored in `event.detail`
+: An event object containing the [model](/ref/prop/model/). Because this is an event the model is stored in `event.detail`
 
 ## Example
 
