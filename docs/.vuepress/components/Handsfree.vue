@@ -3,7 +3,7 @@
   #handsfree-debugger
 
   //- This will be moved into the Navbar
-  HandsfreeToggle#navbar-handsfree-toggle(text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
+  HandsfreeToggle#navbar-handsfree-toggle(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
   #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
@@ -29,6 +29,14 @@ export default {
 
   data () {
     return {
+      opts: {
+        weboji: false,
+        hands: true,
+        pose: false,
+        holistic: false,
+        facemesh: false
+      },
+      
       hasMovedToggle: false,
       isMaximized: false,
       isMinimized: false
@@ -65,8 +73,8 @@ export default {
             window.Handsfree = Handsfree
             window.handsfree = this.$root.handsfree = new Handsfree({
               // weboji: true,
-              // hands: true,
-              holistic: true,
+              hands: true,
+              // holistic: true,
               // facemesh: true,
               // pose: true,
               showDebug: true,

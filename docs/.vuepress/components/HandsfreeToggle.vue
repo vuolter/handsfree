@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.block-children
   button.handsfree-show-when-stopped.handsfree-hide-when-loading(@click='start')
     Fa-Video
     span {{textOff}}
@@ -22,7 +22,7 @@ export default {
 
   methods: {
     start () {
-      this.$root.handsfree.start(this.$props.opts, () => {
+      this.$root.handsfree.update(this.$props.opts, () => {
         this.$emit('started')
       })
     },

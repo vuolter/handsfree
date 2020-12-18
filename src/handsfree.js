@@ -111,8 +111,7 @@ class Handsfree {
       hands: {},
       facemesh: {},
       pose: {},
-      holistic: {},
-      // handpose: {}
+      holistic: {}
     }
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.hands = new HandsModel(this, this.config.hands)
@@ -208,9 +207,6 @@ class Handsfree {
     if (typeof config.holistic === 'boolean') {
       config.holistic = {enabled: config.holistic}
     }
-    // if (typeof config.handpose === 'boolean') {
-    //   config.handpose = {enabled: config.handpose}
-    // }
 
     return merge({}, defaults, config)
   }

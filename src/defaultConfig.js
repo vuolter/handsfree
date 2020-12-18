@@ -89,8 +89,14 @@ export default {
   // Facemesh model
   facemesh: {
     enabled: false,
+    // The maximum number of faces to detect (1 - 4)
     maxNumFaces: 1,
+
+    // Minimum confidence (0 - 1) for a face to be considered detected
     minDetectionConfidence: 0.5,
+    
+    // Minimum confidence (0 - 1) for the landmark tracker to be considered detected
+    // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
   },
 
