@@ -22,7 +22,7 @@ export default {
 
     vertScroll: {
       // The multiplier to scroll by. Lower numbers are slower
-      scrollSpeed: 0.15,
+      scrollSpeed: 0.05,
       // How many pixels from the top/bottom of the scroll area to scroll
       scrollZone: 100
     }
@@ -96,16 +96,16 @@ export default {
     let didNotScroll = false
 
     // Check if we have scrolled up
-    this.$target.scrollTo(0, curScrollTop + 1)
+    this.$target.scrollTo(0, curScrollTop + this.config.vertScroll.scrollSpeed)
     if (curScrollTop === this.getTargetScrollTop()) {
       didNotScroll = true
     } else {
-      this.$target.scrollTo(0, curScrollTop - 1)
+      this.$target.scrollTo(0, curScrollTop - this.config.vertScroll.scrollSpeed)
       return
     }
 
     // Check if we have scrolled down
-    this.$target.scrollTo(0, curScrollTop - 1)
+    this.$target.scrollTo(0, curScrollTop - this.config.vertScroll.scrollSpeed)
     if (curScrollTop === this.getTargetScrollTop()) {
       if (didNotScroll) {
         this.numFramesFocused = 0
@@ -115,7 +115,7 @@ export default {
         )
       }
     } else {
-      this.$target.scrollTo(0, curScrollTop + 1)
+      this.$target.scrollTo(0, curScrollTop + this.config.vertScroll.scrollSpeed)
       return
     }
   },

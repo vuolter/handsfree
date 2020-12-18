@@ -28,12 +28,17 @@ export default class BaseModel {
   loadDependencies (callback) {}
   updateData () {}
 
-  // Toggle the model on/off
-  enable () {
+  /**
+   * Enable model
+   * @param {*} handleLoad If true then it'll also attempt to load,
+   *    otherwise you'll need to handle it yourself. This is mostly used internally
+   *    to prevent the .update() method from double loading
+   */
+  enable (handleLoad = true) {
     this.enabled = true
     document.body.classList.add(`handsfree-model-${this.name}`)
 
-    if (!this.dependenciesLoaded) {
+    if (handleLoad && !this.dependenciesLoaded) {
       this.loadDependencies()
     }
 
@@ -53,7 +58,7 @@ export default class BaseModel {
       } else {
         this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height)
       }
-    })
+    }, 0)
   }
 
   /**

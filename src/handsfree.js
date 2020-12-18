@@ -233,27 +233,26 @@ class Handsfree {
    * @param {Function} callback Called after
    */
   update (config, callback) {
+    let wasEnabled
     config = this.cleanConfig(config, this.config)
 
-    // Update models
-    this.model.weboji.enabled = config.weboji.enabled
-    this.model.weboji.config = config.weboji.config
+    // Run enable/disable methods on changed models
+    ;['hands', 'facemesh', 'pose', 'holistic', 'weboji'].forEach(model => {
+      wasEnabled = this.model[model].enabled
+      this.model[model].enabled = config[model].enabled
+      this.model[model].config = config[model].config
 
-    this.model.hands.enabled = config.hands.enabled
-    this.model.hands.config = config.hands.config
-
-    this.model.facemesh.enabled = config.facemesh.enabled
-    this.model.facemesh.config = config.facemesh.config
-    
-    this.model.pose.enabled = config.pose.enabled
-    this.model.pose.config = config.pose.config
-    
-    this.model.holistic.enabled = config.holistic.enabled
-    this.model.holistic.config = config.holistic.config
+      if (wasEnabled && !config[model].enabled) this.model[model].disable()
+      else if (!wasEnabled && config[model].enabled) this.model[model].enable(false)
+    })
     
     // Start
     this.config = config
-    this.start(callback)
+    if (this.isLooping && callback) {
+      callback()
+    } else {
+      this.start(callback)
+    }
   }
 
 
