@@ -23,7 +23,7 @@ export default {
     vertScroll: {
       // The multiplier to scroll by. Lower numbers are slower
       scrollSpeed: 0.15,
-      // How many pixels from the the edge to scroll
+      // How many pixels from the top/bottom of the scroll area to scroll
       scrollZone: 100
     }
   },
