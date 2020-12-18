@@ -10,14 +10,14 @@ export default class HandsModel extends BaseModel {
 
   loadDependencies (callback) {
     // Load hands
-    this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/hands.js`, () => {
+    this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
       this.api = new window.Hands({locateFile: file => {
-        return `${this.handsfree.config.assetsPath}/@mediapipe/hands/${file}`
+        return `${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/${file}`
       }})
 
       // Load the hands camera module
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/drawing_utils.js`, () => {
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/node_modules/@mediapipe/camera_utils/camera_utils.js`, () => {
           this.camera = new Camera(this.handsfree.debug.$video, {
             // Run inference
             onFrame: async () => {

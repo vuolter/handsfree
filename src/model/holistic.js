@@ -10,14 +10,14 @@ export default class HolisticModel extends BaseModel {
 
   loadDependencies (callback) {
     // Load holistic
-    this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/holistic.js`, () => {
+    this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/holistic.js`, () => {
       this.api = new window.Holistic({locateFile: file => {
-        return `${this.handsfree.config.assetsPath}/@mediapipe/holistic/${file}`
+        return `${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/${file}`
       }})
 
       // Load the holistic camera module
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/drawing_utils.js`, () => {
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/camera_utils.js`, () => {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/node_modules/@mediapipe/camera_utils/camera_utils.js`, () => {
           this.camera = new Camera(this.handsfree.debug.$video, {
             // Run inference
             onFrame: async () => {

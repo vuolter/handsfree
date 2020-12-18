@@ -32,15 +32,6 @@ export default {
     }
   },
 
-  // Holistic model
-  holistic: {
-    enabled: false,
-    upperBodyOnly: true,
-    smoothLandmarks: true,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
-  },
-
   // Weboji model
   weboji: {
     enabled: false,
@@ -87,28 +78,20 @@ export default {
     }
   },
 
-  handpose: {
+  // Holistic model
+  hands: {
     enabled: false,
-    
-    // How many milliseconds to wait between each inference
-    throttle: 0,
+    maxNumHands: 2,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
+  },
 
-    // Model config
-    model: {
-      // How many frames to go without running the bounding box detector.
-      // - Set to a lower value if you want a safety net in case the mesh
-      //   detector produces consistently flawed predictions
-      maxContinuousChecks: Infinity,
-
-      // Threshold for discarding a prediction
-      detectionConfidence: 0.8,
-
-      // A float representing the threshold for deciding whether boxes overlap
-      // too much in non-maximum suppression. Must be between [0, 1]
-      iouThreshold: 0.3,
-
-      // A threshold for deciding when to remove boxes based on score in non-maximum suppression
-      scoreThreshold: 0.75
-    }
-  }
+  // Holistic model
+  holistic: {
+    enabled: false,
+    upperBodyOnly: true,
+    smoothLandmarks: true,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
+  },
 }

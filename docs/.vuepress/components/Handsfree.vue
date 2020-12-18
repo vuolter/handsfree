@@ -65,8 +65,9 @@ export default {
             window.Handsfree = Handsfree
             window.handsfree = this.$root.handsfree = new Handsfree({
               // weboji: true,
-              hands: true,
+              // hands: true,
               // holistic: true,
+              facemesh: true,
               showDebug: true,
               // showVideo: true,
               setup: {
