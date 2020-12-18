@@ -5,6 +5,9 @@ export default class HandsModel extends BaseModel {
     super(handsfree, config)
     this.name = 'hand'
 
+    // Without this the loading event will happen before the first frame
+    this.hasLoadedAndRun = false
+
     this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
   }
 
@@ -21,7 +24,12 @@ export default class HandsModel extends BaseModel {
           this.camera = new Camera(this.handsfree.debug.$video, {
             // Run inference
             onFrame: async () => {
-              if (this.enabled && this.handsfree.isLooping) {
+              if (!this.hasLoadedAndRun) {
+                this.hasLoadedAndRun = true
+                this.handsfree.emit('modelReady', this)
+                this.handsfree.emit('handsModelReady', this)
+                document.body.classList.add('handsfree-model-hands')      
+              } else if (this.enabled && this.handsfree.isLooping) {
                 await this.api.send({image: this.handsfree.debug.$video})
               }
             },
@@ -30,13 +38,9 @@ export default class HandsModel extends BaseModel {
           })
 
           this.camera.start()
+          this.dependenciesLoaded = true
 
           callback && callback(this)
-          
-          this.dependenciesLoaded = true
-          this.handsfree.emit('modelReady', this)
-          this.handsfree.emit('handsModelReady', this)
-          document.body.classList.add('handsfree-model-hands')
         })
       })
 
