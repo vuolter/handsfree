@@ -37,8 +37,8 @@ export default class HandsModel extends BaseModel {
             height: this.handsfree.debug.$video.height
           })
 
-          this.camera.start()
           this.dependenciesLoaded = true
+          this.camera.start()
 
           callback && callback(this)
         })
@@ -53,6 +53,7 @@ export default class HandsModel extends BaseModel {
   
   updateData (results) {
     this.data = results
+    this.handsfree.data.hands = results
     if (this.handsfree.config.showDebug) {
       this.debug(results)
     }

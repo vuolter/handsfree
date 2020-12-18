@@ -54,6 +54,7 @@ export default class PoseModel extends BaseModel {
   
   updateData (results) {
     this.data = results
+    this.handsfree.data.pose = results
     if (this.handsfree.config.showDebug) {
       this.debug(results)
     }

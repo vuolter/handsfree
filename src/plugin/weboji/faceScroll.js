@@ -35,12 +35,12 @@ export default {
   /**
    * Scroll the page when the cursor goes above/below the threshold
    */
-  onFrame (data) {
+  onFrame ({weboji}) {
     // @FIXME we shouldn't need to do this, but this is occasionally reset to {x: 0, y: 0} when running in client mode
-    if (!data.pointer.x && !data.pointer.y) return
+    if (!weboji.pointer.x && !weboji.pointer.y) return
 
     // Check for hover
-    this.checkForFocus(data)
+    this.checkForFocus(weboji)
     let isScrolling = false
 
     // Get bounds
@@ -54,17 +54,17 @@ export default {
     }
 
     // Check on click
-    if (data.pointer.state === 'mouseDown') {
+    if (weboji.pointer.state === 'mouseDown') {
       this.numFramesFocused = 0
-      this.maybeSetTarget(data)
+      this.maybeSetTarget(weboji)
     }
 
     // Scroll up
-    if (data.pointer.y < bounds.top + this.config.vertScroll.scrollZone) {
+    if (weboji.pointer.y < bounds.top + this.config.vertScroll.scrollZone) {
       this.$target.scrollTo(
         0,
         scrollTop +
-          (data.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
+          (weboji.pointer.y - bounds.top - this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
 
@@ -72,12 +72,12 @@ export default {
     }
 
     // Scroll down
-    if (data.pointer.y > bounds.bottom - this.config.vertScroll.scrollZone) {
+    if (weboji.pointer.y > bounds.bottom - this.config.vertScroll.scrollZone) {
       this.$target.scrollTo(
         0,
         scrollTop -
           (bounds.bottom -
-            data.pointer.y -
+            weboji.pointer.y -
             this.config.vertScroll.scrollZone) *
             this.config.vertScroll.scrollSpeed
       )
@@ -130,10 +130,10 @@ export default {
   /**
    * Checks to see if we've hovered over an element for x turns
    */
-  checkForFocus: throttle(function(data) {
+  checkForFocus: throttle(function(weboji) {
     let $potTarget = document.elementFromPoint(
-      data.pointer.x,
-      data.pointer.y
+      weboji.pointer.x,
+      weboji.pointer.y
     )
     if (!$potTarget) return
     $potTarget = this.recursivelyFindScrollbar($potTarget)
@@ -173,9 +173,9 @@ export default {
   /**
    * Sets a new scroll target on click
    */
-  maybeSetTarget(data) {
-    if (data.pointer.state === 'mouseDown' && data.pointer.$target) {
-      this.selectTarget(this.recursivelyFindScrollbar(data.pointer.$target))
+  maybeSetTarget(weboji) {
+    if (weboji.pointer.state === 'mouseDown' && weboji.pointer.$target) {
+      this.selectTarget(this.recursivelyFindScrollbar(weboji.pointer.$target))
     }
   },
 

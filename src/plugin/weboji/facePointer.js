@@ -49,22 +49,22 @@ export default {
     this.$pointer?.classList.remove('handsfree-hidden')
   },
 
-  onFrame (data) {
+  onFrame ({weboji}) {
     // Get X/Y as if looking straight aweboji
-    let x = data.translation[0] * window.outerWidth
-    let y = window.outerHeight - data.translation[1] * window.outerHeight
-    let z = (1 - data.translation[2]) * window.outerWidth * 2.5
+    let x = weboji.translation[0] * window.outerWidth
+    let y = window.outerHeight - weboji.translation[1] * window.outerHeight
+    let z = (1 - weboji.translation[2]) * window.outerWidth * 2.5
 
     // Add pitch/yaw
     x +=
       z *
-      Math.tan(data.rotation[1] + (this.config.offset.yaw * Math.PI) / 180) *
+      Math.tan(weboji.rotation[1] + (this.config.offset.yaw * Math.PI) / 180) *
       this.config.speed.x
 
     y +=
       z *
         Math.tan(
-          data.rotation[0] + (this.config.offset.pitch * Math.PI) / 180
+          weboji.rotation[0] + (this.config.offset.pitch * Math.PI) / 180
         ) *
         this.config.speed.y -
       window.outerHeight
@@ -84,7 +84,7 @@ export default {
 
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
-    data.pointer = {
+    weboji.pointer = {
       x: this.tween.x,
       y: this.tween.y
     }

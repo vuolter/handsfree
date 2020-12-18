@@ -55,6 +55,7 @@ export default class HolisticModel extends BaseModel {
     this.data.translation = await this.api.get_positionScale()
     this.data.morphs = await this.api.get_morphTargetInfluencesStabilized()
     this.data.state = await this.getStates()
+    this.handsfree.data.weboji = this.data
 
     return this.data
   }

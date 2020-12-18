@@ -87,7 +87,7 @@ export default class BaseModel {
     
     if (Object.keys(this.data).length) {
       this.plugins.forEach(name => {
-        this.handsfree.plugin[name].enabled && this.handsfree.plugin[name]?.onFrame(this.data)
+        this.handsfree.plugin[name].enabled && this.handsfree.plugin[name]?.onFrame(this.handsfree.data)
       })
     }
   }

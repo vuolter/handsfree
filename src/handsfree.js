@@ -69,6 +69,7 @@ class Handsfree {
     // Assign the instance ID
     this.id = ++id
     this.version = pkg.version
+    this.data = {}
 
     // Plugins
     this.plugin = {}
@@ -330,21 +331,17 @@ class Handsfree {
    */
   loop () {
     // Get model data
-    const data = {}
     Object.keys(this.model).forEach(modelName => {
       const model = this.model[modelName]
-      
       if (model.enabled && model.dependenciesLoaded) {
         model.getData()
-        data[modelName] = model.data
       }
     })
-    this.emit('data', data)
-    this.data = data
+    this.emit('data', this.data)
 
     // Run untagged plugins
     this.taggedPlugins.untagged?.forEach(pluginName => {
-      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
+      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(this.data)
     })
 
     // Render video behind everything else
@@ -355,7 +352,7 @@ class Handsfree {
         }
       })
 
-      if (activeModel) {
+      if (activeModel && this.model[activeModel]?.camera) {
         // @fixme let's optimize this
         this.debug.$canvas.video.width = this.debug.$canvas[activeModel].width
         this.debug.$canvas.video.height = this.debug.$canvas[activeModel].height

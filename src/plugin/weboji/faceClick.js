@@ -37,8 +37,8 @@ export default {
    */
   throttle (throttle) {
     this.maybeClick = this.handsfree.throttle(
-      function (data) {
-        this.click(data)
+      function (weboji) {
+        this.click(weboji)
       },
       throttle,
       { trailing: false }
@@ -48,12 +48,12 @@ export default {
   /**
    * Detect click state and trigger a real click event
    */
-  onFrame (data) {
+  onFrame ({weboji}) {
     // Detect if the threshold for clicking is met with specific morphs
     this.thresholdMet = false
     Object.keys(this.config.morphs).forEach((key) => {
       const morph = +this.config.morphs[key]
-      if (morph > 0 && data.morphs[key] >= morph) this.thresholdMet = true
+      if (morph > 0 && weboji.morphs[key] >= morph) this.thresholdMet = true
     })
 
     // Click/release and add body classes
@@ -71,30 +71,30 @@ export default {
       this.mouseDowned > 0 &&
       this.mouseDowned <= this.config.maxMouseDownedFrames
     )
-      data.pointer.state = 'mouseDown'
+      weboji.pointer.state = 'mouseDown'
     else if (this.mouseDowned > this.config.maxMouseDownedFrames)
-      data.pointer.state = 'mouseDrag'
-    else if (this.mouseUp) data.pointer.state = 'mouseUp'
+      weboji.pointer.state = 'mouseDrag'
+    else if (this.mouseUp) weboji.pointer.state = 'mouseUp'
     else ''
 
     // Actually click something (or focus it)
-    if (data.pointer.state === 'mouseDown') {
-      this.maybeClick(data)
+    if (weboji.pointer.state === 'mouseDown') {
+      this.maybeClick(weboji)
     }
   },
 
   /**
    * The actual click method, this is what gets throttled
    */
-  click (data) {
-    const $el = document.elementFromPoint(data.pointer.x, data.pointer.y)
+  click (weboji) {
+    const $el = document.elementFromPoint(weboji.pointer.x, weboji.pointer.y)
     if ($el) {
       $el.dispatchEvent(
         new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
-          clientX: data.pointer.x,
-          clientY: data.pointer.y
+          clientX: weboji.pointer.x,
+          clientY: weboji.pointer.y
         })
       )
 
@@ -102,7 +102,7 @@ export default {
       if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
         $el.focus()
 
-      data.pointer.$target = $el
+      weboji.pointer.$target = $el
     }
   },
 

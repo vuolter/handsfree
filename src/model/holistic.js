@@ -53,6 +53,7 @@ export default class HolisticModel extends BaseModel {
   
   updateData (results) {
     this.data = results
+    this.handsfree.data.holistic = results
     if (this.handsfree.config.showDebug) {
       this.debug(results)
     }

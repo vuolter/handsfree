@@ -4,7 +4,14 @@ sidebarDepth: 2
 ---
 # Plugin: Weboji
 
+
 > **Technical documentation:** [https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf)
+
+::: warning ⚠ Weboji currently only works with itself
+Due to the way the other models are currently being handled, it's not possible to activate Weboji at the same time.
+
+This will be fixed soon!
+:::
 
 <div class="window mb-md">
   <div class="window-body">

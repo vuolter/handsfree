@@ -53,6 +53,7 @@ export default class FacemeshModel extends BaseModel {
   
   updateData (results) {
     this.data = results
+    this.handsfree.data.facemesh = results
     if (this.handsfree.config.showDebug) {
       this.debug(results)
     }
