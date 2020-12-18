@@ -2,7 +2,7 @@
  * Scrolls the page vertically by closing hand
  */
 export default {
-  models: 'handpose',
+  models: 'hands',
   tags: ['browser'],
   enabled: false,
 
@@ -25,10 +25,13 @@ export default {
     framesToFocus: 10,
 
     // Number of pixels the middle and thumb tips must be near each other to drag
-    threshold: 60,
+    threshold: 50,
 
     // Number of frames where a hold is not registered before releasing a drag
-    numThresholdErrorFrames: 5
+    numThresholdErrorFrames: 5,
+
+    // Speed multiplier
+    speed: 2
   },
 
   onUse () {
@@ -38,18 +41,20 @@ export default {
   /**
    * Scroll the page when the cursor goes above/below the threshold
    */
-  onFrame (data) {
+  onFrame ({hands}) {
+    if (!hands.multiHandLandmarks) return
+    const height = this.handsfree.debug.$canvas.hands.height
+    
     // Detect if the threshold for clicking is met with specific morphs
-    const a = data.annotations.middleFinger[3][0] - data.annotations.thumb[3][0]
-    const b = data.annotations.middleFinger[3][1] - data.annotations.thumb[3][1]
-    const c = Math.sqrt(a*a + b*b)
+    const a = hands.multiHandLandmarks[0][4].x - hands.multiHandLandmarks[0][8].x
+    const b = hands.multiHandLandmarks[0][4].y - hands.multiHandLandmarks[0][8].y
+    const c = Math.sqrt(a*a + b*b) * height
     this.thresholdMet = c < this.config.threshold
 
     // Set the original grab point
     if (this.thresholdMet) {
       if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
-        this.checkForFocus(data)
-        this.origScrollTop = this.getTargetScrollTop() + data.pointer.y
+        this.origScrollTop = this.getTargetScrollTop() + hands.multiHandLandmarks[0][4].y * height * this.config.speed
       }
       this.framesSinceLastGrab = 0
     }
@@ -57,7 +62,7 @@ export default {
     
     // Scroll
     if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
-      this.$target.scrollTo(0, this.origScrollTop - data.pointer.y)
+      this.$target.scrollTo(0, this.origScrollTop - hands.multiHandLandmarks[0][4].y * height * this.config.speed)
     }
   },
 
@@ -66,63 +71,5 @@ export default {
    */
   getTargetScrollTop () {
     return this.$target.scrollY || this.$target.scrollTop || 0
-  },
-
-  /**
-   * Checks to see if we've hovered over an element for x turns
-   */
-  checkForFocus (data) {
-    let $potTarget = document.elementFromPoint(
-      data.pointer.x,
-      data.pointer.y
-    )
-    if (!$potTarget) return
-
-    $potTarget = this.recursivelyFindScrollbar($potTarget)
-    this.selectTarget($potTarget)
-  },
-
-  /**
-   * Select and style the element
-   */
-  selectTarget ($potTarget) {
-    // Check required in case the window is the target
-    if (this.$target.classList) {
-      this.$target.classList.remove('handsfree-scroll-focus')
-    }
-    if ($potTarget && $potTarget.classList) {
-      $potTarget.classList.add('handsfree-scroll-focus')
-    }
-
-    if ($potTarget.nodeName === 'HTML' || !$potTarget.nodeName) {
-      $potTarget = window
-    }
-
-    this.$target = $potTarget
-  },
-
-  /**
-   * Traverses up the DOM until a scrollbar is found, or until we hit the body/window
-   */
-  recursivelyFindScrollbar($target) {
-    const styles =
-      $target && $target.getBoundingClientRect ? getComputedStyle($target) : {}
-
-    if (
-      $target &&
-      $target.scrollHeight > $target.clientHeight &&
-      (styles.overflow === 'auto' ||
-        styles.overflow === 'auto scroll' ||
-        styles.overflowY === 'auto' ||
-        styles.overflowY === 'auto scroll')
-    ) {
-      return $target
-    } else {
-      if ($target && $target.parentElement) {
-        return this.recursivelyFindScrollbar($target.parentElement)
-      } else {
-        return window
-      }
-    }
   }
 }

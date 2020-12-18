@@ -596,9 +596,13 @@ class Handsfree {
 
 
 const corePlugins = {
+  // Weboji
   facePointer: require('./plugin/weboji/facePointer').default,
   faceClick: require('./plugin/weboji/faceClick').default,
   faceScroll: require('./plugin/weboji/faceScroll').default,
+
+  handScroll: require('./plugin/hands/handScroll').default
+  
   // fingerPointer: require('./plugin/handpose/palmPointer').default,
   // palmPointer: require('./plugin/handpose/palmPointer').default,
   // pinchClick: require('./plugin/handpose/pinchClick').default,
