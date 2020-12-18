@@ -20,15 +20,18 @@ export default {
   },
 
   config: {
+    // Used to offset the pointer, like when the webcam is not in front of you
     offset: {
+      // Nudge the pointer by this amount
       x: 0,
       y: 0,
-      // A little nudge for when camera is above screen
+      // Calibrate the head (in degrees)
       pitch: -15,
       yaw: -12,
       roll: 0
     },
 
+    // Sets how senstive the pointer is
     speed: {
       x: 1,
       y: 1
