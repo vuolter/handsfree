@@ -19,7 +19,9 @@ prev: /ref/model/
           <li>📅 Extra helpers and plugins coming soon</li>
         </ul>
         <div>
-          <HandsfreeToggle class="handsfree-hide-when-started-without-facemesh" text-off="Try FaceMesh" text-on="Stop FaceMesh" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-facemesh" text-off="Try FaceMesh" text-on="Stop FaceMesh" :opts="demoOpts" />
+          <!-- <button class="full-width handsfree-show-when-started-without-facemesh handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="full-width handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo">👆 Activate Face Pointer</button> -->
         </div>
       </div>
     </div>
