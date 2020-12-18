@@ -150,7 +150,9 @@ class Handsfree {
     // Context 2D canvases
     this.debug.$canvas = {}
     this.debug.context = {}
-    ;['weboji', 'hands', 'pose', 'facemesh', 'holistic'].forEach(model => {
+    this.config.setup.canvas.video = {}
+    // The video canvas is used to display the video
+    ;['weboji', 'video', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
       this.debug.$canvas[model] = {}
       this.debug.context[model] = {}
       
@@ -344,6 +346,22 @@ class Handsfree {
     this.taggedPlugins.untagged?.forEach(pluginName => {
       this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(data)
     })
+
+    // Render video behind everything else
+    if (this.config.showDebug) {
+      const activeModel = ['hands', 'pose', 'holistic', 'facemesh'].find(model => {
+        if (this.model[model].enabled) {
+          return model
+        }
+      })
+
+      if (activeModel) {
+        // @fixme let's optimize this
+        this.debug.$canvas.video.width = this.debug.$canvas[activeModel].width
+        this.debug.$canvas.video.height = this.debug.$canvas[activeModel].height
+        this.debug.context.video.drawImage(this.model[activeModel].camera.video, 0, 0, this.debug.$canvas.video.width, this.debug.$canvas.video.height)
+      }
+    }
 
     this.isLooping && requestAnimationFrame(() => this.isLooping && this.loop())
   }

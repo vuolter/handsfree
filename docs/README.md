@@ -46,7 +46,8 @@ handsfree.start()
 <blockquote>
   <div class="verticle-middle-children space-children text-center">
     <strong>Powered by</strong>
-    <a href="https://google.github.io/mediapipe/solutions/holistic"><img src='/branding/tensorflow.png' height=30></a>
+    <a href="https://www.tensorflow.org/js/"><img src='/branding/tensorflow.png' height=30></a>
+    <a href="https://mediapipe.dev/"><img src='/branding/mediapipe.png' height=30></a>
     <a href="https://github.com/jeeliz/jeelizWeboji"><img src='/branding/jeeliz.png' height=30></a>
   </div>
   <hr style="margin: 20px auto">
