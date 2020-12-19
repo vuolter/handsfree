@@ -32,7 +32,7 @@ handsfree.start()
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><img src="https://media0.giphy.com/media/mQH0i7ScbpqebCXGbB/giphy.gif"></div>
+      <div class="col-6"><img src="https://media4.giphy.com/media/tQ1vFtoMWWpgdCoJJj/giphy.gif"></div>
       <div class="col-6">
         <h2>Run the above code!</h2>
         <ul>

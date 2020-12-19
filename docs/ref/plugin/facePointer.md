@@ -26,7 +26,13 @@ sidebarDepth: 2
   </div>
 </div>
 
-This plugin is used in combination with the [faceClick](/ref/plugin/faceClick/) and [facePointer](/ref/plugin/facePointer/) to help you interact with pages with face gestures.
+> **Models:** [Jeeliz Weboji](/ref/model/weboji/)
+>
+> **Activate:** `handsfree.plugin.facePointer.enable()`
+>
+> **Tags:** `['browser']`
+>
+> **About:** This plugin is used in combination with the [faceClick](/ref/plugin/faceClick/) and [facePointer](/ref/plugin/facePointer/) to help you interact with pages with face gestures.
 
 This plugin will create pointer element with the following classes: 
 
