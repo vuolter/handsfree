@@ -13,7 +13,7 @@ sidebarDepth: 2
       </div>
       <div class="col-6">
         <ul>
-          <li>21 3D hand landmarks per hand</li>
+          <li>21 2D hand landmarks per hand</li>
           <li>Track up to 4 hands at once</li>
           <li>📅 Extra helpers and plugins coming soon</li>
         </ul>

@@ -15,7 +15,7 @@ sidebarDepth: 2
       </div>
       <div class="col-6">
         <ul>
-          <li>468 3D face landmarks</li>
+          <li>468 2D face landmarks</li>
           <li>Track up to 4 faces at once</li>
           <li>📅 Extra helpers and plugins coming soon</li>
         </ul>

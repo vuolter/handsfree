@@ -10,7 +10,7 @@ div.mt-md
           h3
             router-link(to='/ref/model/hands.html') MediaPipe Hands
           ul
-            li 21 3D hand landmarks per hand
+            li 21 2D hand landmarks per hand
             li Track up to 4 hands at once
             li 📅 Extra helpers and plugins coming soon
           div
@@ -31,7 +31,7 @@ div.mt-md
           h3
             router-link(to='/ref/model/facemesh.html') MediaPipe FaceMesh
           ul
-            li 468 3D face landmarks
+            li 468 2D face landmarks
             li Track up to 4 faces at once
             li 📅 Extra helpers and plugins coming soon
           div
