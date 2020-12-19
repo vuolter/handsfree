@@ -45,7 +45,6 @@ import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
-import pkg from '../package.json'
 
 
 /////////////////////////////////////////////////////////////
@@ -68,7 +67,7 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
-    this.version = pkg.version
+    this.version = '8.0.0'
     this.data = {}
 
     // Plugins

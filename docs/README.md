@@ -6,9 +6,12 @@ meta:
 next: /guide/
 ---
 
-<h1 class="mb-0"><img src="/branding/handsfree.png"></h1>
+<h1 class="mb-0" style="margin-bottom: -20px"><img src="/branding/handsfree.png"></h1>
+
+<video muted loop autoplay src="/model-wall.mp4" style="width: 100%"></video>
+
 <h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
-<p class="verticle-middle-children space-children">
+<p class="verticle-middle-children space-children text-center">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"></a>

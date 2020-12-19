@@ -1,3 +1,100 @@
+/* Debug and Feedback */
+.handsfree-feedback,
+.handsfree-video,
+.handsfree-canvas {
+  display: none;
+}
+.handsfree-started.handsfree-show-video .handsfree-feedback,
+.handsfree-started.handsfree-show-video .handsfree-video {
+  display: block;
+}
+.handsfree-started.handsfree-show-debug .handsfree-feedback,
+.handsfree-started.handsfree-show-debug .handsfree-canvas {
+  display: block;
+}
+
+
+/* Debug */
+.handsfree-feedback {
+  position: relative;
+}
+.handsfree-canvas,
+.handsfree-video {
+  width: auto;
+  height: auto;
+  transform: scale(-1, 1);
+}
+.handsfree-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.handsfree-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: auto !important;
+}
+.handsfree-canvas:last-child {
+  position: relative;
+}
+.handsfree-canvas-webgl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: auto;
+  margin-left: 50%;
+  transform: translate(-50%) scale(-1, 1);
+}
+
+/* Loading States */
+.handsfree-show-when-loading {
+  display: none;
+}
+.handsfree-loading .handsfree-hide-when-loading {
+  display: none !important;
+}
+.handsfree-loading .handsfree-show-when-loading {
+  display: block;
+}
+.handsfree-loading a.handsfree-show-when-loading,
+.handsfree-loading button.handsfree-show-when-loading,
+.handsfree-loading span.handsfree-show-when-loading {
+  display: inline-block;
+}
+
+/* Started/stop states */
+.handsfree-stop {
+  display: none;
+}
+.handsfree-started .handsfree-start {
+  display: none;
+}
+.handsfree-started .handsfree-stop {
+  display: block;
+}
+.handsfree-started a.handsfree-stop,
+.handsfree-started button.handsfree-stop,
+.handsfree-started span.handsfree-stop {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-stopped {
+  display: none;
+}
+.handsfree-show-when-started {
+  display: none;
+}
+.handsfree-started .handsfree-show-when-started {
+  display: initial;
+}
+.handsfree-loading .handsfree-show-when-loading {
+  display: initial;
+}
+
 /* Pointer */
 .handsfree-pointer {
   width: 15px;
@@ -29,65 +126,6 @@
   display: none !important;
 }
 
-/* feedback */
-.handsfree-feedback {
-  position: relative;
-}
-.handsfree-canvas, .handsfree-video, .handsfree-debug {
-  width: 100%;
-  height: auto;
-  position: relative;
-  transform: scale(-1, 1);
-}
-.handsfree-canvas {
-  position: absolute;
-}
-.handsfree-video, .handsfree-debug {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-}
-
-/* Loading States */
-.handsfree-show-when-loading {
-  display: none;
-}
-.handsfree-loading .handsfree-hide-when-loading {
-  display: none !important;
-}
-.handsfree-loading .handsfree-show-when-loading {
-  display: block;
-}
-.handsfree-loading a.handsfree-show-when-loading, .handsfree-loading button.handsfree-show-when-loading, .handsfree-loading span.handsfree-show-when-loading {
-  display: inline-block;
-}
-
-/* Started/stop states */
-.handsfree-stop {
-  display: none;
-}
-.handsfree-started .handsfree-start {
-  display: none;
-}
-.handsfree-started .handsfree-stop {
-  display: block;
-}
-.handsfree-started a.handsfree-stop, .handsfree-started button.handsfree-stop, .handsfree-started span.handsfree-stop {
-  display: inline-block;
-}
-.handsfree-started .handsfree-show-when-stopped {
-  display: none;
-}
-.handsfree-show-when-started {
-  display: none;
-}
-.handsfree-started .handsfree-show-when-started {
-  display: initial;
-}
-.handsfree-loading .handsfree-show-when-loading {
-  display: initial;
-}
 
 /* Weboji */
 .handsfree-started .handsfree-hide-when-started-without-weboji {
@@ -111,8 +149,96 @@
   display: inline-block !important;
 }
 
+/* Holistic */
+.handsfree-started .handsfree-hide-when-started-without-holistic {
+  display: none;
+}
+.handsfree-started.handsfree-model-holistic .handsfree-hide-when-started-without-holistic {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-started-without-holistic {
+  display: inline-block;
+}
+.handsfree-show-when-started-without-holistic,
+.handsfree-started.handsfree-model-holistic .handsfree-show-when-started-without-holistic {
+  display: none;
+}
+.handsfree-hide-when-started-without-holistic + .handsfree-show-when-loading,
+.handsfree-loading .handsfree-show-when-started-without-holistic + .handsfree-hide-when-loading {
+  display: none !important;
+}
+.handsfree-started.handsfree-loading .handsfree-hide-when-started-without-holistic + .handsfree-show-when-started-without-holistic {
+  display: inline-block !important;
+}
+
+/* Hands */
+.handsfree-started .handsfree-hide-when-started-without-hands {
+  display: none;
+}
+.handsfree-started.handsfree-model-hands .handsfree-hide-when-started-without-hands {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-started-without-hands {
+  display: inline-block;
+}
+.handsfree-show-when-started-without-hands,
+.handsfree-started.handsfree-model-hands .handsfree-show-when-started-without-hands {
+  display: none;
+}
+.handsfree-hide-when-started-without-hands + .handsfree-show-when-loading,
+.handsfree-loading .handsfree-show-when-started-without-hands + .handsfree-hide-when-loading {
+  display: none !important;
+}
+.handsfree-started.handsfree-loading .handsfree-hide-when-started-without-hands + .handsfree-show-when-started-without-hands {
+  display: inline-block !important;
+}
+
+/* Facemesh */
+.handsfree-started .handsfree-hide-when-started-without-facemesh {
+  display: none;
+}
+.handsfree-started.handsfree-model-facemesh .handsfree-hide-when-started-without-facemesh {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-started-without-facemesh {
+  display: inline-block;
+}
+.handsfree-show-when-started-without-facemesh,
+.handsfree-started.handsfree-model-facemesh .handsfree-show-when-started-without-facemesh {
+  display: none;
+}
+.handsfree-hide-when-started-without-facemesh + .handsfree-show-when-loading,
+.handsfree-loading .handsfree-show-when-started-without-facemesh + .handsfree-hide-when-loading {
+  display: none !important;
+}
+.handsfree-started.handsfree-loading .handsfree-hide-when-started-without-facemesh + .handsfree-show-when-started-without-facemesh {
+  display: inline-block !important;
+}
+
+/* Pose */
+.handsfree-started .handsfree-hide-when-started-without-pose {
+  display: none;
+}
+.handsfree-started.handsfree-model-pose .handsfree-hide-when-started-without-pose {
+  display: inline-block;
+}
+.handsfree-started .handsfree-show-when-started-without-pose {
+  display: inline-block;
+}
+.handsfree-show-when-started-without-pose,
+.handsfree-started.handsfree-model-pose .handsfree-show-when-started-without-pose {
+  display: none;
+}
+.handsfree-hide-when-started-without-pose + .handsfree-show-when-loading,
+.handsfree-loading .handsfree-show-when-started-without-pose + .handsfree-hide-when-loading {
+  display: none !important;
+}
+.handsfree-started.handsfree-loading .handsfree-hide-when-started-without-pose + .handsfree-show-when-started-without-pose {
+  display: inline-block !important;
+}
+
 /* Calibrator, Gesture Recorder */
-.handsfree-gesture-recorder-wrap, .handsfree-calibrator-wrap {
+/* .handsfree-gesture-recorder-wrap, .handsfree-calibrator-wrap {
   position: fixed;
   top: 0;
   left: 0;
@@ -139,7 +265,7 @@
 }
 #tfjs-visor-container > .visor {
   z-index: 1000000;
-}
+} */
 
 /* Click animation */
 body.handsfree-clicked .handsfree-pointer {
