@@ -1,0 +1,31 @@
+<!-- Minimal example using the CDN -->
+<head>
+  <!-- Include Handsfree.js -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.3/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.0.3/build/lib/handsfree.js"></script>
+  <style>
+    .handsfree-canvas-video {
+      background: #000;
+      opacity: 0.1;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <button class="handsfree-show-when-stopped" onclick="handsfree.start()">Start Handsfree</button>
+    <button class="handsfree-show-when-loading" disabled>...</button>
+    <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Handsfree</button>
+  </div>
+  
+  <!-- Instantiate and start it -->
+  <script>
+    const handsfree = new Handsfree({hands: true, showDebug: true})
+    handsfree.taggedPlugins.untagged = []
+
+    // A simple plugin to log the data
+    handsfree.use('logger', data => {
+      console.log(data)
+    })
+  </script>
+</body>

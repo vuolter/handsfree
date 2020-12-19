@@ -1,6 +1,6 @@
 {
   "name": "handsfree",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "src/handsfree.js",
   "scripts": {

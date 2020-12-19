@@ -62,7 +62,7 @@ export default {
          🧙‍♂️ Presenting 🧙‍♀️
 
             Handsfree.js
-              8.0.2
+              8.0.3
 
   Repo:       https://github.com/midiblocks/handsfree
   Discord:    https://discord.gg/TWemTd85

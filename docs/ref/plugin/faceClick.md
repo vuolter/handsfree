@@ -27,9 +27,15 @@ sidebarDepth: 2
   </div>
 </div>
 
-This plugin is used in combination with the [facePointer](/ref/plugin/facePointer/) to help you click on things on the screen with a face gesture. You can customize which `handsfree.data.weboji.morphs[]` to use and how activated that morph needs to be to register the click.
+> **Models:** [Jeeliz Weboji](/ref/model/weboji/)
+>
+> **Activate:** `handsfree.plugin.faceClick.enable()`
+>
+> **Tags:** `['browser']`
+>
+> **About:** This plugin is used in combination with the [facePointer](/ref/plugin/facePointer/) to help you click on things on the screen with a face gesture.
 
-The click triggers a `MouseEvent` on the element underneath the pointer with the following options:
+You can customize which `handsfree.data.weboji.morphs[]` to use and how activated that morph needs to be to register the click. The click triggers a `MouseEvent` on the element underneath the pointer with the following options:
 
 ```js
 new MouseEvent('click', {

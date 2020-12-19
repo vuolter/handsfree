@@ -27,7 +27,13 @@ sidebarDepth: 2
   </div>
 </div>
 
-This plugin is used in combination with the [facePointer](/ref/plugin/facePointer/) to help you scroll pages with head movements.
+> **Models:** [Jeeliz Weboji](/ref/model/weboji/)
+>
+> **Activate:** `handsfree.plugin.faceScroll.enable()`
+>
+> **Tags:** `['browser']`
+>
+> **About:** This plugin is used in combination with the [facePointer](/ref/plugin/facePointer/) to help you scroll pages with head movements.
 
 ## Config
 

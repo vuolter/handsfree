@@ -2,13 +2,12 @@
 next: /ref/prop/
 sidebarDepth: 2
 ---
-
 # Plugin: pinchScroll
 
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><img src="https://media0.giphy.com/media/mQH0i7ScbpqebCXGbB/giphy.gif"></div>
+      <div class="col-6"><img src="https://media4.giphy.com/media/tQ1vFtoMWWpgdCoJJj/giphy.gif"></div>
       <div class="col-6">
         <ul>
           <li>👌 Pinch your thumb and index to grab the page</li>
@@ -22,7 +21,13 @@ sidebarDepth: 2
   </div>
 </div>
 
-This plugin helps you scroll pages by pinching together your thumb and pointer finger.
+> **Models:** [MediaPipe Hands](/ref/model/hands/)
+>
+> **Activate:** `handsfree.plugin.pinchScroll.enable()`
+>
+> **Tags:** `['browser']`
+>
+> **About:** This plugin helps you scroll pages by pinching together your thumb and pointer finger.
 
 ## Config
 
@@ -34,6 +39,8 @@ const handsfree = new Handsfree({
 
   plugin: {
     pinchScroll: {
+      enabled: true,
+      
       // Number of frames over the same element before activating that element
       framesToFocus: 10,
 
@@ -53,7 +60,11 @@ const handsfree = new Handsfree({
 ### After instantiation
 
 ```js
+const handsfree = new Handsfree({hands: true})
+handsfree.start()
+
 // Scroll a little slower
+handsfree.plugin.pinchScroll.enable()
 handsfree.plugin.pinchScroll.config.speed = 1
 ```
 
