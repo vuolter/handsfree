@@ -1,8 +1,9 @@
 # Build
 build/docs
+docs/
 
 # Dev
-node_modules
+/node_modules/
 public
 
 # Annoying files
