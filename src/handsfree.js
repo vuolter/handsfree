@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.0.1
+                8.0.2
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -32,7 +32,6 @@
   #3 Plugins
   #4 Events
   #5 Helpers
-  #6 Core Plugin Imports
 
 */
 
@@ -45,6 +44,20 @@ import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
+
+// Plugins
+import pluginFacePointer from './plugin/weboji/facePointer'
+import pluginFaceClick from './plugin/weboji/faceClick'
+import pluginFaceScroll from './plugin/weboji/faceScroll'
+import pluginPinchScroll  from './plugin/hands/pinchScroll'
+
+const corePlugins = {
+  facePointer: pluginFacePointer,
+  faceClick: pluginFaceClick,
+  faceScroll: pluginFaceScroll,
+  pinchScroll: pluginPinchScroll,
+}
+
 
 
 /////////////////////////////////////////////////////////////
@@ -67,7 +80,7 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.0.1'
+    this.version = '8.0.2'
     this.data = {}
 
     // Plugins
@@ -585,31 +598,5 @@ class Handsfree {
     return throttle(cb, time, opts)
   }
 }
-
-
-
-/////////////////////////////////////////////////////////////
-///////////////// #6 Core Plugin Imports ////////////////////
-/////////////////////////////////////////////////////////////
-
-
-
-const corePlugins = {
-  // Weboji
-  facePointer: require('./plugin/weboji/facePointer').default,
-  faceClick: require('./plugin/weboji/faceClick').default,
-  faceScroll: require('./plugin/weboji/faceScroll').default,
-
-  pinchScroll: require('./plugin/hands/pinchScroll').default
-  
-  // fingerPointer: require('./plugin/handpose/palmPointer').default,
-  // palmPointer: require('./plugin/handpose/palmPointer').default,
-  // pinchClick: require('./plugin/handpose/pinchClick').default,
-  // handScroll: require('./plugin/handpose/handScroll').default,
-  // palmPointers: require('./plugin/holistic/palmPointers').default
-}
-
-
-
 
 export default Handsfree

@@ -18,7 +18,7 @@ The sanitization process simply adds default values for any options you specific
 
 ## `.assetsPath`
 
-**Default**: `https://unpkg.com/handsfree@8.0.1/build/lib/assets`
+**Default**: `https://unpkg.com/handsfree@8.0.2/build/lib/assets`
 
 In order to keep page loads snappy the models are loaded only when needed, and because Handsfree.js is designed to power webapps they are hosted on a CDN. However, you can click here to [download a zip file containing the models](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and copy over the `/build/lib/assets/` folder into your projects public folder to host them yourself.
 

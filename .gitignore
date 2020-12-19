@@ -1,5 +1,5 @@
 # Build
-build/docs
+build
 
 # Dev
 /node_modules
