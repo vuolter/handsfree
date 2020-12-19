@@ -3,7 +3,11 @@
   #handsfree-debugger
 
   //- This will be moved into the Navbar
-  HandsfreeToggle#navbar-handsfree-toggle(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
+  #navbar-handsfree-toggle
+    HandsfreeToggle(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
+    button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='startDemo')
+      Fa-Video
+      | Scroll page with hands
 
   //- This will be moved into the sidebar
   #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
@@ -139,6 +143,10 @@ export default {
       $window.classList.remove('maximized', 'minimized')
       this.isMinimized = false
       this.isMaximized = false      
+    },
+
+    startDemo () {
+      this.$root.handsfree.update(this.opts)
     }
   }
 }
