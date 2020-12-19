@@ -18,8 +18,8 @@ next: /guide/
 ---
 
 ```js
-// Enable Mediapipe's "Holistic" model (550+ landmarks for face, hands, pose)
-const handsfree = new Handsfree({holistic: true})
+// Enable Mediapipe's "Hands" model
+const handsfree = new Handsfree({hands: true})
 // Enable plugins tagged with "browsing"
 handsfree.enablePlugins('browsing')
 // Start tracking
@@ -29,15 +29,16 @@ handsfree.start()
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></div>
+      <div class="col-6"><img src="https://media0.giphy.com/media/mQH0i7ScbpqebCXGbB/giphy.gif"></div>
       <div class="col-6">
         <h2>Run the above code!</h2>
         <ul>
-          <li>🖐 Move pointer with your palm</li>
-          <li>👌 Pinch your thumb and index to click</li>
-          <li>✊ While making a fist, move hand to scroll page</li>
+          <li>👌 Pinch your thumb and index to grab the page</li>
+          <li>↕ While pinched, move hand up and down to scroll page</li>
         </ul>
-        <HandsfreeToggle class="block-children" text-off="Activate Handsfree mode" text-on="Stop Handsfree Mode" />
+        <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Scroll page with hands" text-on="Stop Hands" :opts="demoOpts" />
+        <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+        <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Scroll page with hands</button>
       </div>
     </div>
   </div>
@@ -187,3 +188,37 @@ handsfree.plugin.logger.onFrame = (data) => {
   console.log(handsfree.model.holistic?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
+
+
+
+
+
+
+
+
+
+<!-- Code -->
+<script>
+export default {
+  data () {
+    return {
+      demoOpts: {
+        weboji: false,
+        hands: true,
+        facemesh: false,
+        pose: false,
+        holistic: false
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Start the page with our preset options
+     */
+    startDemo () {
+      this.$root.handsfree.update(this.demoOpts)
+    }
+  }
+}
+</script>
