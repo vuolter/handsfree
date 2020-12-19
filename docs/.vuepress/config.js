@@ -127,6 +127,7 @@ module.exports = {
               ['/ref/plugin/faceClick.md', 'faceClick'],
               ['/ref/plugin/facePointer.md', 'facePointer'],
               ['/ref/plugin/faceScroll.md', 'faceScroll'],
+              ['/ref/plugin/pinchScroll.md', 'pinchScroll'],
             ]
           },
           {

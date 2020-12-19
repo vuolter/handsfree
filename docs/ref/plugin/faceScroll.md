@@ -1,5 +1,4 @@
 ---
-next: /ref/prop/
 sidebarDepth: 2
 ---
 

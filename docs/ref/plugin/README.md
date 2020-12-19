@@ -10,7 +10,10 @@ prev: /ref/method/
 - [palmPointer](/ref/plugin/palmPointer) - 🖐 Move a pointer on the screen by facing your palm towards it
 - [pinchClick](/ref/plugin/pinchClick) - 👌 Pinch your thumb and index finger to click on things -->
 
-### Model: [Weboji](/ref/model/weboji)
-- [faceClick](/ref/plugin/faceClick) - 😏 Click on things with a face gesture
-- [facePointer](/ref/plugin/facePointer) - 😶 Move a pointer on the screen by moving your head
-- [faceScroll](/ref/plugin/faceScroll) - ↕ Scroll the page by moving the [facePointer](/ref/plugin/facePointer) above and below the screen
+### Model: [Weboji](/ref/model/weboji/)
+- [faceClick](/ref/plugin/faceClick/) - Click on things with a face gesture
+- [facePointer](/ref/plugin/facePointer/) - Move a pointer on the screen by moving your head
+- [faceScroll](/ref/plugin/faceScroll/) - Scroll the page by moving the [facePointer](/ref/plugin/facePointer/) above and below the screen
+
+### Model: [Hands](/ref/model/hands/)
+- [pinchScroll](/ref/plugin/pinchScroll/) - Scroll the page by pinching together your thumb and pointer finger
