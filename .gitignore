@@ -1,8 +1,8 @@
 # Build
-build/docs
+build
 
 # Dev
-node_modules
+/node_modules
 
 # Annoying files
 .DS_Store

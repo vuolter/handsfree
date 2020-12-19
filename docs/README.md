@@ -1,6 +1,17 @@
-<h1 class="mb-0"><a href="https://github.com/midiblocks/handsfree"><img src="/branding/handsfree.png"></a></h1>
+---
+sidebarDepth: 1
+meta:
+  - name: description
+    content: Add face, hand, and pose tracking to your projects, create handsfree user experiences, and tap into our growing library of plugins and integrations ✨👌
+next: /guide/
+---
+
+<h1 class="mb-0" style="margin-bottom: -20px"><img src="/branding/handsfree.png"></h1>
+
+<video muted loop autoplay src="/model-wall.mp4" style="width: 100%"></video>
+
 <h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
-<p class="verticle-middle-children space-children">
+<p class="verticle-middle-children space-children text-center">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"></a>
@@ -10,134 +21,121 @@
 ---
 
 ```js
-const handsfree = new Handsfree({face: true})
+// Enable Mediapipe's "Hands" model
+const handsfree = new Handsfree({hands: true})
+// Enable plugins tagged with "browsing"
+handsfree.enablePlugins('browsing')
+// Start tracking
 handsfree.start()
 ```
 
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></div>
+      <div class="col-6"><img src="https://media0.giphy.com/media/mQH0i7ScbpqebCXGbB/giphy.gif"></div>
       <div class="col-6">
-        <h2>Try it!</h2>
+        <h2>Run the above code!</h2>
         <ul>
-          <li>Move head to move red pointer</li>
-          <li>Smile to the left or right to click on things</li>
-          <li>Move pointer above/or below page to scroll</li>
+          <li>👌 Pinch your thumb and index to grab the page</li>
+          <li>↕ While pinched, move hand up and down to scroll page</li>
         </ul>
-        <HandsfreeToggle class="block-children" text-off="Activate Face Pointer" text-on="Stop Handsfree" />
+        <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Scroll page with hands" text-on="Stop Hands" :opts="demoOpts" />
+        <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+        <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Scroll page with hands</button>
       </div>
     </div>
   </div>
 </div>
 
-<blockquote class="verticle-middle-children space-children text-center">
-  <strong>Powered by:</strong>
-  <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="/branding/jeeliz.png"></a>
-  <a href="https://github.com/tensorflow/tfjs-models/"><img src='/branding/tensorflow.png' height=30></a> <a href="https://ml5js.org/"><img src="/branding/ml5.png" height=30></a>
+<blockquote>
+  <div class="verticle-middle-children space-children text-center">
+    <strong>Powered by</strong>
+    <a href="https://www.tensorflow.org/js/"><img src='/branding/tensorflow.png' height=30></a>
+    <a href="https://mediapipe.dev/"><img src='/branding/mediapipe.png' height=30></a>
+    <a href="https://github.com/jeeliz/jeelizWeboji"><img src='/branding/jeeliz.png' height=30></a>
+  </div>
+  <hr style="margin: 20px auto">
+  <div class="text-center">
+    <p><a href="https://github.com/sponsors/midiblocks">Become a sponsor 💜</a></p>
+  </div>
+  <hr style="margin: 20px auto">
+  <div class="text-center">
+    <strong>Special thanks to:</strong> <a href="https://studioforcreativeinquiry.org/">The STUDIO for Creative Inquiry</a>, <a href="https://glitch.com">Glitch.com</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!
+  </div>
 </blockquote>
 
-## Available Models
+## Installing from CDN
 
-Handsfree.js comes bundled with three computer vision models which can be combined and individually throttled to create dynamic User Experiences:
-
-<div class="window">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6"><router-link to="/playgrounds/face"><img src="https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif"></router-link></div>
-      <div class="col-6">
-        <div><strong><router-link to="/docs/face">Face Tracking</router-link> (through <a href="https://github.com/jeeliz/jeelizWeboji">Weboji</a>)</strong></div>
-        <ul>
-          <li>Detect 3D head position and rotation</li>
-          <li>11 face morphs for eyes and mouth</li>
-          <li>~1.4Mb filesize</li>
-        </ul>
-        <div><strong>Featured Example:</strong> <router-link to="/examples/face-pointer">Face Playground</router-link></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="window">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6"><router-link to="/playgrounds/hand"><img src="https://media.giphy.com/media/FxLUuTSxXjJPx8K9L4/source.gif"></router-link></div>
-      <div class="col-6">
-        <div><strong><router-link to="/docs/hand">Hand Tracking</router-link> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">Handpose</a>)</strong></div>
-        <ul>
-          <li>Detect 3D position of palm and fingers</li>
-          <li>Get vectors for where palm/fingers are pointed</li>
-          <li>~2.9Mb filesize</li>
-        </ul>
-        <div><strong>Featured Example:</strong> <router-link to="/playgrounds/hand">Hand Playground</router-link></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="window">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6"><a href="https://flappy-pose.glitch.me/"><img src="https://media1.giphy.com/media/gUHHKdnuOW4OGOXcrI/giphy.gif"></a></div>
-      <div class="col-6">
-        <div><strong><router-link to="/docs/pose">Pose Estimation</router-link> (through <a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet">PoseNet/ml5.js</a>)</strong></div>
-        <ul>
-          <li>Detect 2D keypoints for face, arms, and legs</li>
-          <li>Detect many people at the same time</li>
-          <li>~2.6Mb filesize</li>
-        </ul>
-        <div><strong>Featured Demo:</strong> <a href="https://flappy-pose.glitch.me/">Flappy Pose</a></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-## Installing
-
-### Through CDN
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.15/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@7.2.15/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.2/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.0.2/build/lib/handsfree.js"></script>
 </head>
 
 <body>
   <!-- Instantiate and start it -->
   <script>
-    const handsfree = new Handsfree({face: true})
+    const handsfree = new Handsfree({hands: true})
+    handsfree.enablePlugins('browsing')
     handsfree.start()
   </script>
 </body>
 ```
 
-### Through NPM
+## Installing from NPM
 
-::: warning 💻 Extra steps required
-In order to keep startup times snappy some dependencies must be loaded at runtime:
-
-- Install with: `npm i handsfree`
-- Copy `node_modules/handsfree/build/lib/assets` folder into your projects public folder
-- When instantiating `Handsfree` set the `assetsPath` option to where you moved the assets into
-:::
+```bash 
+# From your projects root
+npm i handsfree
+```
 
 ```js
+// Inside your app
 import Handsfree from 'handsfree'
-const handsfree = new Handsfree({
-  assetsPath: '/public/assets/',
-  face: true
-})
 
+const handsfree = new Handsfree({hands: true})
+handsfree.enablePlugins('browsing')
 handsfree.start()
 ```
 
-## Example Workflow
+### Hosting the models yourself
 
-The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around hooks/plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.2/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+
+```bash
+# Move the models into your project's public directory
+# - change PUBLIC below to where you keep your project's assets
+
+# ON WINDOWS
+move node_modules/handsfree/build/lib/assets PUBLIC
+# EVERYWHERE ELSE
+mv node_modules/handsfree/build/lib/assets PUBLIC
+```
+
+```js
+import Handsfree from 'handsfree'
+
+const handsfree = new Handsfree({
+  hands: true,
+  // Set this to your where you moved the models into
+  assetsPath: '/PUBLIC/assets',
+})
+handsfree.enablePlugins('browsing')
+handsfree.start()
+```
+
+## Models
+<ModelList />
+
+## Quickstart Workflow
+
+The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/TDJEaTp7) if you get stuck!
 
 ```js
 // Let's enable face tracking with the default Face Pointer
-const handsfree = new Handsfree({face: true})
+const handsfree = new Handsfree({weboji: true})
+handsfree.enablePlugins('browsing')
 
 // Now let's start things up
 handsfree.start()
@@ -145,14 +143,14 @@ handsfree.start()
 // Let's create a plugin called "logger"
 // - Plugins run on every frame and is how you "plug in" to the main loop
 // - "this" context is the plugin itself. In this case, handsfree.plugin.logger
-handsfree.use('logger', {face} => {
-  console.log(face.morphs, face.rotation, face.pointer, face, this)
+handsfree.use('logger', data => {
+  console.log(data.weboji.morphs, data.weboji.rotation, data.weboji.pointer, data, this)
 })
 
 // Let's switch to hand tracking now. To demonstrate that you can do this live,
 // let's create a plugin that switches to hand tracking when both eyebrows go up
-handsfree.use('handTrackingSwitcher', {face} => {
-  if (face.state.browsUp) {
+handsfree.use('handTrackingSwitcher', {weboji} => {
+  if (weboji.state.browsUp) {
     // Disable this plugin
     // Same as handsfree.plugin.handTrackingSwitcher.disable()
     this.disable()
@@ -166,10 +164,11 @@ handsfree.use('handTrackingSwitcher', {face} => {
 })
 
 // You can enable and disable any combination of models and plugins
-handsfree.start({
-  face: true,
-  hand: true,
-  pose: true,
+handsfree.update({
+  // Disable weboji which is currently running
+  weboji: false,
+  // Start the holistic model
+  holistic: true,
 
   // This is also how you configure (or pre-configure) a bunch of plugins at once
   plugin: {
@@ -182,14 +181,47 @@ handsfree.start({
   }
 })
 
-// Plugins allow you to instantly switch out entire User Experiences
-const page1 = ['facePointer', 'faceScroll']
-const page2 = ['fingerPointer', 'handScroll']
-handsfree.disablePlugins(page1)
-handsfree.enablePlugins(page2)
+// Disable all plugins
+handsfree.disablePlugins()
+// Enable only the plugins for making music (not actually implemented yet)
+handsfree.enablePlugins('music')
 
-// To work with models directly, use the .api property of the model itself (not the data)
+// Overwrite our logger to display the original model APIs
 handsfree.plugin.logger.onFrame = (data) => {
-  console.log(handsfree.face?.api, handsfree.hand?.api, handsfree.pose?.api)
+  console.log(handsfree.model.holistic?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
+
+
+
+
+
+
+
+
+
+<!-- Code -->
+<script>
+export default {
+  data () {
+    return {
+      demoOpts: {
+        weboji: false,
+        hands: true,
+        facemesh: false,
+        pose: false,
+        holistic: false
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Start the page with our preset options
+     */
+    startDemo () {
+      this.$root.handsfree.update(this.demoOpts)
+    }
+  }
+}
+</script>

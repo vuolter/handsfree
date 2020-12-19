@@ -1,16 +1,20 @@
 <div align="center">
-  <p><a href="https://handsfree.js.org"><img src="https://i.imgur.com/WbfpozB.jpg" alt="handsfree.js.org" title="handsfree.js.org"></a></p>
-  <p>Build handsfree User Experiences and add face, hand, and/or pose tracking to your projects in a snap 👌✨</p>
+  <p><a href="https://handsfree.js.org"><img src="https://media1.giphy.com/media/TTeLMReRXakENiBRHx/giphy.gif" alt="handsfree.js.org" title="handsfree.js.org"></a></p>
+  <p>Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</p>
   <p>
-    <img class="mr-1" src="https://img.shields.io/github/release-pre/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
+    <img class="mr-1" src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
     <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
   </p>
   <p>
     <img class="mr-1" src="https://img.shields.io/github/issues-raw/handsfreejs/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/handsfreejs/handsfree.svg">
   </p>
   <p>Powered by:</p>
-  <p><a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a> &nbsp;&nbsp;&nbsp; <a href="https://ml5js.org/"><img src="https://i.imgur.com/rgguSyv.png" height=30></a> &nbsp;&nbsp;&nbsp; 
-  <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/Z5PUig3.png' height=30></a>
+  <p>
+    <a href="https://mediapipe.dev"><img src="https://i.imgur.com/VGSWYrC.png" height=30></a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="https://github.com/tensorflow/tfjs-models/"><img src='https://i.imgur.com/Z5PUig3.png' height=30></a>
+    &nbsp;&nbsp;&nbsp; 
+    <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
 </div>
 
 <br>
@@ -109,41 +113,64 @@
 <br>
 
 # Quickstart
+## Installing from CDN
 
-## Through CDN
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@7.2.15/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@7.2.15/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.2/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.0.2/build/lib/handsfree.js"></script>
 </head>
 
 <body>
   <!-- Instantiate and start it -->
   <script>
-    const handsfree = new Handsfree({face: true})
+    const handsfree = new Handsfree({hands: true})
+    handsfree.enablePlugins('browsing')
     handsfree.start()
   </script>
 </body>
 ```
 
-## Through NPM
+## Installing from NPM
 
-> 🚨 Extra steps required 🚨
->
-> In order to keep startup times snappy some dependencies must be loaded at runtime:
->
-> - Install with: `npm i handsfree`
-> - Copy `node_modules/handsfree/build/lib/assets` folder into your projects public folder
-> - When instantiating `Handsfree` set the `assetsPath` option to where you moved the assets into
+```bash 
+# From your projects root
+npm i handsfree
+```
+
+```js
+// Inside your app
+import Handsfree from 'handsfree'
+
+const handsfree = new Handsfree({hands: true})
+handsfree.enablePlugins('browsing')
+handsfree.start()
+```
+
+### Hosting the models yourself
+
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.2/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+
+```bash
+# Move the models into your project's public directory
+# - change PUBLIC below to where you keep your project's assets
+
+# ON WINDOWS
+move node_modules/handsfree/build/lib/assets PUBLIC
+# EVERYWHERE ELSE
+mv node_modules/handsfree/build/lib/assets PUBLIC
+```
 
 ```js
 import Handsfree from 'handsfree'
-const handsfree = new Handsfree({
-  assetsPath: '/public/assets/',
-  face: true
-})
 
+const handsfree = new Handsfree({
+  hands: true,
+  // Set this to your where you moved the models into
+  assetsPath: '/PUBLIC/assets',
+})
+handsfree.enablePlugins('browsing')
 handsfree.start()
 ```
 
@@ -151,9 +178,14 @@ handsfree.start()
 
 The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around hooks/plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
 
+## Quickstart Workflow
+
+The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/TDJEaTp7) if you get stuck!
+
 ```js
 // Let's enable face tracking with the default Face Pointer
-const handsfree = new Handsfree({face: true})
+const handsfree = new Handsfree({weboji: true})
+handsfree.enablePlugins('browsing')
 
 // Now let's start things up
 handsfree.start()
@@ -161,14 +193,14 @@ handsfree.start()
 // Let's create a plugin called "logger"
 // - Plugins run on every frame and is how you "plug in" to the main loop
 // - "this" context is the plugin itself. In this case, handsfree.plugin.logger
-handsfree.use('logger', {face} => {
-  console.log(face.morphs, face.rotation, face.pointer, face, this)
+handsfree.use('logger', data => {
+  console.log(data.weboji.morphs, data.weboji.rotation, data.weboji.pointer, data, this)
 })
 
 // Let's switch to hand tracking now. To demonstrate that you can do this live,
 // let's create a plugin that switches to hand tracking when both eyebrows go up
-handsfree.use('handTrackingSwitcher', {face} => {
-  if (face.state.browsUp) {
+handsfree.use('handTrackingSwitcher', {weboji} => {
+  if (weboji.state.browsUp) {
     // Disable this plugin
     // Same as handsfree.plugin.handTrackingSwitcher.disable()
     this.disable()
@@ -182,10 +214,11 @@ handsfree.use('handTrackingSwitcher', {face} => {
 })
 
 // You can enable and disable any combination of models and plugins
-handsfree.start({
-  face: true,
-  hand: true,
-  pose: true,
+handsfree.update({
+  // Disable weboji which is currently running
+  weboji: false,
+  // Start the holistic model
+  holistic: true,
 
   // This is also how you configure (or pre-configure) a bunch of plugins at once
   plugin: {
@@ -198,15 +231,14 @@ handsfree.start({
   }
 })
 
-// Plugins allow you to instantly switch out entire User Experiences
-const page1 = ['facePointer', 'faceScroll']
-const page2 = ['fingerPointer', 'handScroll']
-handsfree.disablePlugins(page1)
-handsfree.enablePlugins(page2)
+// Disable all plugins
+handsfree.disablePlugins()
+// Enable only the plugins for making music (not actually implemented yet)
+handsfree.enablePlugins('music')
 
-// To work with models directly, use the .api property of the model itself (not the data)
+// Overwrite our logger to display the original model APIs
 handsfree.plugin.logger.onFrame = (data) => {
-  console.log(handsfree.face?.api, handsfree.hand?.api, handsfree.pose?.api)
+  console.log(handsfree.model.holistic?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
 
@@ -269,18 +301,17 @@ npm run build:lib
 
 # License & Attributions
 
-## License: Apache 2.0 and...
+## License: Apache 2.0
 
-The Handsfree.js core is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). However, to use the models and plugins included with Handsfree.js you'll also have to follow their licenses (❓ feel free to start an issue about this):
+The Handsfree.js core is available for free and commercial use under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). Each of the models are also available for free and commercial use under Apache 2.0:
 
-- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache 2.0) - Used for face and head tracking
-- [ml5.js](https://github.com/ml5js/ml5-library) (MIT) - Currently used for pose estimation (PoseNet)
-- [TensorFlow.js](https://github.com/tensorflow/tfjs-models) (Apache 2.0) - PoseNet and Handpose
+- [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache 2.0)
+- [MediaPipe Models](https://google.github.io/mediapipe/solutions/solutions) (Apache 2.0)
+- [TensorFlow.js](https://github.com/tensorflow/tfjs-models) (Apache 2.0)
 
 ## Attributions
 I'd like to also thank the following people and projects:
 - [98.css by @jdan](https://github.com/jdan/98.css) (MIT) - Used as boilerplate for documentation theme
-- [Handpose Three.js boilerplate by @LingDong-](https://github.com/LingDong-/handpose-facemesh-demos) - Boilerplate for rendering Handpose in 3D space
 
 <br>
 <br>
