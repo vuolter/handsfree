@@ -1,10 +1,10 @@
 # Build
-build/docs
-docs/
+/build/docs
 
 # Dev
 /node_modules/
-public
+/docs/
+/test/
 
 # Annoying files
 .DS_Store
