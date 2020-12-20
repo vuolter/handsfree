@@ -9128,10 +9128,10 @@
     $target: null,
 
     // The original grab point
-    origScrollTop: {
-      x: 0,
-      y: 0
-    },
+    origScrollTop: 0,
+
+    // The tweened scrollTop, used to smoothen out scroll
+    tweenScroll: {y: 0},
 
     // Number of frames that has passed since the last grab
     framesSinceLastGrab: 0,
@@ -9171,6 +9171,7 @@
       if (this.thresholdMet) {
         if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
           this.origScrollTop = this.getTargetScrollTop() + hands.multiHandLandmarks[0][4].y * height * this.config.speed;
+          TweenMaxWithCSS.killTweensOf(this.tweenScroll);
         }
         this.framesSinceLastGrab = 0;
       }
@@ -9178,7 +9179,14 @@
       
       // Scroll
       if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
-        this.$target.scrollTo(0, this.origScrollTop - hands.multiHandLandmarks[0][4].y * height * this.config.speed);
+        TweenMaxWithCSS.to(this.tweenScroll, 1, {
+          y: this.origScrollTop - hands.multiHandLandmarks[0][4].y * height * this.config.speed,
+          overwrite: true,
+          ease: 'linear.easeNone',
+          immediateRender: true  
+        });
+        
+        this.$target.scrollTo(0, this.tweenScroll.y);
       }
     },
 
