@@ -6,9 +6,10 @@ meta:
 next: /guide/
 ---
 
-<h1 class="mb-0" style="margin-bottom: -20px"><img src="/branding/handsfree.png"></h1>
-
-<video muted loop autoplay src="/model-wall.mp4" style="width: 100%"></video>
+<div id="hero-video" style="position: relative">
+  <h1 class="mb-0"><img alt="Handsfree.js" title="Handsfree.js" src="/branding/handsfree.png"></h1>
+  <video muted loop autoplay src="/model-wall.mp4" style="width: 100%"></video>
+</div>
 
 <h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
 <p class="verticle-middle-children space-children text-center">
@@ -197,9 +198,6 @@ handsfree.plugin.logger.onFrame = (data) => {
 
 
 
-
-
-
 <!-- Code -->
 <script>
 export default {
@@ -225,3 +223,18 @@ export default {
   }
 }
 </script>
+
+
+<style>
+  #hero-video {
+    margin-bottom: 1em;
+  }
+  #hero-video h1 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-75%);
+    padding: 3%  20% 2% 20%;
+    background: rgba(34,34,34, 25%);
+    background: linear-gradient(90deg, rgba(34,34,34,0) 0%, rgba(34,34,34,1) 40%, rgba(34,34,34,1) 50%, rgba(34,34,34,1) 60%, rgba(34,34,34,0) 100%)
+  }
+</style>
