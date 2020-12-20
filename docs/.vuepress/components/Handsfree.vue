@@ -37,7 +37,7 @@ export default {
         weboji: false,
         hands: true,
         pose: false,
-        holistic: false,
+        holistic: true,
         facemesh: true
       },
       
