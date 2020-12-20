@@ -21,12 +21,15 @@ export default class HandsModel extends BaseModel {
       // Load the media stream
       this.handsfree.getUserMedia(() => {
         // Warm up before using in loop
-        if (!this.handsfree.isMediapipeWarmingUp) {
-          this.api.send({image: this.handsfree.debug.$video}).then(() => this.onWarmUp(callback))
+        if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
+          this.warmUp(callback)
         } else {
-          this.handsfree.on('mediapipeWarmedUp', () => this.onWarmUp(callback), {once: true})
+          this.handsfree.on('mediapipeWarmedUp', () => {
+            if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
+              this.warmUp(callback)
+            }
+          })
         }
-        this.handsfree.isMediapipeWarmingUp = true
       })
 
       // Load the hands camera module
@@ -35,7 +38,19 @@ export default class HandsModel extends BaseModel {
   }
 
   /**
-   * Warms up MediaPipe
+   * Warms up the model
+   */
+  warmUp (callback) {
+    this.handsfree.mediapipeWarmups[this.name] = true
+    this.handsfree.mediapipeWarmups.isWarmingUp = true
+    this.api.send({image: this.handsfree.debug.$video}).then(() => {
+      this.handsfree.mediapipeWarmups.isWarmingUp = false
+        this.onWarmUp(callback)
+    })
+  }
+
+  /**
+   * Called after the model has been warmed up
    * - If we don't do this there will be too many initial hits and cause an error
    */
   onWarmUp (callback) {

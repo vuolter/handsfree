@@ -88,8 +88,14 @@ class Handsfree {
       loading: [],
       loaded: []
     }
-    // Whether MediaPipe is warming up the mediaStream
-    this.isMediapipeWarmingUp = false
+    // List of mediapipe models (by name) that are warming up
+    this.mediapipeWarmups = {
+      isWarmingUp: false,
+      hands: false,
+      pose: false,
+      facemesh: false,
+      holistic: false
+    }
 
     // Plugins
     this.plugin = {}
