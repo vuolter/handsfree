@@ -83,6 +83,12 @@ class Handsfree {
     this.version = '8.0.3'
     this.data = {}
 
+    // Dependency management
+    this.dependencies = {
+      loading: [],
+      loaded: []
+    }
+
     // Plugins
     this.plugin = {}
     this.taggedPlugins = {

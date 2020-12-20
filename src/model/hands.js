@@ -15,25 +15,25 @@ export default class HandsModel extends BaseModel {
         return `${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/${file}`
       }})
 
-      // Load the hands camera module
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/node_modules/@mediapipe/camera_utils/camera_utils.js`, () => {
-          this.handsfree.getUserMedia(() => {
-            // Warm up before using in loop
-            // - If we don't do this there will be too many initial hits and cause an error
-            this.api.send({image: this.handsfree.debug.$video}).then(() => {
-              this.dependenciesLoaded = true
-              this.handsfree.emit('modelReady', this)
-              this.handsfree.emit('handsModelReady', this)
-              document.body.classList.add('handsfree-model-hands')                    
-              callback && callback(this)
-            })
-          })
+      // Configure model
+      this.api.setOptions(this.handsfree.config.hands)
+      this.api.onResults(results => this.updateData(results))
+
+      // Load the media stream
+      this.handsfree.getUserMedia(() => {
+        // Warm up before using in loop
+        // - If we don't do this there will be too many initial hits and cause an error
+        this.api.send({image: this.handsfree.debug.$video}).then(() => {
+          this.dependenciesLoaded = true
+          document.body.classList.add('handsfree-model-hands')                    
+          this.handsfree.emit('modelReady', this)
+          this.handsfree.emit('handsModelReady', this)
+          callback && callback(this)
         })
       })
 
-      this.api.setOptions(this.handsfree.config.hands)
-      this.api.onResults(results => this.updateData(results))
+      // Load the hands camera module
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`)
     })
   }
 
@@ -53,8 +53,13 @@ export default class HandsModel extends BaseModel {
    * Debugs the hands model
    */
   debug (results) {
+    // Bail if drawing helpers haven't loaded
+    if (typeof drawConnectors === 'undefined') return
+    
+    // Clear the canvas
     this.handsfree.debug.context.hands.clearRect(0, 0, this.handsfree.debug.$canvas.hands.width, this.handsfree.debug.$canvas.hands.height)
     
+    // Draw skeletons
     if (results.multiHandLandmarks) {
       for (const landmarks of results.multiHandLandmarks) {
         drawConnectors(this.handsfree.debug.context.hands, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5})
