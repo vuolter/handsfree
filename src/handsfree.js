@@ -271,6 +271,17 @@ class Handsfree {
       if (wasEnabled && !this.config[model].enabled) this.model[model].disable()
       else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false)
     })
+
+    // Enable plugins
+    Object.keys(config.plugin).forEach(plugin => {
+      if (typeof config.plugin[plugin].enabled === 'boolean') {
+        if (config.plugin[plugin].enabled) {
+          this.plugin[plugin].enable()
+        } else {
+          this.plugin[plugin].disable()
+        }
+      }
+    })
     
     // Start
     if (this.isLooping && callback) {

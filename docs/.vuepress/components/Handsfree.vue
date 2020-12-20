@@ -4,10 +4,10 @@
 
   //- This will be moved into the Navbar
   #navbar-handsfree-toggle
-    HandsfreeToggle(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
-    button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='startDemo')
-      Fa-Video
-      | Scroll page with hands
+    HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
+    //- button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='startDemo')
+    //-   Fa-Video
+    //-   | Scroll page with hands
 
   //- This will be moved into the sidebar
   #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
@@ -91,7 +91,6 @@ Newsletter: http://eepurl.com/hhD7S1
               assetsPath: '/handsfree'
             })
             window.app = this.$root
-            handsfree.enablePlugins('browser')
           })
         }
   
