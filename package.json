@@ -1,6 +1,6 @@
 {
   "name": "handsfree",
-  "version": "8.0.3",
+  "version": "8.0.4",
   "description": "A Face Pointer and Pose Estimator for interacting with pages, desktops, robots, and more via gestures",
   "main": "src/handsfree.js",
   "scripts": {
@@ -8,10 +8,8 @@
     "build": "rm -rf build/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config && vuepress build docs",
     "build:lib": "rm -rf build/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config",
     "build:docs": "vuepress build docs",
-    "build:serve": "npm run build:docs && npx http-server build/docs",
-    "build:deploy": "npm run build:docs && deploy.sh",
     "fa:build": "node node_modules/vuepress-plugin-font-awesome/index.js --dest=docs",
-    "serve:cdn": "http-server test/cdn.html"
+    "deploy": "npm publish && deploy.sh"
   },
   "repository": {
     "type": "git",
