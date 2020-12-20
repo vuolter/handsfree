@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.0.3
+                8.0.4
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -80,8 +80,22 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.0.3'
+    this.version = '8.0.4'
     this.data = {}
+
+    // Dependency management
+    this.dependencies = {
+      loading: [],
+      loaded: []
+    }
+    // List of mediapipe models (by name) that are warming up
+    this.mediapipeWarmups = {
+      isWarmingUp: false,
+      hands: false,
+      pose: false,
+      facemesh: false,
+      holistic: false
+    }
 
     // Plugins
     this.plugin = {}
@@ -523,11 +537,12 @@ class Handsfree {
    *
    * @param {String} eventName The `handsfree-${eventName}` to listen to
    * @param {Function} callback The callback to call
+   * @param {Object} opts The options to pass into addEventListener (eg: {once: true})
    */
-  on (eventName, callback) {
+  on (eventName, callback, opts) {
     document.addEventListener(`handsfree-${eventName}`, (ev) => {
       callback(ev.detail)
-    })
+    }, opts)
   }
 
 
@@ -557,9 +572,19 @@ class Handsfree {
    * @param {Object} callback The callback to call after the stream is received
    */
   getUserMedia (callback) {
-    if (!this.debug.stream) {
+    // Start getting the stream and call callback after
+    if (!this.debug.stream && !this.debug.isGettingStream) {
+      this.debug.isGettingStream = true
+      
       navigator.mediaDevices
-        .getUserMedia({ audio: false, video: true })
+        .getUserMedia({
+          audio: false,
+          video: {
+            facingMode: 'user',
+            width: this.debug.$video.width,
+            height: this.debug.$video.height
+          }
+        })
         .then((stream) => {
           this.debug.stream = stream
           this.debug.$video.srcObject = stream
@@ -572,9 +597,18 @@ class Handsfree {
         .catch((err) => {
           console.error(`Error getting user media: ${err}`)
         })
+        .finally(() => {
+          this.debug.isGettingStream = false
+        })
+
+    // If a media stream is getting gotten then run the callback once the media stream is ready
+    } else if (!this.debug.stream && this.debug.isGettingStream) {
+      callback && this.on('gotUserMedia', callback)
+    
+    // If everything is loaded then just call the callback
     } else {
       this.debug.$video.play()
-      this.emit('gotUserMedia', stream)
+      this.emit('gotUserMedia', this.debug.stream)
       callback && callback()
     }
   }

@@ -17,48 +17,68 @@ export default class PoseModel extends BaseModel {
       this.api = new window.Pose({locateFile: file => {
         return `${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/${file}`
       }})
+      this.api.setOptions(this.handsfree.config.pose)
+      this.api.onResults(results => this.dataReceived(results))
 
-      // Load the pose camera module
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/node_modules/@mediapipe/camera_utils/camera_utils.js`, () => {
-          this.camera = new Camera(this.handsfree.debug.$video, {
-            // Run inference
-            onFrame: async () => {
-              if (!this.hasLoadedAndRun) {
-                this.hasLoadedAndRun = true
-                this.handsfree.emit('modelReady', this)
-                this.handsfree.emit('poseModelReady', this)
-                document.body.classList.add('handsfree-model-pose')      
-              } else if (this.enabled && this.handsfree.isLooping) {
-                await this.api.send({image: this.handsfree.debug.$video})
-              }
-            },
-            width: this.handsfree.debug.$video.width,
-            height: this.handsfree.debug.$video.height
+      // Load the media stream
+      this.handsfree.getUserMedia(() => {
+        // Warm up before using in loop
+        if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
+          this.warmUp(callback)
+        } else {
+          this.handsfree.on('mediapipeWarmedUp', () => {
+            if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
+              this.warmUp(callback)
+            }
           })
-
-          this.camera.start()
-          this.dependenciesLoaded = true
-
-          callback && callback(this)
-          
-        })
+        }
       })
 
-      this.api.setOptions(this.handsfree.config.pose)
-      this.api.onResults(results => this.updateData(results))
+      // Load the hands camera module
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`)
     })
   }
 
-  getData () {}
+  /**
+   * Warms up the model
+   */
+  warmUp (callback) {
+    this.handsfree.mediapipeWarmups[this.name] = true
+    this.handsfree.mediapipeWarmups.isWarmingUp = true
+    this.api.send({image: this.handsfree.debug.$video}).then(() => {
+      this.handsfree.mediapipeWarmups.isWarmingUp = false
+        this.onWarmUp(callback)
+    })
+  }
+
+  /**
+   * Called after the model has been warmed up
+   * - If we don't do this there will be too many initial hits and cause an error
+   */
+  onWarmUp (callback) {
+    this.dependenciesLoaded = true
+    document.body.classList.add('handsfree-model-pose')                    
+    this.handsfree.emit('modelReady', this)
+    this.handsfree.emit('poseModelReady', this)
+    this.handsfree.emit('mediapipeWarmedUp', this)
+    callback && callback(this)
+  }
   
-  updateData (results) {
+  /**
+   * Get data
+   */
+  async getData () {
+    this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video})
+  }
+  // Called through this.api.onResults
+  dataReceived (results) {
     this.data = results
     this.handsfree.data.pose = results
     if (this.handsfree.config.showDebug) {
       this.debug(results)
     }
   }
+
 
   /**
    * Debugs the pose model

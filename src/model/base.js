@@ -71,7 +71,7 @@ export default class BaseModel {
     $script.async = true
 
     $script.onload = () => {
-      callback()
+      callback && callback()
     }
     $script.onerror = () => {
       this.handsfree.emit('modelError', `Error loading ${src}`)
