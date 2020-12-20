@@ -557,9 +557,19 @@ class Handsfree {
    * @param {Object} callback The callback to call after the stream is received
    */
   getUserMedia (callback) {
-    if (!this.debug.stream) {
+    // Start getting the stream and call callback after
+    if (!this.debug.stream && !this.debug.isGettingStream) {
+      this.debug.isGettingStream = true
+      
       navigator.mediaDevices
-        .getUserMedia({ audio: false, video: true })
+        .getUserMedia({
+          audio: false,
+          video: {
+            facingMode: 'user',
+            width: this.debug.$video.width,
+            height: this.debug.$video.height
+          }
+        })
         .then((stream) => {
           this.debug.stream = stream
           this.debug.$video.srcObject = stream
@@ -572,9 +582,18 @@ class Handsfree {
         .catch((err) => {
           console.error(`Error getting user media: ${err}`)
         })
+        .finally(() => {
+          this.debug.isGettingStream = false
+        })
+
+    // If a media stream is getting gotten then run the callback once the media stream is ready
+    } else if (!this.debug.stream && this.debug.isGettingStream) {
+      callback && this.on('gotUserMedia', callback)
+    
+    // If everything is loaded then just call the callback
     } else {
       this.debug.$video.play()
-      this.emit('gotUserMedia', stream)
+      this.emit('gotUserMedia', this.debug.stream)
       callback && callback()
     }
   }

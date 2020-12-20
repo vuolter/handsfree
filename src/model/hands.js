@@ -5,9 +5,6 @@ export default class HandsModel extends BaseModel {
     super(handsfree, config)
     this.name = 'hands'
 
-    // Without this the loading event will happen before the first frame
-    this.hasLoadedAndRun = false
-
     this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
   }
 
@@ -21,26 +18,17 @@ export default class HandsModel extends BaseModel {
       // Load the hands camera module
       this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
         this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/camera_utils/node_modules/@mediapipe/camera_utils/camera_utils.js`, () => {
-          this.camera = new Camera(this.handsfree.debug.$video, {
-            // Run inference
-            onFrame: async () => {
-              if (!this.hasLoadedAndRun) {
-                this.hasLoadedAndRun = true
-                this.handsfree.emit('modelReady', this)
-                this.handsfree.emit('handsModelReady', this)
-                document.body.classList.add('handsfree-model-hands')      
-              } else if (this.enabled && this.handsfree.isLooping) {
-                await this.api.send({image: this.handsfree.debug.$video})
-              }
-            },
-            width: this.handsfree.debug.$video.width,
-            height: this.handsfree.debug.$video.height
+          this.handsfree.getUserMedia(() => {
+            // Warm up before using in loop
+            // - If we don't do this there will be too many initial hits and cause an error
+            this.api.send({image: this.handsfree.debug.$video}).then(() => {
+              this.dependenciesLoaded = true
+              this.handsfree.emit('modelReady', this)
+              this.handsfree.emit('handsModelReady', this)
+              document.body.classList.add('handsfree-model-hands')                    
+              callback && callback(this)
+            })
           })
-
-          this.dependenciesLoaded = true
-          this.camera.start()
-
-          callback && callback(this)
         })
       })
 
@@ -49,7 +37,9 @@ export default class HandsModel extends BaseModel {
     })
   }
 
-  getData () {}
+  async getData () {
+    this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video})
+  }
   
   updateData (results) {
     this.data = results

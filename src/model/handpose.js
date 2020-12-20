@@ -1,5 +1,8 @@
 import BaseModel from './base.js'
 
+/**
+ * 🚨 This model is not currently active
+ */
 export default class HolisticModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
