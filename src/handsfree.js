@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.0.4
+                8.0.5
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -80,7 +80,7 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.0.4'
+    this.version = '8.0.5'
     this.data = {}
 
     // Dependency management
@@ -233,7 +233,7 @@ class Handsfree {
     
     defaults.setup.wrap.$parent = document.body
 
-    // Map booleans to objects
+    // Map model booleans to objects
     if (typeof config.weboji === 'boolean') {
       config.weboji = {enabled: config.weboji}
     }
@@ -250,6 +250,13 @@ class Handsfree {
       config.holistic = {enabled: config.holistic}
     }
 
+    // Map plugin booleans to objects
+    config.plugin && Object.keys(config.plugin).forEach(plugin => {
+      if (typeof config.plugin[plugin] === 'boolean') {
+        config.plugin[plugin] = {enabled: config.plugin[plugin]}
+      }
+    })        
+
     return merge({}, defaults, config)
   }
 
@@ -261,21 +268,29 @@ class Handsfree {
    * @param {Function} callback Called after
    */
   update (config, callback) {
-    let wasEnabled
-    config = this.cleanConfig(config, this.config)
+    this.config = this.cleanConfig(config, this.config)
 
     // Run enable/disable methods on changed models
     ;['hands', 'facemesh', 'pose', 'holistic', 'weboji'].forEach(model => {
-      wasEnabled = this.model[model].enabled
-      this.model[model].enabled = config[model].enabled
-      this.model[model].config = config[model].config
+      let wasEnabled = this.model[model].enabled
+      this.config[model].config = this.model[model].config
 
-      if (wasEnabled && !config[model].enabled) this.model[model].disable()
-      else if (!wasEnabled && config[model].enabled) this.model[model].enable(false)
+      if (wasEnabled && !this.config[model].enabled) this.model[model].disable()
+      else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false)
+    })
+
+    // Enable plugins
+    config.plugin && Object.keys(config.plugin).forEach(plugin => {
+      if (typeof config.plugin[plugin].enabled === 'boolean') {
+        if (config.plugin[plugin].enabled) {
+          this.plugin[plugin].enable()
+        } else {
+          this.plugin[plugin].disable()
+        }
+      }
     })
     
     // Start
-    this.config = config
     if (this.isLooping && callback) {
       callback()
     } else {
@@ -300,6 +315,10 @@ class Handsfree {
    * @param {Function} callback The callback to run before the very first frame
    */
   start (callback) {
+    // Cleans any configs since instantiation (particularly for boolean-ly set plugins)
+    this.config = this.cleanConfig(this.config, this.config)
+    
+    // Start loading
     document.body.classList.add('handsfree-loading')
     this.emit('loading', this)
 
@@ -318,6 +337,13 @@ class Handsfree {
         this.emit(`${modelName}ModelReady`, model)
       }
     })
+
+    // Enable initial plugins
+    Object.keys(this.config.plugin).forEach(plugin => {
+      if (typeof this.config.plugin?.[plugin]?.enabled === 'boolean' && this.config.plugin[plugin].enabled) {
+        this.plugin[plugin].enable()
+      }
+    })    
   }
 
   /**

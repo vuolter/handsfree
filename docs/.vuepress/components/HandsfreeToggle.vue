@@ -28,7 +28,11 @@ export default {
     },
 
     stop () {
-      this.$root.handsfree.stop()
+      if (this.$listeners?.stop) {
+        this.$emit('stop')
+      } else {
+        this.$root.handsfree.stop()
+      }
     }
   }
 }

@@ -16,9 +16,11 @@ console.log(handsfree.config)
 
 The sanitization process simply adds default values for any options you specifically did not provide. Passing an empty object will result in `handsfree.config` having all the defaults [listed below](#the-full-list). The recommended way to update this config is with [handsfree.update](/ref/method/update/)
 
-## `.assetsPath`
+## Setup
 
-**Default**: `https://unpkg.com/handsfree@8.0.4/build/lib/assets`
+### `.assetsPath`
+
+**Default**: `https://unpkg.com/handsfree@8.0.5/build/lib/assets`
 
 In order to keep page loads snappy the models are loaded only when needed, and because Handsfree.js is designed to power webapps they are hosted on a CDN. However, you can click here to [download a zip file containing the models](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and copy over the `/build/lib/assets/` folder into your projects public folder to host them yourself.
 
@@ -34,7 +36,7 @@ handsfree.start()
 ```
 If there's an error, a [modelError event](/ref/event/modelError/) will be triggered and along with console message which you can use to zero in on the correct folder.
 
-## `.setup.canvas[modelName]`
+### `.setup.canvas[modelName]`
 
 **Default**:
 ```js
@@ -49,7 +51,7 @@ If there's an error, a [modelError event](/ref/event/modelError/) will be trigge
 }
 ```
 
-## `.setup.video`
+### `.setup.video`
 
 **Default**:
 ```js
@@ -64,7 +66,7 @@ If there's an error, a [modelError event](/ref/event/modelError/) will be trigge
 }
 ```
 
-## `.setup.wrap`
+### `.setup.wrap`
 
 **Default**:
 ```js
@@ -77,17 +79,46 @@ If there's an error, a [modelError event](/ref/event/modelError/) will be trigge
   $parent: document.body
 }
 ```
-## `.handpose`
+
+
+
+## Models
+
+### `.handpose`
 
 See the [Handpose Model](/ref/model/handpose/#configuration) page
 
-## `.holistic`
+### `.holistic`
 
 See the [Holistic Model](/ref/model/holistic/#configuration) page
 
-## `.weboji`
+### `.weboji`
 
 See the [Weboji Model](/ref/model/weboji/#configuration) page
+
+
+## Plugins
+
+See the [individual plugin pages](/ref/plugin/) for possible configs. Like with models, you can pass in a Boolean to enable/disable them or an object to configure specific properties (don't forget to `.enable` it if you'd like it enabled):
+
+```js
+handsfree = new Handsfree({
+  hands: true,
+  weboji: true,
+  
+  plugin: {
+    // Enable this plugin with defaults
+    facePointer: true,
+
+    // Enable this plugin with specific configs
+    pinchScroll: {
+      enabled: true,
+      speed: 1
+    }
+  }
+})
+```
+
 
 ## The Full List
 

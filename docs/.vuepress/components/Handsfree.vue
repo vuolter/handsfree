@@ -4,10 +4,7 @@
 
   //- This will be moved into the Navbar
   #navbar-handsfree-toggle
-    HandsfreeToggle(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
-    button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='startDemo')
-      Fa-Video
-      | Scroll page with hands
+    HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
   #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
@@ -47,9 +44,10 @@ export default {
     }
   },
 
-  updated () {
-    setTimeout(() => {
-      console.log(`
+  mounted () {
+    if (!this.hasMovedToggle) {
+      setTimeout(() => {
+        console.log(`
         ✨
         (\\.   \\      ,/)
           \\(   |\\     )/
@@ -62,27 +60,21 @@ export default {
          🧙‍♂️ Presenting 🧙‍♀️
 
             Handsfree.js
-              8.0.4
+              8.0.5
 
-  Repo:       https://github.com/midiblocks/handsfree
-  Discord:    https://discord.gg/TWemTd85
-  Newsletter: http://eepurl.com/hhD7S1
+Repo: https://github.com/midiblocks/handsfree
+Discord: https://discord.gg/TWemTd85
+Newsletter: http://eepurl.com/hhD7S1
 `)
       
-      if (!this.hasMovedToggle) {
         // Import Handsfree
+        // - Don't start with any models since they will be loaded by examples
         if (!window.Handsfree) {
           import('@handsfree/handsfree.js').then(module => {
             const Handsfree = module.default
             window.Handsfree = Handsfree
             window.handsfree = this.$root.handsfree = new Handsfree({
-              // weboji: true,
-              hands: true,
-              // holistic: true,
-              // facemesh: true,
-              // pose: true,
               showDebug: true,
-              // showVideo: true,
               setup: {
                 wrap: {
                   $parent: document.querySelector('#handsfree-debug-window .window-body')
@@ -91,7 +83,6 @@ export default {
               assetsPath: '/handsfree'
             })
             window.app = this.$root
-            handsfree.enablePlugins('browser')
           })
         }
   
@@ -105,8 +96,8 @@ export default {
           this.$refs.window
         )
         this.hasMovedToggle = true
-      }
-    }, 50)
+      }, 50)
+    }
   },
 
   methods: {

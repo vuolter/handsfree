@@ -146,3 +146,40 @@ handsfree.use('consoleLogger', data => {
 })
 ```
 
+## Updating plugins through instantiation or `handsfree.update()`
+
+You can set plugins during instantiation through the `plugin` property. Set the plugin name to true to use defaults:
+
+```js
+handsfree = new Handsfree({
+  hands: true,
+  plugin: {
+    // Enable with defaults
+    pinchScroll: true
+  }
+})
+```
+
+Or pass a config object to pre-configure it:
+
+```js
+handsfree = new Handsfree({
+  hands: true,
+  plugin: {
+    pinchScroll: {
+      enabled: true,
+      speed: 1
+    }
+  }
+})
+```
+
+You can do the same with the [handsfree.update()](/ref/method/update/) method:
+
+```js
+handsfree.update({
+  plugin: {
+    pinchScroll: true
+  }
+})
+```

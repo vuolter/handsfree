@@ -5,7 +5,7 @@
  */
 export default {
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.0.4/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.0.5/build/lib/assets',
   
   // Setup config. Ignore this to have everything done for you automatically
   setup: {
@@ -171,4 +171,6 @@ export default {
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
   },
+
+  plugin: {}
 }
