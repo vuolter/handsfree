@@ -16,7 +16,8 @@ div.mt-md
           div
             HandsfreeToggle.full-width.handsfree-hide-when-started-without-hands(text-off='Try Hands' text-on='Stop Hands' :opts='demo.hands' @stop='stop("hands")')
             button.handsfree-show-when-started-without-hands.handsfree-show-when-loading(disabled)
-              Fa-Spinner(spin)  Loading...
+              Fa-Spinner(spin)
+              | Loading...
             button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='start("hands")')
               Fa-Video
               | Try Hands
@@ -37,7 +38,8 @@ div.mt-md
           div
             HandsfreeToggle.full-width.handsfree-hide-when-started-without-facemesh(text-off='Try FaceMesh' text-on='Stop FaceMesh' :opts='demo.facemesh' @stop='stop("facemesh")')
             button.handsfree-show-when-started-without-facemesh.handsfree-show-when-loading(disabled)
-              Fa-Spinner(spin)  Loading...
+              Fa-Spinner(spin)
+              | Loading...
             button.handsfree-show-when-started-without-facemesh.handsfree-hide-when-loading(@click='start("facemesh")')
               Fa-Video
               | Try FaceMesh
@@ -58,7 +60,8 @@ div.mt-md
           div
             HandsfreeToggle.full-width.handsfree-hide-when-started-without-pose(text-off='Try Pose' text-on='Stop Pose' :opts='demo.pose' @stop='stop("pose")')
             button.handsfree-show-when-started-without-pose.handsfree-show-when-loading(disabled)
-              Fa-Spinner(spin)  Loading...
+              Fa-Spinner(spin)
+              | Loading...
             button.handsfree-show-when-started-without-pose.handsfree-hide-when-loading(@click='start("pose")')
               Fa-Video
               | Try Pose
@@ -80,7 +83,8 @@ div.mt-md
           div
             HandsfreeToggle.full-width.handsfree-hide-when-started-without-holistic(text-off='Try Holistic' text-on='Stop Holistic' :opts='demo.holistic' @stop='stop("holistic")')
             button.handsfree-show-when-started-without-holistic.handsfree-show-when-loading(disabled)
-              Fa-Spinner(spin)  Loading...
+              Fa-Spinner(spin)
+              | Loading...
             button.handsfree-show-when-started-without-holistic.handsfree-hide-when-loading(@click='start("holistic")')
               Fa-Video
               | Try Holistic
@@ -101,7 +105,8 @@ div.mt-md
           div
             HandsfreeToggle.full-width.handsfree-hide-when-started-without-weboji(text-off='Try Weboji' text-on='Stop Weboji' :opts='demo.weboji' @stop='stop("weboji")')
             button.handsfree-show-when-started-without-weboji.handsfree-show-when-loading(disabled)
-              Fa-Spinner(spin)  Loading...
+              Fa-Spinner(spin)
+              | Loading...
             button.handsfree-show-when-started-without-weboji.handsfree-hide-when-loading(@click='start("weboji")')
               Fa-Video
               | Try Weboji

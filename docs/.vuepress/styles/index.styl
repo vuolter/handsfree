@@ -34,6 +34,15 @@ html
   //     position relative
   //     left -.85em
 
+// Hide fallback loaders
+.handsfree-loading
+  &.handsfree-model-hands.handsfree-started .handsfree-hide-when-started-without-hands,
+  &.handsfree-model-facemesh.handsfree-started .handsfree-hide-when-started-without-facemesh,
+  &.handsfree-model-pose.handsfree-started .handsfree-hide-when-started-without-pose,
+  &.handsfree-model-holistic.handsfree-started .handsfree-hide-when-started-without-holistic,
+  &.handsfree-model-weboji.handsfree-started .handsfree-hide-when-started-without-weboji
+      display none
+
 /**
  * @TODO Organize the following better
  */

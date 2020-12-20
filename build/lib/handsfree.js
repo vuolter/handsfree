@@ -41,7 +41,8 @@
      *    to prevent the .update() method from double loading
      */
     enable (handleLoad = true) {
-      this.enabled = true;
+      this.handsfree.config[this.name] = this.config;
+      this.handsfree.config[this.name].enabled = this.enabled = true;
       document.body.classList.add(`handsfree-model-${this.name}`);
 
       if (handleLoad && !this.dependenciesLoaded) {
@@ -55,8 +56,10 @@
     }
 
     disable () {
-      this.enabled = false;
+      this.handsfree.config[this.name] = this.config;
+      this.handsfree.config[this.name].enabled = this.enabled = false;
       document.body.classList.remove(`handsfree-model-${this.name}`);
+      
       setTimeout(() => {
         // Weboji uses a webgl context so let's just hide it
         if (this.name === 'weboji') {
@@ -3363,7 +3366,7 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.0.4/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.0.5/build/lib/assets',
     
     // Setup config. Ignore this to have everything done for you automatically
     setup: {
@@ -3529,6 +3532,8 @@
       // Higher values are more robust at the expense of higher latency
       minTrackingConfidence: 0.5
     },
+
+    plugin: {}
   };
 
   function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -9211,7 +9216,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.0.4
+                  8.0.5
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -9264,7 +9269,7 @@
     constructor (config = {}) {
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.0.4';
+      this.version = '8.0.5';
       this.data = {};
 
       // Dependency management
@@ -9417,7 +9422,7 @@
       
       defaults.setup.wrap.$parent = document.body;
 
-      // Map booleans to objects
+      // Map model booleans to objects
       if (typeof config.weboji === 'boolean') {
         config.weboji = {enabled: config.weboji};
       }
@@ -9434,6 +9439,13 @@
         config.holistic = {enabled: config.holistic};
       }
 
+      // Map plugin booleans to objects
+      config.plugin && Object.keys(config.plugin).forEach(plugin => {
+        if (typeof config.plugin[plugin] === 'boolean') {
+          config.plugin[plugin] = {enabled: config.plugin[plugin]};
+        }
+      });        
+
       return merge_1({}, defaults, config)
     }
 
@@ -9445,21 +9457,29 @@
      * @param {Function} callback Called after
      */
     update (config, callback) {
-      let wasEnabled;
-      config = this.cleanConfig(config, this.config)
+      this.config = this.cleanConfig(config, this.config)
 
       // Run enable/disable methods on changed models
       ;['hands', 'facemesh', 'pose', 'holistic', 'weboji'].forEach(model => {
-        wasEnabled = this.model[model].enabled;
-        this.model[model].enabled = config[model].enabled;
-        this.model[model].config = config[model].config;
+        let wasEnabled = this.model[model].enabled;
+        this.config[model].config = this.model[model].config;
 
-        if (wasEnabled && !config[model].enabled) this.model[model].disable();
-        else if (!wasEnabled && config[model].enabled) this.model[model].enable(false);
+        if (wasEnabled && !this.config[model].enabled) this.model[model].disable();
+        else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false);
+      });
+
+      // Enable plugins
+      config.plugin && Object.keys(config.plugin).forEach(plugin => {
+        if (typeof config.plugin[plugin].enabled === 'boolean') {
+          if (config.plugin[plugin].enabled) {
+            this.plugin[plugin].enable();
+          } else {
+            this.plugin[plugin].disable();
+          }
+        }
       });
       
       // Start
-      this.config = config;
       if (this.isLooping && callback) {
         callback();
       } else {
@@ -9484,6 +9504,10 @@
      * @param {Function} callback The callback to run before the very first frame
      */
     start (callback) {
+      // Cleans any configs since instantiation (particularly for boolean-ly set plugins)
+      this.config = this.cleanConfig(this.config, this.config);
+      
+      // Start loading
       document.body.classList.add('handsfree-loading');
       this.emit('loading', this);
 
@@ -9502,6 +9526,13 @@
           this.emit(`${modelName}ModelReady`, model);
         }
       });
+
+      // Enable initial plugins
+      Object.keys(this.config.plugin).forEach(plugin => {
+        if (typeof this.config.plugin?.[plugin]?.enabled === 'boolean' && this.config.plugin[plugin].enabled) {
+          this.plugin[plugin].enable();
+        }
+      });    
     }
 
     /**

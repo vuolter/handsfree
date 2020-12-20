@@ -60,7 +60,7 @@ export default {
          🧙‍♂️ Presenting 🧙‍♀️
 
             Handsfree.js
-              8.0.4
+              8.0.5
 
 Repo: https://github.com/midiblocks/handsfree
 Discord: https://discord.gg/TWemTd85
@@ -68,18 +68,13 @@ Newsletter: http://eepurl.com/hhD7S1
 `)
       
         // Import Handsfree
+        // - Don't start with any models since they will be loaded by examples
         if (!window.Handsfree) {
           import('@handsfree/handsfree.js').then(module => {
             const Handsfree = module.default
             window.Handsfree = Handsfree
             window.handsfree = this.$root.handsfree = new Handsfree({
-              // weboji: true,
-              hands: true,
-              // holistic: true,
-              // facemesh: true,
-              // pose: true,
               showDebug: true,
-              // showVideo: true,
               setup: {
                 wrap: {
                   $parent: document.querySelector('#handsfree-debug-window .window-body')
