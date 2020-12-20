@@ -4,6 +4,21 @@ next: /about/
 ---
 # 🤝 Community
 
+
+<div class="window">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <iframe src="https://player.vimeo.com/video/476537051" width="100%" style="min-height: 230px" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+      <div class="col-6">
+        <h2>Coming soon 🙌</h2>
+        <p>Handsfree.js 8 has been rewritten from scratch in December 2020 with a documentation-first approach. Links to past projects and experiments, new chat and forums, along with details for getting involved coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 ## Past Experiments
 
 The following is a collection of projects built with previous versions of Handsfree.js. A form to submit your own projects will be added soon!
