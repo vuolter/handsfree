@@ -35,7 +35,8 @@ export default class BaseModel {
    *    to prevent the .update() method from double loading
    */
   enable (handleLoad = true) {
-    this.enabled = true
+    this.handsfree.config[this.name] = this.config
+    this.handsfree.config[this.name].enabled = this.enabled = true
     document.body.classList.add(`handsfree-model-${this.name}`)
 
     if (handleLoad && !this.dependenciesLoaded) {
@@ -49,8 +50,10 @@ export default class BaseModel {
   }
 
   disable () {
-    this.enabled = false
+    this.handsfree.config[this.name] = this.config
+    this.handsfree.config[this.name].enabled = this.enabled = false
     document.body.classList.remove(`handsfree-model-${this.name}`)
+    
     setTimeout(() => {
       // Weboji uses a webgl context so let's just hide it
       if (this.name === 'weboji') {

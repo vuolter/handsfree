@@ -47,7 +47,7 @@ export default {
     }
   },
 
-  updated () {
+  mounted () {
     setTimeout(() => {
       console.log(`
         ✨
@@ -64,9 +64,9 @@ export default {
             Handsfree.js
               8.0.4
 
-  Repo:       https://github.com/midiblocks/handsfree
-  Discord:    https://discord.gg/TWemTd85
-  Newsletter: http://eepurl.com/hhD7S1
+Repo: https://github.com/midiblocks/handsfree
+Discord: https://discord.gg/TWemTd85
+Newsletter: http://eepurl.com/hhD7S1
 `)
       
       if (!this.hasMovedToggle) {
