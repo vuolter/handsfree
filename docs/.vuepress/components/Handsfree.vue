@@ -5,9 +5,6 @@
   //- This will be moved into the Navbar
   #navbar-handsfree-toggle
     HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
-    //- button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='startDemo')
-    //-   Fa-Video
-    //-   | Scroll page with hands
 
   //- This will be moved into the sidebar
   #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
@@ -48,8 +45,9 @@ export default {
   },
 
   mounted () {
-    setTimeout(() => {
-      console.log(`
+    if (!this.hasMovedToggle) {
+      setTimeout(() => {
+        console.log(`
         ✨
         (\\.   \\      ,/)
           \\(   |\\     )/
@@ -69,7 +67,6 @@ Discord: https://discord.gg/TWemTd85
 Newsletter: http://eepurl.com/hhD7S1
 `)
       
-      if (!this.hasMovedToggle) {
         // Import Handsfree
         if (!window.Handsfree) {
           import('@handsfree/handsfree.js').then(module => {
@@ -104,8 +101,8 @@ Newsletter: http://eepurl.com/hhD7S1
           this.$refs.window
         )
         this.hasMovedToggle = true
-      }
-    }, 50)
+      }, 50)
+    }
   },
 
   methods: {
