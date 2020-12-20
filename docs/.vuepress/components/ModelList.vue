@@ -113,38 +113,18 @@ export default {
     return {
       demo: {
         weboji: {
-          weboji: true,
-          hands: false,
-          facemesh: false,
-          pose: false,
-          holistic: false
+          weboji: true
         },
         hands: {
-          weboji: false,
-          hands: true,
-          facemesh: false,
-          pose: false,
-          holistic: false
+          hands: true
         },
         facemesh: {
-          weboji: false,
-          hands: false,
-          facemesh: true,
-          pose: false,
-          holistic: false
+          facemesh: true
         },
         pose: {
-          weboji: false,
-          hands: false,
-          facemesh: false,
-          pose: true,
-          holistic: false
+          pose: true
         },
         holistic: {
-          weboji: false,
-          hands: false,
-          facemesh: false,
-          pose: false,
           holistic: true
         }
       }
