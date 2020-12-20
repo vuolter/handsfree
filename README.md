@@ -1,5 +1,5 @@
 <div align="center">
-  <p><a href="https://handsfree.js.org"><img src="https://media1.giphy.com/media/TTeLMReRXakENiBRHx/giphy.gif" alt="handsfree.js.org" title="handsfree.js.org"></a></p>
+  <p><a href="https://handsfree.js.org"><img src="https://media2.giphy.com/media/BBcnSU1IJ5tpQbwXDI/giphy.gif" alt="handsfree.js.org" title="handsfree.js.org"></a></p>
   <p>Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</p>
   <p>
     <img class="mr-1" src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
@@ -38,83 +38,10 @@
 <br>
 <br>
 
-## Face Tracking Examples
-<table>
-  <tr>
-    <td>
-      <p><strong>Face Pointers</strong></p>
-      <p><img src="https://media4.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif"></p>
-    </td>
-    <td>
-      <p><strong>Motion Parallax Display</strong></p>
-      <p><img src="https://media4.giphy.com/media/8sCpFH9JCws8iWsaoj/giphy.gif"></p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p><strong>Puppeteering Industrial Robots</strong></p>
-      <p><img src="https://media4.giphy.com/media/1XE2rnMPk6BFu8VQRr/giphy.gif"></p>
-    </td>
-    <td>
-      <p><strong>Playing desktop games with face clicks</strong></p>
-      <p><img src="https://media4.giphy.com/media/YATR9GZSSHKeNw3fht/giphy.gif"></p>
-    </td>
-  </tr>
-</table>
-
-<br>
-<hr>
-<br>
-
-## Hand Tracking Examples
-<table>
-  <tr>
-    <td>
-      <p><strong>Hand Pointers</strong></p>
-      <p><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></p>
-    </td>
-    <td>
-      <p><strong>Use with Three.js</strong></p>
-      <p><img src="https://media4.giphy.com/media/brC1Ow2v62htVmpfLh/giphy.gif"></p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p><strong>Playing desktop games with pinch clicks</strong></p>
-      <p><img src="https://media4.giphy.com/media/pdDOkUpnRbzMk8r0L4/giphy.gif"></p>
-    </td>
-    <td>
-      <p><strong>Laser pointers but with your finger</strong></p>
-      <p><img src="https://media4.giphy.com/media/2vcbWI2ZAPeGvJVpII/giphy.gif"></p>
-    </td>
-  </tr>
-</table>
-
-<br>
-<hr>
-<br>
-
-## Pose Estimation Examples
-<table>
-  <tr>
-    <td>
-      <p><strong>Flappy Pose - Flappy Bird but where you have to flap your arms</strong></p>
-      <p><img src="https://media4.giphy.com/media/hwNj7nfkDljmlnaNRA/giphy.gif"></p>
-    </td>
-    <td></td>
-  </tr>
-</table>
-
-<br>
-<br>
-<br>
-<hr>
-<br>
-<br>
-<br>
-
 # Quickstart
 ## Installing from CDN
+
+This option is great if you don't have or need a server, or if you're developing on a [site like CodePen](https://codepen.io/MIDIBlocks/pen/mdrwYzM). You can also [just download this repo](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and open up `/boilerplates/cdn.html` in your browser. Since the models are loaded on CDN you won't need to do any further setup to get started!
 
 ```html
 <head>
@@ -124,11 +51,16 @@
 </head>
 
 <body>
-  <!-- Instantiate and start it -->
+  <!-- Your code must be inside body as it applies classes to it -->
   <script>
+    // Instantiate and start Handsfree
     const handsfree = new Handsfree({hands: true})
-    handsfree.enablePlugins('browsing')
     handsfree.start()
+
+    // Create a plugin named "logger" to show data on every frame
+    handsfree.use('logger', data => {
+      console.log(data)
+    })
   </script>
 </body>
 ```
@@ -149,7 +81,7 @@ handsfree.enablePlugins('browsing')
 handsfree.start()
 ```
 
-### Hosting the models yourself
+## Hosting the models yourself
 
 The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.3/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
@@ -175,7 +107,15 @@ handsfree.enablePlugins('browsing')
 handsfree.start()
 ```
 
-## Example Workflow
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+# Example Workflow
 
 The following aims to give you a quick overview of how things work. The key takeaway is that everything is centered around hooks/plugins, which are basically named callbacks which are run on every frame and can be toggled on and off.
 
@@ -292,6 +232,79 @@ npm run build:lib
   <h2>Explore the interactive docs at: <a href="https://handsfree.js.org">Handsfree.js.org</a></h2>
   <p>Or try it right away with the serverless boilerplates in <code>/boilerplate/</code>!</p>
 </div>
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+# Examples
+
+## Face Tracking Examples
+<table>
+  <tr>
+    <td>
+      <p><strong>Face Pointers</strong></p>
+      <p><img src="https://media4.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif"></p>
+    </td>
+    <td>
+      <p><strong>Motion Parallax Display</strong></p>
+      <p><img src="https://media4.giphy.com/media/8sCpFH9JCws8iWsaoj/giphy.gif"></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p><strong>Puppeteering Industrial Robots</strong></p>
+      <p><img src="https://media4.giphy.com/media/1XE2rnMPk6BFu8VQRr/giphy.gif"></p>
+    </td>
+    <td>
+      <p><strong>Playing desktop games with face clicks</strong></p>
+      <p><img src="https://media4.giphy.com/media/YATR9GZSSHKeNw3fht/giphy.gif"></p>
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+## Hand Tracking Examples
+<table>
+  <tr>
+    <td>
+      <p><strong>Hand Pointers</strong></p>
+      <p><img src="https://media4.giphy.com/media/FxLUuTSxXjJPx8K9L4/giphy.gif"></p>
+    </td>
+    <td>
+      <p><strong>Use with Three.js</strong></p>
+      <p><img src="https://media4.giphy.com/media/brC1Ow2v62htVmpfLh/giphy.gif"></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p><strong>Playing desktop games with pinch clicks</strong></p>
+      <p><img src="https://media4.giphy.com/media/pdDOkUpnRbzMk8r0L4/giphy.gif"></p>
+    </td>
+    <td>
+      <p><strong>Laser pointers but with your finger</strong></p>
+      <p><img src="https://media4.giphy.com/media/2vcbWI2ZAPeGvJVpII/giphy.gif"></p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## Pose Estimation Examples
+<table>
+  <tr>
+    <td width="50%">
+      <p><strong>Flappy Pose - Flappy Bird but where you have to flap your arms</strong></p>
+      <p><img src="https://media4.giphy.com/media/hwNj7nfkDljmlnaNRA/giphy.gif"></p>
+    </td>
+    <td></td>
+  </tr>
+</table>
 
 <br>
 <br>
