@@ -233,7 +233,7 @@ class Handsfree {
     
     defaults.setup.wrap.$parent = document.body
 
-    // Map booleans to objects
+    // Map model booleans to objects
     if (typeof config.weboji === 'boolean') {
       config.weboji = {enabled: config.weboji}
     }
@@ -249,6 +249,13 @@ class Handsfree {
     if (typeof config.holistic === 'boolean') {
       config.holistic = {enabled: config.holistic}
     }
+
+    // Map plugin booleans to objects
+    config.plugin && Object.keys(config.plugin).forEach(plugin => {
+      if (typeof config.plugin[plugin] === 'boolean') {
+        config.plugin[plugin] = {enabled: config.plugin[plugin]}
+      }
+    })        
 
     return merge({}, defaults, config)
   }
@@ -273,7 +280,7 @@ class Handsfree {
     })
 
     // Enable plugins
-    Object.keys(config.plugin).forEach(plugin => {
+    config.plugin && Object.keys(config.plugin).forEach(plugin => {
       if (typeof config.plugin[plugin].enabled === 'boolean') {
         if (config.plugin[plugin].enabled) {
           this.plugin[plugin].enable()
@@ -308,6 +315,10 @@ class Handsfree {
    * @param {Function} callback The callback to run before the very first frame
    */
   start (callback) {
+    // Cleans any configs since instantiation (particularly for boolean-ly set plugins)
+    this.config = this.cleanConfig(this.config, this.config)
+    
+    // Start loading
     document.body.classList.add('handsfree-loading')
     this.emit('loading', this)
 
@@ -326,6 +337,13 @@ class Handsfree {
         this.emit(`${modelName}ModelReady`, model)
       }
     })
+
+    // Enable initial plugins
+    Object.keys(this.config.plugin).forEach(plugin => {
+      if (typeof this.config.plugin?.[plugin]?.enabled === 'boolean' && this.config.plugin[plugin].enabled) {
+        this.plugin[plugin].enable()
+      }
+    })    
   }
 
   /**

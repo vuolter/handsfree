@@ -171,4 +171,6 @@ export default {
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
   },
+
+  plugin: {}
 }
