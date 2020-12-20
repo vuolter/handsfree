@@ -88,6 +88,8 @@ class Handsfree {
       loading: [],
       loaded: []
     }
+    // Whether MediaPipe is warming up the mediaStream
+    this.isMediapipeWarmingUp = false
 
     // Plugins
     this.plugin = {}
@@ -529,11 +531,12 @@ class Handsfree {
    *
    * @param {String} eventName The `handsfree-${eventName}` to listen to
    * @param {Function} callback The callback to call
+   * @param {Object} opts The options to pass into addEventListener (eg: {once: true})
    */
-  on (eventName, callback) {
+  on (eventName, callback, opts) {
     document.addEventListener(`handsfree-${eventName}`, (ev) => {
       callback(ev.detail)
-    })
+    }, opts)
   }
 
 

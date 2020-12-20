@@ -38,7 +38,7 @@ export default {
         hands: true,
         pose: false,
         holistic: false,
-        facemesh: false
+        facemesh: true
       },
       
       hasMovedToggle: false,

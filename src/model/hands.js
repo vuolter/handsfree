@@ -11,25 +11,22 @@ export default class HandsModel extends BaseModel {
   loadDependencies (callback) {
     // Load hands
     this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
+      // Configure model
       this.api = new window.Hands({locateFile: file => {
         return `${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/${file}`
       }})
-
-      // Configure model
       this.api.setOptions(this.handsfree.config.hands)
-      this.api.onResults(results => this.updateData(results))
+      this.api.onResults(results => this.dataReceived(results))
 
       // Load the media stream
       this.handsfree.getUserMedia(() => {
         // Warm up before using in loop
-        // - If we don't do this there will be too many initial hits and cause an error
-        this.api.send({image: this.handsfree.debug.$video}).then(() => {
-          this.dependenciesLoaded = true
-          document.body.classList.add('handsfree-model-hands')                    
-          this.handsfree.emit('modelReady', this)
-          this.handsfree.emit('handsModelReady', this)
-          callback && callback(this)
-        })
+        if (!this.handsfree.isMediapipeWarmingUp) {
+          this.api.send({image: this.handsfree.debug.$video}).then(() => this.onWarmUp(callback))
+        } else {
+          this.handsfree.on('mediapipeWarmedUp', () => this.onWarmUp(callback), {once: true})
+        }
+        this.handsfree.isMediapipeWarmingUp = true
       })
 
       // Load the hands camera module
@@ -37,11 +34,27 @@ export default class HandsModel extends BaseModel {
     })
   }
 
+  /**
+   * Warms up MediaPipe
+   * - If we don't do this there will be too many initial hits and cause an error
+   */
+  onWarmUp (callback) {
+    this.dependenciesLoaded = true
+    document.body.classList.add('handsfree-model-hands')                    
+    this.handsfree.emit('modelReady', this)
+    this.handsfree.emit('handsModelReady', this)
+    this.handsfree.emit('mediapipeWarmedUp', this)
+    callback && callback(this)
+  }
+
+  /**
+   * Get data
+   */
   async getData () {
     this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video})
   }
-  
-  updateData (results) {
+  // Called through this.api.onResults
+  dataReceived (results) {
     this.data = results
     this.handsfree.data.hands = results
     if (this.handsfree.config.showDebug) {
