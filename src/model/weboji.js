@@ -17,28 +17,17 @@ export default class HolisticModel extends BaseModel {
         .then(model => model.json())
         // Next, let's initialize the weboji tracker API
         .then(model => {
-          window.JEELIZ_RESIZER.size_canvas({
+          this.api.init({
             canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
-            callback: (videoSettings) => {
-              if (typeof videoSettings === 'object') {
-                videoSettings = merge(videoSettings, this.handsfree.config.weboji.videoSettings)
-              } else {
-                videoSettings = this.handsfree.config.weboji.videoSettings
-              }
-
-              this.api.init({
-                canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
-                NNC: JSON.stringify(model),
-                videoSettings,
-                callbackReady: () => {
-                  callback && callback(this)
-                  
-                  this.dependenciesLoaded = true
-                  this.handsfree.emit('modelReady', this)
-                  this.handsfree.emit('webojiModelReady', this)
-                  document.body.classList.add('handsfree-model-weboji')
-                }
-              })
+            NNC: JSON.stringify(model),
+            videoSettings: this.handsfree.config.weboji.videoSettings,
+            callbackReady: () => {
+              callback && callback(this)
+              
+              this.dependenciesLoaded = true
+              this.handsfree.emit('modelReady', this)
+              this.handsfree.emit('webojiModelReady', this)
+              document.body.classList.add('handsfree-model-weboji')
             }
           })
         })
