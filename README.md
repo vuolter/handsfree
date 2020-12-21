@@ -338,6 +338,22 @@ I'd like to also thank the following people and projects:
 <br>
 <br>
 
+# Thanks to the Handsfree.js.org GitHub Sponsors
+
+Starting a large project [and movement](https://handsfree.js.org/about#master-plan) is so much fun but it's also a bit daunting 😅 I'd like to thank the following for [supporting this project](https://github.com/sponsors/midiblocks):
+
+- [@DavidNTompkins](https://github.com/DavidNTompkins)
+
+<br>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<br>
+
 # Special Thanks
 
 - [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way. Also for inviting me back for a multi-month residency in Spring 2021!!!
