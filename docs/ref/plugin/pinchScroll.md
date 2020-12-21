@@ -83,7 +83,11 @@ export default {
         hands: true,
         facemesh: false,
         pose: false,
-        holistic: false
+        holistic: false,
+
+        plugin: {
+          pinchScroll: {enabled: true}
+        }
       }
     }
   },
