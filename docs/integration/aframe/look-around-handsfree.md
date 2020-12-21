@@ -1,4 +1,4 @@
-# A-Frame
+# A-Frame: "Look around" handsfree
 
 <div class="window mb-md">
   <div class="window-body">
@@ -6,6 +6,11 @@
       <div class="col-6">
       </div>
       <div class="col-6">
+        <h2>Try it!</h2>
+        <ul>
+          <li>Turn head around to turn the camera</li>
+          <li>Move your head to move the camera</li>
+        </ul>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-pose" text-off="Look around Handsfree" text-on="Stop Pose" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-pose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
@@ -28,6 +33,9 @@ import {TweenMax} from 'gsap'
 let iframe
 let $rig
 let tween = {
+  x: 0,
+  y: 0,
+  z: 0,
   yaw: 0,
   pitch: 0,
   roll: 0
@@ -60,15 +68,18 @@ export default {
      */
     onData ({detail}) {
       const weboji = detail.weboji
-      console.log(weboji, $rig)
       if (!weboji || !$rig) return
 
       TweenMax.to(tween, 1, {
-        yaw: -weboji.rotation[0] * 180 / Math.PI * 5 + 45,
-        pitch: -weboji.rotation[1] * 180 / Math.PI * 5,
+        x: (weboji.translation[0] - .5) * 10,
+        y: (weboji.translation[1] - .5) * 5,
+        z: weboji.translation[2] * 10,
+        yaw: -weboji.rotation[0] * 180 / Math.PI * 3 + 45,
+        pitch: -weboji.rotation[1] * 180 / Math.PI * 3,
         roll: weboji.rotation[2] * 180 / Math.PI * 3
       })
-      // $rig.setAttribute('position', `${-weboji.translationX / 80 + 4} ${-weboji.translationY / 80 + 5} ${weboji.scale / -20 + 5}`)
+      console.log(weboji, weboji.translation)
+      $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
       $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
     },
 

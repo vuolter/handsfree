@@ -78,7 +78,7 @@ module.exports = {
         children: [
           {
             title: 'A-Frame',
-            path: '/integration/aframe',
+            path: '/integration/aframe/',
             collapsable: true,
             children: [
               ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree']
