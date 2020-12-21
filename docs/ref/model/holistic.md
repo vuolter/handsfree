@@ -3,8 +3,6 @@ sidebarDepth: 2
 ---
 # Model: Holistic
 
-> **Technical documentation:** [https://google.github.io/mediapipe/solutions/holistic.html](https://google.github.io/mediapipe/solutions/holistic.html)
-
 <div class="window mb-md">
   <div class="window-body">
     <div class="row">
@@ -27,6 +25,9 @@ sidebarDepth: 2
     </div>
   </div>
 </div>
+
+> [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/holistic)
+> [Technical documentation](https://google.github.io/mediapipe/solutions/holistic.html)
 
 ## Usage
 

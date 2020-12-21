@@ -22,7 +22,7 @@
 </div>
 
 <div>
-  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 350px"></iframe>
+  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 500px"></iframe>
 </div>
 
 

@@ -3,8 +3,6 @@ sidebarDepth: 2
 ---
 # 🤸‍♀️ Pose
 
-> **Technical documentation:** [https://google.github.io/mediapipe/solutions/pose](https://google.github.io/mediapipe/solutions/pose)
-
 <div class="window mb-md">
   <div class="window-body">
     <div class="row">
@@ -26,6 +24,9 @@ sidebarDepth: 2
     </div>
   </div>
 </div>
+
+> [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/pose)
+> [Technical documentation](https://google.github.io/mediapipe/solutions/pose.html)
 
 ## Usage
 
