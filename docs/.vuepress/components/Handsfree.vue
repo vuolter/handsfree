@@ -62,9 +62,7 @@ export default {
             Handsfree.js
               8.0.5
 
-Repo: https://github.com/midiblocks/handsfree
-Discord: https://discord.gg/TWemTd85
-Newsletter: http://eepurl.com/hhD7S1
+https://github.com/midiblocks/handsfree
 `)
       
         // Import Handsfree

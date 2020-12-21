@@ -1,6 +1,6 @@
 ---
 prev: /
-next: /ref/
+next: /integration/
 ---
 # 📋 Guides
 
