@@ -48,19 +48,19 @@ export default {
     if (!this.hasMovedToggle) {
       setTimeout(() => {
         console.log(`
-        ✨
-        (\\.   \\      ,/)
-          \\(   |\\     )/
-          //\\  | \\   /\\\\
-        (/ /\\_#oo#_/\\ \\)
-          \\/\\  ####  /\\/
-              \`##'
+    ✨
+    (\\.   \\      ,/)
+      \\(   |\\     )/
+      //\\  | \\   /\\\\
+    (/ /\\_#oo#_/\\ \\)
+      \\/\\  ####  /\\/
+          \`##'
 
 
-         🧙‍♂️ Presenting 🧙‍♀️
+    🧙‍♂️ Presenting 🧙‍♀️
 
-            Handsfree.js
-              8.0.5
+       Handsfree.js
+          8.0.5
 
 https://github.com/midiblocks/handsfree
 `)

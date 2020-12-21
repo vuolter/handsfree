@@ -1,5 +1,4 @@
 import BaseModel from './base.js'
-import merge from 'lodash/merge'
 
 export default class HolisticModel extends BaseModel {
   constructor (handsfree, config) {
@@ -22,12 +21,11 @@ export default class HolisticModel extends BaseModel {
             NNC: JSON.stringify(model),
             videoSettings: this.handsfree.config.weboji.videoSettings,
             callbackReady: () => {
-              callback && callback(this)
-              
               this.dependenciesLoaded = true
               this.handsfree.emit('modelReady', this)
               this.handsfree.emit('webojiModelReady', this)
               document.body.classList.add('handsfree-model-weboji')
+              callback && callback(this)
             }
           })
         })
@@ -39,11 +37,11 @@ export default class HolisticModel extends BaseModel {
     })
   }
 
-  async getData () {
-    this.data.rotation = await this.api.get_rotationStabilized()
-    this.data.translation = await this.api.get_positionScale()
-    this.data.morphs = await this.api.get_morphTargetInfluencesStabilized()
-    this.data.state = await this.getStates()
+  getData () {
+    this.data.rotation = this.api.get_rotationStabilized()
+    this.data.translation = this.api.get_positionScale()
+    this.data.morphs = this.api.get_morphTargetInfluencesStabilized()
+    this.data.state = this.getStates()
     this.handsfree.data.weboji = this.data
 
     return this.data

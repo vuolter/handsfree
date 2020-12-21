@@ -343,6 +343,11 @@ I'd like to also thank the following people and projects:
 Starting a large project [and movement](https://handsfree.js.org/about#master-plan) is so much fun but it's also a bit daunting 😅 I'd like to thank the following for [supporting this project](https://github.com/sponsors/midiblocks):
 
 - [@DavidNTompkins](https://github.com/DavidNTompkins)
+- [@digitalcoleman](https://github.com/digitalcoleman)
+
+<br>
+<br>
+<small>(please feel free to contact me at midiblocks@gmail.com)</small>
 
 <br>
 <br>

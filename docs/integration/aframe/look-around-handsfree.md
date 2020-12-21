@@ -4,6 +4,7 @@
   <div class="window-body">
     <div class="row">
       <div class="col-6">
+        <img src="https://media3.giphy.com/media/YOPrRX6vTy6tb3frgt/giphy.gif">
       </div>
       <div class="col-6">
         <h2>Try it!</h2>
@@ -12,9 +13,9 @@
           <li>Move your head to move the camera</li>
         </ul>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-pose" text-off="Look around Handsfree" text-on="Stop Pose" :opts="demoOpts" />
-          <button class="handsfree-show-when-started-without-pose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-pose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Look around Handsfree</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Look around Handsfree" text-on="Stop Pose" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Look around Handsfree</button>
         </div>
       </div>
     </div>
@@ -78,7 +79,7 @@ export default {
         pitch: -weboji.rotation[1] * 180 / Math.PI * 1,
         roll: weboji.rotation[2] * 180 / Math.PI * 1
       })
-      console.log(weboji, weboji.translation)
+
       $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
       $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
     },
