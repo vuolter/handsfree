@@ -73,10 +73,10 @@ export default {
       TweenMax.to(tween, 1, {
         x: (weboji.translation[0] - .5) * 10,
         y: (weboji.translation[1] - .5) * 5,
-        z: weboji.translation[2] * 10,
-        yaw: -weboji.rotation[0] * 180 / Math.PI * 3 + 45,
-        pitch: -weboji.rotation[1] * 180 / Math.PI * 3,
-        roll: weboji.rotation[2] * 180 / Math.PI * 3
+        z: 5 - weboji.translation[2] * 30,
+        yaw: -weboji.rotation[0] * 180 / Math.PI * 1 + 15,
+        pitch: -weboji.rotation[1] * 180 / Math.PI * 1,
+        roll: weboji.rotation[2] * 180 / Math.PI * 1
       })
       console.log(weboji, weboji.translation)
       $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
