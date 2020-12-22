@@ -3,9 +3,9 @@
   .title-bar(v-if='hasTitlebar')
     .title-bar-text(v-if='title') {{title}}
     .title-bar-controls(v-if='hasTitlebarControls')
-      button(v-if='hasMinimize' aria-label='Minimize' @click='minimize')
-      button(v-if='hasMaximize || hasMinimize' aria-label='Restore' @click='restore')
-      button(v-if='hasMaximize' aria-label='Maximize' @click='maximize')
+      button(v-if='minimize' aria-label='Minimize' @click='onMinimize')
+      button(v-if='maximize || minimize' aria-label='Restore' @click='onRestore')
+      button(v-if='maximize' aria-label='Maximize' @click='onMaximize')
   .window-body
     slot
 </template>
@@ -14,57 +14,41 @@
 export default {
   name: 'Window',
 
-  props: ['title'],
+  props: ['title', 'maximize', 'minimize'],
 
   computed: {
     hasTitlebar () {
-      return this.hasTitlebarControls || this.$props.title
+      return this.hasTitlebarControls || this.title
     },
     hasTitlebarControls () {
-      return this.hasMaximize
+      return this.maximize || this.minimize
     }
   },
 
   data: () => ({
-    hasMinimize: false,
-    hasMaximize: false,
-    isMinimize: false,
-    isMaximize: false,
+    isMinimized: false,
+    isMaximized: false,
   }),
-
-  /**
-   * Setup toolbar items
-   */
-  mounted () {
-    this.hasMinimize = !!this.$listeners.minimize
-    this.hasMaximize = !!this.$listeners.maximize
-  },
 
   methods: {
     /**
      * Handle window resize
      */
-    minimize () {
-      this.$emit('minimize')
-
+    onMinimize () {
       this.$refs.window.classList.add('minimized')
       this.$refs.window.classList.remove('maximized')
       this.isMinimized = true
       this.isMaximized = false
     },
 
-    maximize () {
-      this.$emit('maximize')
-
+    onMaximize () {
       this.$refs.window.classList.add('maximized')
       this.$refs.window.classList.remove('minimized')
       this.isMinimized = false
       this.isMaximized = true
     },
     
-    restore () {
-      this.$emit('restore')
-
+    onRestore () {
       this.$refs.window.classList.remove('maximized', 'minimized')
       this.isMinimized = false
       this.isMaximized = false      
