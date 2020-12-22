@@ -46,6 +46,7 @@ export default class HolisticModel extends BaseModel {
     // Helpers
     this.data.state = this.getStates()
     this.data.degree = this.getDegrees()
+    this.data.isDetected = this.api.is_detected()
 
     this.handsfree.data.weboji = this.data
 

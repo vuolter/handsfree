@@ -187,7 +187,7 @@ export default {
      */
     onData ({detail}) {
       const weboji = detail.weboji
-      if (!weboji.degree) return
+      if (!weboji.isDetected) return
 
       // Calculate rotation
       const rot = weboji.degree

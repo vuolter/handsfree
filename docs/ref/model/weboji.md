@@ -95,6 +95,11 @@ handsfree = new Handsfree({
 
 ```js
 /**
+ * {Boolean} Whether the face is detected or not
+ */
+handsfree.data.weboji.isDetected
+
+/**
  * {Array} Face morphs, from 0 (not activated) to 1 (fully activated)
  * 
  * 0: smileRight → closed mouth smile right
