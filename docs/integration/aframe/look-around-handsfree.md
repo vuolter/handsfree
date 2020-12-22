@@ -65,7 +65,9 @@ handsfree.use('lookHandsfree', ({weboji}) => {
   }
   
   // Now let's just tell A-Frame to update our camera rig
-  $rig.setAttribute('rotation', `${rot[0]} ${rot[1]} ${rot[2]}`)
+  // - We flip yaw/roll because we are "looking into" the aframe vs how the tracker is "looking at" us
+  // - We multiply by 1.5 to make it "look more", so we don't have to physically move our head as much
+  $rig.setAttribute('rotation', `${-rot[0] * 1.5} ${-rot[1] * 1.5} ${rot[2] * 1.5}`)
   $rig.setAttribute('position', `${pos} ${pos} ${pos}`)
 })
 
@@ -119,9 +121,9 @@ handsfree.use('lookHandsfree', ({weboji}) => {
 
   // Tween this values
   TweenMax.to(tween, 1, {
-    yaw: rot[0],
-    pitch: rot[1],
-    roll: rot[2],
+  yaw: -rot[0] * 1.5,
+  pitch: -rot[1] * 1.5,
+  roll: rot[2] * 1.5,
     x: pos.x,
     y: pos.y,
     z: pos.z
@@ -135,11 +137,6 @@ handsfree.use('lookHandsfree', ({weboji}) => {
 // Start tracking
 handsfree.start()
 ```
-
-## Making the plugin configurable
-
-
----
 
 ## Boilerplate
 
@@ -194,7 +191,7 @@ export default {
 
       // Calculate rotation
       const rot = weboji.degree
-      rot[0] += 15
+      rot[0] -= 15
       
       // Calculate position
       const pos = {
@@ -205,9 +202,9 @@ export default {
 
       // Tween this values
       TweenMax.to(tween, 1, {
-        yaw: rot[0],
-        pitch: rot[1],
-        roll: rot[2],
+        yaw: -rot[0] * 1.5,
+        pitch: -rot[1] * 1.5,
+        roll: rot[2] * 1.5,
         x: pos.x,
         y: pos.y,
         z: pos.z

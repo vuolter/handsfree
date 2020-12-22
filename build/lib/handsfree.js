@@ -107,6 +107,539 @@
     }
   }
 
+  class HolisticModel extends BaseModel {
+    constructor (handsfree, config) {
+      super(handsfree, config);
+      this.name = 'weboji';
+    }
+
+    loadDependencies (callback) {
+      // Load holistic
+      this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
+        const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json';
+        this.api = window.JEEFACETRANSFERAPI;
+
+        fetch(url)
+          .then(model => model.json())
+          // Next, let's initialize the weboji tracker API
+          .then(model => {
+            this.api.init({
+              canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
+              NNC: JSON.stringify(model),
+              videoSettings: this.handsfree.config.weboji.videoSettings,
+              callbackReady: () => {
+                this.dependenciesLoaded = true;
+                this.handsfree.emit('modelReady', this);
+                this.handsfree.emit('webojiModelReady', this);
+                document.body.classList.add('handsfree-model-weboji');
+                callback && callback(this);
+              }
+            });
+          })
+          .catch((ev) => {
+            console.log(ev);
+            console.error(`Couldn't load weboji tracking model at ${url}`);
+            this.handsfree.emit('modelError', ev);
+          });
+      });
+    }
+
+    getData () {
+      // Core
+      this.data.rotation = this.api.get_rotationStabilized();
+      this.data.translation = this.api.get_positionScale();
+      this.data.morphs = this.api.get_morphTargetInfluencesStabilized();
+      
+      // Helpers
+      this.data.state = this.getStates();
+      this.data.degree = this.getDegrees();
+
+      this.handsfree.data.weboji = this.data;
+
+      return this.data
+    }
+
+    /**
+     * Helpers for getting degrees
+     */
+    getDegrees () {
+      return [
+        this.data.rotation[0] * 180 / Math.PI,
+        this.data.rotation[1] * 180 / Math.PI,
+        this.data.rotation[2] * 180 / Math.PI
+      ]
+    }
+    
+    /**
+     * Sets some stateful helpers
+     */
+    getStates() {
+      /**
+       * Handles extra calculations for weboji morphs
+       */
+      const morphs = this.data.morphs;
+      const state = this.data.state || {};
+
+      // Smiles
+      state.smileRight =
+        morphs[0] > this.handsfree.config.weboji.morphs.threshold.smileRight;
+      state.smileLeft =
+        morphs[1] > this.handsfree.config.weboji.morphs.threshold.smileLeft;
+      state.smile = state.smileRight && state.smileLeft;
+      state.smirk =
+        (state.smileRight && !state.smileLeft) ||
+        (!state.smileRight && state.smileLeft);
+      state.pursed =
+        morphs[7] > this.handsfree.config.weboji.morphs.threshold.mouthRound;
+
+      // Eyebrows
+      state.browLeftUp =
+        morphs[4] > this.handsfree.config.weboji.morphs.threshold.browLeftUp;
+      state.browRightUp =
+        morphs[5] > this.handsfree.config.weboji.morphs.threshold.browRightUp;
+      state.browsUp =
+        morphs[4] > this.handsfree.config.weboji.morphs.threshold.browLeftUp &&
+        morphs[5] > this.handsfree.config.weboji.morphs.threshold.browLeftUp;
+
+      state.browLeftDown =
+        morphs[2] > this.handsfree.config.weboji.morphs.threshold.browLeftDown;
+      state.browRightDown =
+        morphs[3] > this.handsfree.config.weboji.morphs.threshold.browRightDown;
+      state.browsDown =
+        morphs[2] > this.handsfree.config.weboji.morphs.threshold.browLeftDown &&
+        morphs[3] > this.handsfree.config.weboji.morphs.threshold.browLeftDown;
+
+      state.browsUpDown =
+        (state.browLeftDown && state.browRightUp) ||
+        (state.browRightDown && state.browLeftUp);
+
+      // Eyes
+      state.eyeLeftClosed =
+        morphs[8] > this.handsfree.config.weboji.morphs.threshold.eyeLeftClosed;
+      state.eyeRightClosed =
+        morphs[9] > this.handsfree.config.weboji.morphs.threshold.eyeRightClosed;
+      state.eyesClosed = state.eyeLeftClosed && state.eyeRightClosed;
+
+      // Mouth
+      state.mouthClosed = morphs[6] === 0;
+      state.mouthOpen =
+        morphs[6] > this.handsfree.config.weboji.morphs.threshold.mouthOpen;
+
+      return state
+    }
+  }
+
+  class HandsModel extends BaseModel {
+    constructor (handsfree, config) {
+      super(handsfree, config);
+      this.name = 'hands';
+
+      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
+    }
+
+    loadDependencies (callback) {
+      // Load hands
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
+        // Configure model
+        this.api = new window.Hands({locateFile: file => {
+          return `${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/${file}`
+        }});
+        this.api.setOptions(this.handsfree.config.hands);
+        this.api.onResults(results => this.dataReceived(results));
+
+        // Load the media stream
+        this.handsfree.getUserMedia(() => {
+          // Warm up before using in loop
+          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
+            this.warmUp(callback);
+          } else {
+            this.handsfree.on('mediapipeWarmedUp', () => {
+              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
+                this.warmUp(callback);
+              }
+            });
+          }
+        });
+
+        // Load the hands camera module
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
+      });
+    }
+
+    /**
+     * Warms up the model
+     */
+    warmUp (callback) {
+      this.handsfree.mediapipeWarmups[this.name] = true;
+      this.handsfree.mediapipeWarmups.isWarmingUp = true;
+      this.api.send({image: this.handsfree.debug.$video}).then(() => {
+        this.handsfree.mediapipeWarmups.isWarmingUp = false;
+          this.onWarmUp(callback);
+      });
+    }
+
+    /**
+     * Called after the model has been warmed up
+     * - If we don't do this there will be too many initial hits and cause an error
+     */
+    onWarmUp (callback) {
+      this.dependenciesLoaded = true;
+      document.body.classList.add('handsfree-model-hands');                    
+      this.handsfree.emit('modelReady', this);
+      this.handsfree.emit('handsModelReady', this);
+      this.handsfree.emit('mediapipeWarmedUp', this);
+      callback && callback(this);
+    }
+
+    /**
+     * Get data
+     */
+    async getData () {
+      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
+    }
+    // Called through this.api.onResults
+    dataReceived (results) {
+      this.data = results;
+      this.handsfree.data.hands = results;
+      if (this.handsfree.config.showDebug) {
+        this.debug(results);
+      }
+    }
+
+    /**
+     * Debugs the hands model
+     */
+    debug (results) {
+      // Bail if drawing helpers haven't loaded
+      if (typeof drawConnectors === 'undefined') return
+      
+      // Clear the canvas
+      this.handsfree.debug.context.hands.clearRect(0, 0, this.handsfree.debug.$canvas.hands.width, this.handsfree.debug.$canvas.hands.height);
+      
+      // Draw skeletons
+      if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+          drawConnectors(this.handsfree.debug.context.hands, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
+          drawLandmarks(this.handsfree.debug.context.hands, landmarks, {color: '#FF0000', lineWidth: 2});
+        }
+      }
+    }
+  }
+
+  class FacemeshModel extends BaseModel {
+    constructor (handsfree, config) {
+      super(handsfree, config);
+      this.name = 'facemesh';
+      this.isWarmedUp = false;
+    }
+
+    loadDependencies (callback) {
+      // Load facemesh
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/face_mesh/node_modules/@mediapipe/face_mesh/face_mesh.js`, () => {
+        // Configure model
+        this.api = new window.FaceMesh({locateFile: file => {
+          return `${this.handsfree.config.assetsPath}/@mediapipe/face_mesh/node_modules/@mediapipe/face_mesh/${file}`
+        }});
+        this.api.setOptions(this.handsfree.config.facemesh);
+        this.api.onResults(results => this.dataReceived(results));
+
+        // Load the media stream
+        this.handsfree.getUserMedia(() => {
+          // Warm up before using in loop
+          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
+            this.warmUp(callback);
+          } else {
+            this.handsfree.on('mediapipeWarmedUp', () => {
+              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
+                this.warmUp(callback);
+              }
+            });
+          }
+        });
+
+        // Load the hands camera module
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
+      });
+    }
+
+    /**
+     * Warms up the model
+     */
+    warmUp (callback) {
+      this.handsfree.mediapipeWarmups[this.name] = true;
+      this.handsfree.mediapipeWarmups.isWarmingUp = true;
+      this.api.send({image: this.handsfree.debug.$video}).then(() => {
+        this.handsfree.mediapipeWarmups.isWarmingUp = false;
+          this.onWarmUp(callback);
+      });
+    }
+
+    /**
+     * Called after the model has been warmed up
+     * - If we don't do this there will be too many initial hits and cause an error
+     */
+    onWarmUp (callback) {
+      this.dependenciesLoaded = true;
+      document.body.classList.add('handsfree-model-facemesh');                    
+      this.handsfree.emit('modelReady', this);
+      this.handsfree.emit('facemeshModelReady', this);
+      this.handsfree.emit('mediapipeWarmedUp', this);
+      callback && callback(this);
+    }
+    
+    /**
+     * Get data
+     */
+    async getData () {
+      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
+    }
+    // Called through this.api.onResults
+    dataReceived (results) {
+      this.data = results;
+      this.handsfree.data.facemesh = results;
+      if (this.handsfree.config.showDebug) {
+        this.debug(results);
+      }
+    }
+
+    /**
+     * Debugs the facemesh model
+     */
+    debug (results) {
+      // Bail if drawing helpers haven't loaded
+      if (typeof drawConnectors === 'undefined') return
+      
+      this.handsfree.debug.context.facemesh.clearRect(0, 0, this.handsfree.debug.$canvas.facemesh.width, this.handsfree.debug.$canvas.facemesh.height);
+
+      if (results.multiFaceLandmarks) {
+        for (const landmarks of results.multiFaceLandmarks) {
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_TESSELATION, {color: '#C0C0C070', lineWidth: 1});
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
+          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
+        }
+      }
+    }
+  }
+
+  class PoseModel extends BaseModel {
+    constructor (handsfree, config) {
+      super(handsfree, config);
+      this.name = 'pose';
+
+      // Without this the loading event will happen before the first frame
+      this.hasLoadedAndRun = false;
+
+      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
+    }
+
+    loadDependencies (callback) {
+      // Load pose
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/pose.js`, () => {
+        this.api = new window.Pose({locateFile: file => {
+          return `${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/${file}`
+        }});
+        this.api.setOptions(this.handsfree.config.pose);
+        this.api.onResults(results => this.dataReceived(results));
+
+        // Load the media stream
+        this.handsfree.getUserMedia(() => {
+          // Warm up before using in loop
+          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
+            this.warmUp(callback);
+          } else {
+            this.handsfree.on('mediapipeWarmedUp', () => {
+              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
+                this.warmUp(callback);
+              }
+            });
+          }
+        });
+
+        // Load the hands camera module
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
+      });
+    }
+
+    /**
+     * Warms up the model
+     */
+    warmUp (callback) {
+      this.handsfree.mediapipeWarmups[this.name] = true;
+      this.handsfree.mediapipeWarmups.isWarmingUp = true;
+      this.api.send({image: this.handsfree.debug.$video}).then(() => {
+        this.handsfree.mediapipeWarmups.isWarmingUp = false;
+          this.onWarmUp(callback);
+      });
+    }
+
+    /**
+     * Called after the model has been warmed up
+     * - If we don't do this there will be too many initial hits and cause an error
+     */
+    onWarmUp (callback) {
+      this.dependenciesLoaded = true;
+      document.body.classList.add('handsfree-model-pose');                    
+      this.handsfree.emit('modelReady', this);
+      this.handsfree.emit('poseModelReady', this);
+      this.handsfree.emit('mediapipeWarmedUp', this);
+      callback && callback(this);
+    }
+    
+    /**
+     * Get data
+     */
+    async getData () {
+      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
+    }
+    // Called through this.api.onResults
+    dataReceived (results) {
+      this.data = results;
+      this.handsfree.data.pose = results;
+      if (this.handsfree.config.showDebug) {
+        this.debug(results);
+      }
+    }
+
+
+    /**
+     * Debugs the pose model
+     */
+    debug (results) {
+      this.handsfree.debug.context.pose.clearRect(0, 0, this.handsfree.debug.$canvas.pose.width, this.handsfree.debug.$canvas.pose.height);
+
+      if (results.poseLandmarks) {
+        drawConnectors(this.handsfree.debug.context.pose, results.poseLandmarks, POSE_CONNECTIONS, {color: '#00FF00', lineWidth: 4});
+        drawLandmarks(this.handsfree.debug.context.pose, results.poseLandmarks, {color: '#FF0000', lineWidth: 2});
+      }
+    }
+  }
+
+  class HolisticModel$1 extends BaseModel {
+    constructor (handsfree, config) {
+      super(handsfree, config);
+      this.name = 'holistic';
+
+      // Without this the loading event will happen before the first frame
+      this.hasLoadedAndRun = false;
+
+      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
+    }
+
+    loadDependencies (callback) {
+      // Load holistic
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/holistic.js`, () => {
+        this.api = new window.Holistic({locateFile: file => {
+          return `${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/${file}`
+        }});
+        this.api.setOptions(this.handsfree.config.holistic);
+        this.api.onResults(results => this.dataReceived(results));
+
+        // Load the media stream
+        this.handsfree.getUserMedia(() => {
+          // Warm up before using in loop
+          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
+            this.warmUp(callback);
+          } else {
+            this.handsfree.on('mediapipeWarmedUp', () => {
+              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
+                this.warmUp(callback);
+              }
+            });
+          }
+        });
+
+        // Load the hands camera module
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
+      });
+    }
+
+    /**
+     * Warms up the model
+     */
+    warmUp (callback) {
+      this.handsfree.mediapipeWarmups[this.name] = true;
+      this.handsfree.mediapipeWarmups.isWarmingUp = true;
+      this.api.send({image: this.handsfree.debug.$video}).then(() => {
+        this.handsfree.mediapipeWarmups.isWarmingUp = false;
+          this.onWarmUp(callback);
+      });
+    }
+
+    /**
+     * Called after the model has been warmed up
+     * - If we don't do this there will be too many initial hits and cause an error
+     */
+    onWarmUp (callback) {
+      this.dependenciesLoaded = true;
+      document.body.classList.add('handsfree-model-holistic');                    
+      this.handsfree.emit('modelReady', this);
+      this.handsfree.emit('holisticModelReady', this);
+      this.handsfree.emit('mediapipeWarmedUp', this);
+      callback && callback(this);
+    }
+    
+    /**
+     * Get data
+     */
+    async getData () {
+      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
+    }
+    // Called through this.api.onResults
+    dataReceived (results) {
+      this.data = results;
+      this.handsfree.data.holistic = results;
+      if (this.handsfree.config.showDebug) {
+        this.debug(results);
+      }
+    }
+
+    /**
+     * Debugs the holistic model
+     */
+    debug (results) {
+      this.handsfree.debug.context.holistic.clearRect(0, 0, this.handsfree.debug.$canvas.holistic.width, this.handsfree.debug.$canvas.holistic.height);
+
+      drawConnectors(this.handsfree.debug.context.holistic, results.poseLandmarks, POSE_CONNECTIONS, {
+        color: '#0f0',
+        lineWidth: 4
+      });
+      
+      drawLandmarks(this.handsfree.debug.context.holistic, results.poseLandmarks, {
+        color: '#f00',
+        lineWidth: 2
+      });
+      
+      drawConnectors(this.handsfree.debug.context.holistic, results.faceLandmarks, FACEMESH_TESSELATION, {
+        color: '#f0f',
+        lineWidth: 1
+      });
+      
+      drawConnectors(this.handsfree.debug.context.holistic, results.leftHandLandmarks, HAND_CONNECTIONS, {
+        color: '#0f0',
+        lineWidth: 5
+      });
+      
+      drawLandmarks(this.handsfree.debug.context.holistic, results.leftHandLandmarks, {
+        color: '#f0f',
+        lineWidth: 2
+      });
+      
+      drawConnectors(this.handsfree.debug.context.holistic, results.rightHandLandmarks, HAND_CONNECTIONS, {
+        color: '#0f0',
+        lineWidth: 5
+      });
+
+      drawLandmarks(this.handsfree.debug.context.holistic, results.rightHandLandmarks, {
+        color: '#f0f',
+        lineWidth: 2
+      });    
+    }
+  }
+
   /**
    * Removes all key-value entries from the list cache.
    *
@@ -2422,532 +2955,6 @@
 
   var merge_1 = merge;
 
-  class HolisticModel extends BaseModel {
-    constructor (handsfree, config) {
-      super(handsfree, config);
-      this.name = 'weboji';
-    }
-
-    loadDependencies (callback) {
-      // Load holistic
-      this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
-        const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json';
-        this.api = window.JEEFACETRANSFERAPI;
-
-        fetch(url)
-          .then(model => model.json())
-          // Next, let's initialize the weboji tracker API
-          .then(model => {
-            window.JEELIZ_RESIZER.size_canvas({
-              canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
-              callback: (videoSettings) => {
-                if (typeof videoSettings === 'object') {
-                  videoSettings = merge_1(videoSettings, this.handsfree.config.weboji.videoSettings);
-                } else {
-                  videoSettings = this.handsfree.config.weboji.videoSettings;
-                }
-
-                this.api.init({
-                  canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
-                  NNC: JSON.stringify(model),
-                  videoSettings,
-                  callbackReady: () => {
-                    callback && callback(this);
-                    
-                    this.dependenciesLoaded = true;
-                    this.handsfree.emit('modelReady', this);
-                    this.handsfree.emit('webojiModelReady', this);
-                    document.body.classList.add('handsfree-model-weboji');
-                  }
-                });
-              }
-            });
-          })
-          .catch((ev) => {
-            console.log(ev);
-            console.error(`Couldn't load weboji tracking model at ${url}`);
-            this.handsfree.emit('modelError', ev);
-          });
-      });
-    }
-
-    async getData () {
-      this.data.rotation = await this.api.get_rotationStabilized();
-      this.data.translation = await this.api.get_positionScale();
-      this.data.morphs = await this.api.get_morphTargetInfluencesStabilized();
-      this.data.state = await this.getStates();
-      this.handsfree.data.weboji = this.data;
-
-      return this.data
-    }
-
-    getStates() {
-      /**
-       * Handles extra calculations for weboji morphs
-       */
-      const morphs = this.data.morphs;
-      const state = this.data.state || {};
-
-      // Smiles
-      state.smileRight =
-        morphs[0] > this.handsfree.config.weboji.morphs.threshold.smileRight;
-      state.smileLeft =
-        morphs[1] > this.handsfree.config.weboji.morphs.threshold.smileLeft;
-      state.smile = state.smileRight && state.smileLeft;
-      state.smirk =
-        (state.smileRight && !state.smileLeft) ||
-        (!state.smileRight && state.smileLeft);
-      state.pursed =
-        morphs[7] > this.handsfree.config.weboji.morphs.threshold.mouthRound;
-
-      // Eyebrows
-      state.browLeftUp =
-        morphs[4] > this.handsfree.config.weboji.morphs.threshold.browLeftUp;
-      state.browRightUp =
-        morphs[5] > this.handsfree.config.weboji.morphs.threshold.browRightUp;
-      state.browsUp =
-        morphs[4] > this.handsfree.config.weboji.morphs.threshold.browLeftUp &&
-        morphs[5] > this.handsfree.config.weboji.morphs.threshold.browLeftUp;
-
-      state.browLeftDown =
-        morphs[2] > this.handsfree.config.weboji.morphs.threshold.browLeftDown;
-      state.browRightDown =
-        morphs[3] > this.handsfree.config.weboji.morphs.threshold.browRightDown;
-      state.browsDown =
-        morphs[2] > this.handsfree.config.weboji.morphs.threshold.browLeftDown &&
-        morphs[3] > this.handsfree.config.weboji.morphs.threshold.browLeftDown;
-
-      state.browsUpDown =
-        (state.browLeftDown && state.browRightUp) ||
-        (state.browRightDown && state.browLeftUp);
-
-      // Eyes
-      state.eyeLeftClosed =
-        morphs[8] > this.handsfree.config.weboji.morphs.threshold.eyeLeftClosed;
-      state.eyeRightClosed =
-        morphs[9] > this.handsfree.config.weboji.morphs.threshold.eyeRightClosed;
-      state.eyesClosed = state.eyeLeftClosed && state.eyeRightClosed;
-
-      // Mouth
-      state.mouthClosed = morphs[6] === 0;
-      state.mouthOpen =
-        morphs[6] > this.handsfree.config.weboji.morphs.threshold.mouthOpen;
-
-      return state
-    }
-  }
-
-  class HandsModel extends BaseModel {
-    constructor (handsfree, config) {
-      super(handsfree, config);
-      this.name = 'hands';
-
-      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
-    }
-
-    loadDependencies (callback) {
-      // Load hands
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
-        // Configure model
-        this.api = new window.Hands({locateFile: file => {
-          return `${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/${file}`
-        }});
-        this.api.setOptions(this.handsfree.config.hands);
-        this.api.onResults(results => this.dataReceived(results));
-
-        // Load the media stream
-        this.handsfree.getUserMedia(() => {
-          // Warm up before using in loop
-          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
-            this.warmUp(callback);
-          } else {
-            this.handsfree.on('mediapipeWarmedUp', () => {
-              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
-                this.warmUp(callback);
-              }
-            });
-          }
-        });
-
-        // Load the hands camera module
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
-      });
-    }
-
-    /**
-     * Warms up the model
-     */
-    warmUp (callback) {
-      this.handsfree.mediapipeWarmups[this.name] = true;
-      this.handsfree.mediapipeWarmups.isWarmingUp = true;
-      this.api.send({image: this.handsfree.debug.$video}).then(() => {
-        this.handsfree.mediapipeWarmups.isWarmingUp = false;
-          this.onWarmUp(callback);
-      });
-    }
-
-    /**
-     * Called after the model has been warmed up
-     * - If we don't do this there will be too many initial hits and cause an error
-     */
-    onWarmUp (callback) {
-      this.dependenciesLoaded = true;
-      document.body.classList.add('handsfree-model-hands');                    
-      this.handsfree.emit('modelReady', this);
-      this.handsfree.emit('handsModelReady', this);
-      this.handsfree.emit('mediapipeWarmedUp', this);
-      callback && callback(this);
-    }
-
-    /**
-     * Get data
-     */
-    async getData () {
-      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
-    }
-    // Called through this.api.onResults
-    dataReceived (results) {
-      this.data = results;
-      this.handsfree.data.hands = results;
-      if (this.handsfree.config.showDebug) {
-        this.debug(results);
-      }
-    }
-
-    /**
-     * Debugs the hands model
-     */
-    debug (results) {
-      // Bail if drawing helpers haven't loaded
-      if (typeof drawConnectors === 'undefined') return
-      
-      // Clear the canvas
-      this.handsfree.debug.context.hands.clearRect(0, 0, this.handsfree.debug.$canvas.hands.width, this.handsfree.debug.$canvas.hands.height);
-      
-      // Draw skeletons
-      if (results.multiHandLandmarks) {
-        for (const landmarks of results.multiHandLandmarks) {
-          drawConnectors(this.handsfree.debug.context.hands, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
-          drawLandmarks(this.handsfree.debug.context.hands, landmarks, {color: '#FF0000', lineWidth: 2});
-        }
-      }
-    }
-  }
-
-  class FacemeshModel extends BaseModel {
-    constructor (handsfree, config) {
-      super(handsfree, config);
-      this.name = 'facemesh';
-      this.isWarmedUp = false;
-    }
-
-    loadDependencies (callback) {
-      // Load facemesh
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/face_mesh/node_modules/@mediapipe/face_mesh/face_mesh.js`, () => {
-        // Configure model
-        this.api = new window.FaceMesh({locateFile: file => {
-          return `${this.handsfree.config.assetsPath}/@mediapipe/face_mesh/node_modules/@mediapipe/face_mesh/${file}`
-        }});
-        this.api.setOptions(this.handsfree.config.facemesh);
-        this.api.onResults(results => this.dataReceived(results));
-
-        // Load the media stream
-        this.handsfree.getUserMedia(() => {
-          // Warm up before using in loop
-          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
-            this.warmUp(callback);
-          } else {
-            this.handsfree.on('mediapipeWarmedUp', () => {
-              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
-                this.warmUp(callback);
-              }
-            });
-          }
-        });
-
-        // Load the hands camera module
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
-      });
-    }
-
-    /**
-     * Warms up the model
-     */
-    warmUp (callback) {
-      this.handsfree.mediapipeWarmups[this.name] = true;
-      this.handsfree.mediapipeWarmups.isWarmingUp = true;
-      this.api.send({image: this.handsfree.debug.$video}).then(() => {
-        this.handsfree.mediapipeWarmups.isWarmingUp = false;
-          this.onWarmUp(callback);
-      });
-    }
-
-    /**
-     * Called after the model has been warmed up
-     * - If we don't do this there will be too many initial hits and cause an error
-     */
-    onWarmUp (callback) {
-      this.dependenciesLoaded = true;
-      document.body.classList.add('handsfree-model-facemesh');                    
-      this.handsfree.emit('modelReady', this);
-      this.handsfree.emit('facemeshModelReady', this);
-      this.handsfree.emit('mediapipeWarmedUp', this);
-      callback && callback(this);
-    }
-    
-    /**
-     * Get data
-     */
-    async getData () {
-      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
-    }
-    // Called through this.api.onResults
-    dataReceived (results) {
-      this.data = results;
-      this.handsfree.data.facemesh = results;
-      if (this.handsfree.config.showDebug) {
-        this.debug(results);
-      }
-    }
-
-    /**
-     * Debugs the facemesh model
-     */
-    debug (results) {
-      // Bail if drawing helpers haven't loaded
-      if (typeof drawConnectors === 'undefined') return
-      
-      this.handsfree.debug.context.facemesh.clearRect(0, 0, this.handsfree.debug.$canvas.facemesh.width, this.handsfree.debug.$canvas.facemesh.height);
-
-      if (results.multiFaceLandmarks) {
-        for (const landmarks of results.multiFaceLandmarks) {
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_TESSELATION, {color: '#C0C0C070', lineWidth: 1});
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
-          drawConnectors(this.handsfree.debug.context.facemesh, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
-        }
-      }
-    }
-  }
-
-  class PoseModel extends BaseModel {
-    constructor (handsfree, config) {
-      super(handsfree, config);
-      this.name = 'pose';
-
-      // Without this the loading event will happen before the first frame
-      this.hasLoadedAndRun = false;
-
-      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
-    }
-
-    loadDependencies (callback) {
-      // Load pose
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/pose.js`, () => {
-        this.api = new window.Pose({locateFile: file => {
-          return `${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/${file}`
-        }});
-        this.api.setOptions(this.handsfree.config.pose);
-        this.api.onResults(results => this.dataReceived(results));
-
-        // Load the media stream
-        this.handsfree.getUserMedia(() => {
-          // Warm up before using in loop
-          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
-            this.warmUp(callback);
-          } else {
-            this.handsfree.on('mediapipeWarmedUp', () => {
-              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
-                this.warmUp(callback);
-              }
-            });
-          }
-        });
-
-        // Load the hands camera module
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
-      });
-    }
-
-    /**
-     * Warms up the model
-     */
-    warmUp (callback) {
-      this.handsfree.mediapipeWarmups[this.name] = true;
-      this.handsfree.mediapipeWarmups.isWarmingUp = true;
-      this.api.send({image: this.handsfree.debug.$video}).then(() => {
-        this.handsfree.mediapipeWarmups.isWarmingUp = false;
-          this.onWarmUp(callback);
-      });
-    }
-
-    /**
-     * Called after the model has been warmed up
-     * - If we don't do this there will be too many initial hits and cause an error
-     */
-    onWarmUp (callback) {
-      this.dependenciesLoaded = true;
-      document.body.classList.add('handsfree-model-pose');                    
-      this.handsfree.emit('modelReady', this);
-      this.handsfree.emit('poseModelReady', this);
-      this.handsfree.emit('mediapipeWarmedUp', this);
-      callback && callback(this);
-    }
-    
-    /**
-     * Get data
-     */
-    async getData () {
-      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
-    }
-    // Called through this.api.onResults
-    dataReceived (results) {
-      this.data = results;
-      this.handsfree.data.pose = results;
-      if (this.handsfree.config.showDebug) {
-        this.debug(results);
-      }
-    }
-
-
-    /**
-     * Debugs the pose model
-     */
-    debug (results) {
-      this.handsfree.debug.context.pose.clearRect(0, 0, this.handsfree.debug.$canvas.pose.width, this.handsfree.debug.$canvas.pose.height);
-
-      if (results.poseLandmarks) {
-        drawConnectors(this.handsfree.debug.context.pose, results.poseLandmarks, POSE_CONNECTIONS, {color: '#00FF00', lineWidth: 4});
-        drawLandmarks(this.handsfree.debug.context.pose, results.poseLandmarks, {color: '#FF0000', lineWidth: 2});
-      }
-    }
-  }
-
-  class HolisticModel$1 extends BaseModel {
-    constructor (handsfree, config) {
-      super(handsfree, config);
-      this.name = 'holistic';
-
-      // Without this the loading event will happen before the first frame
-      this.hasLoadedAndRun = false;
-
-      this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
-    }
-
-    loadDependencies (callback) {
-      // Load holistic
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/holistic.js`, () => {
-        this.api = new window.Holistic({locateFile: file => {
-          return `${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/${file}`
-        }});
-        this.api.setOptions(this.handsfree.config.holistic);
-        this.api.onResults(results => this.dataReceived(results));
-
-        // Load the media stream
-        this.handsfree.getUserMedia(() => {
-          // Warm up before using in loop
-          if (!this.handsfree.mediapipeWarmups.isWarmingUp) {
-            this.warmUp(callback);
-          } else {
-            this.handsfree.on('mediapipeWarmedUp', () => {
-              if (!this.handsfree.mediapipeWarmups.isWarmingUp && !this.handsfree.mediapipeWarmups[this.name]) {
-                this.warmUp(callback);
-              }
-            });
-          }
-        });
-
-        // Load the hands camera module
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`);
-      });
-    }
-
-    /**
-     * Warms up the model
-     */
-    warmUp (callback) {
-      this.handsfree.mediapipeWarmups[this.name] = true;
-      this.handsfree.mediapipeWarmups.isWarmingUp = true;
-      this.api.send({image: this.handsfree.debug.$video}).then(() => {
-        this.handsfree.mediapipeWarmups.isWarmingUp = false;
-          this.onWarmUp(callback);
-      });
-    }
-
-    /**
-     * Called after the model has been warmed up
-     * - If we don't do this there will be too many initial hits and cause an error
-     */
-    onWarmUp (callback) {
-      this.dependenciesLoaded = true;
-      document.body.classList.add('handsfree-model-holistic');                    
-      this.handsfree.emit('modelReady', this);
-      this.handsfree.emit('holisticModelReady', this);
-      this.handsfree.emit('mediapipeWarmedUp', this);
-      callback && callback(this);
-    }
-    
-    /**
-     * Get data
-     */
-    async getData () {
-      this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
-    }
-    // Called through this.api.onResults
-    dataReceived (results) {
-      this.data = results;
-      this.handsfree.data.holistic = results;
-      if (this.handsfree.config.showDebug) {
-        this.debug(results);
-      }
-    }
-
-    /**
-     * Debugs the holistic model
-     */
-    debug (results) {
-      this.handsfree.debug.context.holistic.clearRect(0, 0, this.handsfree.debug.$canvas.holistic.width, this.handsfree.debug.$canvas.holistic.height);
-
-      drawConnectors(this.handsfree.debug.context.holistic, results.poseLandmarks, POSE_CONNECTIONS, {
-        color: '#0f0',
-        lineWidth: 4
-      });
-      
-      drawLandmarks(this.handsfree.debug.context.holistic, results.poseLandmarks, {
-        color: '#f00',
-        lineWidth: 2
-      });
-      
-      drawConnectors(this.handsfree.debug.context.holistic, results.faceLandmarks, FACEMESH_TESSELATION, {
-        color: '#f0f',
-        lineWidth: 1
-      });
-      
-      drawConnectors(this.handsfree.debug.context.holistic, results.leftHandLandmarks, HAND_CONNECTIONS, {
-        color: '#0f0',
-        lineWidth: 5
-      });
-      
-      drawLandmarks(this.handsfree.debug.context.holistic, results.leftHandLandmarks, {
-        color: '#f0f',
-        lineWidth: 2
-      });
-      
-      drawConnectors(this.handsfree.debug.context.holistic, results.rightHandLandmarks, HAND_CONNECTIONS, {
-        color: '#0f0',
-        lineWidth: 5
-      });
-
-      drawLandmarks(this.handsfree.debug.context.holistic, results.rightHandLandmarks, {
-        color: '#f0f',
-        lineWidth: 2
-      });    
-    }
-  }
-
   /**
    * The base plugin class
    * - When you do `handsfree.use()` it actually extends this class
@@ -3366,7 +3373,7 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.0.5/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.0.4/build/lib/assets',
     
     // Setup config. Ignore this to have everything done for you automatically
     setup: {
@@ -9216,7 +9223,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.0.5
+                  8.0.6
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -9269,7 +9276,7 @@
     constructor (config = {}) {
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.0.5';
+      this.version = '8.0.6';
       this.data = {};
 
       // Dependency management
@@ -9370,7 +9377,7 @@
       this.debug.context = {};
       this.config.setup.canvas.video = {}
       // The video canvas is used to display the video
-      ;['weboji', 'video', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
+      ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
         this.debug.$canvas[model] = {};
         this.debug.context[model] = {};
         
@@ -9391,9 +9398,7 @@
         this.debug.$wrap.appendChild(this.debug.$canvas[model]);
 
         // Context
-        if (model === 'weboji') {
-          this.debug.context[model] = this.debug.$canvas[model].getContext('webgl');  
-        } else {
+        if (model === 'weboji') ; else {
           this.debug.context[model] = this.debug.$canvas[model].getContext('2d');  
         }
       });
