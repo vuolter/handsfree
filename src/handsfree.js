@@ -181,7 +181,7 @@ class Handsfree {
     this.debug.context = {}
     this.config.setup.canvas.video = {}
     // The video canvas is used to display the video
-    ;['weboji', 'video', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
+    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
       this.debug.$canvas[model] = {}
       this.debug.context[model] = {}
       
@@ -203,7 +203,7 @@ class Handsfree {
 
       // Context
       if (model === 'weboji') {
-        this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
+        // this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
       } else {
         this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
       }

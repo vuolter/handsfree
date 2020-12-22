@@ -26,6 +26,37 @@
   <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 500px"></iframe>
 </div>
 
+## How it works
+
+### Basic approach
+
+First we start by instantiating Handsfree. We'll use the [Weboji model](/ref/model/weboji/) which gives us head pose and translation:
+
+```js
+handsfree = new Handsfree({weboji: true})
+```
+
+Next we create a plugin to match the A-Frame camera's pose with your head's:
+
+```js
+$rig = document.querySelector('#camera-rig')
+
+// Create the plugin
+handsfree.use('lookHandsfree', ({weboji}) => {
+  const rot = weboji.rotation
+  const pos = weboji.translation
+  
+  $rig.setAttribute('position', `${pos[0]} ${pos[1]} ${pos[2]}`)
+  $rig.setAttribute('rotation', `${rot[0]} ${rot[1]} ${rot[2]}`)
+})
+
+// Start tracking
+handsfree.start()
+```
+
+### Let's add tweening
+
+Although the above will definitely work, you'll notice that it jerks around quite a bit:
 
 ## Boilerplate
 
@@ -87,8 +118,13 @@ export default {
         roll: weboji.rotation[2] * 180 / Math.PI * 1
       })
 
-      $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
-      $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
+      // $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
+      // $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
+      const rot = weboji.rotation
+      const pos = weboji.translation
+      
+      $rig.setAttribute('position', `${(weboji.translation[0] - .5) * 10} ${(weboji.translation[1] - .5) * 5} ${5 - weboji.translation[2] * 30}`)
+      $rig.setAttribute('rotation', `${-weboji.rotation[0] * 180 / Math.PI * 1 + 15} ${-weboji.rotation[1] * 180 / Math.PI * 1} ${weboji.rotation[2] * 180 / Math.PI * 1}`)
     },
 
     /**
