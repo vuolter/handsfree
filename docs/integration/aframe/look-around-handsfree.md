@@ -11,6 +11,7 @@
         <ul>
           <li>Turn head around to turn the camera</li>
           <li>Move your head to move the camera</li>
+          <li><a href="https://codepen.io/MIDIBlocks/pen/wvzqbXr">Try it on CodePen</a></li>
         </ul>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Look around Handsfree" text-on="Stop Pose" :opts="demoOpts" />
@@ -22,9 +23,9 @@
   </div>
 </div>
 
-<div>
-  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 500px"></iframe>
-</div>
+<Window title="Look around the A-Frame Handsfree" style="height: 500px" :maximize='true'>
+  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 100%"></iframe>
+</Window>
 
 ## The basic approach
 
@@ -138,9 +139,15 @@ handsfree.use('lookHandsfree', ({weboji}) => {
 handsfree.start()
 ```
 
+## See Also
+
+- The [Weboji Model](/ref/model/weboji/)
+- [Plugins and the main loop](/ref/guide/the-loop/)
+- [handsfree.use()](/ref/method/use/)
+
 ## Boilerplate
 
-The following is the boilerplate located [in the repo at /boilerplate/aframe/look-around-handsfree/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/look-around-handsfree/index.html). You can also play with this demo on CodePen, or locally without a server.
+The following is the boilerplate located [in the repo at /boilerplate/aframe/look-around-handsfree/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/look-around-handsfree/index.html). You can also [play with this demo on CodePen](https://codepen.io/MIDIBlocks/pen/wvzqbXr), or by copy/pasting the following into a local `.html` file without a server.
 
 <<< @/boilerplate/aframe/look-around-handsfree/index.html
 
@@ -187,7 +194,7 @@ export default {
      */
     onData ({detail}) {
       const weboji = detail.weboji
-      if (!weboji.degree) return
+      if (!weboji.isDetected) return
 
       // Calculate rotation
       const rot = weboji.degree

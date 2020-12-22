@@ -7,14 +7,7 @@
     HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
-  #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
-    .title-bar
-      .title-bar-text Debugger
-      .title-bar-controls
-        button(aria-label='Minimize' @click='minimize')
-        button(aria-label='Restore' @click='restore')
-        button(aria-label='Maximize' @click='maximize')
-    .window-body
+  Window#handsfree-debug-window.handsfree-show-when-started.mb-0(title='Debugger' :minimize='true' :maximize='true')
 </template>
 
 <script>
@@ -60,7 +53,7 @@ export default {
     🧙‍♂️ Presenting 🧙‍♀️
 
        Handsfree.js
-          8.0.6
+          8.0.7
 
 https://github.com/midiblocks/handsfree
 `)
@@ -81,59 +74,24 @@ https://github.com/midiblocks/handsfree
               assetsPath: '/handsfree'
             })
             window.app = this.$root
+
+            // Move toggle and window
+            document.querySelector('header.navbar > .links').appendChild(
+              document.querySelector('#navbar-handsfree-toggle')
+            )
+            
+            // Move the sidebar
+            document.querySelector('aside.sidebar').appendChild(
+              document.querySelector('#handsfree-debug-window')
+            )
           })
         }
-  
-        // Move toggle and window
-        document.querySelector('header.navbar > .links').appendChild(
-          document.querySelector('#navbar-handsfree-toggle')
-        )
-        
-        // Move the sidebar
-        document.querySelector('aside.sidebar').appendChild(
-          this.$refs.window
-        )
         this.hasMovedToggle = true
       }, 50)
     }
   },
 
   methods: {
-    /**
-     * Minimize the debugger
-     */
-    minimize () {
-      const $window = document.querySelector('#handsfree-debug-window')
-      
-      $window.classList.add('minimized')
-      $window.classList.remove('maximized')
-      this.isMinimized = true
-      this.isMaximized = false
-    },
-
-    /**
-     * Maximize the debugger
-     */
-    maximize () {
-      const $window = document.querySelector('#handsfree-debug-window')
-      
-      $window.classList.add('maximized')
-      $window.classList.remove('minimized')
-      this.isMinimized = false
-      this.isMaximized = true
-    },
-
-    /**
-     * Restore the debugger to its normal size
-     */
-    restore () {
-      const $window = document.querySelector('#handsfree-debug-window')
-      
-      $window.classList.remove('maximized', 'minimized')
-      this.isMinimized = false
-      this.isMaximized = false      
-    },
-
     startDemo () {
       this.$root.handsfree.update(this.opts)
     }
