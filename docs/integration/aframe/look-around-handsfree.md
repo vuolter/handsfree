@@ -11,6 +11,7 @@
         <ul>
           <li>Turn head around to turn the camera</li>
           <li>Move your head to move the camera</li>
+          <li><a href="https://codepen.io/MIDIBlocks/pen/wvzqbXr">Try it on CodePen</a></li>
         </ul>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Look around Handsfree" text-on="Stop Pose" :opts="demoOpts" />
@@ -137,6 +138,12 @@ handsfree.use('lookHandsfree', ({weboji}) => {
 // Start tracking
 handsfree.start()
 ```
+
+## See Also
+
+- The [Weboji Model](/ref/model/weboji/)
+- [Plugins and the main loop](/ref/guide/the-loop/)
+- [handsfree.use()](/ref/method/use/)
 
 ## Boilerplate
 

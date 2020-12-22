@@ -3374,7 +3374,7 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.0.4/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.0.7/build/lib/assets',
     
     // Setup config. Ignore this to have everything done for you automatically
     setup: {
@@ -9224,7 +9224,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.0.6
+                  8.0.7
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -9277,7 +9277,7 @@
     constructor (config = {}) {
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.0.6';
+      this.version = '8.0.7';
       this.data = {};
 
       // Dependency management
