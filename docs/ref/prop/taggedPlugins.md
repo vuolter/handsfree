@@ -25,7 +25,7 @@ You could then do things with the collection of plugins, like so:
 
 ```js
 // Re-run all plugin onUse() methods
-handsfree.taggedPlugins.tagA.forEach(pluginName => {
+handsfree.taggedPlugins.tagA.forEach((pluginName) => {
   handsfree.plugin[pluginName]?.onUse()
 })
 ```

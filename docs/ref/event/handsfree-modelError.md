@@ -14,10 +14,10 @@ event
 const handsfree = new Handsfree({handpose: true})
 
 // Listen for the event
-document.addEventListener('handsfree-modelError', event => {
+document.addEventListener('handsfree-modelError', (event) => {
   console.log(event.detail)
 })
-handsfree.on('modelError', event => {
+handsfree.on('modelError', (event) => {
   console.log(event.detail)
 })
 

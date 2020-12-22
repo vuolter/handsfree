@@ -15,7 +15,7 @@ Basic plugins are created with [handsfree.use(pluginName, callback)](/ref/method
 
 ```js
 // A plugin that console logs your data on every frame
-handsfree.use('consoleLogger', data => {
+handsfree.use('consoleLogger', (data) => {
   console.log(data.weboji.rotation, data.holistic.data.faceLandmarks)
 })
 ```
@@ -31,7 +31,7 @@ The callback receives a `data` object containing the data of every enabled model
 
 ```js
 // A plugin that console logs your data on every frame
-handsfree.use('consoleLogger', {weboji} => {
+handsfree.use('consoleLogger', ({weboji}) => {
   console.log(weboji.rotation, weboji.translation, weboji.morphs)
 })
 ```
@@ -117,7 +117,7 @@ handsfree.enablePlugins('homepage')
 You may occasionally find yourself in a part of your app where you don't have easy access to your `handsfree` instance. In these cases, you can still access the data on every frame by listening to the `handsfree-data` event on the `document`:
 
 ```js
-document.addEventListener('handsfree-data', event => {
+document.addEventListener('handsfree-data', (event) => {
   console.log(event.detail.weboji.rotation, event.detail.weboji.translation)
 })
 ```
@@ -127,7 +127,7 @@ document.addEventListener('handsfree-data', event => {
 Because you have the ability to swap out models and configs on the fly, it's highly recommended to first check that the model has data. Due to the synchronous way that data is received it's possible that the data is not present the frame immediately after enabling the plugin:
 
 ```js
-handfree.use('consoleLogger', data => {
+handfree.use('consoleLogger', (data) => {
   if (!data.weboji) return
 
   console.log(data.weboji)
@@ -139,7 +139,7 @@ In some models, properties are only available if detected. For example, if the r
 In these cases it might be necessary to check if the property also exists by using the [Optional Chaining operator](https://www.joshwcomeau.com/operator-lookup?match=optional-chaining):
 
 ```js
-handsfree.use('consoleLogger', data => {
+handsfree.use('consoleLogger', (data) => {
   if (!data.holistic?.rightHandLandmarks?.[0]) return
 
   console.log(data.holistic.rightHandLandmarks[0])

@@ -150,7 +150,7 @@ handsfree.use('logger', data => {
 
 // Let's switch to hand tracking now. To demonstrate that you can do this live,
 // let's create a plugin that switches to hand tracking when both eyebrows go up
-handsfree.use('handTrackingSwitcher', {weboji} => {
+handsfree.use('handTrackingSwitcher', ({weboji}) => {
   if (weboji.state.browsUp) {
     // Disable this plugin
     // Same as handsfree.plugin.handTrackingSwitcher.disable()

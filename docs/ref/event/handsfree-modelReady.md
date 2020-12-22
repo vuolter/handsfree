@@ -18,19 +18,19 @@ const handsfree = new Handsfree({handpose: true, holistic: true, weboji: true})
 
 // Listen for the event
 // - This will get called 3 times since 3 models are being loaded
-document.addEventListener('handsfree-modelReady', event => {
+document.addEventListener('handsfree-modelReady', (event) => {
   console.log(event.detail)
 })
-handsfree.on('modelReady', event => {
+handsfree.on('modelReady', (event) => {
   console.log(event.detail)
 })
-handsfree.on('webojiModelReady', event => {
+handsfree.on('webojiModelReady', (event) => {
   console.log(event.detail)
 })
-handsfree.on('handposeModelReady', event => {
+handsfree.on('handposeModelReady', (event) => {
   console.log(event.detail)
 })
-handsfree.on('holisticModelReady', event => {
+handsfree.on('holisticModelReady', (event) => {
   console.log(event.detail)
 })
 

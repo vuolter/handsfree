@@ -13,7 +13,7 @@ event
 
 ```js
 // Listen for the event
-document.addEventListener('handsfree-init', event => {
+document.addEventListener('handsfree-init', (event) => {
   console.log('The initialized handsfree instance', event.detail)
 })
 

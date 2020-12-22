@@ -19,11 +19,11 @@ event
 const handsfree = new Handsfree({weboji: true, handpose: true})
 
 // Listen for the event
-document.addEventListener('handsfree-data', event => {
+document.addEventListener('handsfree-data', (event) => {
   const data = event.detail
   console.log(data.weboji, data.handpose)
 })
-handsfree.on('data', event => {
+handsfree.on('data', (event) => {
   const data = event.detail
   console.log(data.weboji, data.handpose)
 })
