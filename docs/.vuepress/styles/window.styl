@@ -8,14 +8,20 @@ html
         &:hover
           background-color silver !important
 
-#handsfree-debug-window
+.window-component
   margin-top .5em
+  flex-direction column
+  display flex
+
+  &.handsfree-show-when-started
+    display none
 
   button[aria-label='Restore']
     display none
 
   .window-body
     overflow hidden
+    flex auto
 
   &.minimized
     .window-body
@@ -28,14 +34,19 @@ html
   
   &.maximized
     position fixed
-    top 58px
+    top 56px
     margin-top 0
     left 0
     right 0
     bottom 0
     z-index 100
+    height calc(100vh - 61px) !important
 
     button[aria-label='Maximize']
       display none
     button[aria-label='Restore']
       display inline-block
+
+.handsfree-started
+  .window-component.handsfree-show-when-started
+    display flex

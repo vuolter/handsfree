@@ -22,8 +22,8 @@
   </div>
 </div>
 
-<Window title="Look around the A-Frame Handsfree" @maximize="maximize">
-  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 500px"></iframe>
+<Window title="Look around the A-Frame Handsfree" style="height: 500px" @maximize="maximize">
+  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 100%"></iframe>
 </Window>
 
 ## The basic approach
@@ -140,7 +140,7 @@ handsfree.start()
 
 ## Boilerplate
 
-The following is the boilerplate located [in the repo at /boilerplate/aframe/look-around-handsfree/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/look-around-handsfree/index.html). You can also play with this demo on CodePen, or locally without a server.
+The following is the boilerplate located [in the repo at /boilerplate/aframe/look-around-handsfree/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/look-around-handsfree/index.html). You can also [play with this demo on CodePen](https://codepen.io/MIDIBlocks/pen/wvzqbXr), or by copy/pasting the following into a local `.html` file without a server.
 
 <<< @/boilerplate/aframe/look-around-handsfree/index.html
 

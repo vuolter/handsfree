@@ -7,7 +7,7 @@
     HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
-  #handsfree-debug-window.window.handsfree-show-when-started(ref='window')
+  #handsfree-debug-window.window-component.window.handsfree-show-when-started(ref='window')
     .title-bar
       .title-bar-text Debugger
       .title-bar-controls

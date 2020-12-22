@@ -1,5 +1,5 @@
 <template lang="pug">
-.window.mb-md
+.window.window-component.mb-md(ref='window')
   .title-bar(v-if='hasTitlebar')
     .title-bar-text(v-if='title') {{title}}
     .title-bar-controls(v-if='hasTitlebarControls')
@@ -27,7 +27,9 @@ export default {
 
   data: () => ({
     hasMinimize: false,
-    hasMaximize: false
+    hasMaximize: false,
+    isMinimize: false,
+    isMaximize: false,
   }),
 
   /**
@@ -39,9 +41,34 @@ export default {
   },
 
   methods: {
-    minimize () {this.$emit('minimize')},
-    maximize () {this.$emit('maximize')},
-    restore () {this.$emit('restore')},
+    /**
+     * Handle window resize
+     */
+    minimize () {
+      this.$emit('minimize')
+
+      this.$refs.window.classList.add('minimized')
+      this.$refs.window.classList.remove('maximized')
+      this.isMinimized = true
+      this.isMaximized = false
+    },
+
+    maximize () {
+      this.$emit('maximize')
+
+      this.$refs.window.classList.add('maximized')
+      this.$refs.window.classList.remove('minimized')
+      this.isMinimized = false
+      this.isMaximized = true
+    },
+    
+    restore () {
+      this.$emit('restore')
+
+      this.$refs.window.classList.remove('maximized', 'minimized')
+      this.isMinimized = false
+      this.isMaximized = false      
+    },
   }
 }
 </script>
