@@ -55,7 +55,7 @@ export default class HolisticModel extends BaseModel {
   /**
    * Helpers for getting degrees
    */
-  degree () {
+  getDegrees () {
     return [
       this.data.rotation[0] * 180 / Math.PI,
       this.data.rotation[1] * 180 / Math.PI,

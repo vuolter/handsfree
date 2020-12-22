@@ -26,29 +26,37 @@
       handsfree = new Handsfree({weboji: true})
 
       // Used to hold tween values (without this things will be jerky)
-      tween = {x: 0, y: 0, z: 0, yaw: 0, pitch: 0, roll: 0}
+      tween = {yaw: 0, pitch: 0, roll: 0, x: 0, y: 0, z: 0}
 
       // Create a new "plugin" to hook into the main loop
       // @see https://handsfree.js.org/guide/the-loop
       handsfree.use('lookHandsfree', ({weboji}) => {
-        if (!weboji || !$rig) return
-
-        // Tween the values instead of setting them outright to avoid jitters
-        TweenMax.to(tween, 1, {
-          // Translation
+        if (!weboji.degree) return
+  
+        // Calculate rotation
+        const rot = weboji.degree
+        rot[0] += 15
+        
+        // Calculate position
+        const pos = {
           x: (weboji.translation[0] - .5) * 10,
           y: (weboji.translation[1] - .5) * 5,
-          z: 5 - weboji.translation[2] * 30,
+          z: 5 - weboji.translation[2] * 30
+        }
 
-          // Rotation
-          yaw: -weboji.rotation[0] * 180 / Math.PI * 1 + 15,
-          pitch: -weboji.rotation[1] * 180 / Math.PI * 1,
-          roll: weboji.rotation[2] * 180 / Math.PI * 1
+        // Tween this values
+        TweenMax.to(tween, 1, {
+          yaw: rot[0],
+          pitch: rot[1],
+          roll: rot[2],
+          x: pos.x,
+          y: pos.y,
+          z: pos.z
         })
-
-        // Now we just set the values
-        $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
+        
+        // Use the tweened values instead of the actual current values from webcam
         $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
+        $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
       })
 
       // Cache the camera rig into a variable

@@ -26,9 +26,7 @@
   <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 500px"></iframe>
 </div>
 
-## How it works
-
-### Basic approach
+## The basic approach
 
 First we start by instantiating Handsfree. We'll use the [Weboji model](/ref/model/weboji/) which gives us head pose and translation:
 
@@ -43,6 +41,9 @@ $rig = document.querySelector('#camera-rig')
 
 // Create the plugin
 handsfree.use('lookHandsfree', ({weboji}) => {
+  // Bail if we don't have weboji data
+  if (!weboji.degree) return
+  
   // [yaw, pitch, roll]
   const rot = weboji.degree
 
@@ -72,7 +73,7 @@ handsfree.use('lookHandsfree', ({weboji}) => {
 handsfree.start()
 ```
 
-### Let's add tweening
+## Adding Tweening
 
 Although the above will definitely work, you'll notice that it jerks around quite a bit:
 
@@ -91,7 +92,54 @@ Although the above will definitely work, you'll notice that it jerks around quit
   </div>
 </div>
 
-This is due to slight errors between frames and the fact that it isn't running at a full 30 or 60FPS. To fix this, we use Tweening:
+This is due to slight errors between frames and the fact that it isn't running at a full 30 or 60FPS. To fix this, we can modify the above to use Tweening:
+
+```html
+<!-- Add a tweening library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+```
+
+```js
+// This will hold our tween values
+tween = {yaw: 0, pitch: 0, roll: 0, x: 0, y: 0, z: 0}
+
+handsfree.use('lookHandsfree', ({weboji}) => {
+  if (!weboji.degree) return
+  
+  // Calculate rotation
+  const rot = weboji.degree
+  rot[0] += 15
+  
+  // Calculate position
+  const pos = {
+    x: (weboji.translation[0] - .5) * 10,
+    y: (weboji.translation[1] - .5) * 5,
+    z: 5 - weboji.translation[2] * 30
+  }
+
+  // Tween this values
+  TweenMax.to(tween, 1, {
+    yaw: rot[0],
+    pitch: rot[1],
+    roll: rot[2],
+    x: pos.x,
+    y: pos.y,
+    z: pos.z
+  })
+  
+  // Use the tweened values instead of the actual current values from webcam
+  $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
+  $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
+})
+
+// Start tracking
+handsfree.start()
+```
+
+## Making the plugin configurable
+
+
+---
 
 ## Boilerplate
 
@@ -142,24 +190,32 @@ export default {
      */
     onData ({detail}) {
       const weboji = detail.weboji
-      if (!weboji || !$rig) return
+      if (!weboji.degree) return
 
-      TweenMax.to(tween, 1, {
+      // Calculate rotation
+      const rot = weboji.degree
+      rot[0] += 15
+      
+      // Calculate position
+      const pos = {
         x: (weboji.translation[0] - .5) * 10,
         y: (weboji.translation[1] - .5) * 5,
-        z: 5 - weboji.translation[2] * 30,
-        yaw: -weboji.degree[0] + 15,
-        pitch: -weboji.degree[1],
-        roll: weboji.degree[2]
-      })
+        z: 5 - weboji.translation[2] * 30
+      }
 
-      // $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
-      // $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
-      const rot = weboji.rotation
-      const pos = weboji.translation
+      // Tween this values
+      TweenMax.to(tween, 1, {
+        yaw: rot[0],
+        pitch: rot[1],
+        roll: rot[2],
+        x: pos.x,
+        y: pos.y,
+        z: pos.z
+      })
       
-      $rig.setAttribute('position', `${(weboji.translation[0] - .5) * 10} ${(weboji.translation[1] - .5) * 5} ${5 - weboji.translation[2] * 30}`)
-      $rig.setAttribute('rotation', `${-weboji.rotation[0] * 180 / Math.PI * 1 + 15} ${-weboji.rotation[1] * 180 / Math.PI * 1} ${weboji.rotation[2] * 180 / Math.PI * 1}`)
+      // Use the tweened values instead of the actual current values from webcam
+      $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
+      $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
     },
 
     /**
