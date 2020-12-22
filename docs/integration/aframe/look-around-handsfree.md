@@ -27,6 +27,13 @@
 </div>
 
 
+## Boilerplate
+
+The following is the boilerplate located [in the repo at /boilerplate/aframe/look-around-handsfree/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/look-around-handsfree/index.html). You can also play with this demo on CodePen, or locally without a server.
+
+<<< @/boilerplate/aframe/look-around-handsfree/index.html
+
+
 
 <script>
 import {TweenMax} from 'gsap'

@@ -3,6 +3,7 @@
     <title>A-Frame: Look around handsfree</title>
     <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+    <style>button {font-size: 2.5em; cursor: pointer;}</style>
     
     <!-- Include Handsfree.js in head -->
     <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.5/build/lib/assets/handsfree.css" />
@@ -10,21 +11,70 @@
   </head>
   <body>
 
+
+
+
+
+
+
+
+
+    
     <!-- Instantiate Handsfree.js in body -->
     <script>
       // Let's use weboji. See: https://handsfree.js.org/ref/model/weboji
-      handsfree = new Handsfree({weboji: true})
+      handsfree = new Handsfree({weboji: true, showDebug: true})
+
+      // Used to hold tween values (without this things will be jerky)
+      tween = {x: 0, y: 0, z: 0, yaw: 0, pitch: 0, roll: 0}
 
       // Create a new "plugin" to hook into the main loop
       // @see https://handsfree.js.org/guide/the-loop
       handsfree.use('lookHandsfree', ({weboji}) => {
-        console.log(weboji)
+        if (!weboji || !$rig) return
+
+        // Tween the values instead of setting them outright to avoid jitters
+        TweenMax.to(tween, 1, {
+          // Translation
+          x: (weboji.translation[0] - .5) * 10,
+          y: (weboji.translation[1] - .5) * 5,
+          z: 5 - weboji.translation[2] * 30,
+
+          // Rotation
+          yaw: -weboji.rotation[0] * 180 / Math.PI * 1 + 15,
+          pitch: -weboji.rotation[1] * 180 / Math.PI * 1,
+          roll: weboji.rotation[2] * 180 / Math.PI * 1
+        })
+
+        // Now we just set the values
+        $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
+        $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
       })
+
+      // Cache the camera rig into a variable
+      window.onload = function () {
+        $rig = document.querySelector('#rig')
+      }
     </script>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Button. Notice the helper classes :) -->
     <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 100">
-      <button onclick="handsfree.start()" class="handsfree-show-when-stopped">Start webcam</button>
+      <button onclick="handsfree.start()" class="handsfree-show-when-stopped handsfree-hide-when-loading">Start webcam</button>
       <button class="handsfree-show-when-loading">Loading...</button>
       <button onclick="handsfree.stop()" class="handsfree-show-when-started">Stop webcam</button>
     </div>
