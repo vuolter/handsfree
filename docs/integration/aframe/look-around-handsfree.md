@@ -22,9 +22,9 @@
   </div>
 </div>
 
-<div>
+<Window title="Look around the A-Frame Handsfree" @maximize="maximize">
   <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 500px"></iframe>
-</div>
+</Window>
 
 ## The basic approach
 
@@ -228,6 +228,10 @@ export default {
     startDemo () {
       this.$handsfree.disablePlugins()
       this.$handsfree.update(this.demoOpts)
+    },
+
+    maximize () {
+      console.log('maximize')
     }
   }
 }
