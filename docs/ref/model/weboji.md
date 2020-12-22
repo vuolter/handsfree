@@ -4,15 +4,6 @@ sidebarDepth: 2
 ---
 # Plugin: Weboji
 
-
-> **Technical documentation:** [https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf)
-
-::: warning ⚠ Weboji currently only works with itself
-Due to the way the other models are currently being handled, it's not possible to activate Weboji at the same time.
-
-This will be fixed soon!
-:::
-
 <div class="window mb-md">
   <div class="window-body">
     <div class="row">
@@ -35,6 +26,8 @@ This will be fixed soon!
   </div>
 </div>
 
+> - [Jeeliz Weboji repository](https://github.com/jeeliz/jeelizWeboji)
+> - [Full model API](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf)
 
 ## Usage
 
@@ -125,6 +118,12 @@ handsfree.data.weboji.morphs
 handsfree.data.weboji.rotation
 
 /**
+ * {Array} Head rotation [pitch, yaw, roll]
+ * - in degrees where [0, 0, 0] is the head pointed directly at camera
+ */
+handsfree.data.weboji.degree
+
+/**
  * {Array} Head translation [x, y, s]
  * - These are each between 0 and 1
  * - Scale refers to the size of the head in relation to the webcam frame
@@ -194,7 +193,15 @@ handsfree = new Handsfree({
 })
 ```
 
+## See also
 
+- Integrations
+  - A-Frame
+    - ["Look around" handsfree](/integration/aframe/look-around-handsfree/)
+- Plugins
+  - [faceClick](/ref/model/faceClick/)
+  - [facePointer](/ref/model/facePointer/)
+  - [faceScroll](/ref/model/faceScroll/)
 
 <!-- Code -->
 <script>

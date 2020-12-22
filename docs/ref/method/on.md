@@ -31,7 +31,7 @@ opts: object
 const handsfree = new Handsfree({hands: true})
 
 // Work with data without creating a plugin
-handsfree.on('data', event => {
+handsfree.on('data', (event) => {
   const data = event.detail
   console.log(data.hands)
 })

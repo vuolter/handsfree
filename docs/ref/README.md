@@ -1,5 +1,5 @@
 ---
-prev: /guide/
+prev: /integration/
 next: /community/
 ---
 # 📚 References

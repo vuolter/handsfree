@@ -25,7 +25,7 @@ data: any
 const handsfree = new Handsfree({weboji: true})
 
 // Listen to the event
-document.addEventListener('handsfree-myEvent', event => {
+document.addEventListener('handsfree-myEvent', (event) => {
   // logs: 123
   console.log(event.detail)
 })

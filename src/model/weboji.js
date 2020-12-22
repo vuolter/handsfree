@@ -1,5 +1,4 @@
 import BaseModel from './base.js'
-import merge from 'lodash/merge'
 
 export default class HolisticModel extends BaseModel {
   constructor (handsfree, config) {
@@ -17,28 +16,16 @@ export default class HolisticModel extends BaseModel {
         .then(model => model.json())
         // Next, let's initialize the weboji tracker API
         .then(model => {
-          window.JEELIZ_RESIZER.size_canvas({
+          this.api.init({
             canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
-            callback: (videoSettings) => {
-              if (typeof videoSettings === 'object') {
-                videoSettings = merge(videoSettings, this.handsfree.config.weboji.videoSettings)
-              } else {
-                videoSettings = this.handsfree.config.weboji.videoSettings
-              }
-
-              this.api.init({
-                canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
-                NNC: JSON.stringify(model),
-                videoSettings,
-                callbackReady: () => {
-                  callback && callback(this)
-                  
-                  this.dependenciesLoaded = true
-                  this.handsfree.emit('modelReady', this)
-                  this.handsfree.emit('webojiModelReady', this)
-                  document.body.classList.add('handsfree-model-weboji')
-                }
-              })
+            NNC: JSON.stringify(model),
+            videoSettings: this.handsfree.config.weboji.videoSettings,
+            callbackReady: () => {
+              this.dependenciesLoaded = true
+              this.handsfree.emit('modelReady', this)
+              this.handsfree.emit('webojiModelReady', this)
+              document.body.classList.add('handsfree-model-weboji')
+              callback && callback(this)
             }
           })
         })
@@ -50,16 +37,35 @@ export default class HolisticModel extends BaseModel {
     })
   }
 
-  async getData () {
-    this.data.rotation = await this.api.get_rotationStabilized()
-    this.data.translation = await this.api.get_positionScale()
-    this.data.morphs = await this.api.get_morphTargetInfluencesStabilized()
-    this.data.state = await this.getStates()
+  getData () {
+    // Core
+    this.data.rotation = this.api.get_rotationStabilized()
+    this.data.translation = this.api.get_positionScale()
+    this.data.morphs = this.api.get_morphTargetInfluencesStabilized()
+    
+    // Helpers
+    this.data.state = this.getStates()
+    this.data.degree = this.getDegrees()
+
     this.handsfree.data.weboji = this.data
 
     return this.data
   }
 
+  /**
+   * Helpers for getting degrees
+   */
+  getDegrees () {
+    return [
+      this.data.rotation[0] * 180 / Math.PI,
+      this.data.rotation[1] * 180 / Math.PI,
+      this.data.rotation[2] * 180 / Math.PI
+    ]
+  }
+  
+  /**
+   * Sets some stateful helpers
+   */
   getStates() {
     /**
      * Handles extra calculations for weboji morphs

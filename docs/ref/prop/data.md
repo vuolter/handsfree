@@ -9,7 +9,7 @@ Usually you'll only want to access this property directly when you need it outsi
 ```js
 const handsfree = new Handsfree({weboji: true, handpose: true, holistic: true})
 
-document.addEventListener('someEvent', event => {
+document.addEventListener('someEvent', (event) => {
   console.log(handsfree.data.weboji, handsfree.data.handpose, handsfree.data.holistic)
 })
 ```

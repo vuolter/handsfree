@@ -16,10 +16,10 @@ event
 const handsfree = new Handsfree({handpose: true})
 
 // Listen for the event
-document.addEventListener('handsfree-gotUserMedia', event => {
+document.addEventListener('handsfree-gotUserMedia', (event) => {
   console.log(event.detail)
 })
-handsfree.on('gotUserMedia', event => {
+handsfree.on('gotUserMedia', (event) => {
   console.log(event.detail)
 })
 

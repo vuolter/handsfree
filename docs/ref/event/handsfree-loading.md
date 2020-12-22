@@ -15,10 +15,10 @@ event
 const handsfree = new Handsfree({weboji: true})
 
 // Listen for the event
-document.addEventListener('handsfree-loading', event => {
+document.addEventListener('handsfree-loading', (event) => {
   console.log(event.detail)
 })
-handsfree.on('loading', event => {
+handsfree.on('loading', (event) => {
   console.log(event.detail)
 })
 

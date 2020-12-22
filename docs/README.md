@@ -70,8 +70,8 @@ handsfree.start()
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.5/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.0.5/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.6/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.0.6/build/lib/handsfree.js"></script>
 </head>
 
 <body>
@@ -102,7 +102,7 @@ handsfree.start()
 
 ### Hosting the models yourself
 
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.5/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.6/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
 ```bash
 # Move the models into your project's public directory
@@ -150,7 +150,7 @@ handsfree.use('logger', data => {
 
 // Let's switch to hand tracking now. To demonstrate that you can do this live,
 // let's create a plugin that switches to hand tracking when both eyebrows go up
-handsfree.use('handTrackingSwitcher', {weboji} => {
+handsfree.use('handTrackingSwitcher', ({weboji}) => {
   if (weboji.state.browsUp) {
     // Disable this plugin
     // Same as handsfree.plugin.handTrackingSwitcher.disable()

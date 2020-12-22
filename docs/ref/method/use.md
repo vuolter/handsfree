@@ -29,7 +29,7 @@ const handsfree = new Handsfree({
 
 // A plugin that console logs your data on every frame
 // - The callback is mapped to handsfree.plugin.consoleLogger.onFrame(data => {})
-handsfree.use('consoleLogger', data => {
+handsfree.use('consoleLogger', (data) => {
   console.log(data.weboji, data.holistic, data.handpose)
 })
 ```

@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.0.5
+                8.0.6
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -80,7 +80,7 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.0.5'
+    this.version = '8.0.6'
     this.data = {}
 
     // Dependency management
@@ -181,7 +181,7 @@ class Handsfree {
     this.debug.context = {}
     this.config.setup.canvas.video = {}
     // The video canvas is used to display the video
-    ;['weboji', 'video', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
+    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
       this.debug.$canvas[model] = {}
       this.debug.context[model] = {}
       
@@ -203,7 +203,7 @@ class Handsfree {
 
       // Context
       if (model === 'weboji') {
-        this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
+        // this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
       } else {
         this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
       }
