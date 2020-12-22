@@ -38,15 +38,34 @@ export default class HolisticModel extends BaseModel {
   }
 
   getData () {
+    // Core
     this.data.rotation = this.api.get_rotationStabilized()
     this.data.translation = this.api.get_positionScale()
     this.data.morphs = this.api.get_morphTargetInfluencesStabilized()
+    
+    // Helpers
     this.data.state = this.getStates()
+    this.data.degree = this.getDegrees()
+
     this.handsfree.data.weboji = this.data
 
     return this.data
   }
 
+  /**
+   * Helpers for getting degrees
+   */
+  degree () {
+    return [
+      this.data.rotation[0] * 180 / Math.PI,
+      this.data.rotation[1] * 180 / Math.PI,
+      this.data.rotation[2] * 180 / Math.PI
+    ]
+  }
+  
+  /**
+   * Sets some stateful helpers
+   */
   getStates() {
     /**
      * Handles extra calculations for weboji morphs

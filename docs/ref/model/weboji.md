@@ -118,6 +118,12 @@ handsfree.data.weboji.morphs
 handsfree.data.weboji.rotation
 
 /**
+ * {Array} Head rotation [pitch, yaw, roll]
+ * - in degrees where [0, 0, 0] is the head pointed directly at camera
+ */
+handsfree.data.weboji.degree
+
+/**
  * {Array} Head translation [x, y, s]
  * - These are each between 0 and 1
  * - Scale refers to the size of the head in relation to the webcam frame

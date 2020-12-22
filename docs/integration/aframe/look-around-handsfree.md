@@ -43,11 +43,29 @@ $rig = document.querySelector('#camera-rig')
 
 // Create the plugin
 handsfree.use('lookHandsfree', ({weboji}) => {
-  const rot = weboji.rotation
-  const pos = weboji.translation
+  // [yaw, pitch, roll]
+  const rot = weboji.degree
+
+  // Let's shift the yaw slightly
+  // - this assumes webcam is slightly below eye level, like on a laptop
+  rot[0] += 15
   
-  $rig.setAttribute('position', `${pos[0]} ${pos[1]} ${pos[2]}`)
+  // Calculate position
+  // - Positions are normalized between [0, 1]
+  // - 0 is all the way to the left of the canvas, 1 all the way to the right
+  // - Change the multiplier to change the range you want to move by
+  const pos = {
+    // Subtract .5 to "center" the x value
+    x: (weboji.translation[0] - .5) * 10,
+    // Subtract .5 to "center" the y value
+    y: (weboji.translation[1] - .5) * 5,
+    // Let's position the camera 5 units back from the center of the room
+    z: 5 - weboji.translation[2] * 30
+  }
+  
+  // Now let's just tell A-Frame to update our camera rig
   $rig.setAttribute('rotation', `${rot[0]} ${rot[1]} ${rot[2]}`)
+  $rig.setAttribute('position', `${pos} ${pos} ${pos}`)
 })
 
 // Start tracking
@@ -57,6 +75,23 @@ handsfree.start()
 ### Let's add tweening
 
 Although the above will definitely work, you'll notice that it jerks around quite a bit:
+
+<div class="window mb-md">
+  <div class="window-body">
+    <div class="row">
+      <div class="col-6">
+        <h2>Jerky</h2>
+        <img src="https://media1.giphy.com/media/N2KK8hpwsepdXy7lUA/giphy.gif">
+      </div>
+      <div class="col-6">
+        <h2>Smooth</h2>
+        <img src="https://media3.giphy.com/media/YOPrRX6vTy6tb3frgt/giphy.gif">
+      </div>
+    </div>
+  </div>
+</div>
+
+This is due to slight errors between frames and the fact that it isn't running at a full 30 or 60FPS. To fix this, we use Tweening:
 
 ## Boilerplate
 
@@ -113,9 +148,9 @@ export default {
         x: (weboji.translation[0] - .5) * 10,
         y: (weboji.translation[1] - .5) * 5,
         z: 5 - weboji.translation[2] * 30,
-        yaw: -weboji.rotation[0] * 180 / Math.PI * 1 + 15,
-        pitch: -weboji.rotation[1] * 180 / Math.PI * 1,
-        roll: weboji.rotation[2] * 180 / Math.PI * 1
+        yaw: -weboji.degree[0] + 15,
+        pitch: -weboji.degree[1],
+        roll: weboji.degree[2]
       })
 
       // $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
