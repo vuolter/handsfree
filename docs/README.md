@@ -109,9 +109,9 @@ The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.c
 # - change PUBLIC below to where you keep your project's assets
 
 # ON WINDOWS
-move node_modules/handsfree/build/lib/assets PUBLIC
+xcopy /e node_modules\handsfree\build\lib PUBLIC
 # EVERYWHERE ELSE
-mv node_modules/handsfree/build/lib/assets PUBLIC
+cp -r node_modules/handsfree/build/lib/* PUBLIC
 ```
 
 ```js
