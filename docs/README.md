@@ -158,7 +158,7 @@ handsfree.use('handTrackingSwitcher', ({weboji}) => {
 
     // Turn off face tracking and enable hand tracking
     handsfree.update({
-      facemesh: false,
+      weboji: false,
       hands: true
     })
   }
