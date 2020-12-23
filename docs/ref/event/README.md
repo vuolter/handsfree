@@ -13,7 +13,7 @@ document.addEventListener('handsfree-data', event => {
 })
 
 // ...or through the .on() method (without the 'handsfree-' prefix)
-handsfree.on('data', {detail} => {
+handsfree.on('data', ({detail}) => {
   console.log(detail)
 })
 ```
