@@ -1,13 +1,13 @@
 import BaseModel from './base.js'
 
-export default class HolisticModel extends BaseModel {
+export default class WebojiModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
     this.name = 'weboji'
   }
 
   loadDependencies (callback) {
-    // Load holistic
+    // Load weboji
     this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
       const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json'
       this.api = window.JEEFACETRANSFERAPI

@@ -3,7 +3,7 @@ import BaseModel from './base.js'
 /**
  * 🚨 This model is not currently active
  */
-export default class HolisticModel extends BaseModel {
+export default class HandposeModel extends BaseModel {
   constructor (handsfree, config) {
     super(handsfree, config)
     this.name = 'handpose'
