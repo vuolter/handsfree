@@ -178,8 +178,7 @@ module.exports = {
         children: [
           ['https://github.com/midiblocks/handsfree', 'GitHub'],
           ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
-          ['https://groups.google.com/g/handsfreejs', 'Google Groups'],
-          ['https://discord.gg/TDJEaTp7', 'Discord'],
+          ['https://discord.gg/snbB62DUT9', 'Discord'],
           ['https://twitter.com/midiblocks', 'Twitter'],
           ['http://eepurl.com/hhD7S1', '📧 Newsletter']
         ]
