@@ -1,3 +1,8 @@
+---
+prev: /app/
+next: false
+---
+
 # Chrome Extension: Handsfree WebXR 
 
 <Window>
@@ -15,6 +20,8 @@
   </div>
 </Window>
 
+> This project is a recent fork of the [Mozilla WebXR Emulator Extension](https://github.com/MozillaReality/WebXR-emulator-extension)
+
 ## Installing
 
 > 🚨 **This project is still experimental!**
@@ -29,6 +36,8 @@
 
 ## Using the WebXR Emulator
 
+### Handsfree mode
+
 After installing the extension you should now see the <kbd>WebXR</kbd> tab in your Dev Tools. In order for this to work, the WebXR tab must be opened as it's what contains the scripts that reads your heads pose.
 
 1. Set this field to the device you'd like to emulate
@@ -36,9 +45,31 @@ After installing the extension you should now see the <kbd>WebXR</kbd> tab in yo
 
 ![](https://i.imgur.com/tJLVsKn.png)
 
+### Click and drag mode
+
+Until controllers are made handsfree as well, you can use the mouse to manually drag the controller around. To do this, first click on the device you'd like to control to reveal its axis handles. Some headsets can't be translated but for those that can multiple clicks switches between rotation and translation. Once the handles are visible, click and drag a handle to move the device in that axis.
+
+![](https://media2.giphy.com/media/7ZGLsF2mXy6l4dDL75/giphy.gif)
 
 ## Notes
 
+- I've installed this a few times on different machines, and occasionally the first time you enter Handsfree Mode it won't work. Just reload the page and try again, I'll try figure out why this happens
 - Everything happens client side and only in the tab which you activated Handsfree Mode in
 - I do not use analytics or trackers in the Chrome Extension, nor do I collect any data
 - [Please open any issues](https://github.com/midiblocks/handsfree-webxr/issues) for questions or comments on GitHub, or come [chat and research with me on Discord](https://discord.gg/snbB62DUT9)
+
+## Getting Updates
+Until this extension is available in the Firefox/Chrome Web Stores, the best way to get updates is to [watch for releases on the repository on GitHub](https://github.com/midiblocks/handsfree-webxr). I'll make a release for all the updates worth downloading again, including detailed notes:
+
+<img src="https://i.imgur.com/aXf241T.png" width=300>
+
+You can also:
+
+- [Sign up to my Handsfree.js.org newsletter](http://eepurl.com/hhD7S1)
+- [DM me on Twitter @Midiblocks](https://twitter.com/midiblocks)
+- [Join the Discord](https://discord.gg/snbB62DUT9)
+
+## See Also
+
+- Understand the code that makes this work in the [Handsfree A-Frame Integration](/integration/aframe/look-around-handsfree/)
+- [Original Mozilla WebXR Emulator Extension](https://github.com/MozillaReality/WebXR-emulator-extension) of which this is a recent fork of
