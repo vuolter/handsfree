@@ -1,6 +1,6 @@
 ---
 prev: /guide/
-next: /ref/
+next: /app/
 ---
 
 # 🧩 Integrations
