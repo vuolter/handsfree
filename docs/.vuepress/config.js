@@ -87,6 +87,21 @@ module.exports = {
         ]
       },
       {
+        title: '📱 Apps & Browser Extensions',
+        collapsable: true,
+        path: '/app/',
+        children: [
+          {
+            title: 'Browser Extensions',
+            path: '/app/browser/',
+            collapsable: true,
+            children: [
+              ['/app/browser/handsfree-webxr.md', 'Handsfree WebXR']
+            ]
+          }
+        ]
+      },
+      {
         title: '📚 Reference',
         path: '/ref/',
         collapsable: true,

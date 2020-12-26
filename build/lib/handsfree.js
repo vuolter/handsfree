@@ -107,14 +107,14 @@
     }
   }
 
-  class HolisticModel extends BaseModel {
+  class WebojiModel extends BaseModel {
     constructor (handsfree, config) {
       super(handsfree, config);
       this.name = 'weboji';
     }
 
     loadDependencies (callback) {
-      // Load holistic
+      // Load weboji
       this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
         const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json';
         this.api = window.JEEFACETRANSFERAPI;
@@ -519,7 +519,7 @@
     }
   }
 
-  class HolisticModel$1 extends BaseModel {
+  class HolisticModel extends BaseModel {
     constructor (handsfree, config) {
       super(handsfree, config);
       this.name = 'holistic';
@@ -9228,7 +9228,7 @@
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
-    Discord:    https://discord.gg/TWemTd85
+    Discord:    https://discord.gg/snbB62DUT9
     Newsletter: http://eepurl.com/hhD7S1
 
     
@@ -9339,11 +9339,11 @@
         pose: {},
         holistic: {}
       };
-      this.model.weboji = new HolisticModel(this, this.config.weboji);
+      this.model.weboji = new WebojiModel(this, this.config.weboji);
       this.model.hands = new HandsModel(this, this.config.hands);
       this.model.pose = new PoseModel(this, this.config.pose);
       this.model.facemesh = new FacemeshModel(this, this.config.facemesh);
-      this.model.holistic = new HolisticModel$1(this, this.config.holistic);
+      this.model.holistic = new HolisticModel(this, this.config.holistic);
     }
 
     /**

@@ -1,5 +1,5 @@
 ---
-prev: /integration/
+prev: /app/
 next: /community/
 ---
 # 📚 References
