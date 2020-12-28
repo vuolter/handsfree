@@ -534,6 +534,25 @@ class Handsfree {
     })
   }
 
+  /**
+   * Run plugins manually
+   * @param {Object} data The data to run
+   */
+  runPlugins (data) {
+    this.data = data
+    
+    // Run model plugins
+    Object.keys(this.model).forEach(name => {
+      this.model[name].data = data?.[name]
+      this.model[name].runPlugins()
+    })
+    
+    // Run untagged plugins
+    this.taggedPlugins.untagged?.forEach(pluginName => {
+      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(this.data)
+    })
+  }
+
 
 
 
