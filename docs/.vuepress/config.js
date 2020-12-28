@@ -142,6 +142,7 @@ module.exports = {
               ['/ref/method/normalize.md', '.normalize()'],
               ['/ref/method/on.md', '.on()'],
               ['/ref/method/pause.md', '.pause()'],
+              ['/ref/method/runPlugins.md', '.runPlugins()'],
               ['/ref/method/start.md', '.start()'],
               ['/ref/method/stop.md', '.stop()'],
               ['/ref/method/update.md', '.update()'],

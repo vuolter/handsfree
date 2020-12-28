@@ -20,6 +20,7 @@ handsfree.start()
 - [.normalize()](/ref/method/normalize/) - A helper method to normalize values between 0 and 1
 - [.on()](/ref/method/on/) - A helper method for listening to `.emit()` or browser events prefixed with `handsfree-`
 - [.pause()](/ref/method/pause/) - Pauses the [main loop](/guide/the-loop/) without shutting off the webcam stream
+- [.runPlugins()](/ref/method/runPlugins/) - Manually sets [handsfree.data](/ref/prop/data/) and runs all active plugins
 - [.start()](/ref/method/start/) - Starts the [main loop](/guide/the-loop/) and begins tracking
 - [.stop()](/ref/method/stop/) - Stops the [main loop](/guide/the-loop/) and tracking
 - [.throttle()](/ref/method/throttle/) - Throttles the passed function so that it only runs every n milliseconds

@@ -44,7 +44,7 @@ Setting this to `true` will cause Handsfree.js to only load the plugins, and dis
 
 A common use case is to run Handsfree.js in the browser and stream the data to the desktop via websockets, for example, to control the desktop mouse pointer. Another use case is to run Handsfree.js plugins on a low powered device while running the models externally on a device with a GPU.
 
-You'll need to manually call `handsfree.runPlugins(data)` on the local device/context on each frame as there will be no loop.
+You'll need to manually call [handsfree.runPlugins(data)](/ref/method/runPlugins/) on the local device/context on each frame as there will be no loop.
 
 ### `.setup.canvas[modelName]`
 
