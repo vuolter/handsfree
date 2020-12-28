@@ -89,7 +89,7 @@ export default class BaseModel {
    */
   runPlugins () {
     // Exit if no data
-    if (this.name === 'handpose' && !this.data.annotations) {
+    if (!this.data || (this.name === 'handpose' && !this.data.annotations)) {
       return
     }
     

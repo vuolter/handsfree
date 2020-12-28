@@ -123,8 +123,10 @@ class Handsfree {
         document.body.classList.remove('handsfree-loading')
         document.body.classList.add('handsfree-started')
 
-        this.isLooping = true
-        this.loop()
+        if (!this.config.isClient) {
+          this.isLooping = true
+          this.loop()
+        }
       }
     })
 
