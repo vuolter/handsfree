@@ -9,6 +9,15 @@ export default class HandsModel extends BaseModel {
   }
 
   loadDependencies (callback) {
+    // Just load utils on client
+    if (this.handsfree.config.isClient) {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+        this.onWarmUp(callback)
+      })
+
+      return
+    }
+
     // Load hands
     this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
       // Configure model

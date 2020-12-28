@@ -12,6 +12,15 @@ export default class HolisticModel extends BaseModel {
   }
 
   loadDependencies (callback) {
+    // Just load utils on client
+    if (this.handsfree.config.isClient) {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+        this.onWarmUp(callback)
+      })
+
+      return
+    }
+
     // Load holistic
     this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/holistic.js`, () => {
       this.api = new window.Holistic({locateFile: file => {

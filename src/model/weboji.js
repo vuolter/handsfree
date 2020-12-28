@@ -7,6 +7,12 @@ export default class WebojiModel extends BaseModel {
   }
 
   loadDependencies (callback) {
+    // Just load utils on client
+    if (this.handsfree.config.isClient) {
+      this.onReady(callback)
+      return
+    }
+
     // Load weboji
     this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
       const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json'
@@ -20,13 +26,7 @@ export default class WebojiModel extends BaseModel {
             canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
             NNC: JSON.stringify(model),
             videoSettings: this.handsfree.config.weboji.videoSettings,
-            callbackReady: () => {
-              this.dependenciesLoaded = true
-              this.handsfree.emit('modelReady', this)
-              this.handsfree.emit('webojiModelReady', this)
-              document.body.classList.add('handsfree-model-weboji')
-              callback && callback(this)
-            }
+            callbackReady: () => this.onReady(callback)
           })
         })
         .catch((ev) => {
@@ -37,6 +37,14 @@ export default class WebojiModel extends BaseModel {
     })
   }
 
+  onReady (callback) {
+    this.dependenciesLoaded = true
+    this.handsfree.emit('modelReady', this)
+    this.handsfree.emit('webojiModelReady', this)
+    document.body.classList.add('handsfree-model-weboji')
+    callback && callback(this)
+  }
+  
   getData () {
     // Core
     this.data.rotation = this.api.get_rotationStabilized()
