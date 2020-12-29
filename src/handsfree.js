@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.0.7
+                8.0.8
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -80,7 +80,7 @@ class Handsfree {
   constructor (config = {}) {
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.0.7'
+    this.version = '8.0.8'
     this.data = {}
 
     // Dependency management
@@ -123,8 +123,10 @@ class Handsfree {
         document.body.classList.remove('handsfree-loading')
         document.body.classList.add('handsfree-started')
 
-        this.isLooping = true
-        this.loop()
+        if (!this.config.isClient) {
+          this.isLooping = true
+          this.loop()
+        }
       }
     })
 
@@ -531,6 +533,25 @@ class Handsfree {
       this.taggedPlugins[tag].forEach(pluginName => {
         this.plugin[pluginName].disable()
       })
+    })
+  }
+
+  /**
+   * Run plugins manually
+   * @param {Object} data The data to run
+   */
+  runPlugins (data) {
+    this.data = data
+    
+    // Run model plugins
+    Object.keys(this.model).forEach(name => {
+      this.model[name].data = data?.[name]
+      this.model[name].runPlugins()
+    })
+    
+    // Run untagged plugins
+    this.taggedPlugins.untagged?.forEach(pluginName => {
+      this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(this.data)
     })
   }
 

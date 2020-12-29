@@ -8,6 +8,15 @@ export default class FacemeshModel extends BaseModel {
   }
 
   loadDependencies (callback) {
+    // Just load utils on client
+    if (this.handsfree.config.isClient) {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+        this.onWarmUp(callback)
+      })
+
+      return
+    }
+    
     // Load facemesh
     this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/face_mesh/node_modules/@mediapipe/face_mesh/face_mesh.js`, () => {
       // Configure model

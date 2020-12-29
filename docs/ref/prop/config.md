@@ -20,7 +20,7 @@ The sanitization process simply adds default values for any options you specific
 
 ### `.assetsPath`
 
-**Default**: `https://unpkg.com/handsfree@8.0.7/build/lib/assets`
+**Default**: `https://unpkg.com/handsfree@8.0.8/build/lib/assets`
 
 In order to keep page loads snappy the models are loaded only when needed, and because Handsfree.js is designed to power webapps they are hosted on a CDN. However, you can click here to [download a zip file containing the models](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and copy over the `/build/lib/assets/` folder into your projects public folder to host them yourself.
 
@@ -35,6 +35,16 @@ const handsfree = new Handsfree({
 handsfree.start()
 ```
 If there's an error, a [modelError event](/ref/event/modelError/) will be triggered and along with console message which you can use to zero in on the correct folder.
+
+### `.isClient`
+
+**Default:** `false`
+
+Setting this to `true` will cause Handsfree.js to only load the plugins, and disables the loop. This is useful for when you want to run computer vision on another device or context, but run the plugins on the current device or context.
+
+A common use case is to run Handsfree.js in the browser and stream the data to the desktop via websockets, for example, to control the desktop mouse pointer. Another use case is to run Handsfree.js plugins on a low powered device while running the models externally on a device with a GPU.
+
+You'll need to manually call [handsfree.runPlugins(data)](/ref/method/runPlugins/) on the local device/context on each frame as there will be no loop.
 
 ### `.setup.canvas[modelName]`
 

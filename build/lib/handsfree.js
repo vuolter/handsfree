@@ -95,7 +95,7 @@
      */
     runPlugins () {
       // Exit if no data
-      if (this.name === 'handpose' && !this.data.annotations) {
+      if (!this.data || (this.name === 'handpose' && !this.data.annotations)) {
         return
       }
       
@@ -114,6 +114,12 @@
     }
 
     loadDependencies (callback) {
+      // Just load utils on client
+      if (this.handsfree.config.isClient) {
+        this.onReady(callback);
+        return
+      }
+
       // Load weboji
       this.loadDependency(`${this.handsfree.config.assetsPath}/jeeliz/jeelizFaceTransfer.js`, () => {
         const url = this.handsfree.config.assetsPath + '/jeeliz/jeelizFaceTransferNNC.json';
@@ -127,13 +133,7 @@
               canvasId: `handsfree-canvas-weboji-${this.handsfree.id}`,
               NNC: JSON.stringify(model),
               videoSettings: this.handsfree.config.weboji.videoSettings,
-              callbackReady: () => {
-                this.dependenciesLoaded = true;
-                this.handsfree.emit('modelReady', this);
-                this.handsfree.emit('webojiModelReady', this);
-                document.body.classList.add('handsfree-model-weboji');
-                callback && callback(this);
-              }
+              callbackReady: () => this.onReady(callback)
             });
           })
           .catch((ev) => {
@@ -144,6 +144,14 @@
       });
     }
 
+    onReady (callback) {
+      this.dependenciesLoaded = true;
+      this.handsfree.emit('modelReady', this);
+      this.handsfree.emit('webojiModelReady', this);
+      document.body.classList.add('handsfree-model-weboji');
+      callback && callback(this);
+    }
+    
     getData () {
       // Core
       this.data.rotation = this.api.get_rotationStabilized();
@@ -239,6 +247,15 @@
     }
 
     loadDependencies (callback) {
+      // Just load utils on client
+      if (this.handsfree.config.isClient) {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+          this.onWarmUp(callback);
+        });
+
+        return
+      }
+
       // Load hands
       this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
         // Configure model
@@ -335,6 +352,15 @@
     }
 
     loadDependencies (callback) {
+      // Just load utils on client
+      if (this.handsfree.config.isClient) {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+          this.onWarmUp(callback);
+        });
+
+        return
+      }
+      
       // Load facemesh
       this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/face_mesh/node_modules/@mediapipe/face_mesh/face_mesh.js`, () => {
         // Configure model
@@ -438,6 +464,15 @@
     }
 
     loadDependencies (callback) {
+      // Just load utils on client
+      if (this.handsfree.config.isClient) {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+          this.onWarmUp(callback);
+        });
+
+        return
+      }
+
       // Load pose
       this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/pose.js`, () => {
         this.api = new window.Pose({locateFile: file => {
@@ -531,6 +566,15 @@
     }
 
     loadDependencies (callback) {
+      // Just load utils on client
+      if (this.handsfree.config.isClient) {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+          this.onWarmUp(callback);
+        });
+
+        return
+      }
+
       // Load holistic
       this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/holistic/node_modules/@mediapipe/holistic/holistic.js`, () => {
         this.api = new window.Holistic({locateFile: file => {
@@ -3374,8 +3418,12 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.0.7/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.0.8/build/lib/assets',
     
+    // This will load everything but the models. This is useful when you want to use run inference
+    // on another device or context but run the plugins on the current device
+    isCLient: false,
+
     // Setup config. Ignore this to have everything done for you automatically
     setup: {
       // The canvas element to use for rendering debug info like skeletons and keypoints
@@ -9224,7 +9272,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.0.7
+                  8.0.8
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -9277,7 +9325,7 @@
     constructor (config = {}) {
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.0.7';
+      this.version = '8.0.8';
       this.data = {};
 
       // Dependency management
@@ -9320,8 +9368,10 @@
           document.body.classList.remove('handsfree-loading');
           document.body.classList.add('handsfree-started');
 
-          this.isLooping = true;
-          this.loop();
+          if (!this.config.isClient) {
+            this.isLooping = true;
+            this.loop();
+          }
         }
       });
 
@@ -9726,6 +9776,25 @@
         this.taggedPlugins[tag].forEach(pluginName => {
           this.plugin[pluginName].disable();
         });
+      });
+    }
+
+    /**
+     * Run plugins manually
+     * @param {Object} data The data to run
+     */
+    runPlugins (data) {
+      this.data = data;
+      
+      // Run model plugins
+      Object.keys(this.model).forEach(name => {
+        this.model[name].data = data?.[name];
+        this.model[name].runPlugins();
+      });
+      
+      // Run untagged plugins
+      this.taggedPlugins.untagged?.forEach(pluginName => {
+        this.plugin[pluginName].enabled && this.plugin[pluginName]?.onFrame(this.data);
       });
     }
 

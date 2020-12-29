@@ -5,8 +5,12 @@
  */
 export default {
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.0.7/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.0.8/build/lib/assets',
   
+  // This will load everything but the models. This is useful when you want to use run inference
+  // on another device or context but run the plugins on the current device
+  isCLient: false,
+
   // Setup config. Ignore this to have everything done for you automatically
   setup: {
     // The canvas element to use for rendering debug info like skeletons and keypoints

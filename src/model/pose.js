@@ -12,6 +12,15 @@ export default class PoseModel extends BaseModel {
   }
 
   loadDependencies (callback) {
+    // Just load utils on client
+    if (this.handsfree.config.isClient) {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+        this.onWarmUp(callback)
+      })
+
+      return
+    }
+
     // Load pose
     this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/pose/node_modules/@mediapipe/pose/pose.js`, () => {
       this.api = new window.Pose({locateFile: file => {
