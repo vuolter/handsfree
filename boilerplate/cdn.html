@@ -13,14 +13,17 @@
 
 <body>
   <div>
-    <button class="handsfree-show-when-stopped" onclick="handsfree.start()">Start Handsfree</button>
-    <button class="handsfree-show-when-loading" disabled>...</button>
+    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Handsfree</button>
+    <button class="handsfree-show-when-loading" disabled>Loading ...</button>
     <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Handsfree</button>
   </div>
   
   <!-- Instantiate and start it -->
   <script>
-    const handsfree = new Handsfree({hands: true, showDebug: true})
+    const handsfree = new Handsfree({
+      hands: true,
+      showDebug: true
+    })
     handsfree.taggedPlugins.untagged = []
 
     // A simple plugin to log the data
