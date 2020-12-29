@@ -8,6 +8,9 @@ export default [
    */
   {
     input: 'src/handsfree.js',
+    moduleContext: {
+      'node_modules/gsap/TweenLite.js': 'window'
+    },
 
     output: {
       name: 'Handsfree',

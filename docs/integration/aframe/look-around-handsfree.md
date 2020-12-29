@@ -121,7 +121,7 @@ handsfree.use('lookHandsfree', ({weboji}) => {
   }
 
   // Tween this values
-  TweenMax.to(tween, 1, {
+  window.handsfree.TweenMax.to(tween, 1, {
   yaw: -rot[0] * 1.5,
   pitch: -rot[1] * 1.5,
   roll: rot[2] * 1.5,
@@ -154,8 +154,6 @@ The following is the boilerplate located [in the repo at /boilerplate/aframe/loo
 
 
 <script>
-import {TweenMax} from 'gsap'
-  
 let iframe
 let $rig
 let tween = {
@@ -208,7 +206,7 @@ export default {
       }
 
       // Tween this values
-      TweenMax.to(tween, 1, {
+      window.handsfree.TweenMax.to(tween, 1, {
         yaw: -rot[0] * 1.5,
         pitch: -rot[1] * 1.5,
         roll: rot[2] * 1.5,
@@ -233,8 +231,8 @@ export default {
     },
 
     startDemo () {
-      this.$handsfree.disablePlugins()
-      this.$handsfree.update(this.demoOpts)
+      window.handsfree.disablePlugins()
+      window.handsfree.update(this.demoOpts)
     }
   }
 }

@@ -1,8 +1,6 @@
 /**
  * Move a pointer with your palm
  */
-import { TweenMax } from 'gsap/all'
-
 export default {
   models: 'holistic',
   enabled: false,
@@ -77,7 +75,7 @@ export default {
         mid.y = mid.y / this.palmPoints.length
 
         // Tween
-        TweenMax.to(this.tween[n], 1, {
+        this.handsfree.TweenMax.to(this.tween[n], 1, {
           x: window.outerWidth - mid.x * window.outerWidth + this.config.offset.x,
           y: mid.y * window.outerHeight + this.config.offset.y,
           overwrite: true,
