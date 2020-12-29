@@ -1,5 +1,3 @@
-import { TweenMax } from 'gsap/all'
-
 export default {
   models: 'handpose',
   enabled: false,
@@ -55,7 +53,7 @@ export default {
     const hits = this.handsfree.handpose.three.raycaster.intersectObject(this.handsfree.handpose.three.screen, true)
 
     if (hits && hits.length) {
-      TweenMax.to(this.tween, 1, {
+      this.handsfree.TweenMax.to(this.tween, 1, {
         x: window.outerWidth - this.handsfree.normalize(this.handsfree.handpose.three.renderer.domElement.width - (hits[0].point.x + this.handsfree.handpose.three.renderer.domElement.width / 2), this.handsfree.handpose.three.renderer.domElement.width) * window.outerWidth,
         y: this.handsfree.normalize(hits[0].point.y + this.handsfree.handpose.three.renderer.domElement.height / 2, this.handsfree.handpose.three.renderer.domElement.height) * window.outerHeight, 
         overwrite: true,

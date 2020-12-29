@@ -145,6 +145,8 @@ module.exports = {
               ['/ref/method/runPlugins.md', '.runPlugins()'],
               ['/ref/method/start.md', '.start()'],
               ['/ref/method/stop.md', '.stop()'],
+              ['/ref/method/throttle.md', '.throttle()'],
+              ['/ref/method/TweenMax.md', '.TweenMax()'],
               ['/ref/method/update.md', '.update()'],
               ['/ref/method/unpause.md', '.unpause()'],
               ['/ref/method/use.md', '.use()'],

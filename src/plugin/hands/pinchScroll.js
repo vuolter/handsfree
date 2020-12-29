@@ -1,5 +1,3 @@
-import { TweenMax } from 'gsap/all'
-
 /**
  * Scrolls the page vertically by closing hand
  */
@@ -57,7 +55,7 @@ export default {
     if (this.thresholdMet) {
       if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
         this.origScrollTop = this.getTargetScrollTop() + hands.multiHandLandmarks[0][4].y * height * this.config.speed
-        TweenMax.killTweensOf(this.tweenScroll)
+        this.handsfree.TweenMax.killTweensOf(this.tweenScroll)
       }
       this.framesSinceLastGrab = 0
     }
@@ -65,7 +63,7 @@ export default {
     
     // Scroll
     if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
-      TweenMax.to(this.tweenScroll, 1, {
+      this.handsfree.TweenMax.to(this.tweenScroll, 1, {
         y: this.origScrollTop - hands.multiHandLandmarks[0][4].y * height * this.config.speed,
         overwrite: true,
         ease: 'linear.easeNone',

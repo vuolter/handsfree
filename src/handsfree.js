@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.0.8
+                8.0.9
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -44,6 +44,7 @@ import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
+import {TweenMax} from "gsap/TweenMaxBase"
 
 // Plugins
 import pluginFacePointer from './plugin/weboji/facePointer'
@@ -78,9 +79,13 @@ class Handsfree {
    * @param {Object} config The initial config to use
    */
   constructor (config = {}) {
+    // Helpers
+    this.throttle = throttle
+    this.TweenMax = TweenMax
+    
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.0.8'
+    this.version = '8.0.9'
     this.data = {}
 
     // Dependency management
@@ -667,18 +672,6 @@ class Handsfree {
     Object.keys(corePlugins).forEach(name => {
       this.use(name, corePlugins[name])
     })    
-  }
-
-  /**
-   * Throttles callback to run timeInMilliseconds
-   * @see https://handsfree.js.org/ref/method/throttle
-   *
-   * @param {function} callback The callback to run
-   * @param {Integer} time How many milliseconds to throttle (in other words, run this method at most ever x milliseconds)
-   * @param {Object} options {leading: true, trailing: true} @see https://lodash.com/docs/4.17.15#throttle
-   */
-  throttle(cb, time, opts) {
-    return throttle(cb, time, opts)
   }
 }
 

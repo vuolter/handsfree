@@ -1,5 +1,3 @@
-import { TweenMax } from 'gsap/all'
-
 export default {
   models: 'weboji',
   enabled: false,
@@ -74,7 +72,7 @@ export default {
     y += this.config.offset.y
 
     // @todo Make the sensitivity variable
-    TweenMax.to(this.tween, 1, {
+    this.handsfree.TweenMax.to(this.tween, 1, {
       x,
       y,
       overwrite: true,
