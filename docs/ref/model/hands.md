@@ -25,8 +25,8 @@ sidebarDepth: 2
   </div>
 </div>
 
-> [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/hands)
-> [Technical documentation](https://google.github.io/mediapipe/solutions/hands.html)
+> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/hands)
+> - [Technical documentation](https://google.github.io/mediapipe/solutions/hands.html)
 
 ## Usage
 

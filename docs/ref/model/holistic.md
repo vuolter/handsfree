@@ -26,8 +26,8 @@ sidebarDepth: 2
   </div>
 </div>
 
-> [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/holistic)
-> [Technical documentation](https://google.github.io/mediapipe/solutions/holistic.html)
+> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/holistic)
+> - [Technical documentation](https://google.github.io/mediapipe/solutions/holistic.html)
 
 ## Usage
 
