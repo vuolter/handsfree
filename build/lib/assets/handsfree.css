@@ -1,21 +1,22 @@
-/* Debug and Feedback */
-.handsfree-feedback,
+/* Debugger */
+.handsfree-debugger,
 .handsfree-video,
 .handsfree-canvas {
   display: none;
 }
-.handsfree-started.handsfree-show-video .handsfree-feedback,
-.handsfree-started.handsfree-show-video .handsfree-video {
-  display: block;
-}
-.handsfree-started.handsfree-show-debug .handsfree-feedback,
+.handsfree-started.handsfree-show-debug .handsfree-debugger,
 .handsfree-started.handsfree-show-debug .handsfree-canvas {
   display: block;
 }
 
+.handsfree-started.handsfree-show-debug .handsfree-show-when-debugging {display: block}
+.handsfree-started.handsfree-show-debug .handsfree-hide-when-debugging {display: none}
+
+body.handsfree-started.handsfree-hide-debug .handsfree-show-when-not-debugging {display: block}
+body.handsfree-started.handsfree-hide-debug .handsfree-hide-when-not-debugging {display: none}
 
 /* Debug */
-.handsfree-feedback {
+.handsfree-debugger {
   position: relative;
 }
 .handsfree-canvas,
