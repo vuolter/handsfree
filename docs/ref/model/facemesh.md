@@ -27,8 +27,8 @@ sidebarDepth: 2
   </div>
 </div>
 
-> [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/face_mesh)
-> [Technical documentation](https://google.github.io/mediapipe/solutions/face_mesh.html)
+> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/face_mesh)
+> - [Technical documentation](https://google.github.io/mediapipe/solutions/face_mesh.html)
 
 ## Usage
 
