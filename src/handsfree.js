@@ -32,6 +32,7 @@
   #3 Plugins
   #4 Events
   #5 Helpers
+  #6 Debugger
 
 */
 
@@ -154,78 +155,6 @@ class Handsfree {
     this.model.pose = new PoseModel(this, this.config.pose)
     this.model.facemesh = new FacemeshModel(this, this.config.facemesh)
     this.model.holistic = new HolisticModel(this, this.config.holistic)
-  }
-
-  /**
-   * Sets up the video and canvas elements
-   */
-  setupDebugger () {
-    this.debug = {}
-    
-    // Feedback wrap
-    if (!this.config.setup.wrap.$el) {
-      const $wrap = document.createElement('DIV')
-      $wrap.classList.add('handsfree-feedback')
-      this.config.setup.wrap.$el = $wrap
-    }
-    this.debug.$wrap = this.config.setup.wrap.$el
-
-    // Create video element
-    if (!this.config.setup.video.$el) {
-      const $video = document.createElement('VIDEO')
-      $video.setAttribute('playsinline', true)
-      $video.classList.add('handsfree-video')
-      $video.setAttribute('id', `handsfree-video-${this.id}`)
-      this.config.setup.video.$el = $video
-    }
-    this.debug.$video = this.config.setup.video.$el
-    this.debug.$video.width = this.config.setup.video.width
-    this.debug.$video.height = this.config.setup.video.height
-    this.debug.$wrap.appendChild(this.debug.$video)
-
-    // Context 2D canvases
-    this.debug.$canvas = {}
-    this.debug.context = {}
-    this.config.setup.canvas.video = {
-      width: this.debug.$video.width,
-      height: this.debug.$video.height
-    }
-
-    // The video canvas is used to display the video
-    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
-      this.debug.$canvas[model] = {}
-      this.debug.context[model] = {}
-      
-      let $canvas = this.config.setup.canvas[model].$el
-      if (!$canvas) {
-        $canvas = document.createElement('CANVAS')
-        this.config.setup.canvas[model].$el = $canvas
-      }
-      
-      // Classes
-      $canvas.classList.add('handsfree-canvas', `handsfree-canvas-${model}`, `handsfree-hide-when-started-without-${model}`)
-      $canvas.setAttribute('id', `handsfree-canvas-${model}-${this.id}`)
-
-      // Dimensions
-      this.debug.$canvas[model] = this.config.setup.canvas[model].$el
-      this.debug.$canvas[model].width = this.config.setup.canvas[model].width
-      this.debug.$canvas[model].height = this.config.setup.canvas[model].height
-      this.debug.$wrap.appendChild(this.debug.$canvas[model])
-
-      // Context
-      if (model === 'weboji') {
-        // this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
-      } else {
-        this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
-      }
-    })
-    
-    // Append everything to the body
-    this.config.setup.wrap.$parent.appendChild(this.debug.$wrap)
-
-    // Add classes
-    this.config.showDebug && document.body.classList.add('handsfree-show-debug')
-    this.config.showVideo && document.body.classList.add('handsfree-show-video')
   }
 
   /**
@@ -674,6 +603,101 @@ class Handsfree {
     Object.keys(corePlugins).forEach(name => {
       this.use(name, corePlugins[name])
     })    
+  }
+
+
+
+  /////////////////////////////////////////////////////////////
+  //////////////////////// #6 DEBUGGER ////////////////////////
+  /////////////////////////////////////////////////////////////
+
+
+
+  /**
+   * Sets up the video and canvas elements
+   */
+  setupDebugger () {
+    this.debug = {}
+    
+    // Feedback wrap
+    if (!this.config.setup.wrap.$el) {
+      const $wrap = document.createElement('DIV')
+      $wrap.classList.add('handsfree-feedback')
+      this.config.setup.wrap.$el = $wrap
+    }
+    this.debug.$wrap = this.config.setup.wrap.$el
+
+    // Create video element
+    if (!this.config.setup.video.$el) {
+      const $video = document.createElement('VIDEO')
+      $video.setAttribute('playsinline', true)
+      $video.classList.add('handsfree-video')
+      $video.setAttribute('id', `handsfree-video-${this.id}`)
+      this.config.setup.video.$el = $video
+    }
+    this.debug.$video = this.config.setup.video.$el
+    this.debug.$video.width = this.config.setup.video.width
+    this.debug.$video.height = this.config.setup.video.height
+    this.debug.$wrap.appendChild(this.debug.$video)
+
+    // Context 2D canvases
+    this.debug.$canvas = {}
+    this.debug.context = {}
+    this.config.setup.canvas.video = {
+      width: this.debug.$video.width,
+      height: this.debug.$video.height
+    }
+
+    // The video canvas is used to display the video
+    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
+      this.debug.$canvas[model] = {}
+      this.debug.context[model] = {}
+      
+      let $canvas = this.config.setup.canvas[model].$el
+      if (!$canvas) {
+        $canvas = document.createElement('CANVAS')
+        this.config.setup.canvas[model].$el = $canvas
+      }
+      
+      // Classes
+      $canvas.classList.add('handsfree-canvas', `handsfree-canvas-${model}`, `handsfree-hide-when-started-without-${model}`)
+      $canvas.setAttribute('id', `handsfree-canvas-${model}-${this.id}`)
+
+      // Dimensions
+      this.debug.$canvas[model] = this.config.setup.canvas[model].$el
+      this.debug.$canvas[model].width = this.config.setup.canvas[model].width
+      this.debug.$canvas[model].height = this.config.setup.canvas[model].height
+      this.debug.$wrap.appendChild(this.debug.$canvas[model])
+
+      // Context
+      if (model === 'weboji') {
+        // this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
+      } else {
+        this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
+      }
+    })
+    
+    // Append everything to the body
+    this.config.setup.wrap.$parent.appendChild(this.debug.$wrap)
+
+    // Add classes
+    this.config.showDebug && document.body.classList.add('handsfree-show-debug')
+  }
+
+  /**
+   * Shows the debugger
+   */
+  showDebugger () {
+    this.isDebugging = true
+    document.body.classList.add('handsfree-show-debug')
+  }
+
+  /**
+   * Hides the debugger
+   */
+  hideDebugger () {
+    this.isDebugging = false
+    document.body.classList.remove('handsfree-show-debug')
   }
 }
 

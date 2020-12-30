@@ -4,10 +4,6 @@
 .handsfree-canvas {
   display: none;
 }
-.handsfree-started.handsfree-show-video .handsfree-feedback,
-.handsfree-started.handsfree-show-video .handsfree-video {
-  display: block;
-}
 .handsfree-started.handsfree-show-debug .handsfree-feedback,
 .handsfree-started.handsfree-show-debug .handsfree-canvas {
   display: block;
