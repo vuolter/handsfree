@@ -81,7 +81,7 @@ export default class HandsModel extends BaseModel {
   dataReceived (results) {
     this.data = results
     this.handsfree.data.hands = results
-    if (this.handsfree.config.showDebug) {
+    if (this.handsfree.isDebugging) {
       this.debug(results)
     }
   }

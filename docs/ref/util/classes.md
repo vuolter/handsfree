@@ -16,6 +16,11 @@ body.handsfree-loading
 body.handsfree-model-weboji
 body.handsfree-model-hands
 body.handsfree-model-holistic
+body.handsfree-model-pose
+body.handsfree-model-facemesh
+
+body.handsfree-show-debug
+body.handsfree-hide-debug
 ```
 
 ## Started, loading, and stopped states
@@ -38,4 +43,12 @@ The following can be added to elements to show that element only when specific m
 .handsfree-show-when-started-without-weboji
 .handsfree-show-when-started-without-hands
 .handsfree-show-when-started-without-holistic
+```
+
+## Debugging
+The following can be used to hide/show things based on the visibility state of the debugger:
+
+```css
+.handsfree-show-when-debugging
+.handsfree-hide-when-debugging
 ```

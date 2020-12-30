@@ -16,11 +16,12 @@ handsfree.start()
 - [.disablePlugins()](/ref/method/disablePlugins/) - Disables plugins by plugin tag
 - [.emit()](/ref/method/emit/) - Triggers an event on the `document` with a `handsfree-` namespace
 - [.enablePlugins()](/ref/method/enablePlugins/) - Enables plugins by plugin tag
-- [.cleanConfig()](/ref/method/cleanConfig/) - Cleans and sanitizes the config, setting up defaults
+- [.hideDebugger()](/ref/method/hideDebugger/) - Hides the visual feedback and adds helper classes to the body
 - [.normalize()](/ref/method/normalize/) - A helper method to normalize values between 0 and 1
 - [.on()](/ref/method/on/) - A helper method for listening to `.emit()` or browser events prefixed with `handsfree-`
 - [.pause()](/ref/method/pause/) - Pauses the [main loop](/guide/the-loop/) without shutting off the webcam stream
 - [.runPlugins()](/ref/method/runPlugins/) - Manually sets [handsfree.data](/ref/prop/data/) and runs all active plugins
+- [.showDebugger()](/ref/method/showDebugger/) - Shows the visual feedback and adds helper classes to the body
 - [.start()](/ref/method/start/) - Starts the [main loop](/guide/the-loop/) and begins tracking
 - [.stop()](/ref/method/stop/) - Stops the [main loop](/guide/the-loop/) and tracking
 - [.throttle()](/ref/method/throttle/) - An alias to [lodash.throttle](https://lodash.com/docs/4.17.15#throttle) function which is used to throttle (or limit the number of times) the passed function is called over a given amount of milliseconds

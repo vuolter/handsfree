@@ -80,7 +80,7 @@ export default class FacemeshModel extends BaseModel {
   dataReceived (results) {
     this.data = results
     this.handsfree.data.facemesh = results
-    if (this.handsfree.config.showDebug) {
+    if (this.handsfree.isDebugging) {
       this.debug(results)
     }
   }

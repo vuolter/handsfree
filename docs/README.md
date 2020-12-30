@@ -11,7 +11,7 @@ next: /guide/
   <video muted loop autoplay src="/model-wall.mp4" style="width: 100%"></video>
 </div>
 
-<h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</h3>
+<h3 style="padding-top: 2em">Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap ✨👌</h3>
 <p class="verticle-middle-children space-children text-center">
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/stars/midiblocks/handsfree?style=social"></a>
   <a href="https://github.com/midiblocks/handsfree"><img src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg"></a>
@@ -70,8 +70,8 @@ handsfree.start()
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.0.10/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.0.10/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.1.0/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.1.0/build/lib/handsfree.js"></script>
 </head>
 
 <body>
@@ -102,7 +102,7 @@ handsfree.start()
 
 ### Hosting the models yourself
 
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.0.10/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.1.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
 ```bash
 # Move the models into your project's public directory

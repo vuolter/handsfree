@@ -7,7 +7,7 @@
     HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
-  Window#handsfree-debug-window.handsfree-show-when-started.mb-0(title='Debugger' :minimize='true' :maximize='true')
+  Window#handsfree-debug-window.handsfree-show-when-started.handsfree-hide-when-not-debugging.mb-0(title='Debugger' :minimize='true' :maximize='true')
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
     🧙‍♂️ Presenting 🧙‍♀️
 
        Handsfree.js
-          8.0.10
+          8.1.0
 
 https://github.com/midiblocks/handsfree
 https://github.com/sponsors/midiblocks
