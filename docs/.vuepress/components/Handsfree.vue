@@ -56,6 +56,7 @@ export default {
           8.0.9
 
 https://github.com/midiblocks/handsfree
+https://github.com/sponsors/midiblocks
 `)
       
         // Import Handsfree
