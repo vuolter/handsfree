@@ -83,7 +83,7 @@ export default class PoseModel extends BaseModel {
   dataReceived (results) {
     this.data = results
     this.handsfree.data.pose = results
-    if (this.handsfree.config.showDebug) {
+    if (this.handsfree.isDebugging) {
       this.debug(results)
     }
   }
