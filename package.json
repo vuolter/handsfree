@@ -24,7 +24,6 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "clippyjs": "0.0.3",
     "markdown-it-deflist": "^2.1.0",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",

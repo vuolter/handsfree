@@ -43,8 +43,7 @@ module.exports = {
   },
   
   globalUIComponents: [
-    'Handsfree',
-    // 'Clippy'
+    'Handsfree'
   ],
   
   themeConfig: {
