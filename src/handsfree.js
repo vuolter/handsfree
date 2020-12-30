@@ -409,18 +409,16 @@ class Handsfree {
     })
 
     // Render video behind everything else
+    // - Note: Weboji uses its own camera
     if (this.config.showDebug) {
-      const activeModel = ['hands', 'pose', 'holistic', 'facemesh'].find(model => {
+      const isUsingCamera = ['hands', 'pose', 'holistic', 'facemesh'].find(model => {
         if (this.model[model].enabled) {
           return model
         }
       })
 
-      if (activeModel && this.model[activeModel]?.camera) {
-        // @fixme let's optimize this
-        this.debug.$canvas.video.width = this.debug.$canvas[activeModel].width
-        this.debug.$canvas.video.height = this.debug.$canvas[activeModel].height
-        this.debug.context.video.drawImage(this.model[activeModel].camera.video, 0, 0, this.debug.$canvas.video.width, this.debug.$canvas.video.height)
+      if (isUsingCamera) {
+        this.debug.context.video.drawImage(this.debug.$video, 0, 0, this.debug.$canvas.video.width, this.debug.$canvas.video.height)
       }
     }
 
