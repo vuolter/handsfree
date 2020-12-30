@@ -186,7 +186,11 @@ class Handsfree {
     // Context 2D canvases
     this.debug.$canvas = {}
     this.debug.context = {}
-    this.config.setup.canvas.video = {}
+    this.config.setup.canvas.video = {
+      width: this.debug.$video.width,
+      height: this.debug.$video.height
+    }
+
     // The video canvas is used to display the video
     ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
       this.debug.$canvas[model] = {}
