@@ -549,7 +549,7 @@ class Handsfree {
   }
 
   /**
-   * Gets the webcam media stream into handsfree.feedback.stream
+   * Gets the webcam media stream into handsfree.debug.$video
    * @see https://handsfree.js.org/ref/method/getUserMedia
    * 
    * @param {Object} callback The callback to call after the stream is received
@@ -619,10 +619,10 @@ class Handsfree {
   setupDebugger () {
     this.debug = {}
     
-    // Feedback wrap
+    // debugger wrap
     if (!this.config.setup.wrap.$el) {
       const $wrap = document.createElement('DIV')
-      $wrap.classList.add('handsfree-feedback')
+      $wrap.classList.add('handsfree-debugger')
       this.config.setup.wrap.$el = $wrap
     }
     this.debug.$wrap = this.config.setup.wrap.$el

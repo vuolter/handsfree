@@ -1,10 +1,10 @@
-/* Debug and Feedback */
-.handsfree-feedback,
+/* Debugger */
+.handsfree-debugger,
 .handsfree-video,
 .handsfree-canvas {
   display: none;
 }
-.handsfree-started.handsfree-show-debug .handsfree-feedback,
+.handsfree-started.handsfree-show-debug .handsfree-debugger,
 .handsfree-started.handsfree-show-debug .handsfree-canvas {
   display: block;
 }
@@ -16,7 +16,7 @@ body.handsfree-started.handsfree-hide-debug .handsfree-show-when-not-debugging {
 body.handsfree-started.handsfree-hide-debug .handsfree-hide-when-not-debugging {display: none}
 
 /* Debug */
-.handsfree-feedback {
+.handsfree-debugger {
   position: relative;
 }
 .handsfree-canvas,
