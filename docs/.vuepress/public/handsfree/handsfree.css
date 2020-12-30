@@ -9,6 +9,11 @@
   display: block;
 }
 
+.handsfree-started.handsfree-show-debug .handsfree-show-when-debugging {display: block}
+.handsfree-started.handsfree-show-debug .handsfree-hide-when-debugging {display: none}
+
+body.handsfree-started.handsfree-hide-debug .handsfree-show-when-not-debugging {display: block}
+body.handsfree-started.handsfree-hide-debug .handsfree-hide-when-not-debugging {display: none}
 
 /* Debug */
 .handsfree-feedback {

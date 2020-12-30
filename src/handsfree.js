@@ -681,7 +681,11 @@ class Handsfree {
     this.config.setup.wrap.$parent.appendChild(this.debug.$wrap)
 
     // Add classes
-    this.config.showDebug && document.body.classList.add('handsfree-show-debug')
+    if (this.config.showDebug) {
+      this.showDebugger()
+    } else {
+      this.hideDebugger()
+    }
   }
 
   /**
@@ -690,6 +694,7 @@ class Handsfree {
   showDebugger () {
     this.isDebugging = true
     document.body.classList.add('handsfree-show-debug')
+    document.body.classList.remove('handsfree-hide-debug')
   }
 
   /**
@@ -698,6 +703,7 @@ class Handsfree {
   hideDebugger () {
     this.isDebugging = false
     document.body.classList.remove('handsfree-show-debug')
+    document.body.classList.add('handsfree-hide-debug')
   }
 }
 
