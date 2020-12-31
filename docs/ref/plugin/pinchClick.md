@@ -36,10 +36,6 @@ sidebarDepth: 2
       <div class="finger-pincher handsfree-hide-when-finger-pinched-0-3"></div>
       <div class="finger-pincher handsfree-show-when-finger-pinched-0-3"></div>
     </td>
-    <td>
-      <div class="finger-pincher handsfree-hide-when-finger-pinched-1-4"></div>
-      <div class="finger-pincher handsfree-show-when-finger-pinched-1-4"></div>
-    </td>
   </tr>
   <tr>
     <td>
@@ -57,10 +53,6 @@ sidebarDepth: 2
     <td>
       <div class="finger-pincher handsfree-hide-when-finger-pinched-1-3"></div>
       <div class="finger-pincher handsfree-show-when-finger-pinched-1-3"></div>
-    </td>
-    <td>
-      <div class="finger-pincher handsfree-hide-when-finger-pinched-1-4"></div>
-      <div class="finger-pincher handsfree-show-when-finger-pinched-1-4"></div>
     </td>
   </tr>
 </table>
