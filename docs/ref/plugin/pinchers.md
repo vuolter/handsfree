@@ -1,11 +1,11 @@
 ---
 sidebarDepth: 2
 ---
-# Plugin: pinchClick
+# Plugin: pinchers
 
 <Window>
   <div class="row">
-    <div class="col-6"><img src="https://media4.giphy.com/media/tQ1vFtoMWWpgdCoJJj/giphy.gif"></div>
+    <div class="col-6"><img src="https://media4.giphy.com/media/IHcXdVDrnpVnZqwq4z/giphy.gif"></div>
     <div class="col-6">
       <ul>
         <li>👌 Pinch your thumb with any finger to set that fingers "click" state</li>
@@ -25,7 +25,7 @@ sidebarDepth: 2
 >
 > **Tags:** This plugin works with all tags
 >
-> **About:** This plugin emits a `handsfree-pinch-start-H-F`, `handsfree-pinch-held-H-F`, and `handsfree-pinch-released-H-F` event on the document for every pinched finger and adds `.handsfree-finger-pinched-H-F` to the body
+> **About:** This plugin emits a events a `handsfree-pincher` event and sets classes on the body to help you style elements based on which fingers were pinched
 
 <table class="finger-pincher-table">
   <thead>
