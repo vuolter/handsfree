@@ -51,13 +51,16 @@ import {TweenMax} from "gsap/TweenMaxBase"
 import pluginFacePointer from './plugin/weboji/facePointer'
 import pluginFaceClick from './plugin/weboji/faceClick'
 import pluginFaceScroll from './plugin/weboji/faceScroll'
+
 import pluginPinchScroll  from './plugin/hands/pinchScroll'
+import pluginPinchers  from './plugin/hands/pinchers'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
   faceScroll: pluginFaceScroll,
   pinchScroll: pluginPinchScroll,
+  pinchers: pluginPinchers,
 }
 
 

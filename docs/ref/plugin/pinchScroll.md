@@ -12,6 +12,7 @@ sidebarDepth: 2
         <ul>
           <li>👌 Pinch your thumb and index to grab the page</li>
           <li>↕ While pinched, move hand up and down to scroll page</li>
+          <li>Adjustable speed</li>
         </ul>
         <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Scroll page with hands" text-on="Stop Hands" :opts="demoOpts" />
         <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
