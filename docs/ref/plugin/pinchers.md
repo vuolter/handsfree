@@ -31,10 +31,10 @@ sidebarDepth: 2
   <thead>
     <tr>
       <th>Hand</th>
-      <th>Index</th>
-      <th>Middle</th>
-      <th>Ring</th>
-      <th>Pinky</th>
+      <th>Index [0]</th>
+      <th>Middle [1]</th>
+      <th>Ring [2]</th>
+      <th>Pinky [3]</th>
     </tr>
   </thead>
   <tbody>
@@ -79,6 +79,29 @@ sidebarDepth: 2
   </tbody>
 </table>
 
+## Classes
+
+This plugin comes with many helper classes to help you style your app based on the pinching fingers, they look like this:
+
+```css
+/* Left hand (0), index finger (0) */
+.handsfree-show-when-finger-pinched-0-0
+.handsfree-hide-when-finger-pinched-0-0
+
+/* Right hand (1), pinky finger (3) */
+.handsfree-show-when-finger-pinched-1-3
+.handsfree-hide-when-finger-pinched-1-3
+```
+
+Simply apply these classes to the elements you'd like to show/hide. If you'd like some more styling then you can take advantage of the body classes that get added:
+
+```css
+/* Left (0) middle finger (1) */
+body.handsfree-finger-pinched-0-1
+
+/* Right (1) ring finger (2) */
+body.handsfree-finger-pinched-1-2
+```
 
 ## Full plugin code
 
