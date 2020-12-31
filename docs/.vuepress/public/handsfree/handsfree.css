@@ -238,36 +238,6 @@ body.handsfree-started.handsfree-hide-debug .handsfree-hide-when-not-debugging {
   display: inline-block !important;
 }
 
-/* Calibrator, Gesture Recorder */
-/* .handsfree-gesture-recorder-wrap, .handsfree-calibrator-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  text-align: center;
-  padding-top: 100px;
-  box-sizing: border-box;
-  pointer-events: none;
-  z-index: 999998;
-}
-.handsfree-gesture-recorder-wrap.handsfree-visible, .handsfree-calibrator-wrap.handsfree-visible {
-  opacity: 0.95;
-}
-.handsfree-calibrator-marker {
-  width: 160px;
-  height: 160px;
-  border-radius: 160px;
-  margin: auto;
-  border: 2px solid #aac;
-}
-#tfjs-visor-container > .visor {
-  z-index: 1000000;
-} */
-
 /* Click animation */
 body.handsfree-clicked .handsfree-pointer {
   background: #ff0;
@@ -276,8 +246,35 @@ body.handsfree-clicked .handsfree-pointer {
 @keyframes shadow-pulse {
   0% {
     box-shadow: 0 0 0 15px rgba(255, 0, 0, 0.45);
- }
+  }
   100% {
     box-shadow: 0 0 0 75px rgba(255, 0, 0, 0);
- }
+  }
+}
+
+/* Finger Pinchers */
+body:not(.handsfree-finger-pinched-0-0) .handsfree-hide-when-finger-pinched-0-0 {
+  display: block;
+}
+body.handsfree-finger-pinched-0-0 .handsfree-hide-when-finger-pinched-0-0 {
+  display: none;
+}
+body:not(.handsfree-finger-pinched-0-0) .handsfree-show-when-finger-pinched-0-0 {
+  display: none;
+}
+body.handsfree-finger-pinched-0-0 .handsfree-show-when-finger-pinched-0-0 {
+  display: block;
+}
+
+body:not(.handsfree-finger-pinched-1-0) .handsfree-hide-when-finger-pinched-1-0 {
+  display: block;
+}
+body.handsfree-finger-pinched-1-0 .handsfree-hide-when-finger-pinched-1-0 {
+  display: none;
+}
+body:not(.handsfree-finger-pinched-1-0) .handsfree-show-when-finger-pinched-1-0 {
+  display: none;
+}
+body.handsfree-finger-pinched-1-0 .handsfree-show-when-finger-pinched-1-0 {
+  display: block;
 }
