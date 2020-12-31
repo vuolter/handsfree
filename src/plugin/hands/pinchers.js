@@ -121,11 +121,11 @@ export default {
         // Click
         if (visible[hand] && this.thresholdMet[hand][finger]) {
           this.pinchDowned[hand][finger]++
-          document.body.classList.add(`handsfree-hand-pinched-${hand}-${finger}`)
+          document.body.classList.add(`handsfree-finger-pinched-${hand}-${finger}`)
         } else {
           this.pinchUp[hand][finger] = this.pinchDowned[hand][finger]
           this.pinchDowned[hand][finger] = 0
-          document.body.classList.remove(`handsfree-hand-pinched-${hand}-${finger}`)
+          document.body.classList.remove(`handsfree-finger-pinched-${hand}-${finger}`)
         }
 
         // Make sure states are available

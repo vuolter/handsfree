@@ -18,6 +18,53 @@ sidebarDepth: 2
   </div>
 </Window>
 
+<table class="finger-pincher-table">
+  <tr>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-0"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-0"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-1"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-1"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-2"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-2"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-3"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-3"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-4"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-4"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-0"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-0"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-1"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-1"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-2"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-2"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-3"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-3"></div>
+    </td>
+    <td>
+      <div class="finger-pincher handsfree-show-when-finger-pinched-0-4"></div>
+      <div class="finger-pincher handsfree-hide-when-finger-pinched-0-4"></div>
+    </td>
+  </tr>
+</table>
+
 
 ## Full plugin code
 
@@ -53,3 +100,19 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.finger-pincher-table
+  td
+    text-align center
+
+.finger-pincher
+  display inline-block
+  width 32px
+  height 32px
+  border-radius 32px
+  background #f00
+
+  &:first-child
+    background #000
+</style>
