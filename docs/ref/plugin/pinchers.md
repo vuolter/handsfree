@@ -88,7 +88,7 @@ handsfree.data.hands.pinchState = [
   // Left hand
   // index, middle, ring, pinky
   ['', '', '', ''],
-  // Left hand
+  // Right hand
   // index, middle, ring, pinky
   ['', '', '', '']
 ]
@@ -111,13 +111,31 @@ handsfree.use('logger', ({hands}) => {
 
 ## Events
 
-Currently this plugin emits an event for every individual finger, which you can listen to:
+Currently this plugin emits an event for every individual finger, which you can listen to. There are 2 a total of 4 possible events per finger, where `h` represents the hand (0 = left, 1 = right) and `f` represents the index:
+
+```css
+/* Any event */
+handsfree-finger-pinched-h-f
+/* start event */
+handsfree-finger-pinched-start-h-f
+/* held event */
+handsfree-finger-pinched-held-h-f
+/* released event */
+handsfree-finger-pinched-released-h-f
+```
+
+Here are a few examples for listening to these events:
 
 ```js
 // Listen to any event from left hand (0), index finger (0)
 document.addEventListener('handsfree-finger-pinched-0-0')
 // Listen to any event right hand (1), pinky finger (3)
 handsfree.on('finger-pinched-1-0')
+
+// Listen to a specific event from left hand (0), middle finger (1)
+handsfree.on('finger-pinched-start-0-1')
+// Listen to a specific event from right hand (1), ring finger (2)
+document.addEventListener('handsfree-finger-pinched-1-2')
 ```
 
 ## Classes

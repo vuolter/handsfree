@@ -108,7 +108,9 @@ export default {
       }
     }
 
+    // Update the hands object
     this.checkClick(hands, leftVisible, rightVisible)
+    hands.origPinch = this.origPinch
   },
 
   /**
