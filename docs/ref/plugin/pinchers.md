@@ -21,9 +21,9 @@ sidebarDepth: 2
 
 > **Models:** [MediaPipe Hands](/ref/model/hands/)
 >
-> **About:** This plugin emits a events a `handsfree-pincher` event and sets classes on the body to help you style elements based on which fingers were pinched
+> **About:** This plugin emits events, adds new properties to the hand data, and sets classes on the body to help you style elements based on which fingers were pinched
 >
-> **Activate:** This plugin is automatically activated when the [Hands Model](/ref/model/hands/) is enabled.
+> **Activate:** This plugin is automatically activated when the [Hands Model](/ref/model/hands/) is enabled
 >
 > **Tags:** `['core']`
 
