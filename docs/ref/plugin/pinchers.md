@@ -81,6 +81,8 @@ sidebarDepth: 2
 
 ## Properties
 
+### Pinch States with `.pinchState`
+
 This plugin adds `handsfree.data.hands.pinchState` to the [Hands Model](/ref/model/hands/). It is a 2D array with the following:
 
 ```js
@@ -106,6 +108,36 @@ Each index can be of one of the following states:
 const handsfree = new Handsfree({hands: true})
 handsfree.use('logger', ({hands}) => {
   console.log(hands.pinchState)
+})
+```
+
+### Original Pinch Locations with `.origPos`
+
+In addition the the `.pinchState`, you also have access to the original pixel `{x, y}` that the pinch occurred within the webcam through `.origPinch`. This is very useful for determining how far a pinch was "dragged". Like with `.pinchState`, `handsfree.data.hands.origPinch` contains one value per finger per hand:
+
+```js
+// Log the original point of pinch
+handsfree.on('finger-pinched-0-1', () => {
+  // Display the x and y of the left pointer finger
+  console.log(
+    handsfree.data.hands.origPinch[0][0].x,
+    handsfree.data.hands.origPinch[0][0].y
+  )
+})
+```
+
+### Current Pinch Locations with `.curPinch`
+
+Like `.origPinch`, `.curPinch` lists the current pixel `{x, y}` that the pinch is happening at. This is useful for calculating the distance since the `.origPinch`:
+
+```js
+// Log the original point of pinch
+handsfree.on('finger-pinched-1-3', () => {
+  // Display the x and y of the right pinky
+  console.log(
+    handsfree.data.hands.curPinch[1][3].x,
+    handsfree.data.hands.curPinch[1][3].y
+  )
 })
 ```
 

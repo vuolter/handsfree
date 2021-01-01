@@ -111,6 +111,7 @@ export default {
     // Update the hands object
     this.checkClick(hands, leftVisible, rightVisible)
     hands.origPinch = this.origPinch
+    hands.curPinch = this.curPinch
   },
 
   /**
@@ -153,8 +154,16 @@ export default {
 
         // Emit an event
         if (hands.pinchState[hand][finger]) {
-          this.handsfree.emit(`finger-pinched-${hand}-${finger}`)
-          this.handsfree.emit(`finger-pinched-${hands.pinchState[hand][finger]}-${hand}-${finger}`)
+          this.handsfree.emit(`finger-pinched-${hand}-${finger}`, {
+            event: hands.pinchState[hand][finger],
+            origPinch: hands.origPinch[hand][finger],
+            curPinch: hands.curPinch[hand][finger]
+          })
+          this.handsfree.emit(`finger-pinched-${hands.pinchState[hand][finger]}-${hand}-${finger}`, {
+            event: hands.pinchState[hand][finger],
+            origPinch: hands.origPinch[hand][finger],
+            curPinch: hands.curPinch[hand][finger]
+          })
         }
       }
     }
