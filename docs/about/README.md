@@ -36,7 +36,8 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
-| 2020-12-30 | 8.1.1 | Adds [.showDebugger()](/ref/method/showDebugger/), [.hideDebugger()](/ref/method/hideDebugger/), and helper classes. Renames `feedback` to `debugger`
+| 2020-12-31 | 8.1.1 | Adds [pinchers Plugin](/ref/plugin/pinchers/) for easily working with finger pinches through events, new properties, and styles
+| 2020-12-30 | 8.1.0 | Adds [.showDebugger()](/ref/method/showDebugger/), [.hideDebugger()](/ref/method/hideDebugger/), and helper classes. Renames `feedback` to `debugger`
 | 2020-12-29 | 8.0.10 | Fixes a bug where `handsfree.debug.$video` had 0 width and height; Fixed issue where the webcam feed was not showing behind model wireframes when `handsfree.config.showDebug === true`
 | 2020-12-28 | 8.0.9 | Adds [isClient Mode](/ref/prop/config#isclient) for remote inference. [.runPlugins()](/ref/method/runPlugins/) [.TweenMax()](/ref/method/TweenMax/), [.throttle()](/ref/method/throttle/), reduced filesize by 80kb+
 | 2020-12-22 | 8.0.7 | Adds [handsfree.model.weboji.isDetected](/ref/model/weboji/)
