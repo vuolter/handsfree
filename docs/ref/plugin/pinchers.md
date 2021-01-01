@@ -143,9 +143,10 @@ handsfree.on('finger-pinched-1-3', () => {
 
 ## Events
 
-Currently this plugin emits an event for every individual finger, which you can listen to. There are 2 a total of 4 possible events per finger, where `h` represents the hand (0 = left, 1 = right) and `f` represents the index:
+Currently this plugin emits an event for every individual finger, which you can listen to. There are a total of 8 possible events, where `h` represents the hand (0 = left, 1 = right) and `f` represents the index:
 
 ```css
+/* SPECIFIC HAND */
 /* Any event */
 handsfree-finger-pinched-h-f
 /* start event */
@@ -154,20 +155,42 @@ handsfree-finger-pinched-start-h-f
 handsfree-finger-pinched-held-h-f
 /* released event */
 handsfree-finger-pinched-released-h-f
+
+/* ANY HAND */
+/* Any event */
+handsfree-finger-pinched-f
+/* start event */
+handsfree-finger-pinched-start-f
+/* held event */
+handsfree-finger-pinched-held-f
+/* released event */
+handsfree-finger-pinched-released-f
 ```
 
 Here are a few examples for listening to these events:
 
 ```js
+// ## SPECIFIC HAND
 // Listen to any event from left hand (0), index finger (0)
 document.addEventListener('handsfree-finger-pinched-0-0')
 // Listen to any event right hand (1), pinky finger (3)
-handsfree.on('finger-pinched-1-0')
+handsfree.on('finger-pinched-1-3')
 
 // Listen to a specific event from left hand (0), middle finger (1)
 handsfree.on('finger-pinched-start-0-1')
 // Listen to a specific event from right hand (1), ring finger (2)
 document.addEventListener('handsfree-finger-pinched-1-2')
+
+// ## ANY HAND
+// Listen to any event from with any index finger (0)
+document.addEventListener('handsfree-finger-pinched-0')
+// Listen to any event with any pinky finger (3)
+handsfree.on('finger-pinched-3')
+
+// Listen to a specific event with any middle finger (1)
+handsfree.on('finger-pinched-start-1')
+// Listen to a specific event with any ring finger (2)
+document.addEventListener('handsfree-finger-pinched-2')
 ```
 
 ## Classes
@@ -175,6 +198,7 @@ document.addEventListener('handsfree-finger-pinched-1-2')
 This plugin comes with many helper classes to help you style your app based on the pinching fingers, they look like this:
 
 ```css
+/* ## SPECIFIC HAND */
 /* Left hand (0), index finger (0) */
 .handsfree-show-when-finger-pinched-0-0
 .handsfree-hide-when-finger-pinched-0-0
@@ -182,6 +206,15 @@ This plugin comes with many helper classes to help you style your app based on t
 /* Right hand (1), pinky finger (3) */
 .handsfree-show-when-finger-pinched-1-3
 .handsfree-hide-when-finger-pinched-1-3
+
+/* ## ANY HAND */
+/* Any index finger (0) */
+.handsfree-show-when-finger-pinched-0
+.handsfree-hide-when-finger-pinched-0
+
+/* Any pinky finger (3) */
+.handsfree-show-when-finger-pinched-3
+.handsfree-hide-when-finger-pinched-3
 ```
 
 Simply apply these classes to the elements you'd like to show/hide. If you'd like some more styling then you can take advantage of the body classes that get added:
@@ -192,6 +225,12 @@ body.handsfree-finger-pinched-0-1
 
 /* Right (1) ring finger (2) */
 body.handsfree-finger-pinched-1-2
+
+/* ANY middle finger (1) */
+body.handsfree-finger-pinched-1
+
+/* ANY ring finger (2) */
+body.handsfree-finger-pinched-2
 ```
 
 ## Full plugin code

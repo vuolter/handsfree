@@ -121,12 +121,10 @@ export default {
     const visible = [leftVisible, rightVisible]
 
     // Make sure states are available
-    if (!hands.pinchState) {
-      hands.pinchState = [
-        ['', '', '', ''],
-        ['', '', '', '']
-      ]
-    }
+    hands.pinchState = [
+      ['', '', '', ''],
+      ['', '', '', '']
+    ]
     
     // Loop through every hand and finger
     for (let hand = 0; hand < 2; hand++) {
@@ -134,11 +132,11 @@ export default {
         // Click
         if (visible[hand] && this.thresholdMet[hand][finger]) {
           this.pinchDowned[hand][finger]++
-          document.body.classList.add(`handsfree-finger-pinched-${hand}-${finger}`)
+          document.body.classList.add(`handsfree-finger-pinched-${hand}-${finger}`, `handsfree-finger-pinched-${finger}`)
         } else {
           this.pinchUp[hand][finger] = this.pinchDowned[hand][finger]
           this.pinchDowned[hand][finger] = 0
-          document.body.classList.remove(`handsfree-finger-pinched-${hand}-${finger}`)
+          document.body.classList.remove(`handsfree-finger-pinched-${hand}-${finger}`, `handsfree-finger-pinched-${finger}`)
         }
         
         // Set the state
@@ -154,12 +152,24 @@ export default {
 
         // Emit an event
         if (hands.pinchState[hand][finger]) {
+          // Specific hand
           this.handsfree.emit(`finger-pinched-${hand}-${finger}`, {
             event: hands.pinchState[hand][finger],
             origPinch: hands.origPinch[hand][finger],
             curPinch: hands.curPinch[hand][finger]
           })
           this.handsfree.emit(`finger-pinched-${hands.pinchState[hand][finger]}-${hand}-${finger}`, {
+            event: hands.pinchState[hand][finger],
+            origPinch: hands.origPinch[hand][finger],
+            curPinch: hands.curPinch[hand][finger]
+          })
+          // Any hand
+          this.handsfree.emit(`finger-pinched-${finger}`, {
+            event: hands.pinchState[hand][finger],
+            origPinch: hands.origPinch[hand][finger],
+            curPinch: hands.curPinch[hand][finger]
+          })
+          this.handsfree.emit(`finger-pinched-${hands.pinchState[hand][finger]}-${finger}`, {
             event: hands.pinchState[hand][finger],
             origPinch: hands.origPinch[hand][finger],
             curPinch: hands.curPinch[hand][finger]
