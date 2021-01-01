@@ -12,23 +12,127 @@
 </head>
 
 <body>
-  <div>
-    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Handsfree</button>
+  <!-- Start/stop button with helper classes -->
+  <div class="text-center">
+    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Hand Tracking</button>
     <button class="handsfree-show-when-loading" disabled>Loading ...</button>
-    <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Handsfree</button>
+    <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Hands</button>
   </div>
+  
+  <!-- Pincher table with helper classes to toggle things on/off -->
+  <section>
+    <h1>Pinch fingers to light up the circles</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Hand</th>
+          <th>Index [0]</th>
+          <th>Middle [1]</th>
+          <th>Ring [2]</th>
+          <th>Pinky [3]</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Left</th>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-0-0"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-0-0"></div>
+          </td>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-0-1"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-0-1"></div>
+          </td>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-0-2"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-0-2"></div>
+          </td>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-0-3"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-0-3"></div>
+          </td>
+        </tr>
+        <tr>
+          <th>Right</th>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-1-0"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-1-0"></div>
+          </td>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-1-1"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-1-1"></div>
+          </td>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-1-2"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-1-2"></div>
+          </td>
+          <td>
+            <div class="finger-pincher handsfree-hide-when-finger-pinched-1-3"></div>
+            <div class="finger-pincher handsfree-show-when-finger-pinched-1-3"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- We'll have the debugger injected into here -->
+    <div id="debugger-holder"></div>
+  </section>
   
   <!-- Instantiate and start it -->
   <script>
     const handsfree = new Handsfree({
+      // Show debug
+      showDebug: true,
+
+      // Turn some of thes on to combine them
       hands: true,
-      showDebug: true
+      facemesh: false,
+      pose: false,
+      holistic: false,
+      weboji: false
     })
-    handsfree.taggedPlugins.untagged = []
 
     // A simple plugin to log the data
     handsfree.use('logger', data => {
       console.log(data)
     })
   </script>
+
+  <!-- Demo styles -->
+  <style>
+    button {
+      font-size: 2em;
+      padding: .5em;
+    }
+    
+    h1, table {
+      margin-top: 60px;
+    }
+    
+    section {
+      width: 650px;
+      max-width: 100%;
+      margin: auto;
+    }
+
+    table {
+      width: 100%
+    }
+    
+    .finger-pincher {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border-radius: 32px;
+      background: #000;
+      margin: auto;
+    }
+    .finger-pincher:last-child {
+      background: #f00;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+  </style>
 </body>

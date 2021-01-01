@@ -109,15 +109,15 @@ export default {
     }
 
     // Update the hands object
-    this.checkClick(hands, leftVisible, rightVisible)
     hands.origPinch = this.origPinch
     hands.curPinch = this.curPinch
+    this.handsfree.data.hands = this.getPinchStates(hands, leftVisible, rightVisible)
   },
 
   /**
    * Check if we are "mouse clicking"
    */
-  checkClick (hands, leftVisible, rightVisible) {
+  getPinchStates (hands, leftVisible, rightVisible) {
     const visible = [rightVisible, leftVisible]
 
     // Loop through every hand and finger
@@ -167,5 +167,7 @@ export default {
         }
       }
     }
+
+    return hands
   }
 }
