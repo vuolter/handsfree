@@ -118,8 +118,16 @@ export default {
    * Check if we are "mouse clicking"
    */
   getPinchStates (hands, leftVisible, rightVisible) {
-    const visible = [rightVisible, leftVisible]
+    const visible = [leftVisible, rightVisible]
 
+    // Make sure states are available
+    if (!hands.pinchState) {
+      hands.pinchState = [
+        ['', '', '', ''],
+        ['', '', '', '']
+      ]
+    }
+    
     // Loop through every hand and finger
     for (let hand = 0; hand < 2; hand++) {
       for (let finger = 0; finger < 4; finger++) {
@@ -131,14 +139,6 @@ export default {
           this.pinchUp[hand][finger] = this.pinchDowned[hand][finger]
           this.pinchDowned[hand][finger] = 0
           document.body.classList.remove(`handsfree-finger-pinched-${hand}-${finger}`)
-        }
-
-        // Make sure states are available
-        if (!hands.pinchState) {
-          hands.pinchState = [
-            ['', '', '', ''],
-            ['', '', '', '']
-          ]
         }
         
         // Set the state
