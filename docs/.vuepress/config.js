@@ -13,11 +13,13 @@ module.exports = {
 
     ['meta', {property: 'og:type', content: 'website'}],
     ['meta', {property: 'og:url', content: 'https://handsfree.js.org/'}],
-    ['meta', {property: 'og:image', content: ''}],
-
+    ['meta', {property: 'og:image', content: 'https://i.imgur.com/A9g8rfp.jpg'}],
+    ['meta', {property: 'og:title', content: 'Handsfree.js'}],
+    ['meta', {property: 'og:description', content: 'Add face, hand, and pose tracking to your projects, create handsfree user experiences, and tap into our growing library of plugins and integrations ✨👌'}],
+    
     ['meta', {property: 'twitter:card', content: 'summary_large_image'}],
-    ['meta', {property: 'twitter:url', content: 'https://handsfree.js.org/'}],
-    ['meta', {property: 'twitter:image', content: 'https://i.imgur.com/A9g8rfp.jpg'}]
+    ['meta', {property: 'twitter:image', content: 'https://i.imgur.com/A9g8rfp.jpg'}],
+    ['meta', {property: 'twitter:site', content: '@Midiblocks'}],
   ],
 
   alias: {
@@ -161,6 +163,7 @@ module.exports = {
               ['/ref/plugin/faceClick.md', 'faceClick'],
               ['/ref/plugin/facePointer.md', 'facePointer'],
               ['/ref/plugin/faceScroll.md', 'faceScroll'],
+              ['/ref/plugin/pinchers.md', 'pinchers'],
               ['/ref/plugin/pinchScroll.md', 'pinchScroll'],
             ]
           },
