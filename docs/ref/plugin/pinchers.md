@@ -21,11 +21,11 @@ sidebarDepth: 2
 
 > **Models:** [MediaPipe Hands](/ref/model/hands/)
 >
-> **Activate:** `handsfree.plugin.pinchers.enable()`
->
-> **Tags:** This plugin works with all tags
->
 > **About:** This plugin emits a events a `handsfree-pincher` event and sets classes on the body to help you style elements based on which fingers were pinched
+>
+> **Activate:** This plugin is automatically activated when the [Hands Model](/ref/model/hands/) is enabled.
+>
+> **Tags:** `['core']`
 
 <table class="finger-pincher-table">
   <thead>
@@ -78,6 +78,47 @@ sidebarDepth: 2
     </tr>
   </tbody>
 </table>
+
+## Properties
+
+This plugin adds `handsfree.data.hands.pinchState` to the [Hands Model](/ref/model/hands/). It is a 2D array with the following:
+
+```js
+handsfree.data.hands.pinchState = [
+  // Left hand
+  // index, middle, ring, pinky
+  ['', '', '', ''],
+  // Left hand
+  // index, middle, ring, pinky
+  ['', '', '', '']
+]
+```
+
+Each index can be of one of the following states:
+
+| State | Note |
+|-------|------|
+| `start` | When the pinch first starts |
+| `held` | Every frame the pinch is held |
+| `released` | When the pinch is released |
+
+```js
+const handsfree = new Handsfree({hands: true})
+handsfree.use('logger', ({hands}) => {
+  console.log(hands.pinchState)
+})
+```
+
+## Events
+
+Currently this plugin emits an event for every individual finger, which you can listen to:
+
+```js
+// Listen to any event from left hand (0), index finger (0)
+document.addEventListener('handsfree-finger-pinched-0-0')
+// Listen to any event right hand (1), pinky finger (3)
+handsfree.on('finger-pinched-1-0')
+```
 
 ## Classes
 

@@ -1,5 +1,7 @@
 export default {
   models: 'hands',
+  enabled: true,
+  tags: ['core'],
 
   // Index of fingertips
   fingertipIndex: [8, 12, 16, 20],
@@ -51,7 +53,7 @@ export default {
   mouseUp: false,
   // Whether one of the morph confidences have been met
   mouseThresholdMet: false,
-  
+
   config: {
     // Number of frames over the same element before activating that element
     framesToFocus: 10,
@@ -145,6 +147,12 @@ export default {
           hands.pinchState[hand][finger] = 'released'
         } else {
           hands.pinchState[hand][finger] = ''
+        }
+
+        // Emit an event
+        if (hands.pinchState[hand][finger]) {
+          this.handsfree.emit(`finger-pinched-${hand}-${finger}`)
+          this.handsfree.emit(`finger-pinched-${hands.pinchState[hand][finger]}-${hand}-${finger}`)
         }
       }
     }
