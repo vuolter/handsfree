@@ -27,6 +27,10 @@ module.exports = {
     public: path.resolve(__dirname, './public')
   },
 
+  plugins: {
+    plausible: {domain: 'handsfree.js.org'}
+  },
+
   configureWebpack: {
     resolve: {
       alias: {
