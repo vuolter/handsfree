@@ -61,7 +61,7 @@ Until controllers are made handsfree as well, you can use the mouse to manually 
 - I've installed this a few times on different machines, and occasionally the first time you enter Handsfree Mode it won't work. Just reload the page and try again, I'll try figure out why this happens
 - Everything happens client side and only in the tab which you activated Handsfree Mode in
 - I do not use analytics or trackers in the Chrome Extension, nor do I collect any data
-- [Please open any issues](https://github.com/midiblocks/handsfree-webxr/issues) for questions or comments on GitHub, or come [chat and research with me on Discord](https://discord.gg/snbB62DUT9)
+- [Please open any issues](https://github.com/midiblocks/handsfree-webxr/issues) for questions or comments on GitHub, or come [chat and research with me on Discord](https://discord.gg/q96txF5Wf5)
 
 ## Roadmap
 - Attach a controller to the head and use face gestures to trigger buttons
@@ -80,7 +80,7 @@ You can also:
 
 - [Sign up to my Handsfree.js.org newsletter](http://eepurl.com/hhD7S1)
 - [DM me on Twitter @Midiblocks](https://twitter.com/midiblocks)
-- [Join the Discord](https://discord.gg/snbB62DUT9) or add me as a friend at <kbd>Oz#4442</kbd>
+- [Join the Discord](https://discord.gg/q96txF5Wf5) or add me as a friend at <kbd>Oz#4442</kbd>
 
 ## See Also
 
