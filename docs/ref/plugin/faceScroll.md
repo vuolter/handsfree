@@ -84,7 +84,13 @@ export default {
         hands: false,
         facemesh: false,
         pose: false,
-        holistic: false
+        holistic: false,
+
+        plugin: {
+          facePointer: {enabled: true},
+          faceScroll: {enabled: true},
+          faceClick: {enabled: true}
+        }
       }
     }
   },

@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.1.1
+                8.1.2
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -89,7 +89,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.1.1'
+    this.version = '8.1.2'
     this.data = {}
 
     // Dependency management
@@ -266,7 +266,9 @@ class Handsfree {
     this.emit('loading', this)
 
     // Call the callback once things are loaded
-    callback && document.addEventListener('handsfree-modelReady', callback, {once: true})
+    if (callback) {
+      this.on('modelReady', callback, {once: true})
+    }
     
     // Load dependencies
     this.numModelsLoaded = 0

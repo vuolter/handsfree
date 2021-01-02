@@ -24,8 +24,8 @@ export default {
       x: 0,
       y: 0,
       // Calibrate the head (in degrees)
-      pitch: -15,
-      yaw: -12,
+      pitch: 10,
+      yaw: 0,
       roll: 0
     },
 

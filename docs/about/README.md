@@ -36,6 +36,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-01-01 | 8.1.2 | Fixes [Face Pointer](/ref/plugin/facePointer/) offsets, which was causing the pointer to assume you were facing straight up 😆
 | 2020-12-31 | 8.1.1 | Adds [pinchers Plugin](/ref/plugin/pinchers/) for easily working with finger pinches through events, new properties, and styles
 | 2020-12-30 | 8.1.0 | Adds [.showDebugger()](/ref/method/showDebugger/), [.hideDebugger()](/ref/method/hideDebugger/), and helper classes. Renames `feedback` to `debugger`
 | 2020-12-29 | 8.0.10 | Fixes a bug where `handsfree.debug.$video` had 0 width and height; Fixed issue where the webcam feed was not showing behind model wireframes when `handsfree.config.showDebug === true`

@@ -3418,7 +3418,7 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.1.1/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.1.2/build/lib/assets',
     
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
@@ -6255,8 +6255,8 @@
         x: 0,
         y: 0,
         // Calibrate the head (in degrees)
-        pitch: -15,
-        yaw: -12,
+        pitch: 10,
+        yaw: 0,
         roll: 0
       },
 
@@ -6928,7 +6928,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.1.1
+                  8.1.2
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -6987,7 +6987,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.1.1';
+      this.version = '8.1.2';
       this.data = {};
 
       // Dependency management
@@ -7164,7 +7164,9 @@
       this.emit('loading', this);
 
       // Call the callback once things are loaded
-      callback && document.addEventListener('handsfree-modelReady', callback, {once: true});
+      if (callback) {
+        this.on('modelReady', callback, {once: true});
+      }
       
       // Load dependencies
       this.numModelsLoaded = 0;
