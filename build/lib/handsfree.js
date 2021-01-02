@@ -6255,8 +6255,8 @@
         x: 0,
         y: 0,
         // Calibrate the head (in degrees)
-        pitch: -15,
-        yaw: -12,
+        pitch: 10,
+        yaw: 0,
         roll: 0
       },
 
@@ -7164,7 +7164,9 @@
       this.emit('loading', this);
 
       // Call the callback once things are loaded
-      callback && document.addEventListener('handsfree-modelReady', callback, {once: true});
+      if (callback) {
+        this.on('modelReady', callback, {once: true});
+      }
       
       // Load dependencies
       this.numModelsLoaded = 0;
