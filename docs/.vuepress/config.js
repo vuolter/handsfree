@@ -27,6 +27,10 @@ module.exports = {
     public: path.resolve(__dirname, './public')
   },
 
+  plugins: {
+    plausible: {domain: 'handsfree.js.org'}
+  },
+
   configureWebpack: {
     resolve: {
       alias: {
@@ -200,7 +204,7 @@ module.exports = {
         children: [
           ['https://github.com/midiblocks/handsfree', 'GitHub'],
           ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
-          ['https://discord.gg/snbB62DUT9', 'Discord'],
+          ['https://discord.gg/q96txF5Wf5', 'Discord'],
           ['https://twitter.com/midiblocks', 'Twitter'],
           ['http://eepurl.com/hhD7S1', '📧 Newsletter']
         ]

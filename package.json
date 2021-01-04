@@ -30,7 +30,8 @@
     "rollup": "^2.32.0",
     "rollup-plugin-copy": "^3.3.0",
     "vuepress": "^1.7.1",
-    "vuepress-plugin-font-awesome": "^1.90.6"
+    "vuepress-plugin-font-awesome": "^1.90.6",
+    "vuepress-plugin-plausible": "0.0.2"
   },
   "dependencies": {
     "gsap": "^2.1.3",
