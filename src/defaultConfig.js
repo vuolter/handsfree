@@ -27,6 +27,12 @@ export default {
         width: 1280,
         height: 720
       },
+      handpose: {
+        // The canvas element to hold the skeletons and keypoints for hand model
+        $el: null,
+        width: 1280,
+        height: 720
+      },
       holistic: {
         // The canvas element to hold the skeletons and keypoints for holistic model
         $el: null,
@@ -174,6 +180,10 @@ export default {
     // Minimum confidence [0 - 1] for the pose tracker to be considered detected
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
+  },
+
+  handpose: {
+    enabled: false,
   },
 
   plugin: {}
