@@ -22,6 +22,24 @@ export default class HandposeModel extends BaseModel {
     this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
   }
 
+  loadDependencies (callback) {
+    // Load holistic
+    this.loadDependency(`${this.handsfree.config.assetsPath}/tfjs-models/handpose-bundle.js`, () => {
+      this.handsfree.getUserMedia(async () => {
+        await window.tf.setBackend('webgl')
+        this.api = await handpose.load(this.handsfree.config.handpose.model)
+  
+        // this.setup3D()
+  
+        callback && callback(this)
+        this.dependenciesLoaded = true
+        this.handsfree.emit('modelReady', this)
+        this.handsfree.emit('handposeModelReady', this)
+        document.body.classList.add('handsfree-model-handpose')
+      })
+    })
+  }
+
   /**
    * Runs inference and sets up other data
    */
@@ -32,33 +50,15 @@ export default class HandposeModel extends BaseModel {
 
     this.data = {
       ...predictions[0],
-      meshes: this.three.meshes
+      // meshes: this.three.meshes
     }
 
-    if (predictions[0]) {
-      this.updateMeshes(this.data)
-    }
+    // if (predictions[0]) {
+    //   this.updateMeshes(this.data)
+    // }
     
-    this.three.renderer.render(this.three.scene, this.three.camera)
+    // this.three.renderer.render(this.three.scene, this.three.camera)
     return this.data
-  }
-
-  loadDependencies (callback) {
-    // Load holistic
-    this.loadDependency(`${this.handsfree.config.assetsPath}/tfjs-models/handpose-bundle.js`, () => {
-      this.handsfree.getUserMedia(async () => {
-        await window.tf.setBackend('webgl')
-        this.api = await handpose.load(this.handsfree.config.handpose.model)
-  
-        this.setup3D()
-  
-        callback && callback(this)
-        this.dependenciesLoaded = true
-        this.handsfree.emit('modelReady', this)
-        this.handsfree.emit('handposeModelReady', this)
-        document.body.classList.add('handsfree-model-handpose')
-      })
-    })
   }
 
   /**
