@@ -222,7 +222,7 @@ class Handsfree {
     // Run enable/disable methods on changed models
     ;['hands', 'facemesh', 'pose', 'holistic', 'handpose', 'weboji'].forEach(model => {
       let wasEnabled = this.model[model].enabled
-      this.config[model].config = this.model[model].config
+      this.config[model] = this.model[model].config = merge({}, this.model[model].config, config[model])
 
       if (wasEnabled && !this.config[model].enabled) this.model[model].disable()
       else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false)

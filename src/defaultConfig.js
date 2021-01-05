@@ -185,6 +185,10 @@ export default {
   handpose: {
     enabled: false,
 
+    // The backend to use: 'webgl' or 'wasm'
+    // 🚨 Currently only webgl is supported
+    backend: 'webgl',
+
     // How many frames to go without running the bounding box detector. 
     // Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
     maxContinuousChecks: Infinity,

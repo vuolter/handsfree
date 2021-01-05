@@ -25,10 +25,10 @@ export default class HandposeModel extends BaseModel {
   loadDependencies (callback) {
     this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-core.js`, () => {
       this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-converter.js`, () => {
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-backend-webgl.js`, () => {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-backend-${this.handsfree.config.handpose.backend}.js`, () => {
           this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow-models/handpose/handpose.js`, () => {
             this.handsfree.getUserMedia(async () => {
-              await window.tf.setBackend('webgl')
+              await window.tf.setBackend(this.handsfree.config.handpose.backend)
               this.api = await handpose.load(this.handsfree.config.handpose.model)
         
               // this.setup3D()
