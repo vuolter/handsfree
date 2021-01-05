@@ -23,19 +23,24 @@ export default class HandposeModel extends BaseModel {
   }
 
   loadDependencies (callback) {
-    // Load holistic
-    this.loadDependency(`${this.handsfree.config.assetsPath}/tfjs-models/handpose-bundle.js`, () => {
-      this.handsfree.getUserMedia(async () => {
-        await window.tf.setBackend('webgl')
-        this.api = await handpose.load(this.handsfree.config.handpose.model)
-  
-        // this.setup3D()
-  
-        callback && callback(this)
-        this.dependenciesLoaded = true
-        this.handsfree.emit('modelReady', this)
-        this.handsfree.emit('handposeModelReady', this)
-        document.body.classList.add('handsfree-model-handpose')
+    this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-core.js`, () => {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-converter.js`, () => {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-backend-webgl.js`, () => {
+          this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow-models/handpose/handpose.js`, () => {
+            this.handsfree.getUserMedia(async () => {
+              await window.tf.setBackend('webgl')
+              this.api = await handpose.load(this.handsfree.config.handpose.model)
+        
+              // this.setup3D()
+        
+              callback && callback(this)
+              this.dependenciesLoaded = true
+              this.handsfree.emit('modelReady', this)
+              this.handsfree.emit('handposeModelReady', this)
+              document.body.classList.add('handsfree-model-handpose')
+            })
+          })
+        })
       })
     })
   }
