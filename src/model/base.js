@@ -68,8 +68,16 @@ export default class BaseModel {
    * Loads a script and runs a callback
    * @param {string} src The absolute path of the source file
    * @param {*} callback The callback to call after the file is loaded
+   * @param {boolean} skip Whether to skip loading the dependency and just call the callback
    */
-  loadDependency (src, callback) {
+  loadDependency (src, callback, skip = false) {
+    // Skip and run callback
+    if (skip) {
+      callback && callback()
+      return
+    }
+    
+    // Inject script into DOM
     const $script = document.createElement('script')
     $script.async = true
 

@@ -42,7 +42,7 @@ export default class HandposeModel extends BaseModel {
           })
         })
       })
-    })
+    }, !!window.tf)
   }
 
   /**
