@@ -681,8 +681,8 @@ class Handsfree {
       this.debug.$wrap.appendChild(this.debug.$canvas[model])
 
       // Context
-      if (model === 'weboji') {
-        // this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
+      if (['weboji', 'handpose'].includes(model)) {
+        this.debug.$canvas[model].classList.add('handsfree-canvas-webgl')
       } else {
         this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
       }

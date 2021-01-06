@@ -23,26 +23,28 @@ export default class HandposeModel extends BaseModel {
   }
 
   loadDependencies (callback) {
-    this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-core.js`, () => {
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-converter.js`, () => {
-        this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-backend-${this.handsfree.config.handpose.backend}.js`, () => {
-          this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow-models/handpose/handpose.js`, () => {
-            this.handsfree.getUserMedia(async () => {
-              await window.tf.setBackend(this.handsfree.config.handpose.backend)
-              this.api = await handpose.load(this.handsfree.config.handpose.model)
-        
-              // this.setup3D()
-        
-              callback && callback(this)
-              this.dependenciesLoaded = true
-              this.handsfree.emit('modelReady', this)
-              this.handsfree.emit('handposeModelReady', this)
-              document.body.classList.add('handsfree-model-handpose')
+    this.loadDependency(`${this.handsfree.config.assetsPath}/three/three.min.js`, () => {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-core.js`, () => {
+        this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-converter.js`, () => {
+          this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow/tf-backend-${this.handsfree.config.handpose.backend}.js`, () => {
+            this.loadDependency(`${this.handsfree.config.assetsPath}/@tensorflow-models/handpose/handpose.js`, () => {
+              this.handsfree.getUserMedia(async () => {
+                await window.tf.setBackend(this.handsfree.config.handpose.backend)
+                this.api = await handpose.load(this.handsfree.config.handpose.model)
+          
+                this.setup3D()
+          
+                callback && callback(this)
+                this.dependenciesLoaded = true
+                this.handsfree.emit('modelReady', this)
+                this.handsfree.emit('handposeModelReady', this)
+                document.body.classList.add('handsfree-model-handpose')
+              })
             })
           })
         })
-      })
-    }, !!window.tf)
+      }, !!window.tf)
+    }, !!window.THREE)
   }
 
   /**
@@ -55,14 +57,14 @@ export default class HandposeModel extends BaseModel {
 
     this.data = {
       ...predictions[0],
-      // meshes: this.three.meshes
+      meshes: this.three.meshes
     }
 
-    // if (predictions[0]) {
-    //   this.updateMeshes(this.data)
-    // }
+    if (predictions[0]) {
+      this.updateMeshes(this.data)
+    }
     
-    // this.three.renderer.render(this.three.scene, this.three.camera)
+    this.three.renderer.render(this.three.scene, this.three.camera)
     return this.data
   }
 
@@ -74,18 +76,18 @@ export default class HandposeModel extends BaseModel {
     this.three = {
       scene: new window.THREE.Scene(),
       camera: new window.THREE.PerspectiveCamera(90, window.outerWidth / window.outerHeight, 0.1, 1000),
-      renderer: new THREE.WebGLRenderer(),
+      renderer: new THREE.WebGLRenderer({
+        alpha: true,
+        canvas: this.handsfree.debug.$canvas.handpose
+      }),
       meshes: []
     }
     this.three.renderer.setSize(window.outerWidth, window.outerHeight)
-    this.three.renderer.domElement.classList.add('handsfree-handpose-canvas')
-    this.handsfree.debug.$wrap.appendChild(this.three.renderer.domElement)
-    this.three.camera.position.z = -this.handsfree.debug.$video.videoWidth / 2
+    this.three.camera.position.z = this.handsfree.debug.$video.videoWidth / 4
     this.three.camera.lookAt(new window.THREE.Vector3(0, 0, 0))
 
     // Camera plane
     this.three.screen = new window.THREE.Mesh(
-      // new window.THREE.PlaneGeometry(window.outerWidth, window.outerHeight),
       new window.THREE.BoxGeometry(window.outerWidth, window.outerHeight, 1),
       new window.THREE.MeshNormalMaterial()
     )
@@ -134,6 +136,7 @@ export default class HandposeModel extends BaseModel {
     obj.add(mesh)
     this.three.scene.add(obj)
     this.three.meshes.push(obj)    
+    this.three.screen.visible = false
   }
 
   // compute some metadata given a landmark index
