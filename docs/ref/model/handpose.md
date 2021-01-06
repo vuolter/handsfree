@@ -28,83 +28,63 @@ sidebarDepth: 2
 
 > - [TensorFlow Handpose Model](https://github.com/tensorflow/tfjs-models/tree/master/handpose)
 
-## Setup
+## Usage
 
-By default, setting `{hand: true}` adds a new `<video>` element to the DOM to grab the webcam: 
+### With defaults
 
 ```js
-handsfree = new Handsfree({hand: true})
+handsfree = new Handsfree({handpose: true})
+handsfree.start()
 ```
 
-## Config
+### With config
 
 ```js
-// These are all the default values
 handsfree = new Handsfree({
-  hand: {
-    // Whether the model is enabled or not
-    enabled: false,
-    // How many milliseconds to wait between each inference
-    throttle: 0,
-    // Model config
-    model: {
-      // How many frames to go without running the bounding box detector.
-      // - Set to a lower value if you want a safety net in case the mesh
-      //   detector produces consistently flawed predictions
-      maxContinuousChecks: Infinity,
-      // Threshold for discarding a prediction
-      detectionConfidence: 0.8,
-      // A float representing the threshold for deciding whether boxes overlap
-      // too much in non-maximum suppression. Must be between [0, 1]
-      iouThreshold: 0.3,
-      // A threshold for deciding when to remove boxes based on score in non-maximum suppression
-      scoreThreshold: 0.75
-    }
+  handpose: {
+    enabled: true,
+
+    // The backend to use: 'webgl' or 'wasm'
+    // 🚨 Currently only webgl is supported
+    backend: 'webgl',
+
+    // How many frames to go without running the bounding box detector. 
+    // Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
+    maxContinuousChecks: Infinity,
+
+    // Threshold for discarding a prediction
+    detectionConfidence: 0.8,
+
+    // A float representing the threshold for deciding whether boxes overlap too much in non-maximum suppression. Must be between [0, 1]
+    iouThreshold: 0.3,
+
+    // A threshold for deciding when to remove boxes based on score in non-maximum suppression.
+    scoreThreshold: 0.75
   }
 })
 ```
 
-## Accessing data
-
-Each of the following can be accessed either through `handsfree.hand.data` outside of a plugin, or through `data.hand` when inside `onFrame(data => {})`:
-
-```js
-// Outside of a plugin
-console.log(handsfree.hand.data)
-// Inside of a plugin
-handsfree.use('myPlugin', data => {
-  console.log(data.hand)
-})
-```
-
-## Hand Index
-
-Refer to the following image when accessing meshes or a finger index:
+## Data
 
 ![](/hand-indices.jpg)
 
-## Properties
-
 ```js
-/**
- * How confident the model is that a hand is in view
- * [0 - 1]
- */
+// Get the [x, y, z] of various landmarks
+// Thumb tip
+handsfree.hand.data.landmarks[4]
+// Index fingertip
+handsfree.hand.data.landmarks[8]
+
+// How confident the model is that a hand is in view [0 - 1]
 handsfree.hand.data.handInViewConfidence
-/**
- * The top left and bottom right pixels containing the hand in the iframe
- */
+
+// The top left and bottom right pixels containing the hand in the iframe
 handsfree.hand.data.boundingBox = {
   topLeft: [x, y],
   bottomRight: [x, y]
 }
-/**
- * [x, y, z] of various hand landmarks
- */
-handsfree.hand.data.landmarks[0..9] = [...[x, y, z]]
-/**
- * [x, y, z] of various hand landmarks
- */
+
+// [x, y, z] of various hand landmarks
 handsfree.hand.data.annotations: {
   thumb: [...[x, y, z]], // 4 landmarks
   indexFinger: [...[x, y, z]], // 4 landmarks
