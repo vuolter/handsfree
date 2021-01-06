@@ -93,6 +93,28 @@ div.mt-md
     .window-body
       .row
         .col-6
+          router-link(to='/ref/model/handpose.html')
+            img(src='https://media2.giphy.com/media/BPUnqDBgTav2yCfJjE/giphy.gif')
+        .col-6
+          h3
+            router-link(to='/ref/model/handpose.html') TensorFlow Handpose
+          ul
+            li 21 3D hand landmarks
+            li Can only track 1 hand at a time
+            li 📅 Extra helpers and plugins coming soon
+          div
+            HandsfreeToggle.full-width.handsfree-hide-when-started-without-handpose(text-off='Try Handpose' text-on='Stop Handpose' :opts='demo.handpose' @stop='stop("handpose")')
+            button.handsfree-show-when-started-without-handpose.handsfree-show-when-loading(disabled)
+              Fa-Spinner(spin)
+              | Loading...
+            button.handsfree-show-when-started-without-handpose.handsfree-hide-when-loading(@click='start("handpose")')
+              Fa-Video
+              | Try Handpose
+
+  .window.mb-md
+    .window-body
+      .row
+        .col-6
           router-link(to='/ref/model/weboji.html')
             img(src='https://media.giphy.com/media/Iv2aSMS0QTy2P5JNCX/source.gif')
         .col-6
@@ -131,6 +153,9 @@ export default {
         },
         holistic: {
           holistic: true
+        },
+        handpose: {
+          handpose: true
         }
       }
     }
