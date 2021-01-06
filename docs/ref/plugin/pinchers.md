@@ -249,6 +249,7 @@ export default {
         facemesh: false,
         pose: false,
         holistic: false,
+        handpose: false,
 
         plugin: {
           pinchers: {enabled: true}

@@ -209,6 +209,7 @@ export default {
         facemesh: false,
         pose: false,
         holistic: false,
+        handpose: false,
 
         plugin: {
           pinchScroll: {enabled: true}

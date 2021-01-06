@@ -194,7 +194,6 @@ body.handsfree-started.handsfree-hide-debug .handsfree-hide-when-not-debugging {
   display: inline-block !important;
 }
 
-
 /* Handpose */
 .handsfree-started .handsfree-hide-when-started-without-handpose {
   display: none;

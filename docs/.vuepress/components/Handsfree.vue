@@ -28,6 +28,7 @@ export default {
         hands: true,
         pose: false,
         holistic: false,
+        handpose: false,
         facemesh: false
       },
       

@@ -322,11 +322,12 @@ The Handsfree.js core is available for free and commercial use under [Apache 2.0
 
 - [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache 2.0)
 - [MediaPipe Models](https://google.github.io/mediapipe/solutions/solutions) (Apache 2.0)
-- [TensorFlow.js](https://github.com/tensorflow/tfjs-models) (Apache 2.0)
+- [TensorFlow.js Models](https://github.com/tensorflow/tfjs-models) (Apache 2.0)
 
 ## Attributions
 I'd like to also thank the following people and projects:
 - [98.css by @jdan](https://github.com/jdan/98.css) (MIT) - Used as boilerplate for documentation theme
+- [handpose-facemesh-demos by [@LingDong-]](https://github.com/LingDong-/handpose-facemesh-demos) - Used as a boilerplate for the Handpose Three.js setup
 
 <br>
 <br>
@@ -342,6 +343,9 @@ I'd like to also thank the following people and projects:
 
 Starting a large project [and movement](https://handsfree.js.org/about#master-plan) is so much fun but it's also a bit daunting 😅 I'd like to thank the following for [supporting this project](https://github.com/sponsors/midiblocks):
 
+- <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=24> @nsthorat</a>
+---
+I'd also like to thank:
 - [@DavidNTompkins](https://github.com/DavidNTompkins)
 - [@digitalcoleman](https://github.com/digitalcoleman)
 

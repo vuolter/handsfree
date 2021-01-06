@@ -19,3 +19,6 @@ document.addEventListener('someEvent', (event) => {
 - [Available data on the Weboji model](/ref/model/weboji/#data)
 - [Available data on the Handpose model](/ref/model/handpose/#data)
 - [Available data on the Holistic model](/ref/model/holistic/#data)
+- [Available data on the Hands model](/ref/model/hands/#data)
+- [Available data on the Facemesh model](/ref/model/facemesh/#data)
+- [Available data on the Pose model](/ref/model/pose/#data)

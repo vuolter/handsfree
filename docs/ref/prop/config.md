@@ -94,9 +94,21 @@ You'll need to manually call [handsfree.runPlugins(data)](/ref/method/runPlugins
 
 ## Models
 
-### `.handpose`
+### `.hands` (2D)
+
+See the [Hands Model](/ref/model/hands/#configuration) page
+
+### `.handpose` (3D)
 
 See the [Handpose Model](/ref/model/handpose/#configuration) page
+
+### `.facemesh`
+
+See the [Facemesh Model](/ref/model/facemesh/#configuration) page
+
+### `.pose`
+
+See the [Pose Model](/ref/model/pose/#configuration) page
 
 ### `.holistic`
 
