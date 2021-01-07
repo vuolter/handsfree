@@ -14,9 +14,9 @@
 <body>
   <!-- Start/stop button with helper classes -->
   <div class="text-center">
-    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Hand Tracking</button>
+    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="toggleModel('hands')">Start Hand Tracking</button>
     <button class="handsfree-show-when-loading" disabled>Loading ...</button>
-    <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Hands</button>
+    <button class="handsfree-show-when-started handsfree-hide-when-loading" onclick="handsfree.stop()">Stop Handsfree</button>
   </div>
   
   <!-- Pincher table with helper classes to toggle things on/off -->
@@ -74,14 +74,16 @@
       </tbody>
     </table>
 
-    <!-- Changing the model instructions -->
+    <!-- Swapping out models -->
     <h1>Swapping out models</h1>
-    <button onclick="toggleModel('facemesh')">Toggle Facemesh</button>
-    <button onclick="toggleModel('pose')">Toggle Pose</button>
-    <button onclick="toggleModel('handpose')">Toggle Handpose (3D)</button>
-    <button onclick="toggleModel('weboji')">Weboji</button>
-    <button onclick="toggleModel('holistic')">Toggle Holistic</button>
-    <button onclick="toggleModel('hands')">Toggle Hands (2D)</button>
+    <div>
+      <button onclick="toggleModel('facemesh')">Toggle Facemesh</button>
+      <button onclick="toggleModel('pose')">Toggle Pose</button>
+      <button onclick="toggleModel('handpose')">Toggle Handpose (3D)</button>
+      <button onclick="toggleModel('weboji')">Weboji</button>
+      <button onclick="toggleModel('holistic')">Toggle Holistic</button>
+      <button onclick="toggleModel('hands')">Toggle Hands (2D)</button>
+    </div>
     
     <!-- We'll have the debugger injected into here -->
     <div id="debugger-holder"></div>
@@ -99,7 +101,7 @@
       },
 
       // Turn some of thes on to combine them
-      hands: true,
+      hands: false,
       facemesh: false,
       pose: false,
       holistic: false,
