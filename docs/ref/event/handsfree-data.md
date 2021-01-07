@@ -10,7 +10,7 @@ The data is available on [handsfree.data](/ref/prop/data/) or in the individual 
 ## Receives
 
 event
-: An event object containing {[weboji](/ref/model/weboji/), [holistic](/ref/model/holistic/), [handpose](/ref/model/handpose/)} with data for each. Because this is an event the data is stored in `event.detail`
+: An event object containing {[weboji](/ref/model/weboji/), [holistic](/ref/model/holistic/), [handpose](/ref/model/handpose/), [hands](/ref/model/hands/), [facemesh](/ref/model/facemesh/), [pose](/ref/model/pose/)} with data for each. Because this is an event the data is stored in `event.detail`
 
 ## Example
 

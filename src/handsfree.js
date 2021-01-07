@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.1.2
+                8.2.0
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -36,11 +36,12 @@
 
 */
 
-import WebojiModel from './model/weboji'
 import HandsModel from './model/hands'
 import FacemeshModel from './model/facemesh'
 import PoseModel from './model/pose'
 import HolisticModel from './model/holistic'
+import HandposeModel from './model/handpose'
+import WebojiModel from './model/weboji'
 import PluginBase from './Plugin/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
@@ -89,7 +90,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.1.2'
+    this.version = '8.2.0'
     this.data = {}
 
     // Dependency management
@@ -151,13 +152,15 @@ class Handsfree {
       hands: {},
       facemesh: {},
       pose: {},
-      holistic: {}
+      holistic: {},
+      handpose: {}
     }
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.hands = new HandsModel(this, this.config.hands)
     this.model.pose = new PoseModel(this, this.config.pose)
     this.model.facemesh = new FacemeshModel(this, this.config.facemesh)
     this.model.holistic = new HolisticModel(this, this.config.holistic)
+    this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
 
   /**
@@ -192,6 +195,9 @@ class Handsfree {
     if (typeof config.holistic === 'boolean') {
       config.holistic = {enabled: config.holistic}
     }
+    if (typeof config.handpose === 'boolean') {
+      config.handpose = {enabled: config.handpose}
+    }
 
     // Map plugin booleans to objects
     config.plugin && Object.keys(config.plugin).forEach(plugin => {
@@ -214,9 +220,9 @@ class Handsfree {
     this.config = this.cleanConfig(config, this.config)
 
     // Run enable/disable methods on changed models
-    ;['hands', 'facemesh', 'pose', 'holistic', 'weboji'].forEach(model => {
+    ;['hands', 'facemesh', 'pose', 'holistic', 'handpose', 'weboji'].forEach(model => {
       let wasEnabled = this.model[model].enabled
-      this.config[model].config = this.model[model].config
+      this.config[model] = this.model[model].config = merge({}, this.model[model].config, config[model])
 
       if (wasEnabled && !this.config[model].enabled) this.model[model].disable()
       else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false)
@@ -345,7 +351,7 @@ class Handsfree {
     // Render video behind everything else
     // - Note: Weboji uses its own camera
     if (this.isDebugging) {
-      const isUsingCamera = ['hands', 'pose', 'holistic', 'facemesh'].find(model => {
+      const isUsingCamera = ['hands', 'pose', 'holistic', 'handpose', 'facemesh'].find(model => {
         if (this.model[model].enabled) {
           return model
         }
@@ -654,7 +660,7 @@ class Handsfree {
     }
 
     // The video canvas is used to display the video
-    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic'].forEach(model => {
+    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic', 'handpose'].forEach(model => {
       this.debug.$canvas[model] = {}
       this.debug.context[model] = {}
       
@@ -675,8 +681,8 @@ class Handsfree {
       this.debug.$wrap.appendChild(this.debug.$canvas[model])
 
       // Context
-      if (model === 'weboji') {
-        // this.debug.context[model] = this.debug.$canvas[model].getContext('webgl')  
+      if (['weboji', 'handpose'].includes(model)) {
+        this.debug.$canvas[model].classList.add('handsfree-canvas-webgl')
       } else {
         this.debug.context[model] = this.debug.$canvas[model].getContext('2d')  
       }

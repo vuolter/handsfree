@@ -118,6 +118,7 @@ module.exports = {
             children: [
               ['/ref/model/facemesh.md', '😏 FaceMesh'],
               ['/ref/model/hands.md', '🖐 Hands'],
+              ['/ref/model/handpose.md', '🖐 Handpose (3D)'],
               ['/ref/model/holistic.md', '🤺 Holistic'],
               ['/ref/model/pose.md', '🤸‍♀️ Pose'],
               ['/ref/model/weboji.md', '😉 Weboji'],

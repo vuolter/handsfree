@@ -42,7 +42,7 @@ handsfree.start()
 ```js
 const handsfree = new Handsfree({
   hands: {
-    enabled: false,
+    enabled: true,
     // The maximum number of hands to detect [0 - 4]
     maxNumHands: 2,
 
@@ -111,7 +111,8 @@ export default {
         hands: true,
         facemesh: false,
         pose: false,
-        holistic: false
+        holistic: false,
+        handpose: false
       }
     }
   },

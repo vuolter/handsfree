@@ -11,18 +11,18 @@ export default class HandsModel extends BaseModel {
   loadDependencies (callback) {
     // Just load utils on client
     if (this.handsfree.config.isClient) {
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`, () => {
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils.js`, () => {
         this.onWarmUp(callback)
-      })
+      }, !!window.drawConnectors)
 
       return
     }
 
     // Load hands
-    this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/hands.js`, () => {
+    this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/hands/hands.js`, () => {
       // Configure model
       this.api = new window.Hands({locateFile: file => {
-        return `${this.handsfree.config.assetsPath}/@mediapipe/hands/node_modules/@mediapipe/hands/${file}`
+        return `${this.handsfree.config.assetsPath}/@mediapipe/hands/${file}`
       }})
       this.api.setOptions(this.handsfree.config.hands)
       this.api.onResults(results => this.dataReceived(results))
@@ -42,7 +42,7 @@ export default class HandsModel extends BaseModel {
       })
 
       // Load the hands camera module
-      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils/node_modules/@mediapipe/drawing_utils/drawing_utils.js`)
+      this.loadDependency(`${this.handsfree.config.assetsPath}/@mediapipe/drawing_utils.js`, null, !!window.drawConnectors)
     })
   }
 

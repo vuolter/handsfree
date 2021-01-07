@@ -100,6 +100,7 @@ export default {
         facemesh: false,
         pose: false,
         holistic: false,
+        handpose: false,
 
         plugin: {
           facePointer: {enabled: true},

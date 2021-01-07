@@ -101,7 +101,8 @@ export default {
         hands: false,
         facemesh: false,
         pose: true,
-        holistic: false
+        holistic: false,
+        handpose: false
       }
     }
   },

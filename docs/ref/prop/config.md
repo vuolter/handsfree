@@ -20,7 +20,7 @@ The sanitization process simply adds default values for any options you specific
 
 ### `.assetsPath`
 
-**Default**: `https://unpkg.com/handsfree@8.1.2/build/lib/assets`
+**Default**: `https://unpkg.com/handsfree@8.2.0/build/lib/assets`
 
 In order to keep page loads snappy the models are loaded only when needed, and because Handsfree.js is designed to power webapps they are hosted on a CDN. However, you can click here to [download a zip file containing the models](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and copy over the `/build/lib/assets/` folder into your projects public folder to host them yourself.
 
@@ -94,9 +94,21 @@ You'll need to manually call [handsfree.runPlugins(data)](/ref/method/runPlugins
 
 ## Models
 
-### `.handpose`
+### `.hands` (2D)
+
+See the [Hands Model](/ref/model/hands/#configuration) page
+
+### `.handpose` (3D)
 
 See the [Handpose Model](/ref/model/handpose/#configuration) page
+
+### `.facemesh`
+
+See the [Facemesh Model](/ref/model/facemesh/#configuration) page
+
+### `.pose`
+
+See the [Pose Model](/ref/model/pose/#configuration) page
 
 ### `.holistic`
 

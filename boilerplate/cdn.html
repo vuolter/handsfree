@@ -1,8 +1,8 @@
 <!-- Minimal example using the CDN -->
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.1.2/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.1.2/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.0/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.2.0/build/lib/handsfree.js"></script>
   <style>
     .handsfree-canvas-video {
       background: #000;
@@ -14,14 +14,14 @@
 <body>
   <!-- Start/stop button with helper classes -->
   <div class="text-center">
-    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Hand Tracking</button>
+    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="toggleModel('hands')">Start Hand Tracking</button>
     <button class="handsfree-show-when-loading" disabled>Loading ...</button>
-    <button class="handsfree-show-when-started" onclick="handsfree.stop()">Stop Hands</button>
+    <button class="handsfree-show-when-started handsfree-hide-when-loading" onclick="handsfree.stop()">Stop Handsfree</button>
   </div>
   
   <!-- Pincher table with helper classes to toggle things on/off -->
   <section>
-    <h1>Pinch fingers to light up the circles</h1>
+    <h1>Pinch fingers to light up the circles.</h1>
     <table>
       <thead>
         <tr>
@@ -74,6 +74,17 @@
       </tbody>
     </table>
 
+    <!-- Swapping out models -->
+    <h1>Swapping out models</h1>
+    <div>
+      <button onclick="toggleModel('facemesh')">Toggle Facemesh</button>
+      <button onclick="toggleModel('pose')">Toggle Pose</button>
+      <button onclick="toggleModel('handpose')">Toggle Handpose (3D)</button>
+      <button onclick="toggleModel('weboji')">Weboji</button>
+      <button onclick="toggleModel('holistic')">Toggle Holistic</button>
+      <button onclick="toggleModel('hands')">Toggle Hands (2D)</button>
+    </div>
+    
     <!-- We'll have the debugger injected into here -->
     <div id="debugger-holder"></div>
   </section>
@@ -81,27 +92,41 @@
   <!-- Instantiate and start it -->
   <script>
     const handsfree = new Handsfree({
-      // Show debug
+      // Show debug inside a specific element
       showDebug: true,
+      setup: {
+        wrap: {
+          $parent: document.querySelector('#debugger-holder')
+        }
+      },
 
       // Turn some of thes on to combine them
-      hands: true,
+      hands: false,
       facemesh: false,
       pose: false,
       holistic: false,
-      weboji: false
+      weboji: false,
+      handpose: false
     })
 
     // A simple plugin to log the data
     handsfree.use('logger', data => {
       console.log(data)
     })
+
+    // Toggle Model
+    // @todo Actually add this to Handsfree
+    function toggleModel(name) {
+      const config = {}
+      config[name] = !handsfree.model[name].enabled
+      handsfree.update(config)
+    }
   </script>
 
   <!-- Demo styles -->
   <style>
     button {
-      font-size: 2em;
+      font-size: 1em;
       padding: .5em;
     }
     

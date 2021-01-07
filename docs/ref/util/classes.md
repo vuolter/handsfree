@@ -16,6 +16,7 @@ body.handsfree-loading
 body.handsfree-model-weboji
 body.handsfree-model-hands
 body.handsfree-model-holistic
+body.handsfree-model-handpose
 body.handsfree-model-pose
 body.handsfree-model-facemesh
 
@@ -39,10 +40,16 @@ The following can be added to elements to show that element only when specific m
 .handsfree-hide-when-started-without-weboji
 .handsfree-hide-when-started-without-hands
 .handsfree-hide-when-started-without-holistic
+.handsfree-hide-when-started-without-handpose
+.handsfree-hide-when-started-without-facemesh
+.handsfree-hide-when-started-without-pose
 
 .handsfree-show-when-started-without-weboji
 .handsfree-show-when-started-without-hands
 .handsfree-show-when-started-without-holistic
+.handsfree-show-when-started-without-handpose
+.handsfree-show-when-started-without-facemesh
+.handsfree-show-when-started-without-pose
 ```
 
 ## Debugging

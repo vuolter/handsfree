@@ -46,8 +46,8 @@ This option is great if you don't have or need a server, or if you're developing
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.1.2/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.1.2/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.0/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.2.0/build/lib/handsfree.js"></script>
 </head>
 
 <body>
@@ -83,7 +83,7 @@ handsfree.start()
 
 ## Hosting the models yourself
 
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.1.2/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.2.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
 ```bash
 # Move the models into your project's public directory
@@ -322,11 +322,12 @@ The Handsfree.js core is available for free and commercial use under [Apache 2.0
 
 - [Jeeliz Weboji](https://github.com/jeeliz/jeelizWeboji) (Apache 2.0)
 - [MediaPipe Models](https://google.github.io/mediapipe/solutions/solutions) (Apache 2.0)
-- [TensorFlow.js](https://github.com/tensorflow/tfjs-models) (Apache 2.0)
+- [TensorFlow.js Models](https://github.com/tensorflow/tfjs-models) (Apache 2.0)
 
 ## Attributions
 I'd like to also thank the following people and projects:
 - [98.css by @jdan](https://github.com/jdan/98.css) (MIT) - Used as boilerplate for documentation theme
+- [handpose-facemesh-demos by [@LingDong-]](https://github.com/LingDong-/handpose-facemesh-demos) - Used as a boilerplate for the Handpose Three.js setup
 
 <br>
 <br>
@@ -342,12 +343,11 @@ I'd like to also thank the following people and projects:
 
 Starting a large project [and movement](https://handsfree.js.org/about#master-plan) is so much fun but it's also a bit daunting 😅 I'd like to thank the following for [supporting this project](https://github.com/sponsors/midiblocks):
 
+- <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=24> @nsthorat</a>
+---
+I'd also like to thank:
 - [@DavidNTompkins](https://github.com/DavidNTompkins)
 - [@digitalcoleman](https://github.com/digitalcoleman)
-
-<br>
-<br>
-<small>(please feel free to contact me at midiblocks@gmail.com)</small>
 
 <br>
 <br>

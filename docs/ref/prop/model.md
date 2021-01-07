@@ -42,5 +42,8 @@ Each model can be referenced by name, and the original model APIs can be access 
 ```js
 handsfree.model.weboji.api
 handsfree.model.handpose.api
+handsfree.model.hands.api
+handsfree.model.pose.api
+handsfree.model.facemesh.api
 handsfree.model.holistic.api
 ```

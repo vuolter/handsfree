@@ -28,7 +28,17 @@ Please consider supporting this project 💜 There are several ways to help:
 - [Sponsor the project on GitHub](https://github.com/sponsors/midiblocks)
 - [Make a Pull Request](https://github.com/midiblocks)
 
----
+
+
+<blockquote>
+  <div class="text-center">
+    <p>Thanks to all of <a href="https://github.com/midiblocks/handsfree#thanks-to-the-handsfreejsorg-github-sponsors">our GitHub Sponsors</a>, including:</p>
+  </div>
+  <hr style="margin: 20px auto">
+  <div class="text-center">
+    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=24></a>
+  </div>
+</blockquote>
 
 ## Changelog
 
@@ -36,6 +46,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-01-06 | 8.2.0 | Adds [TensorFlow Handpose](/ref/model/handpose/) including a basic THREE boilerplate remixed from [@LingDong-'s handpose-facemesh-demos](https://github.com/LingDong-/handpose-facemesh-demos), and a fingertip raycaster.
 | 2020-01-01 | 8.1.2 | Fixes [Face Pointer](/ref/plugin/facePointer/) offsets, which was causing the pointer to assume you were facing straight up 😆
 | 2020-12-31 | 8.1.1 | Adds [pinchers Plugin](/ref/plugin/pinchers/) for easily working with finger pinches through events, new properties, and styles
 | 2020-12-30 | 8.1.0 | Adds [.showDebugger()](/ref/method/showDebugger/), [.hideDebugger()](/ref/method/hideDebugger/), and helper classes. Renames `feedback` to `debugger`

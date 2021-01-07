@@ -70,8 +70,8 @@ handsfree.start()
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.1.2/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.1.2/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.0/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.2.0/build/lib/handsfree.js"></script>
 </head>
 
 <body>
@@ -102,7 +102,7 @@ handsfree.start()
 
 ### Hosting the models yourself
 
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.1.2/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.2.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
 ```bash
 # Move the models into your project's public directory
@@ -194,6 +194,15 @@ handsfree.plugin.logger.onFrame = (data) => {
 ```
 
 
+<blockquote>
+  <div class="text-center">
+    <p>Thanks to all of <a href="https://github.com/midiblocks/handsfree#thanks-to-the-handsfreejsorg-github-sponsors">our GitHub Sponsors</a>, including:</p>
+  </div>
+  <hr style="margin: 20px auto">
+  <div class="text-center">
+    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=24></a>
+  </div>
+</blockquote>
 
 
 
@@ -209,6 +218,7 @@ export default {
         facemesh: false,
         pose: false,
         holistic: false,
+        handpose: false,
 
         plugin: {
           pinchScroll: {enabled: true}

@@ -5,7 +5,7 @@
  */
 export default {
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.1.2/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.2.0/build/lib/assets',
   
   // This will load everything but the models. This is useful when you want to use run inference
   // on another device or context but run the plugins on the current device
@@ -22,6 +22,12 @@ export default {
         height: 720
       },
       hands: {
+        // The canvas element to hold the skeletons and keypoints for hand model
+        $el: null,
+        width: 1280,
+        height: 720
+      },
+      handpose: {
         // The canvas element to hold the skeletons and keypoints for hand model
         $el: null,
         width: 1280,
@@ -174,6 +180,27 @@ export default {
     // Minimum confidence [0 - 1] for the pose tracker to be considered detected
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5
+  },
+
+  handpose: {
+    enabled: false,
+
+    // The backend to use: 'webgl' or 'wasm'
+    // 🚨 Currently only webgl is supported
+    backend: 'webgl',
+
+    // How many frames to go without running the bounding box detector. 
+    // Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
+    maxContinuousChecks: Infinity,
+
+    // Threshold for discarding a prediction
+    detectionConfidence: 0.8,
+
+    // A float representing the threshold for deciding whether boxes overlap too much in non-maximum suppression. Must be between [0, 1]
+    iouThreshold: 0.3,
+
+    // A threshold for deciding when to remove boxes based on score in non-maximum suppression.
+    scoreThreshold: 0.75
   },
 
   plugin: {}
