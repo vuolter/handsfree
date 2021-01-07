@@ -3,28 +3,33 @@ sidebarDepth: 2
 ---
 # Model: Handpose
 
-
-<div class="window mb-md">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6">
-        <img src="https://media0.giphy.com/media/BPUnqDBgTav2yCfJjE/giphy.gif" />
-      </div>
-      <div class="col-6">
+<Window title="Overview and demo" :maximize="true">
+  <div class="row">
+    <div class="col-6">
+      <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/BPUnqDBgTav2yCfJjE/giphy.gif" /></p>
+      <ul>
+        <li><a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">Original TensorFlow Handpose model on GitHub</a></li>
+        <li><a href="https://github.com/LingDong-/handpose-facemesh-demos">Debugger remixed from @LingDong-'s <code>handpose-facemesh-demos</code> on GitHub</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <Window>
+        <p><code>handsfree = new Handsfree({hands: true})</code></p>
         <ul>
-          <li>21 3D hand landmarks</li>
-          <li>Can only track 1 hand at a time</li>
-          <li>📅 Extra helpers and plugins coming soon</li>
+          <li>🖐 21 3D hand landmarks</li>
+          <li>1️⃣ Only one hand at a time is supported</li>
+          <li>🧰 Includes <a href="https://github.com/mrdoob/three.js/">THREE r124</a>, <a href="https://github.com/tensorflow/tfjs">TensorFlow 2.1</a></li>
         </ul>
+        <p>This model includes a fingertip raycaster, center of palm object, and a minimal THREE environment which doubles a basic debugger for your project.</p>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Try Handpose" text-on="Stop Handpose" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
           <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Handpose</button>
         </div>
-      </div>
+      </Window>
     </div>
   </div>
-</div>
+</Window>
 
 ## Examples
 
@@ -55,8 +60,7 @@ sidebarDepth: 2
       <div>
         <a href="https://handsfree-jenga.glitch.me/"><img alt="Person playing virtual Jenga by pinching and pulling on the blocks in the air with the guide of a Palm Pointer" src="https://media4.giphy.com/media/brC1Ow2v62htVmpfLh/giphy.gif"></a>
       </div>
-      <p>Uses the palmPointer plugin as a guide to show you were on the screen you're currently hovering over. Then users pinchers plugin to click and drag blocks.</p>
-      <p><strong>Note:</strong> This was made with an earlier version of Handsfree.js but the code will basically be the same.</p>
+      <p>This experiment led to the palmPointer plugin which was used here to guide the hand on the screen. The pinch gesture used here to "grab" the blocks was then generalized to all fingers, with 3+ events per finger.</p>
       <div>
         <ul>
           <li><a href="https://handsfree-jenga.glitch.me/">Try it on Glitch</a></li>
