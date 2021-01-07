@@ -26,6 +26,52 @@ sidebarDepth: 2
   </div>
 </div>
 
+## Examples
+
+<!-- 🙌 Hi! If you'd like to add your project, just uncomment below with and replace the ALL_CAPS to your info. Thanks so much 🙏 -->
+
+<!--
+<div class="row">
+  <div class="col-6">
+    <Window title="DEMO_TITLE" :maximize="true">
+      <div>
+        <a href="LINK_TO_DEMO"><img alt="SHORT_DESCRIPTION" src="LINK_TO_GIPHY_OR_OTHER_PUBLIC_GIF_URL"></a>
+      </div>
+      <p>A_BRIEF_DESCRIPTION</p>
+      <div>
+        <ul>
+          <li><a href="LINK_TO_DEMO">Try it on Glitch</a></li>
+          <li><a href="LINK_TO_SOURCE_OR_GITHUB">See the source</a></li>
+        </ul>
+      </div>
+    </Window>
+  </div>
+</div>
+-->
+
+<div class="row">
+  <div class="col-6">
+    <Window title="Handsfree Jenga" :maximize="true">
+      <div>
+        <a href="https://handsfree-jenga.glitch.me/"><img alt="Person playing virtual Jenga by pinching and pulling on the blocks in the air with the guide of a Palm Pointer" src="https://media4.giphy.com/media/brC1Ow2v62htVmpfLh/giphy.gif"></a>
+      </div>
+      <p>Uses the palmPointer plugin as a guide to show you were on the screen you're currently hovering over. Then users pinchers plugin to click and drag blocks.</p>
+      <p><strong>Note:</strong> This was made with an earlier version of Handsfree.js but the code will basically be the same.</p>
+      <div>
+        <ul>
+          <li><a href="https://handsfree-jenga.glitch.me/">Try it on Glitch</a></li>
+          <li><a href="https://glitch.com/edit/#!/handsfree-jenga?path=README.md">See the source</a></li>
+        </ul>
+      </div>
+    </Window>
+  </div>
+  <div class="col-6">
+    <Window title="Add your project">
+      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/handpose.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+    </Window>
+  </div>
+</div>
+
 > - [TensorFlow Handpose Model](https://github.com/tensorflow/tfjs-models/tree/master/handpose)
 
 ## Usage
