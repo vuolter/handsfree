@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.1.2
+                8.2.0
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -90,7 +90,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.1.2'
+    this.version = '8.2.0'
     this.data = {}
 
     // Dependency management
