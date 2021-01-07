@@ -194,6 +194,15 @@ handsfree.plugin.logger.onFrame = (data) => {
 ```
 
 
+<blockquote>
+  <div class="text-center">
+    <p>Thanks to all of <a href="https://github.com/midiblocks/handsfree#thanks-to-the-handsfreejsorg-github-sponsors">our GitHub Sponsors</a>, including:</p>
+  </div>
+  <hr style="margin: 20px auto">
+  <div class="text-center">
+    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=24></a>
+  </div>
+</blockquote>
 
 
 

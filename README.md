@@ -351,10 +351,6 @@ I'd also like to thank:
 
 <br>
 <br>
-<small>(please feel free to contact me at midiblocks@gmail.com)</small>
-
-<br>
-<br>
 <br>
 
 ---
