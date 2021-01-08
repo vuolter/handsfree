@@ -3,30 +3,33 @@ sidebarDepth: 2
 ---
 # 🤸‍♀️ Pose
 
-<div class="window mb-md">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6">
-        <img src="https://media0.giphy.com/media/VJ7aDV6F5id8wY2Ff0/giphy.gif" />
-      </div>
-      <div class="col-6">
+
+<div class="row align-top">
+  <div class="col-6">
+    <p><img alt="A person striking various poses, with a wireframe overlaid on top of them" src="https://media0.giphy.com/media/VJ7aDV6F5id8wY2Ff0/giphy.gif" /></p>
+    <ul>
+      <li>Powered by <a href="https://www.npmjs.com/package/@mediapipe/pose">MediaPipe's Pose</a></li>
+      <li>Full <a href="https://google.github.io/mediapipe/solutions/pose.html">technical documentation</a></li>
+    </ul>
+  </div>
+  <div class="col-6">
+    <Window title="Overview and basic demo">
+      <section>
         <ul>
-          <li>Full body mode with 33 2D pose landmarks</li>
-          <li>Upper body mode with 25 2D upper pose landmarks</li>
+          <li>🤸‍♀️ Full body mode with 33 2D pose landmarks</li>
+          <li>🤺 Upper body mode with 25 2D upper pose landmarks</li>
           <li>📅 Extra helpers and plugins coming soon</li>
         </ul>
+        <p>This model doesn't come with any bonuses or plugins yet but they'll come soon. The API will remain exactly the same, so feel free to started with this model today!</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-pose" text-off="Try Pose" text-on="Stop Pose" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-pose" text-off="Try basic Pose demo" text-on="Stop Pose Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-pose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-pose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Pose</button>
+          <button class="handsfree-show-when-started-without-pose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Pose demo</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </Window>
   </div>
 </div>
-
-> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/pose)
-> - [Technical documentation](https://google.github.io/mediapipe/solutions/pose.html)
 
 ## Usage
 

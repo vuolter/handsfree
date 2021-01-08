@@ -5,7 +5,7 @@ sidebarDepth: 2
 
 <div class="row align-top">
   <div class="col-6">
-    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/9wXxXyUldVNKADnpwn/giphy.gif" /></p>
+    <p><img alt="A person making various poses with their face, hands, and body with a wireframe overlaid on top" src="https://media0.giphy.com/media/9wXxXyUldVNKADnpwn/giphy.gif" /></p>
     <ul>
       <li>Powered by <a href="https://www.npmjs.com/package/@mediapipe/holistic">MediaPipe's Holistic</a></li>
       <li>Full <a href="https://google.github.io/mediapipe/solutions/holistic.html">technical documentation</a></li>
