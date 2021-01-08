@@ -22,15 +22,18 @@ sidebarDepth: 2
         </ul>
         <p>This model doesn't come with any bonuses or plugins yet but they'll come soon. The API will remain exactly the same, so feel free to started with this model today!</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-facemesh" text-off="Try basic Face Mesh demo" text-on="Stop Face Mesh Model" :opts="demoOpts" />
-          <button class="handsfree-show-when-started-without-facemesh handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Face Mesh demo</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-holistic" text-off="Try basic Holistic demo" text-on="Stop Holistic Model" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-holistic handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-holistic handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Holistic demo</button>
         </div>
       </section>
     </Window>
   </div>
 </div>
 
+::: tip ☝ Note
+While this model uses a collection of models similar to MediaPipe [Hands](/ref/model/hands/), [Pose](/ref/model/pose/), and [FaceMesh](/ref/model/facemesh/), they only contain the keypoints and not the other models data points. Plugins for those specific models aren't working for this Holistic model yet, but they will be soon.
+:::
 
 ## Usage
 
@@ -151,6 +154,33 @@ handsfree.data.holistic.poseLandmarks[0].y
 // The confidence in this pose landmark
 handsfree.data.holistic.poseLandmarks[0].visibility
 ```
+
+
+### Examples of accessing the data
+
+```js
+handsfree = new Handsfree({holistic: true})
+handsfree.start()
+
+// From anywhere
+handsfree.data.holistic.multiFaceLandmarks
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.holistic?.poseLandmarks) return
+
+  console.log(data.holistic.poseLandmarks[0])
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail.data
+  if (!data.holistic?.leftHandLandmarks) return
+
+  console.log(event.detail.data.holistic.leftHandLandmarks)
+})
+```
+
 
 
 
