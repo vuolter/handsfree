@@ -95,8 +95,33 @@ handsfree.data.hands.multiHandedness[handIndex] == {
 }
 
 // hand 0
-handsfree.data.hands.multiHandLandmarks[0].label
-handsfree.data.hands.multiHandLandmarks[0].score
+handsfree.data.hands.multiHandedness[0].label
+handsfree.data.hands.multiHandedness[0].score
+```
+
+### Examples of accessing the data
+
+```js
+handsfree = new Handsfree({hands: true})
+handsfree.start()
+
+// From anywhere
+handsfree.data.hands.multiHandLandmarks
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.hands) return
+
+  console.log(data.hands.multiHandLandmarks[0])
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail.data
+  if (!data.hands) return
+
+  console.log(event.detail.data.hands.multiHandedness)
+})
 ```
 
 ## See Also
