@@ -124,10 +124,61 @@ document.addEventListener('handsfree-data', event => {
 })
 ```
 
+## Examples
+
+<!-- 🙌 Hi! If you'd like to add your project, just uncomment below with and replace the ALL_CAPS to your info. Thanks so much 🙏 -->
+
+<!--
+<div class="row">
+  <div class="col-6">
+    <Window title="DEMO_TITLE" :maximize="true">
+      <div>
+        <a href="LINK_TO_DEMO"><img alt="SHORT_DESCRIPTION" src="LINK_TO_GIPHY_OR_OTHER_PUBLIC_GIF_URL"></a>
+      </div>
+      <p>A_BRIEF_DESCRIPTION</p>
+      <div>
+        <ul>
+          <li><a href="LINK_TO_DEMO">Try it on Glitch</a></li>
+          <li><a href="LINK_TO_SOURCE_OR_GITHUB">See the source</a></li>
+        </ul>
+      </div>
+    </Window>
+  </div>
+</div>
+-->
+
+<div class="row align-top">
+  <div class="col-6">
+    <Window title="Scroll pages handsfree" :maximize="true">
+      <section>
+        <div>
+          <router-link to="/ref/plugin/pinchScroll/"><img alt="Person scrolling page by pinching the air and moving hand up and down to scroll in that direction" src="https://media1.giphy.com/media/BSkodGjuwBPAEwxjGv/giphy.gif"></router-link>
+        </div>
+        <p>The <router-link to="/ref/plugin/pinchScroll/">pinchScroll plugin</router-link> helps you scroll pages with a pinch gesture. In the GIF above, it's being used within a Browser Extension to scroll pages you visit handsfree.</p>
+        <div>
+          <ul>
+            <li><router-link to="/ref/plugin/pinchScroll/">Try it on the plugin page</router-link></li>
+            <li><router-link to="/ref/plugin/pinchScroll.html#full-plugin-code">See the source</router-link></li>
+          </ul>
+        </div>
+      </section>
+    </Window>
+  </div>
+  <div class="col-6">
+    <Window title="Add your project">
+      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/hands.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+    </Window>
+  </div>
+</div>
+
 ## See Also
 
 - [pinchers plugin](/ref/plugin/pinchers/) - This plugin adds dozens of new events and helper styles for pinching any finger (index, middle, ring, pinky) to your thumb. It is enabled by default
 - [pinchScroll plugin](/ref/plugin/pinchScroll/) - Adds the ability to scroll pages with a pinch gesture
+
+
+
+
 
 
 <!-- Code -->
