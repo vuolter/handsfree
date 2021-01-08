@@ -94,7 +94,7 @@ div.mt-md
       .row
         .col-6
           router-link(to='/ref/model/handpose.html')
-            img(src='https://media2.giphy.com/media/BPUnqDBgTav2yCfJjE/giphy.gif')
+            img(src='https://media1.giphy.com/media/qtDKTxsvD2fegGlRFr/giphy.gif')
         .col-6
           h3
             router-link(to='/ref/model/handpose.html') TensorFlow Handpose

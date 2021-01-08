@@ -5,7 +5,7 @@ sidebarDepth: 2
 
 <div class="row align-top">
   <div class="col-6">
-    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/BPUnqDBgTav2yCfJjE/giphy.gif" /></p>
+    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media1.giphy.com/media/qtDKTxsvD2fegGlRFr/giphy.gif" /></p>
     <ul>
       <li>Powered by <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">TensorFlow's Handpose</a></li>
       <li>Debugger remixed from <a href="https://github.com/LingDong-/handpose-facemesh-demos">@LingDong-'s <code>handpose-facemesh-demos</code> on GitHub</a></li>
