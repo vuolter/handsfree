@@ -4,30 +4,33 @@ sidebarDepth: 2
 ---
 # Model: Weboji
 
-<div class="window mb-md">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6">
-        <img src="https://media0.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" />
-      </div>
-      <div class="col-6">
+
+<div class="row align-top">
+  <div class="col-6">
+    <p><img alt="A person moving a virtual mouse pointer by moving their head" src="https://media0.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif" /></p>
+    <ul>
+      <li>Powered by <a href="https://github.com/jeeliz/jeelizWeboji">Jeeliz's Weboji</a></li>
+      <li>Full <a href="https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf">technical documentation</a></li>
+    </ul>
+  </div>
+  <div class="col-6">
+    <Window title="Overview and basic demo">
+      <section>
         <ul>
-          <li>6DOF head pose estimations</li>
-          <li>11 face morphs and 16 helper states</li>
-          <li>Comes with "Face Pointer" based plugins</li>
+          <li>😀 6DOF head pose estimations</li>
+          <li>😜 11 face morphs and 16 helper states</li>
+          <li>🔌 Comes with "Face Pointer" based plugins</li>
         </ul>
+        <p>This model uses morphs to help estimate various face states simultaneously and includes assistive tech plugins for browsing pages with face gestures.</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Try Weboji" text-on="Stop Weboji" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Try basic Hands demo" text-on="Stop Weboji Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Weboji</button>
+          <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Weboji demo</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </Window>
   </div>
 </div>
-
-> - [Jeeliz Weboji repository](https://github.com/jeeliz/jeelizWeboji)
-> - [Full model API](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf)
 
 ## Usage
 

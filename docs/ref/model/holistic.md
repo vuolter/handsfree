@@ -182,6 +182,53 @@ document.addEventListener('handsfree-data', event => {
 ```
 
 
+## Examples
+
+<!-- 🙌 Hi! If you'd like to add your project, just uncomment below with and replace the ALL_CAPS to your info. Thanks so much 🙏 -->
+
+<!--
+<div class="row">
+  <div class="col-6">
+    <Window title="DEMO_TITLE" :maximize="true">
+      <div>
+        <a href="LINK_TO_DEMO"><img alt="SHORT_DESCRIPTION" src="LINK_TO_GIPHY_OR_OTHER_PUBLIC_GIF_URL"></a>
+      </div>
+      <p>A_BRIEF_DESCRIPTION</p>
+      <div>
+        <ul>
+          <li><a href="LINK_TO_DEMO">Try it on Glitch</a></li>
+          <li><a href="LINK_TO_SOURCE_OR_GITHUB">See the source</a></li>
+        </ul>
+      </div>
+    </Window>
+  </div>
+</div>
+-->
+
+<div class="row align-top">
+  <div class="col-6">
+    <Window title="Flappy Pose" :maximize="true">
+      <section>
+        <div>
+          <router-link to="/ref/plugin/pinchScroll/"><img alt="Person playing Flappy Bird by flapping their arms. Flappy Bird is a game where you must flap the birds wings to fly or dodge barriers" src="https://media3.giphy.com/media/gUHHKdnuOW4OGOXcrI/giphy.gif"></router-link>
+        </div>
+        <p>In this game, the goal is to flap your arms to get the bird to fly around dodging obstacles. Made with an older version of Handsfree, but the API is very similar!</p>
+        <div>
+          <ul>
+            <li><a href="https://flappy-pose.glitch.me/">Try it on Glitch</a></li>
+            <li><a href="https://glitch.com/edit/#!/flappy-pose?path=src%2Fflap.js%3A32%3A4">See the source</a></li>
+          </ul>
+        </div>
+      </section>
+    </Window>
+  </div>
+  <div class="col-6">
+    <Window title="Add your project">
+      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/hands.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+    </Window>
+  </div>
+</div>
+
 
 
 <!-- Code -->
