@@ -201,6 +201,53 @@ handsfree = new Handsfree({
 })
 ```
 
+## Examples
+
+<!-- 🙌 Hi! If you'd like to add your project, just uncomment below with and replace the ALL_CAPS to your info. Thanks so much 🙏 -->
+
+<!--
+<div class="row">
+  <div class="col-6">
+    <Window title="DEMO_TITLE" :maximize="true">
+      <div>
+        <a href="LINK_TO_DEMO"><img alt="SHORT_DESCRIPTION" src="LINK_TO_GIPHY_OR_OTHER_PUBLIC_GIF_URL"></a>
+      </div>
+      <p>A_BRIEF_DESCRIPTION</p>
+      <div>
+        <ul>
+          <li><a href="LINK_TO_DEMO">Try it on Glitch</a></li>
+          <li><a href="LINK_TO_SOURCE_OR_GITHUB">See the source</a></li>
+        </ul>
+      </div>
+    </Window>
+  </div>
+</div>
+-->
+
+<div class="row align-top">
+  <div class="col-6">
+    <Window title='Playing "Into the Breach" handsfree' :maximize="true">
+      <section>
+        <div>
+          <a href="https://github.com/MIDIBlocks/midiblocks-web"><img alt="Person playing Into the Breach with face gestures" src="https://media3.giphy.com/media/eABiZprIEtouRZIc75/giphy.gif"></a>
+        </div>
+        <p>This example uses the <a href="https://midiblocks.com">Midiblocks Platform</a> to map head movements to control the desktop mouse with the <router-link to="/ref/plugin/facePointer/">facePointer plugin</router-link> and trigger native mouse clicks with the <router-link to="/ref/plugin/faceClick/">faceClick plugin</router-link>.</p>
+        <div>
+          <ul>
+            <li><a href="https://midiblocks.com">Try the Midiblocks web demo</a></li>
+            <li><a href="https://github.com/midiblocks/midiblocks-web">See the Midiblocks source</a></li>
+          </ul>
+        </div>
+      </section>
+    </Window>
+  </div>
+  <div class="col-6">
+    <Window title="Add your project">
+      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/hands.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+    </Window>
+  </div>
+</div>
+
 ## See also
 
 - Integrations
