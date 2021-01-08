@@ -20,9 +20,9 @@ sidebarDepth: 2
         </ul>
         <p>This model includes dozens of <router-link to="/ref/plugin/pinchers/">Pinch Events</router-link> and helper styles to get you going quickly, along with a <router-link to="/ref/plugin/pinchScroll/">plugin for scrolling pages handsfree</router-link>.</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Try basic Handpose demo" text-on="Stop Handpose Model" :opts="demoOpts" />
-          <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Handpose demo</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try basic Hands demo" text-on="Stop Hands Model" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Hands demo</button>
         </div>
       </section>
     </Window>
