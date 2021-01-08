@@ -5,30 +5,32 @@ sidebarDepth: 2
 
 # Model: FaceMesh
 
-<div class="window mb-md">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6">
-        <img src="https://media0.giphy.com/media/g2msiDwoLqabEMrmaL/giphy.gif" />
-      </div>
-      <div class="col-6">
+<div class="row align-top">
+  <div class="col-6">
+    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/g2msiDwoLqabEMrmaL/giphy.gif" /></p>
+    <ul>
+      <li>Powered by <a href="https://www.npmjs.com/package/@mediapipe/face_mesh">MediaPipe's Face Mesh</a></li>
+      <li>Full <a href="https://google.github.io/mediapipe/solutions/face_mesh.html">technical documentation</a></li>
+    </ul>
+  </div>
+  <div class="col-6">
+    <Window title="Overview and basic demo">
+      <section>
         <ul>
-          <li>468 2D face landmarks</li>
-          <li>Track up to 4 faces at once</li>
+          <li>🙂 468 2D face landmarks</li>
+          <li>😁😜 Track up to 4 faces at once</li>
           <li>📅 Extra helpers and plugins coming soon</li>
         </ul>
+        <p>This model doesn't come with any bonuses or plugins yet but they'll come soon. The API will remain exactly the same, so feel free to started with this model today!</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-facemesh" text-off="Try FaceMesh" text-on="Stop FaceMesh" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-facemesh" text-off="Try basic Face Mesh demo" text-on="Stop Face Mesh Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-facemesh handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try FaceMesh</button>
+          <button class="handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Face Mesh demo</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </Window>
   </div>
 </div>
-
-> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/face_mesh)
-> - [Technical documentation](https://google.github.io/mediapipe/solutions/face_mesh.html)
 
 ## Usage
 
@@ -78,6 +80,30 @@ handsfree.data.facemesh.multiFaceLandmarks[0][0].x
 handsfree.data.facemesh.multiFaceLandmarks[0][0].y
 ```
 
+### Examples of accessing the data
+
+```js
+handsfree = new Handsfree({facemesh: true})
+handsfree.start()
+
+// From anywhere
+handsfree.data.facemesh.multiFaceLandmarks[0]
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.facemesh) return
+
+  console.log(data.facemesh.multiFaceLandmarks[0][0])
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail.data
+  if (!data.facemesh) return
+
+  console.log(event.detail.data.facemesh.multiFaceLandmarks)
+})
+```
 
 
 

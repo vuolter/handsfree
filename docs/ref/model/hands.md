@@ -3,30 +3,31 @@ sidebarDepth: 2
 ---
 # Model: Hands
 
-<div class="window mb-md">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6">
-        <img src="https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif" />
-      </div>
-      <div class="col-6">
+<div class="row align-top">
+  <div class="col-6">
+    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif" /></p>
+    <ul>
+      <li>Powered by <a href="https://www.npmjs.com/package/@mediapipe/hands">MediaPipe's Hands</a></li>
+      <li>Full <a href="https://google.github.io/mediapipe/solutions/hands.html">technical documentation</a></li>
+    </ul>
+  </div>
+  <div class="col-6">
+    <Window title="Overview and basic demo">
+      <section>
         <ul>
-          <li>21 2D hand landmarks per hand</li>
-          <li>Track up to 4 hands at once</li>
-          <li>📅 Extra helpers and plugins coming soon</li>
+          <li>🖐 21 2D hand landmarks</li>
+          <li>🖐🖐 Track up to 4 hands total</li>
         </ul>
+        <p>This model includes dozens of <router-link to="/ref/plugin/pinchers/">Pinch Events</router-link> and helper styles to get you going quickly, along with a <router-link to="/ref/plugin/pinchScroll/">plugin for scrolling pages handsfree</router-link>.</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try Hands" text-on="Stop Hands" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try basic Hands demo" text-on="Stop Hands Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Hands</button>
+          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Hands demo</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </Window>
   </div>
 </div>
-
-> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/hands)
-> - [Technical documentation](https://google.github.io/mediapipe/solutions/hands.html)
 
 ## Usage
 
@@ -94,9 +95,88 @@ handsfree.data.hands.multiHandedness[handIndex] == {
 }
 
 // hand 0
-handsfree.data.hands.multiHandLandmarks[0].label
-handsfree.data.hands.multiHandLandmarks[0].score
+handsfree.data.hands.multiHandedness[0].label
+handsfree.data.hands.multiHandedness[0].score
 ```
+
+### Examples of accessing the data
+
+```js
+handsfree = new Handsfree({hands: true})
+handsfree.start()
+
+// From anywhere
+handsfree.data.hands.multiHandLandmarks
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.hands) return
+
+  console.log(data.hands.multiHandLandmarks[0])
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail.data
+  if (!data.hands) return
+
+  console.log(event.detail.data.hands.multiHandedness)
+})
+```
+
+## Examples
+
+<!-- 🙌 Hi! If you'd like to add your project, just uncomment below with and replace the ALL_CAPS to your info. Thanks so much 🙏 -->
+
+<!--
+<div class="row">
+  <div class="col-6">
+    <Window title="DEMO_TITLE" :maximize="true">
+      <div>
+        <a href="LINK_TO_DEMO"><img alt="SHORT_DESCRIPTION" src="LINK_TO_GIPHY_OR_OTHER_PUBLIC_GIF_URL"></a>
+      </div>
+      <p>A_BRIEF_DESCRIPTION</p>
+      <div>
+        <ul>
+          <li><a href="LINK_TO_DEMO">Try it on Glitch</a></li>
+          <li><a href="LINK_TO_SOURCE_OR_GITHUB">See the source</a></li>
+        </ul>
+      </div>
+    </Window>
+  </div>
+</div>
+-->
+
+<div class="row align-top">
+  <div class="col-6">
+    <Window title="Scroll pages handsfree" :maximize="true">
+      <section>
+        <div>
+          <router-link to="/ref/plugin/pinchScroll/"><img alt="Person scrolling page by pinching the air and moving hand up and down to scroll in that direction" src="https://media1.giphy.com/media/BSkodGjuwBPAEwxjGv/giphy.gif"></router-link>
+        </div>
+        <p>The <router-link to="/ref/plugin/pinchScroll/">pinchScroll plugin</router-link> helps you scroll pages with a pinch gesture. In the GIF above, it's being used within a Browser Extension to scroll pages you visit handsfree.</p>
+        <div>
+          <ul>
+            <li><router-link to="/ref/plugin/pinchScroll/">Try it on the plugin page</router-link></li>
+            <li><router-link to="/ref/plugin/pinchScroll.html#full-plugin-code">See the source</router-link></li>
+          </ul>
+        </div>
+      </section>
+    </Window>
+  </div>
+  <div class="col-6">
+    <Window title="Add your project">
+      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/hands.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+    </Window>
+  </div>
+</div>
+
+## See Also
+
+- [pinchers plugin](/ref/plugin/pinchers/) - This plugin adds dozens of new events and helper styles for pinching any finger (index, middle, ring, pinky) to your thumb. It is enabled by default
+- [pinchScroll plugin](/ref/plugin/pinchScroll/) - Adds the ability to scroll pages with a pinch gesture
+
+
 
 
 

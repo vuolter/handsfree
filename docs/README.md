@@ -200,7 +200,7 @@ handsfree.plugin.logger.onFrame = (data) => {
   </div>
   <hr style="margin: 20px auto">
   <div class="text-center">
-    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=24></a>
+    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=48 title="@nsthorat"></a>
   </div>
 </blockquote>
 

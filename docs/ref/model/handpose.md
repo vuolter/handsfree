@@ -5,7 +5,7 @@ sidebarDepth: 2
 
 <div class="row align-top">
   <div class="col-6">
-    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/BPUnqDBgTav2yCfJjE/giphy.gif" /></p>
+    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media1.giphy.com/media/qtDKTxsvD2fegGlRFr/giphy.gif" /></p>
     <ul>
       <li>Powered by <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose">TensorFlow's Handpose</a></li>
       <li>Debugger remixed from <a href="https://github.com/LingDong-/handpose-facemesh-demos">@LingDong-'s <code>handpose-facemesh-demos</code> on GitHub</a></li>
@@ -19,7 +19,7 @@ sidebarDepth: 2
           <li>1️⃣ Only one hand at a time is supported</li>
           <li>🧰 Includes <a href="https://github.com/mrdoob/three.js/">THREE r124</a>, <a href="https://github.com/tensorflow/tfjs">TensorFlow 2.1</a></li>
         </ul>
-        <p>This model includes a fingertip raycaster, center of palm object, and a minimal THREE environment which doubles a basic debugger for your project.</p>
+        <p>This model includes a fingertip raycaster, center of palm object, and a minimal THREE environment which doubles as a basic debugger for your project.</p>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Try basic Handpose demo" text-on="Stop Handpose Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
