@@ -19,7 +19,7 @@ sidebarDepth: 2
           <li>1️⃣ Only one hand at a time is supported</li>
           <li>🧰 Includes <a href="https://github.com/mrdoob/three.js/">THREE r124</a>, <a href="https://github.com/tensorflow/tfjs">TensorFlow 2.1</a></li>
         </ul>
-        <p>This model includes a fingertip raycaster, center of palm object, and a minimal THREE environment which doubles a basic debugger for your project.</p>
+        <p>This model includes a fingertip raycaster, center of palm object, and a minimal THREE environment which doubles as a basic debugger for your project.</p>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Try basic Handpose demo" text-on="Stop Handpose Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>

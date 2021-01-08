@@ -3,30 +3,31 @@ sidebarDepth: 2
 ---
 # Model: Hands
 
-<div class="window mb-md">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6">
-        <img src="https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif" />
-      </div>
-      <div class="col-6">
+<div class="row align-top">
+  <div class="col-6">
+    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif" /></p>
+    <ul>
+      <li>Powered by <a href="https://www.npmjs.com/package/@mediapipe/hands">MediaPipe's Hands</a></li>
+      <li>Full <a href="https://google.github.io/mediapipe/solutions/hands.html">technical documentation</a></li>
+    </ul>
+  </div>
+  <div class="col-6">
+    <Window title="Overview and basic demo">
+      <section>
         <ul>
-          <li>21 2D hand landmarks per hand</li>
-          <li>Track up to 4 hands at once</li>
-          <li>📅 Extra helpers and plugins coming soon</li>
+          <li>🖐 21 2D hand landmarks</li>
+          <li>🖐🖐 Track up to 4 hands total</li>
         </ul>
+        <p>This model includes dozens of <router-link to="/ref/plugin/pinchers/">Pinch Events</router-link> and helper styles to get you going quickly, along with a <router-link to="/ref/plugin/pinchScroll/">plugin for scrolling pages handsfree</router-link>.</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try Hands" text-on="Stop Hands" :opts="demoOpts" />
-          <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Hands</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Try basic Handpose demo" text-on="Stop Handpose Model" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Handpose demo</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </Window>
   </div>
 </div>
-
-> - [MediaPipe Pose NPM Package](https://www.npmjs.com/package/@mediapipe/hands)
-> - [Technical documentation](https://google.github.io/mediapipe/solutions/hands.html)
 
 ## Usage
 
@@ -98,7 +99,10 @@ handsfree.data.hands.multiHandLandmarks[0].label
 handsfree.data.hands.multiHandLandmarks[0].score
 ```
 
+## See Also
 
+- [pinchers plugin](/ref/plugin/pinchers/) - This plugin adds dozens of new events and helper styles for pinching any finger (index, middle, ring, pinky) to your thumb. It is enabled by default
+- [pinchScroll plugin](/ref/plugin/pinchScroll/) - Adds the ability to scroll pages with a pinch gesture
 
 
 <!-- Code -->
