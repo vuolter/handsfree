@@ -75,7 +75,7 @@ handsfree.start()
 
 ```js
 // An array of landmark points for the face
-handsfree.data.holistic.poseLandmarks == [
+handsfree.data.pose.poseLandmarks == [
   // Landmark 0
   {x, y, visibility},
   // Landmark 1
@@ -86,13 +86,36 @@ handsfree.data.holistic.poseLandmarks == [
 ]
 
 // landmark 0
-handsfree.data.holistic.poseLandmarks[0].x
-handsfree.data.holistic.poseLandmarks[0].y
+handsfree.data.pose.poseLandmarks[0].x
+handsfree.data.pose.poseLandmarks[0].y
 // The confidence in this pose landmark
-handsfree.data.holistic.poseLandmarks[0].visibility
+handsfree.data.pose.poseLandmarks[0].visibility
 ```
 
+### Examples of accessing the data
 
+```js
+handsfree = new Handsfree({pose: true})
+handsfree.start()
+
+// From anywhere
+handsfree.data.pose.poseLandmarks
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.pose) return
+
+  console.log(data.pose.poseLandmarks)
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail.data
+  if (!data.pose) return
+
+  console.log(event.detail.data.pose.poseLandmarks)
+})
+```
 
 <!-- Code -->
 <script>
