@@ -23,9 +23,9 @@ sidebarDepth: 2
         </ul>
         <p>This model doesn't come with any bonuses or plugins yet but they'll come soon. The API will remain exactly the same, so feel free to started with this model today!</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Try basic Handpose demo" text-on="Stop Handpose Model" :opts="demoOpts" />
-          <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Handpose demo</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-facemesh" text-off="Try basic Face Mesh demo" text-on="Stop Face Mesh Model" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-facemesh handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-facemesh handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Face Mesh demo</button>
         </div>
       </section>
     </Window>
@@ -80,6 +80,30 @@ handsfree.data.facemesh.multiFaceLandmarks[0][0].x
 handsfree.data.facemesh.multiFaceLandmarks[0][0].y
 ```
 
+### Examples of accessing the data
+
+```js
+handsfree = new Handsfree({facemesh: true})
+handsfree.start()
+
+// From anywhere
+handsfree.data.facemesh.multiFaceLandmarks[0]
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.facemesh) return
+
+  console.log(data.facemesh.multiFaceLandmarks[0][0])
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail.data
+  if (!data.facemesh) return
+
+  console.log(event.detail.data.facemesh.multiFaceLandmarks)
+})
+```
 
 
 
