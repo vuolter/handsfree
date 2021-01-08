@@ -5,6 +5,8 @@
   //- This will be moved into the Navbar
   #navbar-handsfree-toggle
     HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
+    a(href='https://github.com/midiblocks/handsfree')
+      img(src='/branding/github.png' height=32 style='vertical-align: middle')
 
   //- This will be moved into the sidebar
   Window#handsfree-debug-window.handsfree-show-when-started.handsfree-hide-when-not-debugging.mb-0(title='Debugger' :minimize='true' :maximize='true')
