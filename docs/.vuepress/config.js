@@ -73,7 +73,15 @@ module.exports = {
         path: '/guide/',
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
-          ['/guide/updating-configs.md', '🎭 Updating and switching models']
+          ['/guide/updating-configs.md', '🎭 Updating and switching models'],
+          {
+            title: '📰 Blogs & Articles',
+            collapsable: false,
+            path: '/guide/misc/',
+            children: [
+              ['/guide/misc/intro.md', 'Introducing Handsfree.js - Integrate hand, face, and pose gestures to your frontend']
+            ]
+          }
         ]
       },
       {
