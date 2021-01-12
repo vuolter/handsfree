@@ -73,21 +73,21 @@ handsfree = new Handsfree({
 ```js
 // Get the [x, y, z] of various landmarks
 // Thumb tip
-handsfree.handpose.data.landmarks[4]
+handsfree.data.handpose.landmarks[4]
 // Index fingertip
-handsfree.handpose.data.landmarks[8]
+handsfree.data.handpose.landmarks[8]
 
 // How confident the model is that a hand is in view [0 - 1]
-handsfree.handpose.data.handInViewConfidence
+handsfree.data.handpose.handInViewConfidence
 
 // The top left and bottom right pixels containing the hand in the iframe
-handsfree.handpose.data.boundingBox = {
+handsfree.data.handpose.boundingBox = {
   topLeft: [x, y],
   bottomRight: [x, y]
 }
 
 // [x, y, z] of various hand landmarks
-handsfree.handpose.data.annotations: {
+handsfree.data.handpose.annotations: {
   thumb: [...[x, y, z]], // 4 landmarks
   indexFinger: [...[x, y, z]], // 4 landmarks
   middleFinger: [...[x, y, z]], // 4 landmarks
@@ -115,10 +115,10 @@ handsfree.use('logger', data => {
 
 // From an event
 document.addEventListener('handsfree-data', event => {
-  const data = event.detail.data
+  const data = event.detail
   if (!data.handpose) return
 
-  console.log(event.detail.data.handpose.annotations.indexFinger)
+  console.log(data.handpose.annotations.indexFinger)
 })
 ```
 

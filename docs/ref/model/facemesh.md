@@ -98,10 +98,10 @@ handsfree.use('logger', data => {
 
 // From an event
 document.addEventListener('handsfree-data', event => {
-  const data = event.detail.data
+  const data = event.detail
   if (!data.facemesh) return
 
-  console.log(event.detail.data.facemesh.multiFaceLandmarks)
+  console.log(data.facemesh.multiFaceLandmarks)
 })
 ```
 

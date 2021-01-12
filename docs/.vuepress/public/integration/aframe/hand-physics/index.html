@@ -51,6 +51,7 @@
 
       // Update joint positions
       window.addEventListener('message', ev => {
+        console.log(ev)
         if (!ev.data.isHandsfree) return
         
         switch (ev.data.action) {

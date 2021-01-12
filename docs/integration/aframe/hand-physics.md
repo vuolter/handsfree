@@ -41,7 +41,7 @@
 
 
 <script>
-let iframe
+let $iframe
 let tween = {
   x: 0,
   y: 0,
@@ -77,11 +77,10 @@ export default {
     /**
      * Called on handsfree-data
      */
-    onData (detail) {
-      console.log(detail)
+    onData ({detail}) {
       if (!detail?.handpose) return
       
-      iframe.postMessage({
+      $iframe.contentWindow.postMessage({
         isHandsfree: true,
         action: 'data',
         handpose: detail.handpose
@@ -93,7 +92,7 @@ export default {
      */
     onMessage (ev) {
       if (ev.data === 'aframeReady') {
-        window.iframe = iframe = document.querySelector('#aframe').contentDocument
+        $iframe = document.querySelector('#aframe')
       }
     },
 
