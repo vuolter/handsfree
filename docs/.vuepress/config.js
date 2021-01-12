@@ -95,7 +95,7 @@ module.exports = {
             collapsable: true,
             children: [
               ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree'],
-              ['/integration/aframe/hand-physics.md', 'Hand physics']
+              ['/integration/aframe/hand-physics/', 'Hand physics']
             ]
           }
         ]
