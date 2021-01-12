@@ -55,7 +55,7 @@ export default class HandposeModel extends BaseModel {
 
     const predictions = await this.api.estimateHands(this.handsfree.debug.$video)
 
-    this.data = {
+    this.handsfree.data.handpose = this.data = {
       ...predictions[0],
       meshes: this.three.meshes
     }

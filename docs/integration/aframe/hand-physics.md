@@ -14,9 +14,9 @@
           <li><a href="https://codepen.io/MIDIBlocks/pen/wvzqbXr">Try it on CodePen</a></li>
         </ul>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Look around Handsfree" text-on="Stop Pose" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Try Demo" text-on="Stop Demo" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Look around Handsfree</button>
+          <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Demo</button>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@
 </div>
 
 <Window title="Look around the A-Frame Handsfree" style="height: 500px" :maximize='true'>
-  <iframe id="aframe" src="/integration/aframe/look-around-handsfree/index.html" style="width: 100%; height: 100%"></iframe>
+  <iframe id="aframe" src="/integration/aframe/hand-physics/index.html" style="width: 100%; height: 100%"></iframe>
 </Window>
 
 ## The basic approach
@@ -34,15 +34,14 @@
 
 ## Boilerplate
 
-The following is the boilerplate located [in the repo at /boilerplate/aframe/hand-physics/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/hand-physics/index.html). You can also [play with this demo on CodePen](https://codepen.io/MIDIBlocks/pen/wvzqbXr), or by copy/pasting the following into a local `.html` file without a server.
+<!-- The following is the boilerplate located [in the repo at /boilerplate/aframe/hand-physics/index.html](https://github.com/MIDIBlocks/handsfree/tree/master/boilerplate/aframe/hand-physics/index.html). You can also [play with this demo on CodePen](https://codepen.io/MIDIBlocks/pen/wvzqbXr), or by copy/pasting the following into a local `.html` file without a server.
 
-<<< @/boilerplate/aframe/look-around-handsfree/index.html
+<<< @/boilerplate/aframe/look-around-handsfree/index.html -->
 
 
 
 <script>
 let iframe
-let $rig
 let tween = {
   x: 0,
   y: 0,
@@ -55,11 +54,11 @@ let tween = {
 export default {
   data: () => ({
     demoOpts: {
-      weboji: true,
+      weboji: false,
       hands: false,
       pose: false,
       holistic: false,
-      handpose: false,
+      handpose: true,
       facemesh: false
     }
   }),
@@ -78,34 +77,15 @@ export default {
     /**
      * Called on handsfree-data
      */
-    onData ({detail}) {
-      const weboji = detail.weboji
-      if (!weboji.isDetected) return
-
-      // Calculate rotation
-      const rot = weboji.degree
-      rot[0] -= 15
+    onData (detail) {
+      console.log(detail)
+      if (!detail?.handpose) return
       
-      // Calculate position
-      const pos = {
-        x: (weboji.translation[0] - .5) * 10,
-        y: (weboji.translation[1] - .5) * 5,
-        z: 5 - weboji.translation[2] * 30
-      }
-
-      // Tween this values
-      window.handsfree.TweenMax.to(tween, 1, {
-        yaw: -rot[0] * 1.5,
-        pitch: -rot[1] * 1.5,
-        roll: rot[2] * 1.5,
-        x: pos.x,
-        y: pos.y,
-        z: pos.z
+      iframe.postMessage({
+        isHandsfree: true,
+        action: 'data',
+        handpose: detail.handpose
       })
-      
-      // Use the tweened values instead of the actual current values from webcam
-      $rig.setAttribute('rotation', `${tween.yaw} ${tween.pitch} ${tween.roll}`)
-      $rig.setAttribute('position', `${tween.x} ${tween.y} ${tween.z}`)
     },
 
     /**
@@ -114,7 +94,6 @@ export default {
     onMessage (ev) {
       if (ev.data === 'aframeReady') {
         window.iframe = iframe = document.querySelector('#aframe').contentDocument
-        window.$rig = $rig = iframe.querySelector('#rig')
       }
     },
 

@@ -1,9 +1,10 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
   </head>
   <body>
-    <a-scene fog="type: exponential; color: #000; far: 30; density: 0.075">
+    <a-scene fog="type: exponential; color: #000; far: 30; density: 0.075" physics="debug: true">
       <a-assets>
         <img src="./grid.png" id="grid">
       </a-assets>
@@ -14,35 +15,50 @@
 
       <!-- Walls -->
       <!-- Bottom -->
-      <a-entity
+      <a-entity static-body
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0" position="0 -2 0"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
       <!-- Top -->
-      <a-entity
+      <a-entity static-body
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="90 0 0" position="0 7 0"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
       <!-- Right -->
-      <a-entity
+      <a-entity static-body
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 -90 0" position="8 0 0"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
       <!-- Left -->
-      <a-entity
+      <a-entity static-body
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 90 0" position="-8 0 0"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
       <!-- Back -->
-      <a-entity
+      <a-entity static-body
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 0 0" position="0 0 -15"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
 
-      <a-entity light="color: #000; intensity: 1; type: ambient;" visible=""></a-entity>
-      <a-entity light="color: #000; intensity: 1.5" position="5 5 5"></a-entity>
-      <a-entity light="color: #000; intensity: 0.5" position="-5 5 15"></a-entity>
-      <a-entity light="color: #aaa; type: ambient;"></a-entity>
+      <!-- Lights -->
+      <a-entity light="color: #fff; intensity: .5" position="0 3 -5"></a-entity>
+      <a-entity light="color: #fff; type: ambient;"></a-entity>
+      
+      <!-- Objects -->
+      <a-box dynamic-body color="red" position="-2 2 -12" width="1" height="1" depth="1"></a-box>
+      <a-box dynamic-body color="green" position="0 2 -12" width="1" height="1" depth="1"></a-box>
+      <a-box dynamic-body color="blue" position="2 2 -12" width="1" height="1" depth="1"></a-box>
     </a-scene>
     
-    <!-- Notify parent of the ready state -->
+    <!-- Code -->
     <script>
       parent.postMessage('aframeReady')
+
+      // Update joint positions
+      window.addEventListener('message', ev => {
+        if (!ev.data.isHandsfree) return
+        
+        switch (ev.data.action) {
+          case 'data':
+            console.log(ev.data.handpose)
+          break
+        }
+      })
     </script>
   </body>
 </html>
