@@ -17,7 +17,7 @@
       </section>
     </Window>
   </div>
-  <div class="col-6">
+  <!-- <div class="col-6">
     <Window title="Hand Physics" :maximize="true">
       <div>
         <router-link to="/integration/aframe/hand-physics/"><img alt="SHORT_DESCRIPTION" src="https://media3.giphy.com/media/YOPrRX6vTy6tb3frgt/giphy.gif"></router-link>
@@ -30,7 +30,7 @@
         </ul>
       </div>
     </Window>
-  </div>
+  </div> -->
   <!-- 👋 Copy paste the following to the line above this one, and replace the UPPERCASED_STRINGS
   <div class="col-6">
     <Window title="DEMO_TITLE" :maximize="true">
