@@ -77,7 +77,7 @@ npm i handsfree
 import Handsfree from 'handsfree'
 
 const handsfree = new Handsfree({hands: true})
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 handsfree.start()
 ```
 
@@ -103,7 +103,7 @@ const handsfree = new Handsfree({
   // Set this to your where you moved the models into
   assetsPath: '/PUBLIC/assets',
 })
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 handsfree.start()
 ```
 
@@ -126,7 +126,7 @@ The following workflow demonstrates how to use all features of Handsfree.js. Che
 ```js
 // Let's enable face tracking with the default Face Pointer
 const handsfree = new Handsfree({weboji: true})
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 
 // Now let's start things up
 handsfree.start()

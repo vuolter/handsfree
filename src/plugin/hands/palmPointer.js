@@ -2,7 +2,7 @@
  * Move a pointer with your palm
  */
 export default {
-  models: 'handpose',
+  models: 'hands',
   tags: ['browser'],
   enabled: false,
 

@@ -24,8 +24,8 @@ next: /guide/
 ```js
 // Enable Mediapipe's "Hands" model
 const handsfree = new Handsfree({hands: true})
-// Enable plugins tagged with "browsing"
-handsfree.enablePlugins('browsing')
+// Enable plugins tagged with "browser"
+handsfree.enablePlugins('browser')
 // Start tracking
 handsfree.start()
 ```
@@ -78,7 +78,7 @@ handsfree.start()
   <!-- Instantiate and start it -->
   <script>
     const handsfree = new Handsfree({hands: true})
-    handsfree.enablePlugins('browsing')
+    handsfree.enablePlugins('browser')
     handsfree.start()
   </script>
 </body>
@@ -96,7 +96,7 @@ npm i handsfree
 import Handsfree from 'handsfree'
 
 const handsfree = new Handsfree({hands: true})
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 handsfree.start()
 ```
 
@@ -122,7 +122,7 @@ const handsfree = new Handsfree({
   // Set this to your where you moved the models into
   assetsPath: '/PUBLIC/assets',
 })
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 handsfree.start()
 ```
 
@@ -136,7 +136,7 @@ The following workflow demonstrates how to use all features of Handsfree.js. Che
 ```js
 // Let's enable face tracking with the default Face Pointer
 const handsfree = new Handsfree({weboji: true})
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 
 // Now let's start things up
 handsfree.start()
