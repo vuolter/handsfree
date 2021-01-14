@@ -73,21 +73,25 @@ handsfree = new Handsfree({
 ```js
 // Get the [x, y, z] of various landmarks
 // Thumb tip
-handsfree.handpose.data.landmarks[4]
+handsfree.data.handpose.landmarks[4]
 // Index fingertip
-handsfree.handpose.data.landmarks[8]
+handsfree.data.handpose.landmarks[8]
+
+// Normalized landmark values from [0 - 1] for the x and y
+// The z isn't really depth but "units" away from the camera so those aren't normalized
+handsfree.data.handpose.normalized[0]
 
 // How confident the model is that a hand is in view [0 - 1]
-handsfree.handpose.data.handInViewConfidence
+handsfree.data.handpose.handInViewConfidence
 
 // The top left and bottom right pixels containing the hand in the iframe
-handsfree.handpose.data.boundingBox = {
+handsfree.data.handpose.boundingBox = {
   topLeft: [x, y],
   bottomRight: [x, y]
 }
 
 // [x, y, z] of various hand landmarks
-handsfree.handpose.data.annotations: {
+handsfree.data.handpose.annotations: {
   thumb: [...[x, y, z]], // 4 landmarks
   indexFinger: [...[x, y, z]], // 4 landmarks
   middleFinger: [...[x, y, z]], // 4 landmarks
@@ -115,10 +119,10 @@ handsfree.use('logger', data => {
 
 // From an event
 document.addEventListener('handsfree-data', event => {
-  const data = event.detail.data
+  const data = event.detail
   if (!data.handpose) return
 
-  console.log(event.detail.data.handpose.annotations.indexFinger)
+  console.log(data.handpose.annotations.indexFinger)
 })
 ```
 
@@ -129,25 +133,25 @@ The following helper Three.js properties are also available:
 ```js
 // A THREE Arrow object protuding from the index finger
 // - You can use this to calculate pointing vectors
-handsfree.handpose.three.arrow
+handsfree.model.handpose.three.arrow
 // The THREE camera
-handsfree.handpose.three.camera
+handsfree.model.handpose.three.camera
 // An additional mesh that is positioned at the center of the palm
 // - This is where we raycast the Hand Pointer from
-handsfree.handpose.three.centerPalmObj
+handsfree.model.handpose.three.centerPalmObj
 // The meshes representing each skeleton joint
 // - You can tap into the rotation to calculate pointing vectors for each fingertip
-handsfree.handpose.three.meshes[]
+handsfree.model.handpose.three.meshes[]
 // A reusable THREE raycaster
 // @see https://threejs.org/docs/#api/en/core/Raycaster
-handsfree.handpose.three.raycaster
+handsfree.model.handpose.three.raycaster
 // The THREE scene and renderer used to hold the hand model
-handsfree.handpose.three.renderer
-handsfree.handpose.three.scene
+handsfree.model.handpose.three.renderer
+handsfree.model.handpose.three.scene
 // The screen object. The Hand Pointer raycasts from the centerPalmObj
 // onto this screen object. The point of intersection is then mapped to
 // the device screen to position the pointer
-handsfree.handpose.three.screen
+handsfree.model.handpose.three.screen
 ```
 
 

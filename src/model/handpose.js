@@ -16,6 +16,8 @@ export default class HandposeModel extends BaseModel {
       meshes: []
     }
 
+    this.normalized = []
+
     // landmark indices that represent the palm
     // 8 = Index finger tip
     // 12 = Middle finger tip
@@ -55,8 +57,9 @@ export default class HandposeModel extends BaseModel {
 
     const predictions = await this.api.estimateHands(this.handsfree.debug.$video)
 
-    this.data = {
+    this.handsfree.data.handpose = this.data = {
       ...predictions[0],
+      normalized: this.normalized,
       meshes: this.three.meshes
     }
 
@@ -174,6 +177,11 @@ export default class HandposeModel extends BaseModel {
       // compute the center of the bone (midpoint)
       const mid = p0.clone().lerp(p1, 0.5)
       this.three.meshes[i].position.set(mid.x, mid.y, mid.z)
+      this.normalized[i] = [
+        this.handsfree.normalize(p0.x, this.handsfree.debug.$video.videoWidth / -2, this.handsfree.debug.$video.videoWidth / 2),
+        this.handsfree.normalize(p0.y, this.handsfree.debug.$video.videoHeight / -2, this.handsfree.debug.$video.videoHeight / 2),
+        this.three.meshes[i].position.z
+      ]
   
       // compute the length of the bone
       this.three.meshes[i].scale.z = p0.distanceTo(p1)

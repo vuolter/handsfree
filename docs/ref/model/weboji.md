@@ -173,26 +173,26 @@ handsfree.data.weboji.state
 
 ## API
 
-Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.face.api`:
+Please see the [Weboji Docs](https://github.com/jeeliz/jeelizWeboji/blob/master/doc/jeefacetransferAPI.pdf) to see available methods exposed through `handsfree.model.weboji.api`:
 
 ```js
 // Check if the head is detected or not
-handsfree.face.api.is_detected()
+handsfree.model.weboji.api.is_detected()
 ```
 
 ## Using a pre-recorded video instead of a webcam
 
-By default, setting `{face: true}` adds a new `<video>` element to the DOM to grab the webcam: 
+By default, setting `{weboji: true}` adds a new `<video>` element to the DOM to grab the webcam: 
 
 ```js
-handsfree = new Handsfree({face: true})
+handsfree = new Handsfree({weboji: true})
 ```
 
-To use a pre-recorded video or video stream, a canvas, or an image instead of a webcam set the `face.videoSettings.videoElement` property:
+To use a pre-recorded video or video stream, a canvas, or an image instead of a webcam set the `.videoSettings.videoElement` property:
 
 ```js
 handsfree = new Handsfree({
-  face: {
+  weboji: {
     enabled: true,
     videoSettings: {
       videoElement: document.querySelector('#my-video')

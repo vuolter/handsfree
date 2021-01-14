@@ -94,7 +94,8 @@ module.exports = {
             path: '/integration/aframe/',
             collapsable: true,
             children: [
-              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree']
+              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree'],
+              // ['/integration/aframe/hand-physics.md', 'Hand physics']
             ]
           }
         ]
