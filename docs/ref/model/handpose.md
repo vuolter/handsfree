@@ -129,25 +129,25 @@ The following helper Three.js properties are also available:
 ```js
 // A THREE Arrow object protuding from the index finger
 // - You can use this to calculate pointing vectors
-handsfree.handpose.three.arrow
+handsfree.model.handpose.three.arrow
 // The THREE camera
-handsfree.handpose.three.camera
+handsfree.model.handpose.three.camera
 // An additional mesh that is positioned at the center of the palm
 // - This is where we raycast the Hand Pointer from
-handsfree.handpose.three.centerPalmObj
+handsfree.model.handpose.three.centerPalmObj
 // The meshes representing each skeleton joint
 // - You can tap into the rotation to calculate pointing vectors for each fingertip
-handsfree.handpose.three.meshes[]
+handsfree.model.handpose.three.meshes[]
 // A reusable THREE raycaster
 // @see https://threejs.org/docs/#api/en/core/Raycaster
-handsfree.handpose.three.raycaster
+handsfree.model.handpose.three.raycaster
 // The THREE scene and renderer used to hold the hand model
-handsfree.handpose.three.renderer
-handsfree.handpose.three.scene
+handsfree.model.handpose.three.renderer
+handsfree.model.handpose.three.scene
 // The screen object. The Hand Pointer raycasts from the centerPalmObj
 // onto this screen object. The point of intersection is then mapped to
 // the device screen to position the pointer
-handsfree.handpose.three.screen
+handsfree.model.handpose.three.screen
 ```
 
 

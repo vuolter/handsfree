@@ -41,6 +41,8 @@
 
 
 <script>
+import pick from 'lodash/pick'
+
 let $iframe
 let tween = {
   x: 0,
@@ -79,11 +81,10 @@ export default {
      */
     onData ({detail}) {
       if (!detail?.handpose) return
-      
       $iframe.contentWindow.postMessage({
         isHandsfree: true,
         action: 'data',
-        handpose: detail.handpose
+        handpose: pick(detail.handpose, ['normalized'])
       })
     },
 

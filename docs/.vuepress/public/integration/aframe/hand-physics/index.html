@@ -30,9 +30,13 @@
       <a-entity static-body
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 90 0" position="-8 0 0"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
+      <!-- Front -->
+      <a-entity static-body
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 180 0" position="0 0 15"
+        material="src: #grid; repeat: 10000 10000;"></a-entity>
       <!-- Back -->
       <a-entity static-body
-        geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 0 0" position="0 0 -15"
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="0 0 0" position="0 0 -20"
         material="src: #grid; repeat: 10000 10000;"></a-entity>
 
       <!-- Lights -->
@@ -49,14 +53,39 @@
     <script>
       parent.postMessage('aframeReady')
 
-      // Update joint positions
+      /**
+       * Create hand representation
+       */
+      $scene = document.querySelector('a-scene')
+      $hand = []
+      
+      for (let n = 0; n < 21; n++) {
+        const $joint = document.createElement(`a-sphere`)
+        $joint.setAttribute('radius', .1)
+        $hand.push($joint)
+        $scene.appendChild($joint)
+      }
+      $hand[0].setAttribute('color', 'red')
+      
+      /**
+       * Listen to events
+       */
       window.addEventListener('message', ev => {
-        console.log(ev)
         if (!ev.data.isHandsfree) return
         
         switch (ev.data.action) {
+          /**
+           * Update joint positions
+           */
           case 'data':
-            console.log(ev.data.handpose)
+            const data = ev.data.handpose
+            if (!data?.normalized) return
+
+            data.normalized.forEach((joint, n) => {
+              $hand[n].object3D.position.x = data.normalized[n][0] * 10 - 5
+              $hand[n].object3D.position.y = 5 - data.normalized[n][1] * 10
+              $hand[n].object3D.position.z = data.normalized[n][2] / 10 - 10
+            })
           break
         }
       })
