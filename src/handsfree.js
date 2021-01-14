@@ -55,6 +55,7 @@ import pluginFaceScroll from './plugin/weboji/faceScroll'
 
 import pluginPinchScroll  from './plugin/hands/pinchScroll'
 import pluginPinchers  from './plugin/hands/pinchers'
+import pluginPalmPointers  from './plugin/hands/palmPointers'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -62,6 +63,7 @@ const corePlugins = {
   faceScroll: pluginFaceScroll,
   pinchScroll: pluginPinchScroll,
   pinchers: pluginPinchers,
+  palmPointers: pluginPalmPointers,
 }
 
 
