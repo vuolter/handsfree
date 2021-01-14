@@ -578,6 +578,8 @@
         meshes: []
       };
 
+      this.normalized = [];
+
       // landmark indices that represent the palm
       // 8 = Index finger tip
       // 12 = Middle finger tip
@@ -617,8 +619,9 @@
 
       const predictions = await this.api.estimateHands(this.handsfree.debug.$video);
 
-      this.data = {
+      this.handsfree.data.handpose = this.data = {
         ...predictions[0],
+        normalized: this.normalized,
         meshes: this.three.meshes
       };
 
@@ -736,6 +739,11 @@
         // compute the center of the bone (midpoint)
         const mid = p0.clone().lerp(p1, 0.5);
         this.three.meshes[i].position.set(mid.x, mid.y, mid.z);
+        this.normalized[i] = [
+          this.handsfree.normalize(p0.x, this.handsfree.debug.$video.videoWidth / -2, this.handsfree.debug.$video.videoWidth / 2),
+          this.handsfree.normalize(p0.y, this.handsfree.debug.$video.videoHeight / -2, this.handsfree.debug.$video.videoHeight / 2),
+          this.three.meshes[i].position.z
+        ];
     
         // compute the length of the bone
         this.three.meshes[i].scale.z = p0.distanceTo(p1);
@@ -3659,7 +3667,7 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.2.0/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.2.1/build/lib/assets',
     
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
@@ -7196,7 +7204,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.2.0
+                  8.2.1
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -7255,7 +7263,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.2.0';
+      this.version = '8.2.1';
       this.data = {};
 
       // Dependency management

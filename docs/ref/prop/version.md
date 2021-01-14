@@ -10,6 +10,6 @@ Contains your version of Handsfree.js. In the future this will be used to help v
 ```js
 const handsfree = new Handsfree({weboji: true})
 
-// Logs 8.2.0
+// Logs 8.2.1
 console.log(handsfree.version)
 ```
