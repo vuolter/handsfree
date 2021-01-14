@@ -77,6 +77,10 @@ handsfree.data.handpose.landmarks[4]
 // Index fingertip
 handsfree.data.handpose.landmarks[8]
 
+// Normalized landmark values from [0 - 1] for the x and y
+// The z isn't really depth but "units" away from the camera so those aren't normalized
+handsfree.data.handpose.normalized[0]
+
 // How confident the model is that a hand is in view [0 - 1]
 handsfree.data.handpose.handInViewConfidence
 
