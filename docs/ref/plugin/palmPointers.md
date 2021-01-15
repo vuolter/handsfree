@@ -53,7 +53,7 @@ export default {
 
         plugin: {
           palmPointers: {enabled: true},
-          // pinchScroll: {enabled: true}
+          pinchScroll: {enabled: true}
         }
       }
     }

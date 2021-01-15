@@ -7,17 +7,23 @@ export default {
   enabled: false,
 
   // The pointer element
-  $pointer: null,
+  $pointer: [],
 
   // Pointers position
-  pointer: { x: -20, y: -20 },
+  pointer: [
+    { x: -20, y: -20 },
+    { x: -20, y: -20 },
+    { x: -20, y: -20 },
+    { x: -20, y: -20 }
+  ],
 
   // Used to smoothen out the pointer
-  tween: {
-    x: 0,
-    y: 0,
-    positionList: []
-  },
+  tween: [
+    {x: -20, y: -20},
+    {x: -20, y: -20},
+    {x: -20, y: -20},
+    {x: -20, y: -20},
+  ],
 
   config: {
     offset: {
@@ -32,15 +38,19 @@ export default {
   },
 
   onEnable () {
-    if (!this.$pointer) {
-      const $pointer = document.createElement('div')
-      $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-palm', 'handsfree-hide-when-started-without-hands')
-      document.body.appendChild($pointer)
-      this.$pointer = $pointer
+    if (!this.$pointer[0]) {
+      for (let i = 0; i < 4; i++) {
+        const $pointer = document.createElement('div')
+        $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-palm', 'handsfree-hide-when-started-without-hands')
+        document.body.appendChild($pointer)
+        this.$pointer[i] = $pointer
+      }
     }
 
-    this.$pointer?.classList.remove('handsfree-hidden')
-    this.pointer = { x: -20, y: -20 }
+    for (let i = 0; i < 4; i++) {
+      this.$pointer[i].classList.remove('handsfree-hidden')
+      this.pointer[i] = { x: -20, y: -20 }
+    }
   },
 
   onUse () {
@@ -49,28 +59,35 @@ export default {
 
   onFrame ({hands}) {
     if (!hands?.multiHandLandmarks) return
+    hands.pointer = []
     
-    this.handsfree.TweenMax.to(this.tween, 1, {
-      x: window.outerWidth - hands.multiHandLandmarks[0][21].x * window.outerWidth + this.config.offset.x,
-      y: hands.multiHandLandmarks[0][21].y * window.outerHeight + this.config.offset.y,
-      overwrite: true,
-      ease: 'linear.easeNone',
-      immediate: true
+    hands.multiHandLandmarks.forEach((hand, n) => {
+      hands.pointer.push({})
+      
+      this.handsfree.TweenMax.to(this.tween[n], 1, {
+        x: window.outerWidth - hands.multiHandLandmarks[n][21].x * window.outerWidth + this.config.offset.x,
+        y: hands.multiHandLandmarks[n][21].y * window.outerHeight + this.config.offset.y,
+        overwrite: true,
+        ease: 'linear.easeNone',
+        immediate: true
+      })
+  
+      this.$pointer[n].style.left = `${this.tween[n].x}px`
+      this.$pointer[n].style.top = `${this.tween[n].y}px`
+      
+      hands.pointer[n] = {
+        x: this.tween[n].x,
+        y: this.tween[n].y
+      }
     })
-
-    this.$pointer.style.left = `${this.tween.x}px`
-    this.$pointer.style.top = `${this.tween.y}px`
-    
-    hands.pointer = {
-      x: this.tween.x,
-      y: this.tween.y
-    }
   },
 
   /**
    * Toggle pointer
    */
   onDisable() {
-    this.$pointer?.classList.add('handsfree-hidden')
+    this.$pointer.forEach($pointer => {
+      $pointer.classList.add('handsfree-hidden')
+    })
   }
 }
