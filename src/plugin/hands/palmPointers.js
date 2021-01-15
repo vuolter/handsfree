@@ -62,7 +62,14 @@ export default {
     hands.pointer = []
     
     hands.multiHandLandmarks.forEach((landmarks, n) => {
-      const hand = hands.multiHandedness[n].label === 'Right' ? 0 : 1
+      // Use the correct hand index
+      let hand
+      if (n < 2) {
+        hand = hands.multiHandedness[n].label === 'Right' ? 0 : 1
+      } else {
+        hand = hands.multiHandedness[n].label === 'Right' ? 2 : 3
+      }
+
       hands.pointer.push({})
       
       this.handsfree.TweenMax.to(this.tween[hand], 1, {
