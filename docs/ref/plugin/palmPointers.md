@@ -27,9 +27,21 @@ sidebarDepth: 2
 >
 > **Tags:** `['core']`
 
-## Extra Properties
+## Try scrolling these different areas at the same time
+<table class="multi-hand-scrollers">
+  <tr>
+    <td><div><div></div></div></td>
+    <td><div><div></div></div></td>
+  </tr>
+  <tr>
+    <td><div><div></div></div></td>
+    <td><div><div></div></div></td>
+  </tr>
+</table>
 
-This plugin adds `handsfree.data.hands.pointers` to the [Hands Model](/ref/model/hands/):
+## The Pointers
+
+This plugin adds `handsfree.data.hands.pointers` to the [Hands Model](/ref/model/hands/) with an object for each hand:
 
 ```js
 handsfree.data.hands.pointers = [
@@ -44,9 +56,27 @@ handsfree.data.hands.pointers = [
 ]
 ```
 
-## Events
+The pointers are automatically shown and hidden as the hands come in and out view. You can access these in several ways:
 
-## Classes
+```js
+// From anywhere
+handsfree.data.hands.pointers[0]
+
+// From inside a plugin
+handsfree.use('logger', data => {
+  if (!data.hands) return
+
+  console.log(data.hands.pointers[0])
+})
+
+// From an event
+document.addEventListener('handsfree-data', event => {
+  const data = event.detail
+  if (!data.hands) return
+
+  console.log(data.hands.pointers[0])
+})
+```
 
 ## Full plugin code
 
@@ -84,3 +114,20 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.multi-hand-scrollers
+  td
+    padding 0
+  
+    > div
+      max-height 300px
+      overflow auto
+
+      > div
+        height 1000px
+        background url(/favicon.png)
+        background-repeat space
+        background-size 32px
+        opacity 0.25
+</style>
