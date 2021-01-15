@@ -34,7 +34,7 @@ export default {
   onEnable () {
     if (!this.$pointer) {
       const $pointer = document.createElement('div')
-      $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-finger', 'handsfree-hide-when-started-without-handpose')
+      $pointer.classList.add('handsfree-pointer', 'handsfree-pointer-palm', 'handsfree-hide-when-started-without-hands')
       document.body.appendChild($pointer)
       this.$pointer = $pointer
     }
@@ -47,10 +47,12 @@ export default {
     this.onEnable()
   },
 
-  onFrame (data) {
+  onFrame ({hands}) {
+    if (!hands?.multiHandLandmarks) return
+    
     this.handsfree.TweenMax.to(this.tween, 1, {
-      x: window.outerWidth - this.handsfree.normalize(data.annotations.palmBase[0][0], this.handsfree.debug.$video.videoWidth * .75) * window.outerWidth + this.config.offset.x,
-      y: this.handsfree.normalize(data.annotations.palmBase[0][1], this.handsfree.debug.$video.videoHeight * .75) * window.outerHeight - window.outerHeight * .5 + this.config.offset.y,
+      x: window.outerWidth - hands.multiHandLandmarks[0][21].x * window.outerWidth + this.config.offset.x,
+      y: hands.multiHandLandmarks[0][21].y * window.outerHeight + this.config.offset.y,
       overwrite: true,
       ease: 'linear.easeNone',
       immediate: true
@@ -59,7 +61,7 @@ export default {
     this.$pointer.style.left = `${this.tween.x}px`
     this.$pointer.style.top = `${this.tween.y}px`
     
-    data.pointer = {
+    hands.pointer = {
       x: this.tween.x,
       y: this.tween.y
     }

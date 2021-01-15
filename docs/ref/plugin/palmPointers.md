@@ -11,9 +11,9 @@ sidebarDepth: 2
         <li>👌 Pinch your thumb with any finger to set that fingers "click" state</li>
         <li>Unpinched fingers are black, pinched fingers are red</li>
       </ul>
-      <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Pinch fingers to click" text-on="Stop Hands" :opts="demoOpts" />
+      <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try Palm Pointers" text-on="Stop Palm Pointers" :opts="demoOpts" />
       <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-      <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Pinch fingers to click</button>
+      <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try Palm Pointers</button>
     </div>
   </div>
 </Window>
@@ -52,8 +52,8 @@ export default {
         handpose: false,
 
         plugin: {
-          // palmPointers: {enabled: true},
-          pinchScroll: {enabled: true}
+          palmPointers: {enabled: true},
+          // pinchScroll: {enabled: true}
         }
       }
     }
