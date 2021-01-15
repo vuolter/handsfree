@@ -8,8 +8,9 @@ sidebarDepth: 2
     <div class="col-6"><img src="https://media4.giphy.com/media/IHcXdVDrnpVnZqwq4z/giphy.gif"></div>
     <div class="col-6">
       <ul>
-        <li>👌 Pinch your thumb with any finger to set that fingers "click" state</li>
-        <li>Unpinched fingers are black, pinched fingers are red</li>
+        <li>🖐 With your palm(s) pointed at the screen, move your hands to move the pointer</li>
+        <li>👌 Pinch your index and thumb to scroll the page</li>
+        <li>Try scrolling two scroll areas at once!</li>
       </ul>
       <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try Palm Pointers" text-on="Stop Palm Pointers" :opts="demoOpts" />
       <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
@@ -18,16 +19,30 @@ sidebarDepth: 2
   </div>
 </Window>
 
-
 > **Models:** [MediaPipe Hands](/ref/model/hands/)
 >
-> **About:** This plugin emits events, adds new properties to the hand data, and sets classes on the body to help you style elements based on which fingers were pinched
+> **About:** This plugin displays a pointer on the screen for each visible hand, which can be used as a guide when [pinch clicking](/ref/plugin/pinchClick/) or [pinch scrolling](/ref/plugin/pinchScroll/)
 >
-> **Activate:** This plugin is automatically activated when the [Hands Model](/ref/model/hands/) is enabled
+> **Activate:** `handsfree.plugin.palmPointers.enable()` or `handsfree.enablePlugins('core')`
 >
 > **Tags:** `['core']`
 
-## Properties
+## Extra Properties
+
+This plugin adds `handsfree.data.hands.pointers` to the [Hands Model](/ref/model/hands/):
+
+```js
+handsfree.data.hands.pointers = [
+  // Left hand 1
+  {x, y, isVisible},
+  // Right hand 1
+  {x, y, isVisible},
+  // Left hand 2
+  {x, y, isVisible},
+  // Right hand 2
+  {x, y, isVisible}
+]
+```
 
 ## Events
 

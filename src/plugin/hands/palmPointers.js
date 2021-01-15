@@ -11,10 +11,10 @@ export default {
 
   // Pointers position
   pointer: [
-    { x: -20, y: -20 },
-    { x: -20, y: -20 },
-    { x: -20, y: -20 },
-    { x: -20, y: -20 }
+    { x: -20, y: -20, isVisible: false },
+    { x: -20, y: -20, isVisible: false },
+    { x: -20, y: -20, isVisible: false },
+    { x: -20, y: -20, isVisible: false }
   ],
 
   // Used to smoothen out the pointer
@@ -59,7 +59,12 @@ export default {
 
   onFrame ({hands}) {
     if (!hands?.multiHandLandmarks) return
-    hands.pointer = []
+    hands.pointer = [
+      { isVisible: false },
+      { isVisible: false },
+      { isVisible: false },
+      { isVisible: false }
+    ]
     
     hands.multiHandLandmarks.forEach((landmarks, n) => {
       // Use the correct hand index
@@ -70,8 +75,6 @@ export default {
         hand = hands.multiHandedness[n].label === 'Right' ? 2 : 3
       }
 
-      hands.pointer.push({})
-      
       this.handsfree.TweenMax.to(this.tween[hand], 1, {
         x: window.outerWidth - hands.multiHandLandmarks[n][21].x * window.outerWidth + this.config.offset.x,
         y: hands.multiHandLandmarks[n][21].y * window.outerHeight + this.config.offset.y,
@@ -85,7 +88,17 @@ export default {
       
       hands.pointer[hand] = {
         x: this.tween[hand].x,
-        y: this.tween[hand].y
+        y: this.tween[hand].y,
+        isVisible: true
+      }
+    })
+
+    // Toggle pointers
+    hands.pointer.forEach((pointer, hand) => {
+      if (pointer.isVisible) {
+        this.$pointer[hand].style.display = 'block'
+      } else {
+        this.$pointer[hand].style.display = 'none'
       }
     })
   },
