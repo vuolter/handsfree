@@ -61,10 +61,11 @@ export default {
     if (!hands?.multiHandLandmarks) return
     hands.pointer = []
     
-    hands.multiHandLandmarks.forEach((hand, n) => {
+    hands.multiHandLandmarks.forEach((landmarks, n) => {
+      const hand = hands.multiHandedness[n].label === 'Right' ? 0 : 1
       hands.pointer.push({})
       
-      this.handsfree.TweenMax.to(this.tween[n], 1, {
+      this.handsfree.TweenMax.to(this.tween[hand], 1, {
         x: window.outerWidth - hands.multiHandLandmarks[n][21].x * window.outerWidth + this.config.offset.x,
         y: hands.multiHandLandmarks[n][21].y * window.outerHeight + this.config.offset.y,
         overwrite: true,
@@ -72,12 +73,12 @@ export default {
         immediate: true
       })
   
-      this.$pointer[n].style.left = `${this.tween[n].x}px`
-      this.$pointer[n].style.top = `${this.tween[n].y}px`
+      this.$pointer[hand].style.left = `${this.tween[hand].x}px`
+      this.$pointer[hand].style.top = `${this.tween[hand].y}px`
       
-      hands.pointer[n] = {
-        x: this.tween[n].x,
-        y: this.tween[n].y
+      hands.pointer[hand] = {
+        x: this.tween[hand].x,
+        y: this.tween[hand].y
       }
     })
   },
