@@ -7,6 +7,8 @@ export default {
   fingertipIndex: [8, 12, 16, 20],
 
   // Number of frames the current element is the same as the last
+  // [left, right]
+  // [index, middle, ring, pinky]
   numFramesFocused: [[0, 0, 0, 0,], [0, 0, 0, 0]],
 
   // Whether the fingers are touching

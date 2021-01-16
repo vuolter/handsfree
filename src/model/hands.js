@@ -5,7 +5,7 @@ export default class HandsModel extends BaseModel {
     super(handsfree, config)
     this.name = 'hands'
 
-    this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
+    this.palmPoints = [0, 5, 9, 13, 17]
   }
 
   loadDependencies (callback) {
@@ -79,11 +79,39 @@ export default class HandsModel extends BaseModel {
   }
   // Called through this.api.onResults
   dataReceived (results) {
+    // Get center of palm
+    if (results.multiHandLandmarks) {
+      results = this.getCenterOfPalm(results)
+    }
+
+    // Update and debug
     this.data = results
     this.handsfree.data.hands = results
     if (this.handsfree.isDebugging) {
       this.debug(results)
     }
+  }
+
+  /**
+   * Calculates the center of the palm
+   */
+  getCenterOfPalm (results) {
+    results.multiHandLandmarks.forEach((hand, n) => {
+      let x = 0
+      let y = 0
+      
+      this.palmPoints.forEach(i => {
+        x += hand[i].x
+        y += hand[i].y
+      })
+
+      x /= this.palmPoints.length
+      y /= this.palmPoints.length
+      
+      results.multiHandLandmarks[n][21] = {x, y}
+    })
+    
+    return results
   }
 
   /**

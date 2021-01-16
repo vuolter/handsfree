@@ -117,10 +117,10 @@ handsfree.use('logger', data => {
 
 // From an event
 document.addEventListener('handsfree-data', event => {
-  const data = event.detail.data
+  const data = event.detail
   if (!data.hands) return
 
-  console.log(event.detail.data.hands.multiHandedness)
+  console.log(data.hands.multiHandedness)
 })
 ```
 

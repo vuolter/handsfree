@@ -24,8 +24,8 @@ next: /guide/
 ```js
 // Enable Mediapipe's "Hands" model
 const handsfree = new Handsfree({hands: true})
-// Enable plugins tagged with "browsing"
-handsfree.enablePlugins('browsing')
+// Enable plugins tagged with "browser"
+handsfree.enablePlugins('browser')
 // Start tracking
 handsfree.start()
 ```
@@ -70,15 +70,15 @@ handsfree.start()
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.0/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.2.0/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.1/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.2.1/build/lib/handsfree.js"></script>
 </head>
 
 <body>
   <!-- Instantiate and start it -->
   <script>
     const handsfree = new Handsfree({hands: true})
-    handsfree.enablePlugins('browsing')
+    handsfree.enablePlugins('browser')
     handsfree.start()
   </script>
 </body>
@@ -96,13 +96,13 @@ npm i handsfree
 import Handsfree from 'handsfree'
 
 const handsfree = new Handsfree({hands: true})
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 handsfree.start()
 ```
 
 ### Hosting the models yourself
 
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.2.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.2.1/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
 ```bash
 # Move the models into your project's public directory
@@ -122,7 +122,7 @@ const handsfree = new Handsfree({
   // Set this to your where you moved the models into
   assetsPath: '/PUBLIC/assets',
 })
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 handsfree.start()
 ```
 
@@ -136,7 +136,7 @@ The following workflow demonstrates how to use all features of Handsfree.js. Che
 ```js
 // Let's enable face tracking with the default Face Pointer
 const handsfree = new Handsfree({weboji: true})
-handsfree.enablePlugins('browsing')
+handsfree.enablePlugins('browser')
 
 // Now let's start things up
 handsfree.start()

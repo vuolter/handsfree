@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.2.0
+                8.2.1
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -52,6 +52,7 @@ import pluginFaceScroll from './plugin/weboji/faceScroll'
 
 import pluginPinchScroll  from './plugin/hands/pinchScroll'
 import pluginPinchers  from './plugin/hands/pinchers'
+import pluginPalmPointers  from './plugin/hands/palmPointers'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -59,6 +60,7 @@ const corePlugins = {
   faceScroll: pluginFaceScroll,
   pinchScroll: pluginPinchScroll,
   pinchers: pluginPinchers,
+  palmPointers: pluginPalmPointers,
 }
 
 
@@ -94,7 +96,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.2.0'
+    this.version = '8.2.1'
     this.data = {}
 
     // Dependency management

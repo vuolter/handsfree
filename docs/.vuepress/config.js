@@ -73,7 +73,15 @@ module.exports = {
         path: '/guide/',
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
-          ['/guide/updating-configs.md', '🎭 Updating and switching models']
+          ['/guide/updating-configs.md', '🎭 Updating and switching models'],
+          {
+            title: '📰 Blogs & Articles',
+            collapsable: false,
+            path: '/guide/misc/',
+            children: [
+              ['/guide/misc/intro.md', 'Introducing Handsfree.js - Integrate hand, face, and pose gestures to your frontend']
+            ]
+          }
         ]
       },
       {
@@ -86,7 +94,8 @@ module.exports = {
             path: '/integration/aframe/',
             collapsable: true,
             children: [
-              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree']
+              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree'],
+              // ['/integration/aframe/hand-physics.md', 'Hand physics']
             ]
           }
         ]
@@ -168,6 +177,7 @@ module.exports = {
               ['/ref/plugin/faceClick.md', 'faceClick'],
               ['/ref/plugin/facePointer.md', 'facePointer'],
               ['/ref/plugin/faceScroll.md', 'faceScroll'],
+              ['/ref/plugin/palmPointers.md', 'palmPointers'],
               ['/ref/plugin/pinchers.md', 'pinchers'],
               ['/ref/plugin/pinchScroll.md', 'pinchScroll'],
             ]

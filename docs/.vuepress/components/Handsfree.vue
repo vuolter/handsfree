@@ -4,6 +4,8 @@
 
   //- This will be moved into the Navbar
   #navbar-handsfree-toggle
+    a(href='https://github.com/midiblocks/handsfree')
+      img(src='/branding/github.png' height=28 style='vertical-align: middle')
     HandsfreeToggle.handsfree-show-when-started(:opts='opts' text-off='Activate Handsfree Mode' text-on='Stop Handsfree')
 
   //- This will be moved into the sidebar
@@ -54,7 +56,7 @@ export default {
     🧙‍♂️ Presenting 🧙‍♀️
 
        Handsfree.js
-          8.2.0
+          8.2.1
 
 https://github.com/midiblocks/handsfree
 https://github.com/sponsors/midiblocks

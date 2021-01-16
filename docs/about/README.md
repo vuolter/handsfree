@@ -46,7 +46,8 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
-| 2020-01-06 | 8.2.0 | Adds [TensorFlow Handpose](/ref/model/handpose/) including a basic THREE boilerplate remixed from [@LingDong-'s handpose-facemesh-demos](https://github.com/LingDong-/handpose-facemesh-demos), and a fingertip raycaster.
+| 2020-01-13 | 8.2.1 | Adds new [normalized helper](/ref/model/handpose/#data): `handsfree.data.handpose.normalized`. These `[x, y, z]` are similar to `.handpose.landmarks` but normalized between [0, 1]
+| 2020-01-06 | 8.2.0 | Adds [TensorFlow Handpose](/ref/model/handpose/) including a basic THREE boilerplate remixed from [@LingDong-'s handpose-facemesh-demos](https://github.com/LingDong-/handpose-facemesh-demos), and a fingertip raycaster
 | 2020-01-01 | 8.1.2 | Fixes [Face Pointer](/ref/plugin/facePointer/) offsets, which was causing the pointer to assume you were facing straight up 😆
 | 2020-12-31 | 8.1.1 | Adds [pinchers Plugin](/ref/plugin/pinchers/) for easily working with finger pinches through events, new properties, and styles
 | 2020-12-30 | 8.1.0 | Adds [.showDebugger()](/ref/method/showDebugger/), [.hideDebugger()](/ref/method/hideDebugger/), and helper classes. Renames `feedback` to `debugger`

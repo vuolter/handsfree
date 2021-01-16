@@ -16,5 +16,6 @@ prev: /ref/method/
 - [faceScroll](/ref/plugin/faceScroll/) - Scroll the page by moving the [facePointer](/ref/plugin/facePointer/) above and below the screen
 
 ### Model: [Hands](/ref/model/hands/)
+- [palmPointers](/ref/plugin/palmPointers/) - Move a pointer on the screen with your hands
 - [pinchers](/ref/plugin/pinchers/) - A collection of events, properties, and helper styles for finger pinching
 - [pinchScroll](/ref/plugin/pinchScroll/) - Scroll the page by pinching together your thumb and pointer finger
