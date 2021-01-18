@@ -12,10 +12,11 @@ export default {
   $target: [null, null, null, null],
 
   // The original grab point
+  origScrollLeft: [0, 0, 0, 0],
   origScrollTop: [0, 0, 0, 0],
 
   // The tweened scrollTop, used to smoothen out scroll
-  tweenScroll: [{y: 0}, {y: 0}, {y: 0}, {y: 0}],
+  tweenScroll: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
 
   config: {
     // Number of frames over the same element before activating that element
@@ -39,6 +40,7 @@ export default {
     setTimeout(() => {
       if (!hands.pointer) return
       const height = this.handsfree.debug.$canvas.hands.height
+      const width = this.handsfree.debug.$canvas.hands.width
 
       hands.pointer.forEach((pointer, n) => {
         // @fixme Get rid of n > origPinch.length
@@ -50,18 +52,20 @@ export default {
 
           this.$target[n] = this.getTarget($potTarget)
           this.origScrollTop[n] = this.getTargetScrollTop(this.$target[n])
+          this.origScrollLeft[n] = this.getTargetScrollLeft(this.$target[n])
           this.handsfree.TweenMax.killTweensOf(this.tweenScroll[n])
         }
 
         if (hands.pinchState[n][0] === 'held' && this.$target[n]) {
           this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
+            x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
             y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
             overwrite: true,
             ease: 'linear.easeNone',
             immediateRender: true  
           })
 
-          this.$target[n].scrollTo(0, this.tweenScroll[n].y)
+          this.$target[n].scrollTo(this.tweenScroll[n].x, this.tweenScroll[n].y)
         }
       })
     })
@@ -87,6 +91,13 @@ export default {
         return window
       }
     }
+  },
+
+  /**
+   * Gets the scrolltop, taking account the window object
+   */
+  getTargetScrollLeft ($target) {
+    return $target.scrollX || $target.scrollLeft || 0
   },
 
   /**
