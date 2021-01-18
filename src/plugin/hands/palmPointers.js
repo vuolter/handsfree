@@ -58,7 +58,12 @@ export default {
   },
 
   onFrame ({hands}) {
-    if (!hands?.multiHandLandmarks) return
+    // Hide pointers
+    if (!hands?.multiHandLandmarks) {
+      this.$pointer.forEach($pointer => $pointer.style.display = 'none')
+      return
+    }
+
     hands.pointer = [
       { isVisible: false },
       { isVisible: false },

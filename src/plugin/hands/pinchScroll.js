@@ -54,8 +54,6 @@ export default {
         }
 
         if (hands.pinchState[n][0] === 'held' && this.$target[n]) {
-          console.log(this.origScrollTop[n], (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height)
-
           this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
             y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
             overwrite: true,
