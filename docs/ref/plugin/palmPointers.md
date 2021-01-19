@@ -78,6 +78,47 @@ document.addEventListener('handsfree-data', event => {
 })
 ```
 
+## Config
+
+### During instantiation
+
+```js
+handsfree = new Handsfree({
+  hands: true,
+
+  plugin: {
+    palmPointers: {
+      enabled: true,
+
+      // How much to offfset the pointers by
+      // - This is useful for when the camera won't be in front of you
+      // - This is also useful when working with multiple displays
+      offset: {
+        x: 0,
+        y: 0
+      },
+
+      // A multiplier to apply to moving the pointer
+      speed: {
+        x: 1.5,
+        y: 1.5
+      }
+    }
+  }
+})
+```
+
+### After instantiation
+
+```js
+handsfree = new Handsfree({hands: true})
+handsfree.start()
+
+handsfree.plugin.palmPointers.enable()
+handsfree.plugin.palmPointers.speed = {x: 2, y: 2}
+handsfree.plugin.palmPointers.offset = {x: 100, y: 100}
+```
+
 ## Full plugin code
 
 <<< @/src/plugin/hands/palmPointers.js
