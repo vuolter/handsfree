@@ -119,6 +119,26 @@ handsfree.plugin.palmPointers.speed = {x: 2, y: 2}
 handsfree.plugin.palmPointers.offset = {x: 100, y: 100}
 ```
 
+## Properties
+
+```js
+// The pointer {x, y} for each hand
+handsfree.plugin.palmPointers.pointers === [leftHand1, rightHand1, leftHand2, rightHand2]
+
+// The pointer elements
+handsfree.plugin.palmPointers.$pointers === [leftHand1, rightHand1, leftHand2, rightHand2]
+```
+
+### Examples of accessing properties
+
+```js
+// hide the pointer for the left hand (for the 1st person)
+handsfree.plugin.palmPointers.$pointers[0].style.display = 'none'
+
+// show the pointer for the right hand (for the 2nd person)
+handsfree.plugin.palmPointers.$pointers[3].style.display = 'block'
+```
+
 ## Full plugin code
 
 <<< @/src/plugin/hands/palmPointers.js
