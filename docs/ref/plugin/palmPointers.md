@@ -9,7 +9,7 @@ sidebarDepth: 2
     <div class="col-6">
       <ul>
         <li>🖐 With your palm(s) pointed at the screen, move your hands to move the pointer</li>
-        <li>👌 Pinch your index and thumb to scroll the page</li>
+        <li>👌 Pinch your index and thumb to scroll the area under the pointer</li>
         <li>Try scrolling two scroll areas at once!</li>
       </ul>
       <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Try Palm Pointers" text-on="Stop Palm Pointers" :opts="demoOpts" />

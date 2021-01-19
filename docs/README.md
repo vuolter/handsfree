@@ -221,7 +221,8 @@ export default {
         handpose: false,
 
         plugin: {
-          pinchScroll: {enabled: true}
+          pinchScroll: {enabled: true},
+          palmPointers: {enabled: true}
         }
       }
     }
