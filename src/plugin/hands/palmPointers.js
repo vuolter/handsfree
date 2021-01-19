@@ -8,6 +8,7 @@ export default {
 
   // The pointer element
   $pointer: [],
+  arePointersVisible: true,
 
   // Pointers position
   pointer: [
@@ -48,12 +49,10 @@ export default {
       this.$pointer[i] = $pointer
     }
     
-    for (let i = 0; i < 4; i++) {
-      if (this.enabled) {
-        this.$pointer[i].classList.remove('handsfree-hidden')
-      } else {
-        this.$pointer[i].classList.add('handsfree-hidden')
-      }
+    if (this.enabled && this.arePointersVisible) {
+      this.showPointers()
+    } else {
+      this.hidePointers()
     }
   },
 
@@ -61,18 +60,18 @@ export default {
    * Show pointers on enable
    */
   onEnable () {
-    for (let i = 0; i < 4; i++) {
-      this.$pointer[i].classList.remove('handsfree-hidden')
-    }
+    const arePointersVisible = this.arePointersVisible
+    this.showPointers()
+    this.arePointersVisible = arePointersVisible
   },
 
   /**
    * Hide pointers on disable
    */
   onDisable () {
-    for (let i = 0; i < 4; i++) {
-      this.$pointer[i].classList.add('handsfree-hidden')
-    }
+    const arePointersVisible = this.arePointersVisible
+    this.hidePointers()
+    this.arePointersVisible = arePointersVisible
   },
 
   onFrame ({hands}) {
@@ -144,5 +143,21 @@ export default {
     this.$pointer.forEach($pointer => {
       $pointer.classList.add('handsfree-hidden')
     })
+  },
+
+  /**
+   * Toggle pointers
+   */
+  showPointers () {
+    this.arePointersVisible = true
+    for (let i = 0; i < 4; i++) {
+      this.$pointer[i].classList.remove('handsfree-hidden')
+    }
+  },
+  hidePointers () {
+    this.arePointersVisible = false
+    for (let i = 0; i < 4; i++) {
+      this.$pointer[i].classList.add('handsfree-hidden')
+    }
   }
 }

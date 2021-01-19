@@ -121,6 +121,8 @@ handsfree.plugin.palmPointers.offset = {x: 100, y: 100}
 
 ## Properties
 
+The following properties are available on this plugin:
+
 ```js
 // The pointer {x, y} for each hand
 handsfree.plugin.palmPointers.pointers === [leftHand1, rightHand1, leftHand2, rightHand2]
@@ -138,6 +140,23 @@ handsfree.plugin.palmPointers.$pointers[0].style.display = 'none'
 // show the pointer for the right hand (for the 2nd person)
 handsfree.plugin.palmPointers.$pointers[3].style.display = 'block'
 ```
+
+## Methods
+
+The following methods are available on this plugins:
+
+```js
+// Show the pointers (shown by default when enabled)
+this.plugin.palmPointers.showPointers()
+
+// Hide pointers. Note that the pointer values are still updated, this simply hides
+// them visually
+this.plugin.palmPointers.hidePointers()
+```
+
+
+
+
 
 ## Full plugin code
 
