@@ -5,7 +5,7 @@ sidebarDepth: 2
 
 <Window>
   <div class="row">
-    <div class="col-6"><img src="https://media4.giphy.com/media/IHcXdVDrnpVnZqwq4z/giphy.gif"></div>
+    <div class="col-6"><img src="https://media3.giphy.com/media/r3Z89IFJfndPwJcItT/giphy.gif"></div>
     <div class="col-6">
       <ul>
         <li>🖐 With your palm(s) pointed at the screen, move your hands to move the pointer</li>
@@ -154,6 +154,10 @@ this.plugin.palmPointers.showPointers()
 this.plugin.palmPointers.hidePointers()
 ```
 
+## See also
+
+- [pinchers](/ref/plugin/pinchers/) - A collection of events, properties, and helper styles for finger pinching
+- [pinchScroll](/ref/plugin/pinchScroll/) - Scroll the page by pinching together your thumb and pointer finger
 
 
 
