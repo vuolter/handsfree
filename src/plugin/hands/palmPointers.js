@@ -53,8 +53,21 @@ export default {
     }
   },
 
+  onDisable () {
+    for (let i = 0; i < 4; i++) {
+      this.$pointer[i].classList.add('handsfree-hidden')
+    }
+  },
+
   onUse () {
     this.onEnable()
+    for (let i = 0; i < 4; i++) {
+      if (this.enabled) {
+        this.$pointer[i].classList.remove('handsfree-hidden')
+      } else {
+        this.$pointer[i].classList.add('handsfree-hidden')
+      }
+    }
   },
 
   onFrame ({hands}) {
