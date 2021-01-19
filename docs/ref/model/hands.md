@@ -61,7 +61,7 @@ handsfree.start()
 
 ## Data
 
-![](https://google.github.io/mediapipe/images/mobile/hand_landmarks.png)
+![](https://i.imgur.com/yhSbAUU.png)
 <br><small>Image source, MediaPipe: [https://google.github.io/mediapipe/solutions/hands#hand-landmark-model](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model)</small>
 
 ### Hand Landmarks
@@ -173,6 +173,7 @@ document.addEventListener('handsfree-data', event => {
 
 ## See Also
 
+- [palmPointers plugin](/ref/plugin/palmPointers/) - Creates pointers for each hand that can be moved around my moving the hands with the palm pointed towards the webcam
 - [pinchers plugin](/ref/plugin/pinchers/) - This plugin adds dozens of new events and helper styles for pinching any finger (index, middle, ring, pinky) to your thumb. It is enabled by default
 - [pinchScroll plugin](/ref/plugin/pinchScroll/) - Adds the ability to scroll pages with a pinch gesture
 
