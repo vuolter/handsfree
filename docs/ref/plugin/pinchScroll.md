@@ -7,7 +7,7 @@ sidebarDepth: 2
 <div class="window">
   <div class="window-body">
     <div class="row">
-      <div class="col-6"><img src="https://media4.giphy.com/media/tQ1vFtoMWWpgdCoJJj/giphy.gif"></div>
+      <div class="col-6"><img src="https://media3.giphy.com/media/r3Z89IFJfndPwJcItT/giphy.gif"></div>
       <div class="col-6">
         <ul>
           <li>👌 Pinch your thumb and index to grab the page</li>
@@ -29,6 +29,19 @@ sidebarDepth: 2
 > **Tags:** `['browser']`
 >
 > **About:** This plugin helps you scroll pages by pinching together your thumb and pointer finger.
+
+
+## Try scrolling these different areas at the same time
+<table class="multi-hand-scrollers">
+  <tr>
+    <td><div><div></div></div></td>
+    <td><div><div></div></div></td>
+  </tr>
+  <tr>
+    <td><div><div></div></div></td>
+    <td><div><div></div></div></td>
+  </tr>
+</table>
 
 ## Config
 
@@ -69,6 +82,10 @@ handsfree.plugin.pinchScroll.enable()
 handsfree.plugin.pinchScroll.config.speed = 1
 ```
 
+## See Also
+- [palmPointers](/ref/plugin/palmPointers/) - Move a pointer on the screen with your hands
+- [pinchers](/ref/plugin/pinchers/) - A collection of events, properties, and helper styles for finger pinching
+
 ## Full plugin code
 
 <<< @/src/plugin/hands/pinchScroll.js
@@ -88,6 +105,7 @@ export default {
         handpose: false,
 
         plugin: {
+          palmPointers: {enabled: true},
           pinchScroll: {enabled: true}
         }
       }

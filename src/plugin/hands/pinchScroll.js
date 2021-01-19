@@ -7,18 +7,16 @@ export default {
   enabled: false,
 
   // Number of frames the current element is the same as the last
-  numFramesFocused: 0,
+  numFramesFocused: [0, 0, 0, 0],
   // The current scrollable target
-  $target: null,
+  $target: [null, null, null, null],
 
   // The original grab point
-  origScrollTop: 0,
+  origScrollLeft: [0, 0, 0, 0],
+  origScrollTop: [0, 0, 0, 0],
 
   // The tweened scrollTop, used to smoothen out scroll
-  tweenScroll: {y: 0},
-
-  // Number of frames that has passed since the last grab
-  framesSinceLastGrab: 0,
+  tweenScroll: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
 
   config: {
     // Number of frames over the same element before activating that element
@@ -34,50 +32,78 @@ export default {
     speed: 2
   },
 
-  onUse () {
-    this.$target = window
-  },
-
   /**
    * Scroll the page when the cursor goes above/below the threshold
    */
   onFrame ({hands}) {
-    if (!hands.multiHandLandmarks) return
-    const height = this.handsfree.debug.$canvas.hands.height
-    
-    // Detect if the threshold for clicking is met with specific morphs
-    const a = hands.multiHandLandmarks[0][4].x - hands.multiHandLandmarks[0][8].x
-    const b = hands.multiHandLandmarks[0][4].y - hands.multiHandLandmarks[0][8].y
-    const c = Math.sqrt(a*a + b*b) * height
-    this.thresholdMet = c < this.config.threshold
+    // Wait for other plugins to update
+    setTimeout(() => {
+      if (!hands.pointer) return
+      const height = this.handsfree.debug.$canvas.hands.height
+      const width = this.handsfree.debug.$canvas.hands.width
 
-    // Set the original grab point
-    if (this.thresholdMet) {
-      if (this.framesSinceLastGrab > this.config.numThresholdErrorFrames) {
-        this.origScrollTop = this.getTargetScrollTop() + hands.multiHandLandmarks[0][4].y * height * this.config.speed
-        this.handsfree.TweenMax.killTweensOf(this.tweenScroll)
-      }
-      this.framesSinceLastGrab = 0
-    }
-    ++this.framesSinceLastGrab
-    
-    // Scroll
-    if (this.framesSinceLastGrab < this.config.numThresholdErrorFrames) {
-      this.handsfree.TweenMax.to(this.tweenScroll, 1, {
-        y: this.origScrollTop - hands.multiHandLandmarks[0][4].y * height * this.config.speed,
-        overwrite: true,
-        ease: 'linear.easeNone',
-        immediateRender: true  
+      hands.pointer.forEach((pointer, n) => {
+        // @fixme Get rid of n > origPinch.length
+        if (!pointer.isVisible || n > hands.origPinch.length) return
+
+        // Start scroll
+        if (hands.pinchState[n][0] === 'start') {
+          let $potTarget = document.elementFromPoint(pointer.x, pointer.y)
+
+          this.$target[n] = this.getTarget($potTarget)
+          this.origScrollTop[n] = this.getTargetScrollTop(this.$target[n])
+          this.origScrollLeft[n] = this.getTargetScrollLeft(this.$target[n])
+          this.handsfree.TweenMax.killTweensOf(this.tweenScroll[n])
+        }
+
+        if (hands.pinchState[n][0] === 'held' && this.$target[n]) {
+          this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
+            x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
+            y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
+            overwrite: true,
+            ease: 'linear.easeNone',
+            immediateRender: true  
+          })
+
+          this.$target[n].scrollTo(this.tweenScroll[n].x, this.tweenScroll[n].y)
+        }
       })
-      
-      this.$target.scrollTo(0, this.tweenScroll.y)
+    })
+  },
+
+  /**
+   * Finds the closest scroll area
+   */
+  getTarget ($potTarget) {
+    const styles = $potTarget && $potTarget.getBoundingClientRect ? getComputedStyle($potTarget) : {}
+
+    if ($potTarget && $potTarget.scrollHeight > $potTarget.clientHeight &&
+      (styles.overflow === 'auto' ||
+        styles.overflow === 'auto scroll' ||
+        styles.overflowY === 'auto' ||
+        styles.overflowY === 'auto scroll')
+    ) {
+      return $potTarget
+    } else {
+      if ($potTarget && $potTarget.parentElement) {
+        return this.getTarget($potTarget.parentElement)
+      } else {
+        return window
+      }
     }
   },
 
   /**
    * Gets the scrolltop, taking account the window object
    */
-  getTargetScrollTop () {
-    return this.$target.scrollY || this.$target.scrollTop || 0
+  getTargetScrollLeft ($target) {
+    return $target.scrollX || $target.scrollLeft || 0
+  },
+
+  /**
+   * Gets the scrolltop, taking account the window object
+   */
+  getTargetScrollTop ($target) {
+    return $target.scrollY || $target.scrollTop || 0
   }
 }
