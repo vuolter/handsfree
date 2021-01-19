@@ -30,6 +30,19 @@ sidebarDepth: 2
 >
 > **About:** This plugin helps you scroll pages by pinching together your thumb and pointer finger.
 
+
+## Try scrolling these different areas at the same time
+<table class="multi-hand-scrollers">
+  <tr>
+    <td><div><div></div></div></td>
+    <td><div><div></div></div></td>
+  </tr>
+  <tr>
+    <td><div><div></div></div></td>
+    <td><div><div></div></div></td>
+  </tr>
+</table>
+
 ## Config
 
 ### During instantiation

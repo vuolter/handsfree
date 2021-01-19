@@ -114,21 +114,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.multi-hand-scrollers
-  td
-    padding 0
-  
-    > div
-      max-height 300px
-      overflow auto
-
-      > div
-        height 1000px
-        width 1000px
-        background url(/favicon.png)
-        background-repeat space
-        background-size 32px
-        opacity 0.25
-</style>
