@@ -55,7 +55,7 @@ module.exports = {
   themeConfig: {
     logo: '/branding/handsfree.png',
     lastUpdated: 'Last Updated',
-
+    
     repo: 'midiblocks/handsfree',
     docsDir: 'docs',
     editLinks: true,
@@ -80,37 +80,6 @@ module.exports = {
             path: '/guide/misc/',
             children: [
               ['/guide/misc/intro.md', 'Introducing Handsfree.js - Integrate hand, face, and pose gestures to your frontend']
-            ]
-          }
-        ]
-      },
-      {
-        title: '🧩 Integrations',
-        collapsable: true,
-        path: '/integration/',
-        children: [
-          {
-            title: 'A-Frame',
-            path: '/integration/aframe/',
-            collapsable: true,
-            children: [
-              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree'],
-              // ['/integration/aframe/hand-physics.md', 'Hand physics']
-            ]
-          }
-        ]
-      },
-      {
-        title: '📱 Apps & Browser Extensions',
-        collapsable: true,
-        path: '/app/',
-        children: [
-          {
-            title: 'Browser Extensions',
-            path: '/app/browser/',
-            collapsable: true,
-            children: [
-              ['/app/browser/handsfree-webxr.md', 'Handsfree WebXR']
             ]
           }
         ]
@@ -207,6 +176,27 @@ module.exports = {
             ]
           }
         ]
+      },
+      {
+        title: '🧩 Integrations',
+        collapsable: true,
+        path: '/integration/',
+        children: [
+          {
+            title: 'A-Frame',
+            path: '/integration/aframe/',
+            collapsable: true,
+            children: [
+              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree'],
+              // ['/integration/aframe/hand-physics.md', 'Hand physics']
+            ]
+          }
+        ]
+      },
+      {
+        title: '🌐 Handsfree Browser Extension (in development)',
+        collapsable: true,
+        path: '/browser-extension/'
       },
       {
         title: '🤝 Community',
