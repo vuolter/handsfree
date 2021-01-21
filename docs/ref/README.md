@@ -1,5 +1,5 @@
 ---
-prev: /app/
+prev: /guide/
 next: /community/
 ---
 # 📚 References
