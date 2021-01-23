@@ -1,5 +1,6 @@
 # Build
 /build/docs
+/build/extension
 
 # Dev
 /node_modules/
