@@ -211,78 +211,6 @@ handsfree.plugin.logger.onFrame = (data) => {
 <br>
 <br>
 
-# Local Development
-
-If you'd like to contribute to the library or documentation then the following will get you going:
-
-- Install [NodeJS](https://nodejs.org/en/download/) and [git](https://git-scm.com/downloads)
-- Clone this repository: `git clone https://github.com/handsfreejs/handsfree`
-- Install dependencies by running `npm i` in a terminal from the project's root
-- Start development on `localhost:8080` by running `npm start`
-- Hit CTRL+C from the terminal to close the server
-
-Once you've run the above, you can just use `npm start`. If you pull the latest code, remember to run `npm i` to get any new dependencies (this shouldn't happen often).
-
-## Command line scripts
-```bash
-# Start local development on localhost:8080
-npm start 
-
-# Builds the library, documentation, and extension
-npm run build
-
-# Build only the library /dist/lib/
-npm run build:lib
-
-# Build only the documentation at /dist/docs/
-npm run build:docs
-
-# Build only the extension at /dist/extension
-npm run build:extension
-
-# Publish library to NPM
-npm login
-npm publish
-
-# Deploy documentation to handsfree.js.org
-npm deploy.sh
-```
-
-## Dev Notes
-- See [vuepress-component-font-awesome](https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only) for adding new icons to the documentation. Remember to run `npm run fa:build` when adding new font icons so that they are copied over into the `docs/.vuepress/components/FA`  folder
-- You may occasionally need to restart server when adding new files to the `/docs`, this is true when changing `/docs/.vuepress.config.js` as well
-
-<br>
-<br>
-<br>
-<hr>
-<br>
-<br>
-<br>
-
-# The Handsfree Browser Extension
-
-<br>
-<br>
-<br>
-<hr>
-<br>
-<br>
-<br>
-
-<div align="center">
-  <h2>Explore the interactive docs at: <a href="https://handsfree.js.org">Handsfree.js.org</a></h2>
-  <p>Or try it right away with the serverless boilerplates in <code>/boilerplate/</code>!</p>
-</div>
-
-<br>
-<br>
-<br>
-<hr>
-<br>
-<br>
-<br>
-
 # Examples
 
 ## Face Tracking Examples
@@ -347,6 +275,114 @@ npm deploy.sh
     <td></td>
   </tr>
 </table>
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+
+# Local Development
+
+If you'd like to contribute to the library or documentation then the following will get you going:
+
+- Install [NodeJS](https://nodejs.org/en/download/) and [git](https://git-scm.com/downloads)
+- Clone this repository: `git clone https://github.com/handsfreejs/handsfree`
+- Install dependencies by running `npm i` in a terminal from the project's root
+- Start development on `localhost:8080` by running `npm start`
+- Hit CTRL+C from the terminal to close the server
+
+Once you've run the above, you can just use `npm start`. If you pull the latest code, remember to run `npm i` to get any new dependencies (this shouldn't happen often).
+
+## Command line scripts
+```bash
+# Start local development on localhost:8080
+npm start 
+
+# Builds the library, documentation, and extension
+npm run build
+
+# Build only the library /dist/lib/
+npm run build:lib
+
+# Build only the documentation at /dist/docs/
+npm run build:docs
+
+# Build only the extension at /dist/extension
+npm run build:extension
+
+# Publish library to NPM
+npm login
+npm publish
+
+# Deploy documentation to handsfree.js.org
+npm deploy.sh
+```
+
+## Dev Notes
+- See [vuepress-component-font-awesome](https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only) for adding new icons to the documentation. Remember to run `npm run fa:build` when adding new font icons so that they are copied over into the `docs/.vuepress/components/FA`  folder
+- You may occasionally need to restart server when adding new files to the `/docs`, this is true when changing `/docs/.vuepress.config.js` as well
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+# The Handsfree Browser Extension
+
+The Browser Extension is a designed to help you browse the web handsfree through face and/or hand gestures. The goal is to develop a "[Userscript Manager](https://en.wikipedia.org/wiki/Userscript_manager)" like [Tampermonkey](https://www.tampermonkey.net/), but for handsfree-ifying web pages, games, apps, WebXR and really any other type of content found the web.
+
+## How it works
+
+![](https://i.imgur.com/VKFeZpB.jpg)
+
+- When you first install the extension, `/src/background/handsfree.js` checks if you've approved the webcam. If not, then it'll open the options page in `src/options/stream-capture.html`
+- The popup panel has a "Start/Stop Webcam" button that communicates with the background script to start the webcam: `/src/popup/index.html`
+- The background page is where the models are stored and run. This keeps everything isolated and only asks for webcam permission once (vs on every domain): `/src/background/handsfree.js`
+- The background page also uses the "Picture in Picture" API to "pop the webcam" out of the browser. It renders the webcam feed and debug canvases into a single canvas, and uses that as the `srcObject` to a separate video element which is the PiP'ed
+
+## How to install
+
+### Google Chrome
+
+Install as an unpacked chrome extension.
+
+1. Visit `chrome://extensions`
+2. Enable <kbd>Developer Mode</kbd> on the top right
+3. Then click <kbd>Load unpacked</kbd> and select this project's root folder
+
+![](https://i.imgur.com/jXmhYnb.png)
+
+## Handsfree Browsing
+
+By default, each page will get a "Face Pointer" or a set of "Palm Pointers" for you to browse pages handsfree.
+
+![A person controlling a virtual mouse pointer by tilting their head around](https://media3.giphy.com/media/Iv2aSMS0QTy2P5JNCX/giphy.gif)
+![A person scrolling a page by pinching their index and thumb together and raising or lowering their pinched hand](https://media3.giphy.com/media/BSkodGjuwBPAEwxjGv/giphy.gif)
+
+However, in addition to the pointers you can add custom handsfree interactions. For example, here's a demonstration of handsfree-ifying different things:
+
+![Creating generative art with hand gestures](https://media4.giphy.com/media/YB5GHxDKDFti74Jzz9/giphy.gif)
+![A person pinching the air to "pinch" a blob. Moving a pinched blob causes it to sing in a different pitch](https://media1.giphy.com/media/k1JWC1insGrfX1CSNu/giphy.gif)
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+<div align="center">
+  <h2>Explore the interactive docs at: <a href="https://handsfree.js.org">Handsfree.js.org</a></h2>
+  <p>Or try it right away with the serverless boilerplates in <code>/boilerplate/</code>!</p>
+</div>
 
 <br>
 <br>
