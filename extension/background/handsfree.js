@@ -12,7 +12,7 @@ ports = {
  * Setup Handsfree.js and the message bus
  */
 const handsfree = new Handsfree({
-  assetsPath: '/assets/js/handsfree/assets',
+  assetsPath: '/build/lib/assets',
   showDebug: true,
   // weboji: true,
   hands: true
