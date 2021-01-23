@@ -7,6 +7,7 @@ const path = require('path')
  */
 let disableAnalytics = false
 disableAnalytics = process.argv.some(arg => arg === 'build/extension')
+  || process.env.NODE_ENV !== 'production'
 
 // Remove analytics if the flag is present
 const plugins = {
