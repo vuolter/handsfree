@@ -1,6 +1,6 @@
 <div align="center">
   <p><a href="https://handsfree.js.org"><img src="https://media2.giphy.com/media/BBcnSU1IJ5tpQbwXDI/giphy.gif" alt="handsfree.js.org" title="handsfree.js.org"></a></p>
-  <p>Build handsfree User Experiences and add face, hand, and pose tracking to your projects in a snap 👌✨</p>
+  <p>Quickly integrate face, hand, and/or pose tracking to your frontend projects in a snap ✨👌</p>
   <p>
     <img class="mr-1" src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
     <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
@@ -38,10 +38,29 @@
 <br>
 <br>
 
+# Contents
+This repo is broken into 3 main parts: The actual library itself found in `/src/`, the documentation for it in `/docs/`, and the Handsfree Browser Extension in `/extension/`.
+
+- Handsfree.js
+  - [Quickstart with CDN](#installing-from-cdn) (fastest way to get started)
+  - [Quickstart with NPM](#installing-from-npm) (requires server or bundler)
+- [Development guide](#local-development)
+- [Handsfree Browser Extension](#the-handsfree-browser-extension)
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
 # Quickstart
 ## Installing from CDN
 
-This option is great if you don't have or need a server, or if you're developing on a [site like CodePen](https://codepen.io/MIDIBlocks/pen/mdrwYzM). You can also [just download this repo](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and open up `/boilerplates/cdn.html` in your browser. Since the models are loaded on CDN you won't need to do any further setup to get started!
+> Note: models loaded from the CDN may load slower on the initial page load, but should load much faster once cached by the browser.
+
+This option is great if you don't have or need a server, or if you're prototyping on a [site like CodePen](https://codepen.io/MIDIBlocks/pen/mdrwYzM). You can also [just download this repo](https://github.com/MIDIBlocks/handsfree/archive/master.zip) and work with one of the `/boilerplate/`.
 
 ```html
 <head>
@@ -53,13 +72,13 @@ This option is great if you don't have or need a server, or if you're developing
 <body>
   <!-- Your code must be inside body as it applies classes to it -->
   <script>
-    // Instantiate and start Handsfree
-    const handsfree = new Handsfree({hands: true})
+    // Let's use handtracking and show the webcam feed with wireframes
+    const handsfree = new Handsfree({showDebug: true, hands: true})
     handsfree.start()
 
     // Create a plugin named "logger" to show data on every frame
     handsfree.use('logger', data => {
-      console.log(data)
+      console.log(data.hands)
     })
   </script>
 </body>
@@ -76,7 +95,8 @@ npm i handsfree
 // Inside your app
 import Handsfree from 'handsfree'
 
-const handsfree = new Handsfree({hands: true})
+// Let's use handtracking and enable the plugins tagged with "browser"
+const handsfree = new Handsfree({showDebug: true, hands: true})
 handsfree.enablePlugins('browser')
 handsfree.start()
 ```
@@ -193,32 +213,54 @@ handsfree.plugin.logger.onFrame = (data) => {
 
 # Local Development
 
-## Running Handsfree.js.org locally
+If you'd like to contribute to the library or documentation then the following will get you going:
 
-- Install [NodeJS](https://nodejs.org/en/download/)
-- Download this repository: `git clone https://github.com/handsfreejs/handsfree`
-- Install dependencies by running `npm i` from the project root
+- Install [NodeJS](https://nodejs.org/en/download/) and [git](https://git-scm.com/downloads)
+- Clone this repository: `git clone https://github.com/handsfreejs/handsfree`
+- Install dependencies by running `npm i` in a terminal from the project's root
 - Start development on `localhost:8080` by running `npm start`
+- Hit CTRL+C from the terminal to close the server
 
+Once you've run the above, you can just use `npm start`. If you pull the latest code, remember to run `npm i` to get any new dependencies (this shouldn't happen often).
 
 ## Command line scripts
 ```bash
 # Start local development on localhost:8080
 npm start 
 
-# Build into /dist/lib/ and /dist/docs/
+# Builds the library, documentation, and extension
 npm run build
 
-# Build only /dist/docs/
+# Build only the library /dist/lib/
+npm run build:lib
+
+# Build only the documentation at /dist/docs/
 npm run build:docs
 
-# Build only /dist/lib/
-npm run build:lib
+# Build only the extension at /dist/extension
+npm run build:extension
+
+# Publish library to NPM
+npm login
+npm publish
+
+# Deploy documentation to handsfree.js.org
+npm deploy.sh
 ```
 
 ## Dev Notes
-- See [vuepress-component-font-awesome](https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only) for adding fonts. Remember to run `npm run fa:build` when adding new fonts so that they are copied over into the `docs/.vuepress/components/FA`  folder
+- See [vuepress-component-font-awesome](https://github.com/HiYue/vuepress-component-font-awesome#generate-specified-icons-only) for adding new icons to the documentation. Remember to run `npm run fa:build` when adding new font icons so that they are copied over into the `docs/.vuepress/components/FA`  folder
 - You may occasionally need to restart server when adding new files to the `/docs`, this is true when changing `/docs/.vuepress.config.js` as well
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+# The Handsfree Browser Extension
 
 <br>
 <br>
@@ -348,6 +390,8 @@ Starting a large project [and movement](https://handsfree.js.org/about#master-pl
 I'd also like to thank:
 - [@DavidNTompkins](https://github.com/DavidNTompkins)
 - [@digitalcoleman](https://github.com/digitalcoleman)
+- [@joewilbert](https://github.com/joewilbert)
+- And everyone else!
 
 <br>
 <br>
@@ -361,8 +405,8 @@ I'd also like to thank:
 
 # Special Thanks
 
-- [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way. Also for inviting me back for a multi-month residency in Spring 2021!!!
+- [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way. Also for inviting me back for a multi-month residency in Spring 2021!
 - [@AnilDash](https://twitter.com/anildash) for supporting the project during Winter 2018 out of the blue and the opportunities to share my project on [Glitch.com](https://glitch.com/@ozramos)
 - [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58) in support of this project
 - [@jessscon](https://twitter.com/jessscon) and [Google PAIR](https://research.google/teams/brain/pair/) for the very early support that made starting this project possible
-- Everyone who's supported me on [Patreon](https://patreon.com/midiblocks), GoFundMe, and through [Twitter](https://twitter.com/midiblocks) over the years
+- Everyone who's supported me on Patreon, GoFundMe, and through [Twitter](https://twitter.com/midiblocks) and everywhere else over the years
