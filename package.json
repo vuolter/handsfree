@@ -5,9 +5,10 @@
   "main": "src/handsfree.js",
   "scripts": {
     "start": "vuepress dev docs",
-    "build": "npm run build:lib && npm run build:docs",
+    "build": "npm run build:lib && npm run build:docs && npm run build:extension",
     "build:lib": "rm -rf build/lib && rollup --environment INCLUDE_DEPS,BUILD:production --config",
     "build:docs": "vuepress build docs",
+    "build:extension": "vuepress build docs --dest build/extension",
     "fa:build": "node node_modules/vuepress-plugin-font-awesome/index.js --dest=docs",
     "deploy": "npm publish && deploy.sh"
   },
