@@ -1,7 +1,24 @@
 // @see https://vuepress.vuejs.org/guide/basic-config.html
-
 const path = require('path')
 
+/**
+ * Setup a dynamic config, based on the --dest
+ * - If --dest === build/extension then we'll use an extension config
+ */
+let disableAnalytics = false
+disableAnalytics = process.argv.some(arg => arg === 'build/extension')
+
+// Remove analytics if the flag is present
+const plugins = {
+  plausible: {domain: 'handsfree.js.org'}
+}
+if (disableAnalytics) {
+  delete plugins.plausible
+}
+
+/**
+ * Export our config
+ */
 module.exports = {
   dest: 'build/docs',
 
@@ -27,9 +44,7 @@ module.exports = {
     public: path.resolve(__dirname, './public')
   },
 
-  plugins: {
-    plausible: {domain: 'handsfree.js.org'}
-  },
+  plugins,
 
   configureWebpack: {
     resolve: {
