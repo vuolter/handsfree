@@ -47,7 +47,7 @@ export default {
         if (!pointer.isVisible || n > hands.origPinch.length) return
 
         // Start scroll
-        if (hands.pinchState[n][0] === 'start') {
+        if (hands.pinchState[n]?.[0] === 'start') {
           let $potTarget = document.elementFromPoint(pointer.x, pointer.y)
 
           this.$target[n] = this.getTarget($potTarget)
@@ -56,7 +56,7 @@ export default {
           this.handsfree.TweenMax.killTweensOf(this.tweenScroll[n])
         }
 
-        if (hands.pinchState[n][0] === 'held' && this.$target[n]) {
+        if (hands.pinchState[n]?.[0] === 'held' && this.$target[n]) {
           this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
             x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
             y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,

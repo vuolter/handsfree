@@ -1,3 +1,13 @@
+// Maps handsfree pincher events to 
+const eventMap = {
+  start: 'mousedown',
+  held: 'mousemove',
+  released: 'mouseup'
+}
+
+// The last pointer positions for each hand, used to determine movement over time
+let lastHeld = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}]
+
 /**
  * Move a pointer with your palm
  */
@@ -74,6 +84,9 @@ export default {
     this.arePointersVisible = arePointersVisible
   },
 
+  /**
+   * Positions the pointer and dispatches events
+   */
   onFrame ({hands}) {
     // Hide pointers
     if (!hands?.multiHandLandmarks) {
@@ -89,6 +102,8 @@ export default {
     ]
     
     hands.multiHandLandmarks.forEach((landmarks, n) => {
+      const pointer = hands.pointer[n]
+
       // Use the correct hand index
       let hand
       if (n < 2) {
@@ -97,11 +112,8 @@ export default {
         hand = hands.multiHandedness[n].label === 'Right' ? 2 : 3
       }
 
+      // Update pointer position
       this.handsfree.TweenMax.to(this.tween[hand], 1, {
-        // x: window.outerWidth 
-        //   - (.5 - hands.multiHandLandmarks[n][21].x) * this.config.speed.x * window.outerWidth
-        //   - .5 * this.config.speed.x * window.outerWidth
-        //   + this.config.offset.x,
         x: window.outerWidth * this.config.speed.x
           - window.outerWidth * this.config.speed.x / 2
           + window.outerWidth / 2
@@ -115,14 +127,42 @@ export default {
         ease: 'linear.easeNone',
         immediate: true
       })
-  
-      this.$pointer[hand].style.left = `${this.tween[hand].x}px`
-      this.$pointer[hand].style.top = `${this.tween[hand].y}px`
-      
+
       hands.pointer[hand] = {
         x: this.tween[hand].x,
         y: this.tween[hand].y,
         isVisible: true
+      }
+
+      // Visually update pointer element
+      this.$pointer[hand].style.left = `${this.tween[hand].x}px`
+      this.$pointer[hand].style.top = `${this.tween[hand].y}px`
+
+      // Dispatch events
+      let event = pointer?.pinchState?.[n]?.[0]
+      if (event && pointer.isVisible) {
+        // Get the event and element to send events to
+        event = eventMap[event]
+        const $el = document.elementFromPoint(pointer.x, pointer.y)
+        
+        // Dispatch the event
+        if ($el) {
+          $el.dispatchEvent(
+            new MouseEvent(event, {
+              view: window,
+              button: 0,
+              bubbles: true,
+              cancelable: true,
+              clientX: pointer.x,
+              clientY: pointer.y,
+              // Only used when the mouse is captured in full screen mode
+              movementX: pointer.x - lastHeld[hand].x,
+              movementY: pointer.y - lastHeld[hand].y
+            })
+          )
+        }
+
+        lastHeld[hand] = pointer
       }
     })
 
