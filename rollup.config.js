@@ -21,7 +21,7 @@ export default [
     plugins: [
       copy({
         targets: [
-          {src: 'docs/.vuepress/public/handsfree/*', dest: 'build/lib/assets/'}
+          {src: 'docs/.vuepress/public/handsfreejs/*', dest: 'build/lib/assets/'}
         ]
       }),
       commonjs({
