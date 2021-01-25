@@ -212,7 +212,7 @@ module.exports = {
       {
         title: '🌐 Handsfree Browser Extension (in development)',
         collapsable: true,
-        path: '/browser-extension/'
+        path: '/extension/'
       },
       {
         title: '🤝 Community',

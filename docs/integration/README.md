@@ -1,6 +1,6 @@
 ---
 prev: /guide/
-next: /browser-extension/
+next: /extension/
 ---
 
 # 🧩 Integrations
