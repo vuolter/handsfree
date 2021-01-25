@@ -75,7 +75,7 @@ https://github.com/sponsors/midiblocks
                   $parent: document.querySelector('#handsfree-debug-window .window-body')
                 }
               },
-              assetsPath: '/handsfree'
+              assetsPath: '/handsfreejs'
             })
             window.app = this.$root
 
