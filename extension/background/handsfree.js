@@ -1,20 +1,10 @@
 /**
- * Globals
- */
-ports = {
-  // @see /src/devtools/webxr/handsfree.js
-  webxrDevTools: [],
-  // @see /src/content/webxr.js
-  webxrContentScript: []
-}
-
-/**
  * Setup Handsfree.js and the message bus
  */
 const handsfree = new Handsfree({
   assetsPath: '/build/lib/assets',
   showDebug: true,
-  // weboji: true,
+  weboji: true,
   hands: true
 })
 
@@ -53,28 +43,7 @@ handsfree.use('contentScriptBus', {
         chrome.tabs.sendMessage(tabs[i].id, {action: 'handsfree-data', data})
       }
     })
-
-    // Send data to active ports
-    ports.webxrDevTools.forEach(port => {
-      port.postMessage({
-        action: 'handsfree-data',
-        data
-      })
-    })
   }
-})
-
-/**
- * Handle ports to send data to
- */
-chrome.runtime.onConnect.addListener(port => {
-  ports[port.name].push(port)
-
-  // Remove the port
-  port.onDisconnect.addListener(() => {
-    const i = ports[port.name].indexOf(port)
-    if (i !== -1) ports[port.name].slice(i, 1)
-  })
 })
 
 /**

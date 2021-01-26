@@ -1,4 +1,13 @@
 /**
+ * Setup Handsfree.js
+ */
+handsfree = new Handsfree({
+  isClient: true,
+  hands: true
+})
+handsfree.enablePlugins('browser')
+
+/**
  * Clamp a number within the values of a scroller
  */
 function normalize (num, $el) {
