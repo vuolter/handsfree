@@ -59,7 +59,7 @@ export default class BaseModel {
       if (this.name === 'weboji') {
         this.handsfree.debug.$canvas.weboji.style.display = 'none'
       } else {
-        this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height)
+        this.handsfree.debug.context[this.name]?.clearRect && this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height)
       }
     }, 0)
   }

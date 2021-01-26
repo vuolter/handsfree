@@ -143,7 +143,6 @@ class Handsfree {
         if (!this.config.isClient
           && (!this.isUpdating || 
             (this.isUpdating && this.config.autostart))) {
-          console.log('LOOPING')
           this.isLooping = true
           this.loop()
         }
@@ -252,7 +251,6 @@ class Handsfree {
     
     // Start
     if (!this.config.isClient && this.config.autostart) {
-      console.log('STARTING')
       this.start(callback)
     } else {
       callback && callback()

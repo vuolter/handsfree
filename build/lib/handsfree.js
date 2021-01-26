@@ -65,7 +65,7 @@
         if (this.name === 'weboji') {
           this.handsfree.debug.$canvas.weboji.style.display = 'none';
         } else {
-          this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height);
+          this.handsfree.debug.context[this.name]?.clearRect && this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height);
         }
       }, 0);
     }
@@ -165,6 +165,7 @@
      * Warms up the model
      */
     warmUp (callback) {
+      console.log('onWARMUP');
       this.handsfree.mediapipeWarmups[this.name] = true;
       this.handsfree.mediapipeWarmups.isWarmingUp = true;
       this.api.send({image: this.handsfree.debug.$video}).then(() => {
@@ -7571,7 +7572,6 @@
           if (!this.config.isClient
             && (!this.isUpdating || 
               (this.isUpdating && this.config.autostart))) {
-            console.log('LOOPING');
             this.isLooping = true;
             this.loop();
           }
@@ -7680,7 +7680,6 @@
       
       // Start
       if (!this.config.isClient && this.config.autostart) {
-        console.log('STARTING');
         this.start(callback);
       } else {
         callback && callback();
@@ -8031,32 +8030,40 @@
     getUserMedia (callback) {
       // Start getting the stream and call callback after
       if (!this.debug.stream && !this.debug.isGettingStream) {
-        this.debug.isGettingStream = true;
-        
-        navigator.mediaDevices
-          .getUserMedia({
-            audio: false,
-            video: {
-              facingMode: 'user',
-              width: this.debug.$video.width,
-              height: this.debug.$video.height
-            }
-          })
-          .then((stream) => {
-            this.debug.stream = stream;
-            this.debug.$video.srcObject = stream;
-            this.debug.$video.onloadedmetadata = () => {
-              this.debug.$video.play();
-              this.emit('gotUserMedia', stream);
-              callback && callback();
-            };
-          })
-          .catch((err) => {
-            console.error(`Error getting user media: ${err}`);
-          })
-          .finally(() => {
-            this.debug.isGettingStream = false;
-          });
+        // Use the weboji stream if already active
+        if (this.model.weboji?.api?.get_videoStream) {
+          this.debug.$video = this.model.weboji.api.get_video();
+          this.debug.$video.srcObject = this.debug.stream = this.model.weboji.api.get_videoStream();
+          this.emit('gotUserMedia', this.debug.stream);
+          callback && callback();
+
+        // Create a new media stream
+        } else {
+          this.debug.isGettingStream = true;
+          navigator.mediaDevices
+            .getUserMedia({
+              audio: false,
+              video: {
+                facingMode: 'user',
+                width: this.debug.$video.width,
+                height: this.debug.$video.height
+              }
+            })
+            .then((stream) => {
+              this.debug.$video.srcObject = this.debug.stream = stream;
+              this.debug.$video.onloadedmetadata = () => {
+                this.debug.$video.play();
+                this.emit('gotUserMedia', stream);
+                callback && callback();
+              };
+            })
+            .catch((err) => {
+              console.error(`Error getting user media: ${err}`);
+            })
+            .finally(() => {
+              this.debug.isGettingStream = false;
+            });
+        }
 
       // If a media stream is getting gotten then run the callback once the media stream is ready
       } else if (!this.debug.stream && this.debug.isGettingStream) {
