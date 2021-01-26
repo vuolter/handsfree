@@ -221,9 +221,8 @@ class Handsfree {
    * 
    * @param {Object} config The changes to apply
    * @param {Function} callback Called after
-   * @param {Boolean} dontStart Whether to prevent Handsfree from starting if it isn't
    */
-  update (config, callback, dontStart = false) {
+  update (config, callback) {
     this.config = this.cleanConfig(config, this.config)
 
     // Run enable/disable methods on changed models
@@ -232,7 +231,7 @@ class Handsfree {
       this.config[model] = this.model[model].config = merge({}, this.model[model].config, config[model])
 
       if (wasEnabled && !this.config[model].enabled) this.model[model].disable()
-      else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false)
+      else if (!wasEnabled && this.config[model].enabled) this.model[model].enable()
     })
 
     // Enable plugins

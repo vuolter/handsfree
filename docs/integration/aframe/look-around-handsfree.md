@@ -168,6 +168,8 @@ let tween = {
 export default {
   data: () => ({
     demoOpts: {
+      autostart: true,
+
       weboji: true,
       hands: false,
       pose: false,

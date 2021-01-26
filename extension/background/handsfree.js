@@ -82,11 +82,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, respond) {
         ...message.config,
         ...configOverrides
       }
-
-      delete config.isClient
-      delete config.assetsPath
+      const newConfig = {}
+      const keys = Object.keys(config).filter(key => ['weboji', 'hands', 'facemesh', 'pose', 'holistic', 'handpose'].indexOf(key) >= 0)
+      keys.forEach(key => newConfig[key] = config[key])
       
-      handsfree.update(config)
+      console.log('UPDATE', newConfig)
+      handsfree.update(newConfig)
       return
     
     /**

@@ -26,6 +26,8 @@ export default {
   data () {
     return {
       opts: {
+        autostart: true,
+
         weboji: false,
         hands: true,
         pose: false,
