@@ -1,9 +1,9 @@
 /**
  * Setup Handsfree.js
  */
-handsfree = new Handsfree({
-  isClient: true,
-  hands: true
+handsfree.update({
+  hands: true,
+  weboji: false
 })
 handsfree.enablePlugins('browser')
 

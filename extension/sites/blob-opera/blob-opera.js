@@ -4,9 +4,9 @@
  * @see https://artsandculture.google.com/experiment/AAHWrq360NcGbw
  * @see https://handsfree.js.org/ref/plugin/pinchers.html#pinch-states-with-pinchstate
  */
-handsfree = new Handsfree({
-  isClient: true,
-  hands: true
+handsfree.update({
+  hands: true,
+  weboji: false
 })
 handsfree.enablePlugins('browser')
 

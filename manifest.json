@@ -37,7 +37,6 @@
       "js": [
         "/extension/sites/noisedeck.app/noisedeck.app.js"
       ],
-      "all_frames": true,
       "run_at": "document_end"
     },
 
@@ -51,7 +50,6 @@
     {
       "matches": ["https://stadia.google.com/*"],
       "js": ["/extension/sites/stadia.google.com/stadia.js"],
-      "all_frames": true,
       "run_at": "document_end"
     }
   ],

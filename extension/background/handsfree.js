@@ -7,7 +7,7 @@ const configOverrides = {
 }
 const handsfree = new Handsfree({
   weboji: true,
-  hands: true,
+  hands: false,
   ...configOverrides
 })
 
@@ -82,13 +82,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, respond) {
         ...message.config,
         ...configOverrides
       }
+
+      delete config.isClient
+      delete config.assetsPath
       
-      // Update handsfree
-      if (handsfree.isLooping) {
-        handsfree.update(config)
-      } else {
-        handsfree.config = handsfree.cleanConfig(config)
-      }
+      handsfree.update(config)
       return
     
     /**

@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.2.2
+                8.2.3
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -96,7 +96,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.2.2'
+    this.version = '8.2.3'
     this.data = {}
 
     // Dependency management
@@ -221,8 +221,9 @@ class Handsfree {
    * 
    * @param {Object} config The changes to apply
    * @param {Function} callback Called after
+   * @param {Boolean} dontStart Whether to prevent Handsfree from starting if it isn't
    */
-  update (config, callback) {
+  update (config, callback, dontStart = false) {
     this.config = this.cleanConfig(config, this.config)
 
     // Run enable/disable methods on changed models
@@ -246,10 +247,10 @@ class Handsfree {
     })
     
     // Start
-    if (this.isLooping && callback) {
-      callback()
-    } else {
+    if (this.config.autostart && !this.isLooping) {
       this.start(callback)
+    } else {
+      callback && callback()
     }
   }
 
