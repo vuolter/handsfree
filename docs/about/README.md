@@ -46,6 +46,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-01-25 | 8.2.3 | [palmPointers plugin](/ref/plugin/palmPointers/) and [faceClick](/ref/plugin/faceClick/) now emit `mousedown`, `mousemove`, `mousedrag`, and `mouseup` instead of just `click`
 | 2020-01-18 | 8.2.2 | Adds new [palmPointers plugin](/ref/plugin/palmPointers/) and updates the [pinchScroll plugin](/ref/plugin/pinchScroll/) to support all hands. Also adds a new `/boilerplate/cdn/pinch-scrolling.html`
 | 2020-01-13 | 8.2.1 | Adds new [normalized helper](/ref/model/handpose/#data): `handsfree.data.handpose.normalized`. These `[x, y, z]` are similar to `.handpose.landmarks` but normalized between [0, 1]
 | 2020-01-06 | 8.2.0 | Adds [TensorFlow Handpose](/ref/model/handpose/) including a basic THREE boilerplate remixed from [@LingDong-'s handpose-facemesh-demos](https://github.com/LingDong-/handpose-facemesh-demos), and a fingertip raycaster

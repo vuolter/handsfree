@@ -3695,7 +3695,7 @@
    */
   var defaultConfig = {
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.2.2/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.2.3/build/lib/assets',
     
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
@@ -6661,22 +6661,10 @@
     // Whether one of the morph confidences have been met
     thresholdMet: false,
 
-    onUse () {
-      this.throttle(this.config.throttle);
-    },
-
-    /**
-     * Maps .maybeClick to a new throttled function
-     */
-    throttle (throttle) {
-      this.maybeClick = this.handsfree.throttle(
-        function (weboji) {
-          this.click(weboji);
-        },
-        throttle,
-        { trailing: false }
-      );
-    },
+    // The last held {x, y}, used to calculate move delta
+    lastHeld: {x: 0, y: 0},
+    // Original target under mousedown
+    $origTarget: null,
 
     /**
      * Detect click state and trigger a real click event
@@ -6684,6 +6672,7 @@
     onFrame ({weboji}) {
       // Detect if the threshold for clicking is met with specific morphs
       this.thresholdMet = false;
+      let event = '';
       Object.keys(this.config.morphs).forEach((key) => {
         const morph = +this.config.morphs[key];
         if (morph > 0 && weboji.morphs[key] >= morph) this.thresholdMet = true;
@@ -6704,46 +6693,49 @@
         this.mouseDowned > 0 &&
         this.mouseDowned <= this.config.maxMouseDownedFrames
       )
-        weboji.pointer.state = 'mouseDown';
+        event = weboji.pointer.state = 'mousedown';
       else if (this.mouseDowned > this.config.maxMouseDownedFrames)
-        weboji.pointer.state = 'mouseDrag';
-      else if (this.mouseUp) weboji.pointer.state = 'mouseUp';
-      else ;
+        event = weboji.pointer.state = 'mousedrag';
+      else if (this.mouseUp)
+        event = weboji.pointer.state = 'mouseup';
+      else
+        event = 'mousemove';
 
       // Actually click something (or focus it)
-      if (weboji.pointer.state === 'mouseDown') {
-        this.maybeClick(weboji);
-      }
-    },
-
-    /**
-     * The actual click method, this is what gets throttled
-     */
-    click (weboji) {
       const $el = document.elementFromPoint(weboji.pointer.x, weboji.pointer.y);
+      if ($el && event === 'mousedown') {
+        this.$origTarget = $el;
+      }
+
       if ($el) {
-        $el.dispatchEvent(
-          new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            clientX: weboji.pointer.x,
-            clientY: weboji.pointer.y
-          })
-        );
+        const eventOpts = {
+          view: window,
+          button: 0,
+          bubbles: true,
+          cancelable: true,
+          clientX: weboji.pointer.x,
+          clientY: weboji.pointer.y,
+          // Only used when the mouse is captured in full screen mode
+          movementX: weboji.pointer.x - this.lastHeld.x,
+          movementY: weboji.pointer.y - this.lastHeld.y
+        };
+        
+        $el.dispatchEvent(new MouseEvent(event, eventOpts));
 
         // Focus
-        if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+        if (weboji.pointer.state === 'mousedown' && ['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
           $el.focus();
+
+        // Click
+        if (weboji.pointer.state === 'mouseup' && $el === this.$origTarget) {
+          $el.dispatchEvent(new MouseEvent('click', eventOpts));
+        }
 
         weboji.pointer.$target = $el;
       }
-    },
 
-    /**
-     * Throttles the click event
-     * - Defined in onuse
-     */
-    maybeClick: function() {}
+      this.lastHeld = weboji.pointer;
+    }
   };
 
   /**
@@ -7000,7 +6992,7 @@
           if (!pointer.isVisible || n > hands.origPinch.length) return
 
           // Start scroll
-          if (hands.pinchState[n][0] === 'start') {
+          if (hands.pinchState[n]?.[0] === 'start') {
             let $potTarget = document.elementFromPoint(pointer.x, pointer.y);
 
             this.$target[n] = this.getTarget($potTarget);
@@ -7009,7 +7001,7 @@
             this.handsfree.TweenMax.killTweensOf(this.tweenScroll[n]);
           }
 
-          if (hands.pinchState[n][0] === 'held' && this.$target[n]) {
+          if (hands.pinchState[n]?.[0] === 'held' && this.$target[n]) {
             this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
               x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
               y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
@@ -7247,6 +7239,16 @@
     }
   };
 
+  // Maps handsfree pincher events to 
+  const eventMap = {
+    start: 'mousedown',
+    held: 'mousemove',
+    released: 'mouseup'
+  };
+
+  // The last pointer positions for each hand, used to determine movement over time
+  let lastHeld = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+
   /**
    * Move a pointer with your palm
    */
@@ -7323,6 +7325,9 @@
       this.arePointersVisible = arePointersVisible;
     },
 
+    /**
+     * Positions the pointer and dispatches events
+     */
     onFrame ({hands}) {
       // Hide pointers
       if (!hands?.multiHandLandmarks) {
@@ -7338,6 +7343,8 @@
       ];
       
       hands.multiHandLandmarks.forEach((landmarks, n) => {
+        const pointer = hands.pointer[n];
+
         // Use the correct hand index
         let hand;
         if (n < 2) {
@@ -7346,11 +7353,8 @@
           hand = hands.multiHandedness[n].label === 'Right' ? 2 : 3;
         }
 
+        // Update pointer position
         this.handsfree.TweenMax.to(this.tween[hand], 1, {
-          // x: window.outerWidth 
-          //   - (.5 - hands.multiHandLandmarks[n][21].x) * this.config.speed.x * window.outerWidth
-          //   - .5 * this.config.speed.x * window.outerWidth
-          //   + this.config.offset.x,
           x: window.outerWidth * this.config.speed.x
             - window.outerWidth * this.config.speed.x / 2
             + window.outerWidth / 2
@@ -7364,15 +7368,43 @@
           ease: 'linear.easeNone',
           immediate: true
         });
-    
-        this.$pointer[hand].style.left = `${this.tween[hand].x}px`;
-        this.$pointer[hand].style.top = `${this.tween[hand].y}px`;
-        
+
         hands.pointer[hand] = {
           x: this.tween[hand].x,
           y: this.tween[hand].y,
           isVisible: true
         };
+
+        // Visually update pointer element
+        this.$pointer[hand].style.left = `${this.tween[hand].x}px`;
+        this.$pointer[hand].style.top = `${this.tween[hand].y}px`;
+
+        // Dispatch events
+        let event = pointer?.pinchState?.[n]?.[0];
+        if (event && pointer.isVisible) {
+          // Get the event and element to send events to
+          event = eventMap[event];
+          const $el = document.elementFromPoint(pointer.x, pointer.y);
+          
+          // Dispatch the event
+          if ($el) {
+            $el.dispatchEvent(
+              new MouseEvent(event, {
+                view: window,
+                button: 0,
+                bubbles: true,
+                cancelable: true,
+                clientX: pointer.x,
+                clientY: pointer.y,
+                // Only used when the mouse is captured in full screen mode
+                movementX: pointer.x - lastHeld[hand].x,
+                movementY: pointer.y - lastHeld[hand].y
+              })
+            );
+          }
+
+          lastHeld[hand] = pointer;
+        }
       });
 
       // Toggle pointers
@@ -7424,7 +7456,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.2.2
+                  8.2.3
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -7488,7 +7520,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.2.2';
+      this.version = '8.2.3';
       this.data = {};
 
       // Dependency management
