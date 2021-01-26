@@ -23,7 +23,7 @@ sidebarDepth: 2
         </ul>
         <p>This model uses morphs to help estimate various face states simultaneously and includes assistive tech plugins for browsing pages with face gestures.</p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Try basic Hands demo" text-on="Stop Weboji Model" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Try basic Weboji demo" text-on="Stop Weboji Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
           <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Weboji demo</button>
         </div>
