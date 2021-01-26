@@ -86,7 +86,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, respond) {
       const keys = Object.keys(config).filter(key => ['weboji', 'hands', 'facemesh', 'pose', 'holistic', 'handpose'].indexOf(key) >= 0)
       keys.forEach(key => newConfig[key] = config[key])
       
-      console.log('UPDATE', newConfig)
+      newConfig.autostart = !!handsfree.isLooping
+      console.log('RECEIVED', newConfig)
       handsfree.update(newConfig)
       return
     
@@ -111,7 +112,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, respond) {
       // Start Handsfree and set the badge
       chrome.storage.local.set({isHandsfreeStarted: true}, function () {
         handsfree.start()
-        handsfree.enablePlugins('browser')
         chrome.browserAction.setBadgeBackgroundColor({
           color: '#f00'
         })

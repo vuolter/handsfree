@@ -7556,6 +7556,7 @@
       this.loadCorePlugins();
 
       // Start tracking when all models are loaded
+      this.isUpdating = false;
       this.numModelsLoaded = 0;
       this.on('modelReady', () => {
         let numActiveModels = 0;
@@ -7567,7 +7568,10 @@
           document.body.classList.remove('handsfree-loading');
           document.body.classList.add('handsfree-started');
 
-          if (!this.config.isClient) {
+          if (!this.config.isClient
+            && (!this.isUpdating || 
+              (this.isUpdating && this.config.autostart))) {
+            console.log('LOOPING');
             this.isLooping = true;
             this.loop();
           }
@@ -7651,7 +7655,8 @@
      * @param {Function} callback Called after
      */
     update (config, callback) {
-      this.config = this.cleanConfig(config, this.config)
+      this.config = this.cleanConfig(config, this.config);
+      this.isUpdating = true
 
       // Run enable/disable methods on changed models
       ;['hands', 'facemesh', 'pose', 'holistic', 'handpose', 'weboji'].forEach(model => {
@@ -7659,7 +7664,7 @@
         this.config[model] = this.model[model].config = merge_1({}, this.model[model].config, config[model]);
 
         if (wasEnabled && !this.config[model].enabled) this.model[model].disable();
-        else if (!wasEnabled && this.config[model].enabled) this.model[model].enable();
+        else if (!wasEnabled && this.config[model].enabled) this.model[model].enable(false);
       });
 
       // Enable plugins
@@ -7674,7 +7679,8 @@
       });
       
       // Start
-      if (this.config.autostart && !this.isLooping) {
+      if (!this.config.isClient && this.config.autostart) {
+        console.log('STARTING');
         this.start(callback);
       } else {
         callback && callback();
@@ -7707,7 +7713,8 @@
     start (callback) {
       // Cleans any configs since instantiation (particularly for boolean-ly set plugins)
       this.config = this.cleanConfig(this.config, this.config);
-      
+      this.isUpdating = false;
+
       // Start loading
       document.body.classList.add('handsfree-loading');
       this.emit('loading', this);
