@@ -87,7 +87,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, respond) {
       keys.forEach(key => newConfig[key] = config[key])
       
       newConfig.autostart = !!handsfree.isLooping
-      console.log('RECEIVED', newConfig)
       handsfree.update(newConfig)
       return
     

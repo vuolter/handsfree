@@ -165,7 +165,6 @@
      * Warms up the model
      */
     warmUp (callback) {
-      console.log('onWARMUP');
       this.handsfree.mediapipeWarmups[this.name] = true;
       this.handsfree.mediapipeWarmups.isWarmingUp = true;
       this.api.send({image: this.handsfree.debug.$video}).then(() => {
