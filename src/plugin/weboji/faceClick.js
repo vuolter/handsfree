@@ -28,22 +28,10 @@ export default {
   // Whether one of the morph confidences have been met
   thresholdMet: false,
 
-  onUse () {
-    this.throttle(this.config.throttle)
-  },
-
-  /**
-   * Maps .maybeClick to a new throttled function
-   */
-  throttle (throttle) {
-    this.maybeClick = this.handsfree.throttle(
-      function (weboji) {
-        this.click(weboji)
-      },
-      throttle,
-      { trailing: false }
-    )
-  },
+  // The last held {x, y}, used to calculate move delta
+  lastHeld: {x: 0, y: 0},
+  // Original target under mousedown
+  $origTarget: null,
 
   /**
    * Detect click state and trigger a real click event
@@ -51,6 +39,7 @@ export default {
   onFrame ({weboji}) {
     // Detect if the threshold for clicking is met with specific morphs
     this.thresholdMet = false
+    let event = ''
     Object.keys(this.config.morphs).forEach((key) => {
       const morph = +this.config.morphs[key]
       if (morph > 0 && weboji.morphs[key] >= morph) this.thresholdMet = true
@@ -71,44 +60,47 @@ export default {
       this.mouseDowned > 0 &&
       this.mouseDowned <= this.config.maxMouseDownedFrames
     )
-      weboji.pointer.state = 'mouseDown'
+      event = weboji.pointer.state = 'mousedown'
     else if (this.mouseDowned > this.config.maxMouseDownedFrames)
-      weboji.pointer.state = 'mouseDrag'
-    else if (this.mouseUp) weboji.pointer.state = 'mouseUp'
-    else ''
+      event = weboji.pointer.state = 'mousedrag'
+    else if (this.mouseUp)
+      event = weboji.pointer.state = 'mouseup'
+    else
+      event = 'mousemove'
 
     // Actually click something (or focus it)
-    if (weboji.pointer.state === 'mouseDown') {
-      this.maybeClick(weboji)
-    }
-  },
-
-  /**
-   * The actual click method, this is what gets throttled
-   */
-  click (weboji) {
     const $el = document.elementFromPoint(weboji.pointer.x, weboji.pointer.y)
+    if ($el && event === 'mousedown') {
+      this.$origTarget = $el
+    }
+
     if ($el) {
-      $el.dispatchEvent(
-        new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          clientX: weboji.pointer.x,
-          clientY: weboji.pointer.y
-        })
-      )
+      const eventOpts = {
+        view: window,
+        button: 0,
+        bubbles: true,
+        cancelable: true,
+        clientX: weboji.pointer.x,
+        clientY: weboji.pointer.y,
+        // Only used when the mouse is captured in full screen mode
+        movementX: weboji.pointer.x - this.lastHeld.x,
+        movementY: weboji.pointer.y - this.lastHeld.y
+      }
+      
+      $el.dispatchEvent(new MouseEvent(event, eventOpts))
 
       // Focus
-      if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
+      if (weboji.pointer.state === 'mousedown' && ['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes($el.nodeName))
         $el.focus()
+
+      // Click
+      if (weboji.pointer.state === 'mouseup' && $el === this.$origTarget) {
+        $el.dispatchEvent(new MouseEvent('click', eventOpts))
+      }
 
       weboji.pointer.$target = $el
     }
-  },
 
-  /**
-   * Throttles the click event
-   * - Defined in onuse
-   */
-  maybeClick: function() {}
+    this.lastHeld = weboji.pointer
+  }
 }
