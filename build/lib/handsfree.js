@@ -67,6 +67,12 @@
         } else {
           this.handsfree.debug.context[this.name]?.clearRect && this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height);
         }
+
+        // Stop if all models have been stopped
+        let hasRunningModels = Object.keys(this.handsfree.model).some(model => this.handsfree.model[model].enabled);
+        if (!hasRunningModels) {
+          this.handsfree.stop();
+        }
       }, 0);
     }
 
