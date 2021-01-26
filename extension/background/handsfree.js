@@ -1,11 +1,14 @@
 /**
  * Setup Handsfree.js and the message bus
  */
-const handsfree = new Handsfree({
+const configOverrides = {
   assetsPath: '/build/lib/assets',
-  showDebug: true,
+  showDebug: true
+}
+const handsfree = new Handsfree({
   weboji: true,
-  hands: true
+  hands: true,
+  ...configOverrides
 })
 
 /**
@@ -38,7 +41,7 @@ handsfree.use('canvasUpdater', {
 handsfree.use('contentScriptBus', {
   onFrame (data) {
     // Send data to content
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
       for (var i = 0; i < tabs.length; ++i) {
         chrome.tabs.sendMessage(tabs[i].id, {action: 'handsfree-data', data})
       }
@@ -50,17 +53,44 @@ handsfree.use('contentScriptBus', {
  * Override requestAnimationFrame, which doesn't work in background script
  */
 _requestAnimationFrame = requestAnimationFrame
-requestAnimationFrame = newRequestAnimationFrame = function(cb) {
-  setTimeout(function() {
+requestAnimationFrame = newRequestAnimationFrame = function (cb) {
+  setTimeout(function () {
     cb()
   }, 1000 / 30)
 }
 
+// Get handsfree config on tab change
+chrome.tabs.onActivated.addListener(function (tabInfo) {
+  chrome.tabs.sendMessage(tabInfo.tabId, {action: 'handsfree-getConfig'})
+})
+
+// Get handsfree config on page load
+chrome.tabs.onUpdated.addListener(function (tabId) {
+  chrome.tabs.sendMessage(tabId, {action: 'handsfree-getConfig'})
+})
+
 /**
  * Handle Handsfree events
  */
-chrome.runtime.onMessage.addListener(function(message, sender, respond) {
+chrome.runtime.onMessage.addListener(function (message, sender, respond) {
   switch (message.action) {
+    /**
+     * Update the background script instance of handsfree
+     */
+    case 'handsfree-updateBackgroundConfig':
+      const config = {
+        ...message.config,
+        ...configOverrides
+      }
+      
+      // Update handsfree
+      if (handsfree.isLooping) {
+        handsfree.update(config)
+      } else {
+        handsfree.config = handsfree.cleanConfig(config)
+      }
+      return
+    
     /**
      * Start Handsfree
      * - Starts picture in picture
@@ -80,7 +110,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, respond) {
       }, {once: true})
       
       // Start Handsfree and set the badge
-      chrome.storage.local.set({isHandsfreeStarted: true}, function() {
+      chrome.storage.local.set({isHandsfreeStarted: true}, function () {
         handsfree.start()
         handsfree.enablePlugins('browser')
         chrome.browserAction.setBadgeBackgroundColor({

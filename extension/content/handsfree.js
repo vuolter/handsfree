@@ -10,10 +10,20 @@ handsfree.enablePlugins('browser')
 /**
  * Handle messages from background script
  */
-chrome.runtime.onMessage.addListener(function(message) {
+chrome.runtime.onMessage.addListener(function (message) {
   switch (message.action) {
     case 'handsfree-data':
       handsfree.runPlugins(message.data)
-    break
+      return
+
+    /**
+     * Syncs the background script's Handsfree with this one
+     */
+    case 'handsfree-getConfig':
+      chrome.runtime.sendMessage({
+        action: 'handsfree-updateBackgroundConfig',
+        config: handsfree.config
+      })
+      return
   }
 })
