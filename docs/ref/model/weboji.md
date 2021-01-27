@@ -264,6 +264,8 @@ export default {
   data () {
     return {
       demoOpts: {
+        autostart: true,
+
         weboji: true,
         hands: false,
         facemesh: false,

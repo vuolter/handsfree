@@ -65,7 +65,13 @@
         if (this.name === 'weboji') {
           this.handsfree.debug.$canvas.weboji.style.display = 'none';
         } else {
-          this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height);
+          this.handsfree.debug.context[this.name]?.clearRect && this.handsfree.debug.context[this.name].clearRect(0, 0, this.handsfree.debug.$canvas[this.name].width, this.handsfree.debug.$canvas[this.name].height);
+        }
+
+        // Stop if all models have been stopped
+        let hasRunningModels = Object.keys(this.handsfree.model).some(model => this.handsfree.model[model].enabled);
+        if (!hasRunningModels) {
+          this.handsfree.stop();
         }
       }, 0);
     }
@@ -3694,12 +3700,16 @@
    * @see https://handsfree.js.org/ref/prop/config
    */
   var defaultConfig = {
+    // Whether to automatically start or not
+    // This works both during instantiation or with .update()
+    autostart: false,
+    
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.2.3/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.2.4/build/lib/assets',
     
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
-    isCLient: false,
+    isClient: false,
 
     // Setup config. Ignore this to have everything done for you automatically
     setup: {
@@ -6974,7 +6984,7 @@
       numThresholdErrorFrames: 5,
 
       // Speed multiplier
-      speed: 2
+      speed: 1
     },
 
     /**
@@ -6996,15 +7006,25 @@
             let $potTarget = document.elementFromPoint(pointer.x, pointer.y);
 
             this.$target[n] = this.getTarget($potTarget);
-            this.origScrollTop[n] = this.getTargetScrollTop(this.$target[n]);
-            this.origScrollLeft[n] = this.getTargetScrollLeft(this.$target[n]);
+            this.tweenScroll[n].x = this.origScrollLeft[n] = this.getTargetScrollLeft(this.$target[n]);
+            this.tweenScroll[n].y = this.origScrollTop[n] = this.getTargetScrollTop(this.$target[n]);
             this.handsfree.TweenMax.killTweensOf(this.tweenScroll[n]);
           }
 
           if (hands.pinchState[n]?.[0] === 'held' && this.$target[n]) {
+            // With this one you have to pinch, drag, and release in sections each time
+            // this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
+            //   x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
+            //   y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
+            //   overwrite: true,
+            //   ease: 'linear.easeNone',
+            //   immediateRender: true  
+            // })
+
+            // With this one it continuously moves based on the pinch drag distance
             this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
-              x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
-              y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
+              x: this.tweenScroll[n].x - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width * this.config.speed,
+              y: this.tweenScroll[n].y + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height * this.config.speed,
               overwrite: true,
               ease: 'linear.easeNone',
               immediateRender: true  
@@ -7456,7 +7476,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.2.3
+                  8.2.4
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -7520,7 +7540,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.2.3';
+      this.version = '8.2.4';
       this.data = {};
 
       // Dependency management
@@ -7552,7 +7572,10 @@
       this.loadCorePlugins();
 
       // Start tracking when all models are loaded
+      this.hasAddedBodyClass = false;
+      this.isUpdating = false;
       this.numModelsLoaded = 0;
+      
       this.on('modelReady', () => {
         let numActiveModels = 0;
         Object.keys(this.model).forEach(modelName => {
@@ -7562,8 +7585,11 @@
         if (++this.numModelsLoaded === numActiveModels) {
           document.body.classList.remove('handsfree-loading');
           document.body.classList.add('handsfree-started');
+          this.hasAddedBodyClass = true;
 
-          if (!this.config.isClient) {
+          if (!this.config.isClient
+            && (!this.isUpdating || 
+              (this.isUpdating && this.config.autostart))) {
             this.isLooping = true;
             this.loop();
           }
@@ -7647,7 +7673,8 @@
      * @param {Function} callback Called after
      */
     update (config, callback) {
-      this.config = this.cleanConfig(config, this.config)
+      this.config = this.cleanConfig(config, this.config);
+      this.isUpdating = true
 
       // Run enable/disable methods on changed models
       ;['hands', 'facemesh', 'pose', 'holistic', 'handpose', 'weboji'].forEach(model => {
@@ -7670,10 +7697,10 @@
       });
       
       // Start
-      if (this.isLooping && callback) {
-        callback();
-      } else {
+      if (!this.config.isClient && this.config.autostart) {
         this.start(callback);
+      } else {
+        callback && callback();
       }
     }
 
@@ -7703,7 +7730,8 @@
     start (callback) {
       // Cleans any configs since instantiation (particularly for boolean-ly set plugins)
       this.config = this.cleanConfig(this.config, this.config);
-      
+      this.isUpdating = false;
+
       // Start loading
       document.body.classList.add('handsfree-loading');
       this.emit('loading', this);
@@ -7929,6 +7957,12 @@
      */
     runPlugins (data) {
       this.data = data;
+
+      // Add start class to body
+      if (this.config.isClient && !this.hasAddedBodyClass) {
+        document.body.classList.add('handsfree-started');
+        this.hasAddedBodyClass = true;
+      }
       
       // Run model plugins
       Object.keys(this.model).forEach(name => {
@@ -8020,32 +8054,40 @@
     getUserMedia (callback) {
       // Start getting the stream and call callback after
       if (!this.debug.stream && !this.debug.isGettingStream) {
-        this.debug.isGettingStream = true;
-        
-        navigator.mediaDevices
-          .getUserMedia({
-            audio: false,
-            video: {
-              facingMode: 'user',
-              width: this.debug.$video.width,
-              height: this.debug.$video.height
-            }
-          })
-          .then((stream) => {
-            this.debug.stream = stream;
-            this.debug.$video.srcObject = stream;
-            this.debug.$video.onloadedmetadata = () => {
-              this.debug.$video.play();
-              this.emit('gotUserMedia', stream);
-              callback && callback();
-            };
-          })
-          .catch((err) => {
-            console.error(`Error getting user media: ${err}`);
-          })
-          .finally(() => {
-            this.debug.isGettingStream = false;
-          });
+        // Use the weboji stream if already active
+        if (this.model.weboji?.api?.get_videoStream) {
+          this.debug.$video = this.model.weboji.api.get_video();
+          this.debug.$video.srcObject = this.debug.stream = this.model.weboji.api.get_videoStream();
+          this.emit('gotUserMedia', this.debug.stream);
+          callback && callback();
+
+        // Create a new media stream
+        } else {
+          this.debug.isGettingStream = true;
+          navigator.mediaDevices
+            .getUserMedia({
+              audio: false,
+              video: {
+                facingMode: 'user',
+                width: this.debug.$video.width,
+                height: this.debug.$video.height
+              }
+            })
+            .then((stream) => {
+              this.debug.$video.srcObject = this.debug.stream = stream;
+              this.debug.$video.onloadedmetadata = () => {
+                this.debug.$video.play();
+                this.emit('gotUserMedia', stream);
+                callback && callback();
+              };
+            })
+            .catch((err) => {
+              console.error(`Error getting user media: ${err}`);
+            })
+            .finally(() => {
+              this.debug.isGettingStream = false;
+            });
+        }
 
       // If a media stream is getting gotten then run the callback once the media stream is ready
       } else if (!this.debug.stream && this.debug.isGettingStream) {

@@ -4,6 +4,11 @@
  * @see https://artsandculture.google.com/experiment/AAHWrq360NcGbw
  * @see https://handsfree.js.org/ref/plugin/pinchers.html#pinch-states-with-pinchstate
  */
+handsfree.enablePlugins('browser')
+handsfree.update({
+  hands: true,
+  weboji: false
+})
 
 // Maps handsfree pincher events to 
 const eventMap = {

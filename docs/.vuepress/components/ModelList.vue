@@ -140,21 +140,27 @@ export default {
     return {
       demo: {
         weboji: {
+          autostart: true,
           weboji: true
         },
         hands: {
+          autostart: true,
           hands: true
         },
         facemesh: {
+          autostart: true,
           facemesh: true
         },
         pose: {
+          autostart: true,
           pose: true
         },
         holistic: {
+          autostart: true,
           holistic: true
         },
         handpose: {
+          autostart: true,
           handpose: true
         }
       }

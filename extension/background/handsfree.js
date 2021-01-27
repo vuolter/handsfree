@@ -1,21 +1,14 @@
 /**
- * Globals
- */
-ports = {
-  // @see /src/devtools/webxr/handsfree.js
-  webxrDevTools: [],
-  // @see /src/content/webxr.js
-  webxrContentScript: []
-}
-
-/**
  * Setup Handsfree.js and the message bus
  */
-const handsfree = new Handsfree({
+const configOverrides = {
   assetsPath: '/build/lib/assets',
-  showDebug: true,
-  // weboji: true,
-  hands: true
+  showDebug: true
+}
+const handsfree = new Handsfree({
+  weboji: true,
+  hands: false,
+  ...configOverrides
 })
 
 /**
@@ -25,6 +18,7 @@ const handsfree = new Handsfree({
 const $pipCanvas = document.createElement('CANVAS')
 document.body.appendChild($pipCanvas)
 const pipContext = $pipCanvas.getContext('2d')
+pipContext.globalAlpha = .2
 
 // This will be the video we pip
 const $videoPip = document.createElement('VIDEO')
@@ -33,10 +27,10 @@ document.body.appendChild($videoPip)
 handsfree.use('canvasUpdater', {
   onFrame () {
     // Merge all active models into a single layer
-    pipContext.drawImage(handsfree.debug.$video, 0, 0)
+    pipContext.drawImage(handsfree.debug.$video, 0, 0, $pipCanvas.width, $pipCanvas.height)
     Object.keys(handsfree.model).forEach(name => {
       if (handsfree.model[name].enabled) {
-        pipContext.drawImage(handsfree.debug.$canvas[name], 0, 0)
+        pipContext.drawImage(handsfree.debug.$canvas[name], 0, 0, $pipCanvas.width, $pipCanvas.height)
       }
     })
   }
@@ -48,50 +42,55 @@ handsfree.use('canvasUpdater', {
 handsfree.use('contentScriptBus', {
   onFrame (data) {
     // Send data to content
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
       for (var i = 0; i < tabs.length; ++i) {
         chrome.tabs.sendMessage(tabs[i].id, {action: 'handsfree-data', data})
       }
     })
-
-    // Send data to active ports
-    ports.webxrDevTools.forEach(port => {
-      port.postMessage({
-        action: 'handsfree-data',
-        data
-      })
-    })
   }
-})
-
-/**
- * Handle ports to send data to
- */
-chrome.runtime.onConnect.addListener(port => {
-  ports[port.name].push(port)
-
-  // Remove the port
-  port.onDisconnect.addListener(() => {
-    const i = ports[port.name].indexOf(port)
-    if (i !== -1) ports[port.name].slice(i, 1)
-  })
 })
 
 /**
  * Override requestAnimationFrame, which doesn't work in background script
  */
 _requestAnimationFrame = requestAnimationFrame
-requestAnimationFrame = newRequestAnimationFrame = function(cb) {
-  setTimeout(function() {
+requestAnimationFrame = newRequestAnimationFrame = function (cb) {
+  setTimeout(function () {
     cb()
   }, 1000 / 30)
 }
 
+// Get handsfree config on tab change
+chrome.tabs.onActivated.addListener(function (tabInfo) {
+  chrome.tabs.sendMessage(tabInfo.tabId, {action: 'handsfree-getConfig'})
+})
+
+// Get handsfree config on page load
+chrome.tabs.onUpdated.addListener(function (tabId) {
+  chrome.tabs.sendMessage(tabId, {action: 'handsfree-getConfig'})
+})
+
 /**
  * Handle Handsfree events
  */
-chrome.runtime.onMessage.addListener(function(message, sender, respond) {
+chrome.runtime.onMessage.addListener(function (message, sender, respond) {
   switch (message.action) {
+    /**
+     * Update the background script instance of handsfree
+     */
+    case 'handsfree-updateBackgroundConfig':
+      const config = {
+        ...message.config,
+        ...configOverrides
+      }
+      const newConfig = {}
+      const keys = Object.keys(config).filter(key => ['weboji', 'hands', 'facemesh', 'pose', 'holistic', 'handpose'].indexOf(key) >= 0)
+      keys.forEach(key => newConfig[key] = config[key])
+      
+      newConfig.autostart = !!handsfree.isLooping
+      handsfree.update(newConfig)
+      return
+    
     /**
      * Start Handsfree
      * - Starts picture in picture
@@ -111,9 +110,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, respond) {
       }, {once: true})
       
       // Start Handsfree and set the badge
-      chrome.storage.local.set({isHandsfreeStarted: true}, function() {
+      chrome.storage.local.set({isHandsfreeStarted: true}, function () {
         handsfree.start()
-        handsfree.enablePlugins('browser')
         chrome.browserAction.setBadgeBackgroundColor({
           color: '#f00'
         })

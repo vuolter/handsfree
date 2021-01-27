@@ -26,6 +26,8 @@ export default {
   data () {
     return {
       opts: {
+        autostart: true,
+
         weboji: false,
         hands: true,
         pose: false,
@@ -56,7 +58,7 @@ export default {
     🧙‍♂️ Presenting 🧙‍♀️
 
        Handsfree.js
-          8.2.3
+          8.2.4
 
 https://github.com/midiblocks/handsfree
 https://github.com/sponsors/midiblocks

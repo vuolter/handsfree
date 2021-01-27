@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.2.3
+                8.2.4
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -96,7 +96,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.2.3'
+    this.version = '8.2.4'
     this.data = {}
 
     // Dependency management
@@ -128,7 +128,10 @@ class Handsfree {
     this.loadCorePlugins()
 
     // Start tracking when all models are loaded
+    this.hasAddedBodyClass = false
+    this.isUpdating = false
     this.numModelsLoaded = 0
+    
     this.on('modelReady', () => {
       let numActiveModels = 0
       Object.keys(this.model).forEach(modelName => {
@@ -138,8 +141,11 @@ class Handsfree {
       if (++this.numModelsLoaded === numActiveModels) {
         document.body.classList.remove('handsfree-loading')
         document.body.classList.add('handsfree-started')
+        this.hasAddedBodyClass = true
 
-        if (!this.config.isClient) {
+        if (!this.config.isClient
+          && (!this.isUpdating || 
+            (this.isUpdating && this.config.autostart))) {
           this.isLooping = true
           this.loop()
         }
@@ -224,6 +230,7 @@ class Handsfree {
    */
   update (config, callback) {
     this.config = this.cleanConfig(config, this.config)
+    this.isUpdating = true
 
     // Run enable/disable methods on changed models
     ;['hands', 'facemesh', 'pose', 'holistic', 'handpose', 'weboji'].forEach(model => {
@@ -246,10 +253,10 @@ class Handsfree {
     })
     
     // Start
-    if (this.isLooping && callback) {
-      callback()
-    } else {
+    if (!this.config.isClient && this.config.autostart) {
       this.start(callback)
+    } else {
+      callback && callback()
     }
   }
 
@@ -279,7 +286,8 @@ class Handsfree {
   start (callback) {
     // Cleans any configs since instantiation (particularly for boolean-ly set plugins)
     this.config = this.cleanConfig(this.config, this.config)
-    
+    this.isUpdating = false
+
     // Start loading
     document.body.classList.add('handsfree-loading')
     this.emit('loading', this)
@@ -505,6 +513,12 @@ class Handsfree {
    */
   runPlugins (data) {
     this.data = data
+
+    // Add start class to body
+    if (this.config.isClient && !this.hasAddedBodyClass) {
+      document.body.classList.add('handsfree-started')
+      this.hasAddedBodyClass = true
+    }
     
     // Run model plugins
     Object.keys(this.model).forEach(name => {
@@ -596,32 +610,40 @@ class Handsfree {
   getUserMedia (callback) {
     // Start getting the stream and call callback after
     if (!this.debug.stream && !this.debug.isGettingStream) {
-      this.debug.isGettingStream = true
-      
-      navigator.mediaDevices
-        .getUserMedia({
-          audio: false,
-          video: {
-            facingMode: 'user',
-            width: this.debug.$video.width,
-            height: this.debug.$video.height
-          }
-        })
-        .then((stream) => {
-          this.debug.stream = stream
-          this.debug.$video.srcObject = stream
-          this.debug.$video.onloadedmetadata = () => {
-            this.debug.$video.play()
-            this.emit('gotUserMedia', stream)
-            callback && callback()
-          }
-        })
-        .catch((err) => {
-          console.error(`Error getting user media: ${err}`)
-        })
-        .finally(() => {
-          this.debug.isGettingStream = false
-        })
+      // Use the weboji stream if already active
+      if (this.model.weboji?.api?.get_videoStream) {
+        this.debug.$video = this.model.weboji.api.get_video()
+        this.debug.$video.srcObject = this.debug.stream = this.model.weboji.api.get_videoStream()
+        this.emit('gotUserMedia', this.debug.stream)
+        callback && callback()
+
+      // Create a new media stream
+      } else {
+        this.debug.isGettingStream = true
+        navigator.mediaDevices
+          .getUserMedia({
+            audio: false,
+            video: {
+              facingMode: 'user',
+              width: this.debug.$video.width,
+              height: this.debug.$video.height
+            }
+          })
+          .then((stream) => {
+            this.debug.$video.srcObject = this.debug.stream = stream
+            this.debug.$video.onloadedmetadata = () => {
+              this.debug.$video.play()
+              this.emit('gotUserMedia', stream)
+              callback && callback()
+            }
+          })
+          .catch((err) => {
+            console.error(`Error getting user media: ${err}`)
+          })
+          .finally(() => {
+            this.debug.isGettingStream = false
+          })
+      }
 
     // If a media stream is getting gotten then run the callback once the media stream is ready
     } else if (!this.debug.stream && this.debug.isGettingStream) {

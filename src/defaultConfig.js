@@ -4,12 +4,16 @@
  * @see https://handsfree.js.org/ref/prop/config
  */
 export default {
+  // Whether to automatically start or not
+  // This works both during instantiation or with .update()
+  autostart: false,
+  
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.2.3/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.2.4/build/lib/assets',
   
   // This will load everything but the models. This is useful when you want to use run inference
   // on another device or context but run the plugins on the current device
-  isCLient: false,
+  isClient: false,
 
   // Setup config. Ignore this to have everything done for you automatically
   setup: {

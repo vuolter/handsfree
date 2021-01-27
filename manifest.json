@@ -26,9 +26,18 @@
       ],
       "js": [
         "/build/lib/handsfree.js",
-        "/extension/content/handsfree.js"
+        "/extension/content/handsfree-all-frames.js"
       ],
       "all_frames": true,
+      "run_at": "document_end"
+    },
+
+    {
+      "matches": ["*://*/*"],
+      "exclude_matches": ["*://localhost/*"],
+      "js": [
+        "/extension/content/handsfree-root-frame.js"
+      ],
       "run_at": "document_end"
     },
 
@@ -37,7 +46,6 @@
       "js": [
         "/extension/sites/noisedeck.app/noisedeck.app.js"
       ],
-      "all_frames": true,
       "run_at": "document_end"
     },
 
@@ -45,6 +53,12 @@
       "matches": ["https://gacembed.withgoogle.com/blob-opera*"],
       "js": ["/extension/sites/blob-opera/blob-opera.js"],
       "all_frames": true,
+      "run_at": "document_end"
+    },
+
+    {
+      "matches": ["https://stadia.google.com/*"],
+      "js": ["/extension/sites/stadia.google.com/stadia.js"],
       "run_at": "document_end"
     }
   ],

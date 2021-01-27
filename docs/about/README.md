@@ -46,6 +46,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-01-27 | 8.2.4 | Improved the [pinchScroll plugin](/ref/plugin/pinchScroll/) so that it continuously scrolls (instead of having to release and pinch again); `.handsfree-started` is added to body of a [client install](http://localhost:8080/ref/prop/config.html#isclient) (useful in Browser Extensions); merges the [Handsfree Browser Extension](/extension/) to improve iteration feedback cycle (not documented yet); disabling the last active model turns off the camera; fixes a few [Weboji](/ref/model/weboji/) bugs that prevented it from working with other models
 | 2020-01-25 | 8.2.3 | [palmPointers plugin](/ref/plugin/palmPointers/) and [faceClick](/ref/plugin/faceClick/) now emit `mousedown`, `mousemove`, `mousedrag`, and `mouseup` instead of just `click`
 | 2020-01-18 | 8.2.2 | Adds new [palmPointers plugin](/ref/plugin/palmPointers/) and updates the [pinchScroll plugin](/ref/plugin/pinchScroll/) to support all hands. Also adds a new `/boilerplate/cdn/pinch-scrolling.html`
 | 2020-01-13 | 8.2.1 | Adds new [normalized helper](/ref/model/handpose/#data): `handsfree.data.handpose.normalized`. These `[x, y, z]` are similar to `.handpose.landmarks` but normalized between [0, 1]
