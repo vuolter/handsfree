@@ -3705,7 +3705,7 @@
     autostart: false,
     
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.2.3/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.2.4/build/lib/assets',
     
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
@@ -7466,7 +7466,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.2.3
+                  8.2.4
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -7530,7 +7530,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.2.3';
+      this.version = '8.2.4';
       this.data = {};
 
       // Dependency management
