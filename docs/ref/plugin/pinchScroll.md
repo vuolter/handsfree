@@ -65,7 +65,7 @@ const handsfree = new Handsfree({
       numThresholdErrorFrames: 5,
 
       // Speed multiplier
-      speed: 2
+      speed: .5
     }
   }
 })
@@ -79,7 +79,7 @@ handsfree.start()
 
 // Scroll a little slower
 handsfree.plugin.pinchScroll.enable()
-handsfree.plugin.pinchScroll.config.speed = 1
+handsfree.plugin.pinchScroll.config.speed = 2
 ```
 
 ## See Also

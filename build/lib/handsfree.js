@@ -6984,7 +6984,7 @@
       numThresholdErrorFrames: 5,
 
       // Speed multiplier
-      speed: 2
+      speed: 1
     },
 
     /**
@@ -7006,15 +7006,25 @@
             let $potTarget = document.elementFromPoint(pointer.x, pointer.y);
 
             this.$target[n] = this.getTarget($potTarget);
-            this.origScrollTop[n] = this.getTargetScrollTop(this.$target[n]);
-            this.origScrollLeft[n] = this.getTargetScrollLeft(this.$target[n]);
+            this.tweenScroll[n].x = this.origScrollLeft[n] = this.getTargetScrollLeft(this.$target[n]);
+            this.tweenScroll[n].y = this.origScrollTop[n] = this.getTargetScrollTop(this.$target[n]);
             this.handsfree.TweenMax.killTweensOf(this.tweenScroll[n]);
           }
 
           if (hands.pinchState[n]?.[0] === 'held' && this.$target[n]) {
+            // With this one you have to pinch, drag, and release in sections each time
+            // this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
+            //   x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
+            //   y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
+            //   overwrite: true,
+            //   ease: 'linear.easeNone',
+            //   immediateRender: true  
+            // })
+
+            // With this one it continuously moves based on the pinch drag distance
             this.handsfree.TweenMax.to(this.tweenScroll[n], 1, {
-              x: this.origScrollLeft[n] - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width,
-              y: this.origScrollTop[n] + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height,
+              x: this.tweenScroll[n].x - (hands.origPinch[n][0].x - hands.curPinch[n][0].x) * width * this.config.speed,
+              y: this.tweenScroll[n].y + (hands.origPinch[n][0].y - hands.curPinch[n][0].y) * height * this.config.speed,
               overwrite: true,
               ease: 'linear.easeNone',
               immediateRender: true  
