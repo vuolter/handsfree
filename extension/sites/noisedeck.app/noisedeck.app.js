@@ -1,11 +1,11 @@
 /**
  * Setup Handsfree.js
  */
+handsfree.enablePlugins('browser')
 handsfree.update({
   hands: true,
   weboji: false
 })
-handsfree.enablePlugins('browser')
 
 /**
  * Clamp a number within the values of a scroller

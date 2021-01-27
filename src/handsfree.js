@@ -128,8 +128,10 @@ class Handsfree {
     this.loadCorePlugins()
 
     // Start tracking when all models are loaded
+    this.hasAddedBodyClass = false
     this.isUpdating = false
     this.numModelsLoaded = 0
+    
     this.on('modelReady', () => {
       let numActiveModels = 0
       Object.keys(this.model).forEach(modelName => {
@@ -139,6 +141,7 @@ class Handsfree {
       if (++this.numModelsLoaded === numActiveModels) {
         document.body.classList.remove('handsfree-loading')
         document.body.classList.add('handsfree-started')
+        this.hasAddedBodyClass = true
 
         if (!this.config.isClient
           && (!this.isUpdating || 
@@ -510,6 +513,12 @@ class Handsfree {
    */
   runPlugins (data) {
     this.data = data
+
+    // Add start class to body
+    if (this.config.isClient && !this.hasAddedBodyClass) {
+      document.body.classList.add('handsfree-started')
+      this.hasAddedBodyClass = true
+    }
     
     // Run model plugins
     Object.keys(this.model).forEach(name => {
