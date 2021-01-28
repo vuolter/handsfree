@@ -15,7 +15,7 @@ sidebarDepth: 2
     <Window title="Overview and basic demo">
       <section>
         <ul>
-          <li>🖐 21 2D hand landmarks</li>
+          <li>🖐 22 2D hand landmarks</li>
           <li>🖐🖐 Track up to 4 hands total</li>
         </ul>
         <p>This model includes dozens of <router-link to="/ref/plugin/pinchers/">Pinch Events</router-link> and helper styles to get you going quickly, along with a <router-link to="/ref/plugin/pinchScroll/">plugin for scrolling pages handsfree</router-link>.</p>
@@ -66,6 +66,41 @@ handsfree.start()
 
 ### Hand Landmarks
 
+#### `.landmarks` and `.landmarksVisible`
+
+You can access the landmarks for each hand through:
+
+```js
+// handIndex [0 - 3] An array of landmark points for each detected hands
+handsfree.data.hands.landmarks
+
+// Left hand, person #1
+handsfree.data.hands.landmarks[0]
+// Right hand, person #1
+handsfree.data.hands.landmarks[1]
+// Left hand, person #2
+handsfree.data.hands.landmarks[2]
+// Right hand, person #2
+handsfree.data.hands.landmarks[3]
+```
+
+Each of these has 22 `{x, y}` landmarks. To check if the hand is detected, you can use `handsfree.data.hands.landmarksVisible`:
+
+```js
+// Left hand, person #1
+handsfree.data.hands.landmarksVisible[0]
+// Right hand, person #1
+handsfree.data.hands.landmarksVisible[1]
+// Left hand, person #2
+handsfree.data.hands.landmarksVisible[2]
+// Right hand, person #2
+handsfree.data.hands.landmarksVisible[3]
+```
+
+#### Original data
+
+It's not recommended to use these as the hands are not always in the correct index, however it's exposed here to provide backward compatibility for those switching to Handsfree.js from using MediaPipe Hands directly.
+
 ```js
 // handIndex [0 - 3] An array of landmark points for each detected hands
 handsfree.data.hands.multiHandLandmarks[handIndex] == [
@@ -99,26 +134,6 @@ handsfree.data.hands.multiHandedness[0].label
 handsfree.data.hands.multiHandedness[0].score
 ```
 
-### Example of working with specific hands
-
-```js
-handsfree = new Handsfree({hands: true})
-
-// Inside a plugin
-handsfree.use('somePlugin', ({hands}) => {
-  if (!hands.multiHandLandmarks) return
-  
-  // Loop through each detected hand
-  hands.multiHandLandmarks.forEach((hand, n) => {
-    // Check if the hand is a Right hand
-    if (hands.multiHandedness[n].label === 'Right') {
-      // Right hand only code
-      console.log('right hand', hand)
-    }
-  })
-})
-```
-
 ### Examples of accessing the data
 
 ```js
@@ -126,13 +141,16 @@ handsfree = new Handsfree({hands: true})
 handsfree.start()
 
 // From anywhere
-handsfree.data.hands.multiHandLandmarks
+handsfree.data.hands.landmarks
 
 // From inside a plugin
 handsfree.use('logger', data => {
   if (!data.hands) return
 
-  console.log(data.hands.multiHandLandmarks[0])
+  // Show a log whenever the left hand is visible
+  if (data.hands.landmarksVisible[0]) {
+    console.log(data.hands.landmarks[0])
+  }
 })
 
 // From an event
@@ -140,7 +158,10 @@ document.addEventListener('handsfree-data', event => {
   const data = event.detail
   if (!data.hands) return
 
-  console.log(data.hands.multiHandedness)
+  // Show a log whenever the right hand for person #2 is visible
+  if (data.hands.landmarksVisible[3]) {
+    console.log(data.hands.landmarks[3])
+  }
 })
 ```
 
