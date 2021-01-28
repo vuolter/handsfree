@@ -205,12 +205,42 @@
         results = this.getCenterOfPalm(results);
       }
 
+      // Force handedness
+      results = this.forceHandedness(results);
+
       // Update and debug
       this.data = results;
       this.handsfree.data.hands = results;
       if (this.handsfree.isDebugging) {
         this.debug(results);
       }
+    }
+
+    /**
+     * Forces the hands to always be in the same index
+     */
+    forceHandedness (results) {
+      // Empty landmarks
+      results.landmarks = [[], [], [], []];
+      results.landmarksVisible = [false, false, false, false];
+      if (!results.multiHandLandmarks) {
+        return results
+      }
+
+      // Store landmarks in the correct index
+      results.multiHandLandmarks.forEach((landmarks, n) => {
+        let hand;
+        if (n < 2) {
+          hand = results.multiHandedness[n].label === 'Right' ? 0 : 1;
+        } else {
+          hand = results.multiHandedness[n].label === 'Right' ? 2 : 3;
+        }
+
+        results.landmarks[hand] = landmarks;
+        results.landmarksVisible[hand] = true;
+      });
+
+      return results
     }
 
     /**
@@ -3705,7 +3735,7 @@
     autostart: false,
     
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.2.4/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.2.6/build/lib/assets',
     
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
@@ -7476,7 +7506,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.2.4
+                  8.2.6
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -7540,7 +7570,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.2.4';
+      this.version = '8.2.6';
       this.data = {};
 
       // Dependency management
