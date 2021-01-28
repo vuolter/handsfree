@@ -9,7 +9,7 @@ export default {
   autostart: false,
   
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.2.4/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.2.5/build/lib/assets',
   
   // This will load everything but the models. This is useful when you want to use run inference
   // on another device or context but run the plugins on the current device
