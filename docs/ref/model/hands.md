@@ -88,15 +88,35 @@ handsfree.data.hands.multiHandLandmarks[0][0].y
 ```js
 // handIndex [0 - 3] An array of landmark points for each detected hands
 handsfree.data.hands.multiHandedness[handIndex] == {
-  // "right" or "left"
+  // "Right" or "Left"
   label,
-  // The probability that it is "right" or "left"
+  // The probability that it is "Right" or "Left"
   score
 }
 
 // hand 0
 handsfree.data.hands.multiHandedness[0].label
 handsfree.data.hands.multiHandedness[0].score
+```
+
+### Example of working with specific hands
+
+```js
+handsfree = new Handsfree({hands: true})
+
+// Inside a plugin
+handsfree.use('somePlugin', ({hands}) => {
+  if (!hands.multiHandLandmarks) return
+  
+  // Loop through each detected hand
+  hands.multiHandLandmarks.forEach((hand, n) => {
+    // Check if the hand is a Right hand
+    if (hands.multiHandedness[n].label === 'Right') {
+      // Right hand only code
+      console.log('right hand', hand)
+    }
+  })
+})
 ```
 
 ### Examples of accessing the data
