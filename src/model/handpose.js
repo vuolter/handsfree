@@ -1,4 +1,5 @@
 import BaseModel from './base.js'
+import fingerpose from 'fingerpose'
 
 /**
  * 🚨 This model is not currently active

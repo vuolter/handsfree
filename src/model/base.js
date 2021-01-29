@@ -27,6 +27,7 @@ export default class BaseModel {
   // Implement in the model class
   loadDependencies (callback) {}
   updateData () {}
+  useGesture () {}
 
   /**
    * Enable model
