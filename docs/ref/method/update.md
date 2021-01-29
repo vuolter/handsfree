@@ -8,6 +8,8 @@ This method can be used to update Handsfree in real time, even as it's actively 
 
 In addition to reconfiguring models, you can also reconfigure plugins or enable/disable them.
 
+`update()` can receive a special property, `{autostart: true}`, which will also start Handsfree if it's not already started. This is especially helpful when you have multiple start buttons on a page that each do something different (like in `/boilerplate/`).
+
 ## Parameters
 
 config: object

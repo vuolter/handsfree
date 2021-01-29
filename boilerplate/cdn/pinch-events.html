@@ -118,6 +118,7 @@
     function toggleModel(name) {
       const config = {}
       config[name] = !handsfree.model[name].enabled
+      config.autostart = true
       handsfree.update(config)
     }
   </script>
