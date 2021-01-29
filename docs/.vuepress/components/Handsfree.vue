@@ -58,7 +58,7 @@ export default {
     🧙‍♂️ Presenting 🧙‍♀️
 
        Handsfree.js
-          8.2.4
+          8.2.6
 
 https://github.com/midiblocks/handsfree
 https://github.com/sponsors/midiblocks

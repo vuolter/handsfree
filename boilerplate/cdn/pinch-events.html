@@ -1,7 +1,7 @@
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.4/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.2.4/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.2.6/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.2.6/build/lib/handsfree.js"></script>
   <style>
     .handsfree-canvas-video {
       background: #000;
@@ -118,6 +118,7 @@
     function toggleModel(name) {
       const config = {}
       config[name] = !handsfree.model[name].enabled
+      config.autostart = true
       handsfree.update(config)
     }
   </script>
