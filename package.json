@@ -35,6 +35,7 @@
     "vuepress-plugin-plausible": "0.0.2"
   },
   "dependencies": {
+    "fingerpose": "0.0.2",
     "gsap": "^2.1.3",
     "lodash": "^4.17.20"
   }

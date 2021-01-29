@@ -215,6 +215,11 @@ module.exports = {
         path: '/extension/'
       },
       {
+        title: '🤖 Train gesture',
+        collapsable: true,
+        path: '/train/'
+      },
+      {
         title: '🤝 Community',
         collapsable: true,
         path: '/community/',
