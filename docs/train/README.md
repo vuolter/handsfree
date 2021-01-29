@@ -18,7 +18,7 @@ sidebarDepth: 2
         <div class="language-js extra-class"><pre class="language-js"><code>handsfree<span class="token punctuation">.</span><span class="token function">useGesture</span><span class="token punctuation">(</span>
   gestureName<span class="token punctuation">,</span>
   gestureJSON<span class="token punctuation">,</span>
-  callbackToRunOnDetection
+  config
 <span class="token punctuation">)</span>
 </code></pre></div>
         <div>
@@ -45,7 +45,12 @@ export default {
         facemesh: false,
         pose: false,
         holistic: false,
-        handpose: true
+        handpose: true,
+
+        gesture: {
+          victory: true,
+          thumbDown: true
+        }
       }
     }
   },

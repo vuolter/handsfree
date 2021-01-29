@@ -1,3 +1,5 @@
+import merge from 'lodash/merge'
+
 /**
  * The base gesture class
  * - When you do `handsfree.useGesture()` it actually extends this class
@@ -12,17 +14,29 @@ export default class Gesture {
     Object.keys(gesture).forEach((prop) => {
       this[prop] = gesture[prop]
     })
+
+    // handsfree.config.gesture[name] overwrites gesture.config
+    let handsfreeGestureConfig = handsfree.config?.gesture?.[gesture.name]
+    if (typeof handsfreeGestureConfig === 'boolean') {
+      handsfreeGestureConfig = { enabled: handsfreeGestureConfig }
+    }
+
+    // Disable plugins via new Handsfree(config)
+    if (typeof handsfreeGestureConfig === 'object') {
+      merge(this.config, handsfreeGestureConfig)
+      if (typeof handsfreeGestureConfig.enabled === 'boolean') {
+        this.enabled = handsfreeGestureConfig.enabled
+      }
+    }
   }
 
   /**
    * Toggle gesture
    */
   enable () {
-    !this.enabled && this.onEnable && this.onEnable(this.handsfree)
     this.enabled = true
   }
   disable () {
-    this.enabled && this.onDisable && this.onDisable(this.handsfree)
     this.enabled = false
   }
 }

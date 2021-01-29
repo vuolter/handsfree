@@ -56,6 +56,10 @@ import pluginPinchScroll  from './plugin/hands/pinchScroll'
 import pluginPinchers  from './plugin/hands/pinchers'
 import pluginPalmPointers  from './plugin/hands/palmPointers'
 
+// Gesture Definitions
+import gestureVictory from './gesture/handpose/victory.js'
+import gestureThumbDown from './gesture/handpose/thumbDown.js'
+
 const corePlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
@@ -65,6 +69,10 @@ const corePlugins = {
   palmPointers: pluginPalmPointers,
 }
 
+const coreGestures = {
+  victory: gestureVictory,
+  thumbDown: gestureThumbDown
+}
 
 
 /* ////////////////////////// #1 SETUP /////////////////////////
@@ -134,6 +142,7 @@ class Handsfree {
     this.setupDebugger()
     this.prepareModels()
     this.loadCorePlugins()
+    this.loadCoreGestures()
 
     // Start tracking when all models are loaded
     this.hasAddedBodyClass = false
@@ -224,7 +233,14 @@ class Handsfree {
       if (typeof config.plugin[plugin] === 'boolean') {
         config.plugin[plugin] = {enabled: config.plugin[plugin]}
       }
-    })        
+    })
+
+    // Map gesture booleans to objects
+    config.gesture && Object.keys(config.gesture).forEach(gesture => {
+      if (typeof config.gesture[gesture] === 'boolean') {
+        config.gesture[gesture] = {enabled: config.gesture[gesture]}
+      }
+    })
 
     return merge({}, defaults, config)
   }
@@ -256,6 +272,17 @@ class Handsfree {
           this.plugin[plugin].enable()
         } else {
           this.plugin[plugin].disable()
+        }
+      }
+    })
+
+    // Enable gestures
+    config.gesture && Object.keys(config.gesture).forEach(gesture => {
+      if (typeof config.gesture[gesture].enabled === 'boolean') {
+        if (config.gesture[gesture].enabled) {
+          this.gesture[gesture].enable()
+        } else {
+          this.gesture[gesture].disable()
         }
       }
     })
@@ -323,7 +350,14 @@ class Handsfree {
       if (typeof this.config.plugin?.[plugin]?.enabled === 'boolean' && this.config.plugin[plugin].enabled) {
         this.plugin[plugin].enable()
       }
-    })    
+    })
+
+    // Enable initial gestures
+    Object.keys(this.config.gesture).forEach(gesture => {
+      if (typeof this.config.gesture?.[gesture]?.enabled === 'boolean' && this.config.gesture[gesture].enabled) {
+        this.gesture[gesture].enable()
+      }
+    })
   }
 
   /**
@@ -565,12 +599,6 @@ class Handsfree {
    * @returns {Gesture} The gesture object
    */
   useGesture (name, description, config) {
-    if (typeof config === 'function') {
-      config = {
-        onGesture: config
-      }
-    }
-
     config = merge({},
       {
         // Stores the gestures name for internal use
@@ -583,14 +611,6 @@ class Handsfree {
         tags: [],
         // Whether the gesture is enabled or not
         enabled: true,
-        // Called when the gesture is detected. The callback is mapped to this
-        onGesture: null,
-        // Called when the gesture is first added
-        onUse: null,
-        // Called when the gesture is enabled
-        onEnable: null,
-        // Called when the gesture is disabled
-        onDisable: null
       },
       config
     )
@@ -611,7 +631,6 @@ class Handsfree {
 
     // Create the gesture
     this.gesture[name] = new GestureBase(config, this)
-    this.gesture[name].onUse && this.gesture[name].onUse()
 
     // Store a reference to the gesture to simplify things
     if (config.models.length) {
@@ -759,6 +778,15 @@ class Handsfree {
   loadCorePlugins () {
     Object.keys(corePlugins).forEach(name => {
       this.use(name, corePlugins[name])
+    })    
+  }
+
+  /**
+   * Loads all the core plugins (see #6)
+   */
+  loadCoreGestures () {
+    Object.keys(coreGestures).forEach(name => {
+      this.useGesture(name, coreGestures[name].description, coreGestures[name].config)
     })    
   }
 
