@@ -15,7 +15,8 @@ sidebarDepth: 2
           <option value="hands">Hands (2D)</option>
         </select>
         <p>Select a model above and then click the button below to begin training a custom gesture. A JSON object will then be generated to describe your gesture which you can use with:</p>
-        <div class="language-js extra-class"><pre class="language-js"><code>handsfree<span class="token punctuation">.</span>model<span class="token punctuation">[</span>modelName<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">useGesture</span><span class="token punctuation">(</span>
+        <div class="language-js extra-class"><pre class="language-js"><code>handsfree<span class="token punctuation">.</span><span class="token function">useGesture</span><span class="token punctuation">(</span>
+  gestureName<span class="token punctuation">,</span>
   gestureJSON<span class="token punctuation">,</span>
   callbackToRunOnDetection
 <span class="token punctuation">)</span>

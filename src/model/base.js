@@ -10,8 +10,9 @@ export default class BaseModel {
     // Whether the model is enabled or not
     this.enabled = config.enabled
 
-    // Collection of plugins
+    // Collection of plugins and gestures
     this.plugins = []
+    this.gestures = []
 
     setTimeout(() => {
       const getData = this.getData
@@ -27,7 +28,6 @@ export default class BaseModel {
   // Implement in the model class
   loadDependencies (callback) {}
   updateData () {}
-  useGesture () {}
 
   /**
    * Enable model

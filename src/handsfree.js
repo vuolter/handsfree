@@ -27,9 +27,10 @@
   #1 Setup
   #2 Loop
   #3 Plugins
-  #4 Events
-  #5 Helpers
-  #6 Debugger
+  #4 Gestures
+  #5 Events
+  #6 Helpers
+  #7 Debugger
 
 */
 
@@ -40,6 +41,7 @@ import HolisticModel from './model/holistic'
 import HandposeModel from './model/handpose'
 import WebojiModel from './model/weboji'
 import PluginBase from './Plugin/base.js'
+import GestureBase from './Gesture/base.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
 import defaultConfig from './defaultConfig.js'
@@ -116,6 +118,12 @@ class Handsfree {
     // Plugins
     this.plugin = {}
     this.taggedPlugins = {
+      untagged: []
+    }
+
+    // Gestures
+    this.gesture = {}
+    this.taggedGestures = {
       untagged: []
     }
     
@@ -429,7 +437,7 @@ class Handsfree {
         enabled: true,
         // A set of default config values the user can override during instanciation
         config: {},
-        // (instance) => Called on every frame
+        // (instance) => Called on every frame. The callback is mapped to this
         onFrame: null,
         // (instance) => Called when the plugin is first used
         onUse: null,
@@ -532,10 +540,98 @@ class Handsfree {
     })
   }
 
+  
+  
+
+
+/* //////////////////////// #4 GESTURES /////////////////////////
+
+ ██████╗ ███████╗███████╗████████╗██╗   ██╗██████╗ ███████╗███████╗
+██╔════╝ ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗██╔════╝██╔════╝
+██║  ███╗█████╗  ███████╗   ██║   ██║   ██║██████╔╝█████╗  ███████╗
+██║   ██║██╔══╝  ╚════██║   ██║   ██║   ██║██╔══██╗██╔══╝  ╚════██║
+╚██████╔╝███████╗███████║   ██║   ╚██████╔╝██║  ██║███████╗███████║
+ ╚═════╝ ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+                                                                   
+  /////////////////////////////////////////////////////////////*/
+
+  /**
+   * Adds a callback to be called whenever a gesture is detected
+   * @see https://handsfree.js.org/ref/method/useGesture
+   * 
+   * @param {String} name The gesture name
+   * @param {String} description The gesture description
+   * @param {Object|Function} config The config object, or a callback
+   * @returns {Gesture} The gesture object
+   */
+  useGesture (name, description, config) {
+    if (typeof config === 'function') {
+      config = {
+        onGesture: config
+      }
+    }
+
+    config = merge({},
+      {
+        // Stores the gestures name for internal use
+        name,
+        // The description
+        description,
+        // The model this gesture works with
+        models: [],
+        // Gesture tags for quickly turning them on/off
+        tags: [],
+        // Whether the gesture is enabled or not
+        enabled: true,
+        // Called when the gesture is detected. The callback is mapped to this
+        onGesture: null,
+        // Called when the gesture is first added
+        onUse: null,
+        // Called when the gesture is enabled
+        onEnable: null,
+        // Called when the gesture is disabled
+        onDisable: null
+      },
+      config
+    )
+
+    // Sanitize
+    if (typeof config.models === 'string') {
+      config.models = [config.models]
+    }
+
+    // Setup gesture tags
+    if (typeof config.tags === 'string') {
+      config.tags = [config.tags]
+    }
+    config.tags.forEach(tag => {
+      if (!this.taggedGestures[tag]) this.taggedGestures[tag] = []
+      this.taggedGestures[tag].push(name)
+    })
+
+    // Create the gesture
+    this.gesture[name] = new GestureBase(config, this)
+    this.gesture[name].onUse && this.gesture[name].onUse()
+
+    // Store a reference to the gesture to simplify things
+    if (config.models.length) {
+      config.models.forEach(modelName => {
+        this.model[modelName].gestures.push(name)
+      })
+    } else {
+      this.taggedGestures.untagged.push(name)
+    }
+
+    return this.gesture[name]
+  }
 
 
 
-/* ///////////////////////// #4 EVENTS /////////////////////////
+
+
+
+
+/* ///////////////////////// #5 EVENTS /////////////////////////
 
       ███████╗██╗   ██╗███████╗███╗   ██╗████████╗███████╗
       ██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
@@ -576,7 +672,7 @@ class Handsfree {
 
 
 
-/* //////////////////////// #5 HELPERS /////////////////////////
+/* //////////////////////// #6 HELPERS /////////////////////////
 
     ██╗  ██╗███████╗██╗     ██████╗ ███████╗██████╗ ███████╗
     ██║  ██║██╔════╝██║     ██╔══██╗██╔════╝██╔══██╗██╔════╝
@@ -667,7 +763,7 @@ class Handsfree {
   }
 
 
-/* //////////////////////// #6 DEBUGGER ////////////////////////
+/* //////////////////////// #7 DEBUGGER ////////////////////////
 
 ██████╗ ███████╗██████╗ ██╗   ██╗ ██████╗  ██████╗ ███████╗██████╗ 
 ██╔══██╗██╔════╝██╔══██╗██║   ██║██╔════╝ ██╔════╝ ██╔════╝██╔══██╗
