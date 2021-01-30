@@ -302,8 +302,18 @@ export default class HandposeModel extends BaseModel {
    * Gets current gesture
    */
   getGesture () {
-    console.log(this.gestureEstimator)
-    // const gestures = this.gestures.map(gesture => this.handsfree.gesture[gesture])
-    // console.log(this.name, gestures)
+    let gesture = null
+
+    if (this.data.landmarks && this.gestureEstimator) {
+      const estimate = this.gestureEstimator.estimate(this.data.landmarks, 7.5)
+
+      if (estimate.gestures.length) {
+        gesture = estimate.gestures.reduce((p, c) => {
+          return (p.confidence > c.confidence) ? p : c
+        })
+      }
+    }
+
+    return gesture
   }
 }

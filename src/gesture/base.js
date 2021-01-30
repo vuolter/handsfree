@@ -34,8 +34,19 @@ export default class BaseGesture {
    */
   enable () {
     this.enabled = true
+    this.updateGestureEstimator()
   }
   disable () {
     this.enabled = false
+    this.updateGestureEstimator()
+  }
+
+  /**
+   * Update the estimator when a gesture is toggled
+   */
+  updateGestureEstimator () {
+    this.models.forEach(name => {
+      this.handsfree.model[name].updateGestureEstimator()
+    })
   }
 }

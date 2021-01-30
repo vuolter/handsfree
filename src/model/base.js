@@ -13,6 +13,7 @@ export default class BaseModel {
     // Collection of plugins and gestures
     this.plugins = []
     this.gestures = []
+    this.gestureEstimator = null
 
     setTimeout(() => {
       // Get data
