@@ -36,8 +36,9 @@ export default class BaseModel {
   }
 
   // Implement in the model class
-  loadDependencies (callback) {}
+  loadDependencies () {}
   updateData () {}
+  updateGestureEstimator () {}
 
   /**
    * Enable model

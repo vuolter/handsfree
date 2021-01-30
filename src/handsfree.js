@@ -47,7 +47,6 @@ import defaultConfig from './defaultConfig.js'
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
 import {TweenMax} from 'gsap/TweenMaxBase'
-import fingerpose from 'fingerpose'
 
 // Plugins
 import pluginFacePointer from './plugin/weboji/facePointer'
@@ -288,7 +287,6 @@ class Handsfree {
         }
       }
     })
-    this.updateGestureEstimator()
     
     // Start
     if (!this.config.isClient && this.config.autostart) {
@@ -361,7 +359,6 @@ class Handsfree {
         this.gesture[gesture].enable()
       }
     })
-    this.updateGestureEstimator()
   }
 
   /**
@@ -640,68 +637,19 @@ class Handsfree {
       case 'fingerpose':
         this.gesture[name] = new GestureFingerpose(config, this)
         break
-
-      // @todo Add a user defined class
-      // default
-      //   this.gesture[name] = new GestureBase(config, this)
     }
 
     // Store a reference to the gesture to simplify things
     if (config.models.length) {
       config.models.forEach(modelName => {
         this.model[modelName].gestures.push(name)
+        this.model[modelName].updateGestureEstimator()
       })
     } else {
       this.taggedGestures.untagged.push(name)
     }
 
-    // Update the gestureEstimator
-    this.updateGestureEstimator()
-
     return this.gesture[name]
-  }
-
-  /**
-   * Regenerates all enabled gestures
-   */
-  updateGestureEstimator () {
-    const activeGestures = []
-    
-    Object.keys(this.gesture).forEach(name => {
-      if (this.gesture[name].enabled) {
-        this.gesture[name].description.forEach(pose => {
-          const action = pose[0]
-          const description = new fingerpose.GestureDescription(name)
-
-          // Build the description
-          switch (action) {
-            case 'addCurl':
-              description[action](
-                fingerpose.Finger[pose[1]],
-                fingerpose.FingerCurl[pose[2]],
-                pose[3]
-              )
-            break
-            case 'addDirection':
-              description[action](
-                fingerpose.Finger[pose[1]],
-                fingerpose.FingerDirection[pose[2]],
-                pose[3]
-              )
-            break
-            case 'setWeight':
-              description[action](
-                fingerpose.Finger[pose[1]],
-                pose[2]
-              )
-            break
-          }
-
-          // Add the gesture
-          activeGestures.push(description)
-        })
-      }
-    })
   }
 
 

@@ -7,7 +7,6 @@ import merge from 'lodash/merge'
 export default class BaseGesture {
   constructor (gesture, handsfree) {
     // Props
-    this.gesture = gesture
     this.handsfree = handsfree
 
     // Copy properties and methods from plugin into class
@@ -29,8 +28,6 @@ export default class BaseGesture {
       }
     }
   }
-
-  getGesture () {}
 
   /**
    * Toggle gesture
