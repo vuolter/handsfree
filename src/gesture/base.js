@@ -4,7 +4,7 @@ import merge from 'lodash/merge'
  * The base gesture class
  * - When you do `handsfree.useGesture()` it actually extends this class
  */
-export default class Gesture {
+export default class BaseGesture {
   constructor (gesture, handsfree) {
     // Props
     this.gesture = gesture
@@ -29,6 +29,8 @@ export default class Gesture {
       }
     }
   }
+
+  getGesture () {}
 
   /**
    * Toggle gesture

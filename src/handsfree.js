@@ -41,7 +41,7 @@ import HolisticModel from './model/holistic'
 import HandposeModel from './model/handpose'
 import WebojiModel from './model/weboji'
 import PluginBase from './Plugin/base.js'
-import GestureBase from './Gesture/base.js'
+import GestureFingerpose from './Gesture/Fingerpose.js'
 import defaultConfig from './defaultConfig.js'
 
 import merge from 'lodash/merge'
@@ -136,7 +136,6 @@ class Handsfree {
     this.taggedGestures = {
       untagged: []
     }
-    this.gestureEstimator = null
     
     // Clean config and set defaults
     this.config = this.cleanConfig(config)
@@ -637,7 +636,15 @@ class Handsfree {
     })
 
     // Create the gesture
-    this.gesture[name] = new GestureBase(config, this)
+    switch (config.algorithm) {
+      case 'fingerpose':
+        this.gesture[name] = new GestureFingerpose(config, this)
+        break
+
+      // @todo Add a user defined class
+      // default
+      //   this.gesture[name] = new GestureBase(config, this)
+    }
 
     // Store a reference to the gesture to simplify things
     if (config.models.length) {
@@ -695,9 +702,6 @@ class Handsfree {
         })
       }
     })
-
-    // Create the gesture estimator
-    this.gestureEstimator = new fingerpose.GestureEstimator(activeGestures)
   }
 
 

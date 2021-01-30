@@ -29,6 +29,8 @@ export default {
   ],
 
   config: {
-    enabled: false
+    enabled: false,
+    models: 'handpose',
+    algorithm: 'fingerpose'
   }
 }

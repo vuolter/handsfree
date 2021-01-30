@@ -73,6 +73,14 @@ export default class HandposeModel extends BaseModel {
   }
 
   /**
+   * Gets current gesture
+   */
+  getGesture () {
+    const gestures = this.gestures.map(gesture => this.handsfree.gesture[gesture])
+    console.log(this.name, gestures)
+  }
+
+  /**
    * Sets up the 3D environment
    */
   setup3D () {

@@ -19,16 +19,18 @@ export default class BaseModel {
       const getData = this.getData
       this.getData = async () => {
         const data = await getData.apply(this, arguments)
+        data.gesture = this.getGesture()
         this.runPlugins()
         return data
       }
       
       // Get gesture
       const getGesture = this.getGesture
-      this.getGesture = async () => {
-        const gesture = await getGesture.apply(this, arguments)
-        this.runPlugins()
-        return gesture
+      this.getGesture = () => {
+        if (!getGesture) {
+          getGesture = function () {}
+        }
+        return getGesture.apply(this, arguments)
       }
     }, 0)
   }
