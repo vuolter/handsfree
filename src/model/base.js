@@ -15,12 +15,20 @@ export default class BaseModel {
     this.gestures = []
 
     setTimeout(() => {
+      // Get data
       const getData = this.getData
-      
       this.getData = async () => {
         const data = await getData.apply(this, arguments)
         this.runPlugins()
         return data
+      }
+      
+      // Get gesture
+      const getGesture = this.getGesture
+      this.getGesture = async () => {
+        const gesture = await getGesture.apply(this, arguments)
+        this.runPlugins()
+        return gesture
       }
     }, 0)
   }

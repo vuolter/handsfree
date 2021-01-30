@@ -409,6 +409,8 @@ class Handsfree {
         model.getData()
       }
     })
+
+    // Emit data
     this.emit('data', this.data)
 
     // Run untagged plugins
