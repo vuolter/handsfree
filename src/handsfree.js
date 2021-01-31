@@ -63,13 +63,13 @@ import gestureThumbDown from './gesture/handpose/thumbDown.js'
 import gestureThumbUp from './gesture/handpose/thumbUp.js'
 import gesturePointLeft from './gesture/handpose/pointLeft.js'
 import gesturePointRight from './gesture/handpose/pointRight.js'
-// import gesturePointUp from './gesture/handpose/pointUp.js'
 import gestureSpock from './gesture/handpose/spock.js'
 import gestureStop from './gesture/handpose/stop.js'
 import gestureHorns from './gesture/handpose/horns.js'
 import gestureLove from './gesture/handpose/love.js'
 import gestureFist from './gesture/handpose/fist.js'
 import gestureOk from './gesture/handpose/ok.js'
+import gestureCallMe from './gesture/handpose/callMe.js'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -86,13 +86,13 @@ const coreGestures = {
   thumbUp: gestureThumbUp,
   pointLeft: gesturePointLeft,
   pointRight: gesturePointRight,
-  // pointUp: gesturePointUp,
   spock: gestureSpock,
   stop: gestureStop,
   horns: gestureHorns,
   love: gestureLove,
   fist: gestureFist,
   ok: gestureOk,
+  callMe: gestureCallMe,
 }
 
 

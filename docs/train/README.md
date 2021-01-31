@@ -25,10 +25,7 @@ sidebarDepth: 2
           <span class="gesture-emoji" gesture="love">🤟</span>
           <span class="gesture-emoji" gesture="fist">✊</span>
           <span class="gesture-emoji" gesture="ok">👌</span>
-          <!-- 
           <span class="gesture-emoji" gesture="callMe">🤙</span>
-          <span class="gesture-emoji" gesture="pointUp">☝</span>
-          -->
         </p>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Start Handpose" text-on="Stop Handpose Model" :opts="demoOpts" />
