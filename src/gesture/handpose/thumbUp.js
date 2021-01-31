@@ -1,10 +1,10 @@
-// 👎
+// 👍
 export default {
   description: [
     ["addCurl", "Thumb", "NoCurl", 1.0],
-    ["addDirection", "Thumb", "VerticalDown", 1.0],
-    ["addDirection", "Thumb", "DiagonalDownLeft", 0.25],
-    ["addDirection", "Thumb", "DiagonalDownRight", 0.25],
+    ["addDirection", "Thumb", "VerticalUp", 1.0],
+    ["addDirection", "Thumb", "DiagonalUpLeft", 0.25],
+    ["addDirection", "Thumb", "DiagonalUpRight", 0.25],
 
     ["addCurl", "Index", "FullCurl", 1.0],
     ["addDirection", "Index", "HorizontalLeft", 1.0],
