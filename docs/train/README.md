@@ -17,7 +17,8 @@ sidebarDepth: 2
           <span class="gesture-emoji" gesture="victory">✌</span>
           <span class="gesture-emoji" gesture="thumbUp">👍</span>
           <span class="gesture-emoji" gesture="thumbDown">👎</span>
-          <!-- <span class="gesture-emoji" gesture="pointLeft">👈</span>
+          <span class="gesture-emoji" gesture="pointLeft">👈</span>
+          <!-- 
           <span class="gesture-emoji" gesture="pointRight">👉</span>
           <span class="gesture-emoji" gesture="pointUp">☝</span>
           <span class="gesture-emoji" gesture="spock">🖖</span>
@@ -27,7 +28,8 @@ sidebarDepth: 2
           <span class="gesture-emoji" gesture="love">🤟</span>
           <span class="gesture-emoji" gesture="stop">🤚</span>
           <span class="gesture-emoji" gesture="spread">🖐</span>
-          <span class="gesture-emoji" gesture="fist">✊</span> -->
+          <span class="gesture-emoji" gesture="fist">✊</span>
+          -->
         </p>
         <div>
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Start Handpose" text-on="Stop Handpose Model" :opts="demoOpts" />

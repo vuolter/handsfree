@@ -61,6 +61,7 @@ import pluginPalmPointers  from './plugin/hands/palmPointers'
 import gestureVictory from './gesture/handpose/victory.js'
 import gestureThumbDown from './gesture/handpose/thumbDown.js'
 import gestureThumbUp from './gesture/handpose/thumbUp.js'
+import gesturePointLeft from './gesture/handpose/pointLeft.js'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -75,6 +76,7 @@ const coreGestures = {
   victory: gestureVictory,
   thumbDown: gestureThumbDown,
   thumbUp: gestureThumbUp,
+  pointLeft: gesturePointLeft,
 }
 
 
