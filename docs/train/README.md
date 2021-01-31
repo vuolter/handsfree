@@ -5,7 +5,14 @@ sidebarDepth: 2
 
 <div class="row align-top">
   <div class="col-6">
-    <p><img alt="A 3D model of a hand projected above a person's hand" src="https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif" /></p>
+    <Window title="Test available gestures">
+      <section>
+        <div>
+          <span class="gesture-emoji" gesture="victory">✌</span>
+          <span class="gesture-emoji" gesture="thumbDown">👎</span>
+        </div>
+      </section>
+    </Window>
   </div>
   <div class="col-6">
     <Window title="Training a custom gesture">
@@ -55,6 +62,51 @@ export default {
     }
   },
 
+  /**
+   * Creates a plugin that highlights emojis
+   */
+  mounted () {
+    // Recursive because of the way we're loading handsfree into the docs
+    const checkHandsfree = () => {
+      if (this.$root.handsfree) {
+        this.$nextTick(() => {
+          let lastGesture = ''
+          
+          this.$root.handsfree.use('gestureEmojiDetector', ({handpose}) => {
+            if (!handpose) return
+
+            // Toggle the gesture emoji
+            if (handpose.gesture && handpose.gesture.name !== lastGesture) {
+              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
+              if ($el) $el.classList.remove('active')
+              $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
+              if ($el) $el.classList.add('active')
+              
+              lastGesture = handpose.gesture.name
+            }
+
+            // Disable the gesture emoji if no gestures
+            if (!handpose.gesture?.name) {
+              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
+              if ($el) $el.classList.remove('active')
+
+              lastGesture = null
+            }
+          })
+        })
+      } else {
+        setTimeout(checkHandsfree, 5)
+      }
+    }
+
+    checkHandsfree()
+  },
+
+  destroyed () {
+    console.log('test')
+    this.$root.handsfree.plugin.gestureEmojiDetector.disable()
+  },
+
   methods: {
     /**
      * Start the page with our preset options
@@ -65,3 +117,14 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.gesture-emoji
+  font-size 32px
+  display inline-block
+  margin-right 10px
+  opacity 0.2
+
+  &.active
+    opacity 1
+</style>

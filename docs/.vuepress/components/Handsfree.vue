@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import HandsfreeToggle from './HandsfreeToggle'
-
 /**
  * A global component designed to setup Handsfree.js
  * - Adds the Handsfree Toggle to navbar
