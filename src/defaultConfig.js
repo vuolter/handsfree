@@ -15,6 +15,9 @@ export default {
   // on another device or context but run the plugins on the current device
   isClient: false,
 
+  // Gesture config
+  gesture: {},
+
   // Setup config. Ignore this to have everything done for you automatically
   setup: {
     // The canvas element to use for rendering debug info like skeletons and keypoints

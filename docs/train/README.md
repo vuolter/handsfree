@@ -4,7 +4,7 @@ sidebarDepth: 2
 # 🤖 Train Gesture
 
 <div class="row align-top">
-  <div class="col-6"></div>
+  <div class="col-6"><div></div></div>
   <div class="col-6">
     <Window title="Core gestures">
       <section>
