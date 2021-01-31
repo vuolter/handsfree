@@ -4,34 +4,35 @@ sidebarDepth: 2
 # 🤖 Train Gesture
 
 <div class="row align-top">
+  <div class="col-6"></div>
   <div class="col-6">
-    <Window title="Test available gestures">
+    <Window title="Core gestures">
       <section>
-        <div>
-          <span class="gesture-emoji" gesture="victory">✌</span>
-          <span class="gesture-emoji" gesture="thumbDown">👎</span>
-        </div>
-      </section>
-    </Window>
-  </div>
-  <div class="col-6">
-    <Window title="Training a custom gesture">
-      <section>
+        <p>Select a model below to try one of the core gestures or create your own!</p>
         <select class="full-width">
           <option value="handpose">Handpose (3D)</option>
           <option value="hands">Hands (2D)</option>
         </select>
-        <p>Select a model above and then click the button below to begin training a custom gesture. A JSON object will then be generated to describe your gesture which you can use with:</p>
-        <div class="language-js extra-class"><pre class="language-js"><code>handsfree<span class="token punctuation">.</span><span class="token function">useGesture</span><span class="token punctuation">(</span>
-  gestureName<span class="token punctuation">,</span>
-  gestureJSON<span class="token punctuation">,</span>
-  config
-<span class="token punctuation">)</span>
-</code></pre></div>
+        <p>
+          <span class="gesture-emoji" gesture="victory">✌</span>
+          <span class="gesture-emoji" gesture="thumbDown">👎</span>
+          <span class="gesture-emoji" gesture="pointLeft">👈</span>
+          <span class="gesture-emoji" gesture="pointRight">👉</span>
+          <span class="gesture-emoji" gesture="pointUp">☝</span>
+          <span class="gesture-emoji" gesture="spock">🖖</span>
+          <span class="gesture-emoji" gesture="horns">🤘</span>
+          <span class="gesture-emoji" gesture="callMe">🤙</span>
+          <span class="gesture-emoji" gesture="ok">👌</span>
+          <span class="gesture-emoji" gesture="thumbUp">👍</span>
+          <span class="gesture-emoji" gesture="love">🤟</span>
+          <span class="gesture-emoji" gesture="stop">🤚</span>
+          <span class="gesture-emoji" gesture="spread">🖐</span>
+          <span class="gesture-emoji" gesture="fist">✊</span>
+        </p>
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Train a gesture" text-on="Stop Hands Model" :opts="demoOpts" />
-          <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Try basic Hands demo</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Start Handpose" text-on="Stop Handpose Model" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Start Handpose</button>
         </div>
       </section>
     </Window>
@@ -103,7 +104,6 @@ export default {
   },
 
   destroyed () {
-    console.log('test')
     this.$root.handsfree.plugin.gestureEmojiDetector.disable()
   },
 
@@ -120,9 +120,10 @@ export default {
 
 <style lang="stylus">
 .gesture-emoji
-  font-size 32px
+  font-size 30px
   display inline-block
   margin-right 10px
+  margin-bottom 10px
   opacity 0.2
 
   &.active
