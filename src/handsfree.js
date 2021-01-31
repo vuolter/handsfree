@@ -64,6 +64,8 @@ import gestureThumbUp from './gesture/handpose/thumbUp.js'
 import gesturePointLeft from './gesture/handpose/pointLeft.js'
 import gesturePointRight from './gesture/handpose/pointRight.js'
 // import gesturePointUp from './gesture/handpose/pointUp.js'
+import gestureSpock from './gesture/handpose/spock.js'
+import gestureStop from './gesture/handpose/stop.js'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -81,6 +83,8 @@ const coreGestures = {
   pointLeft: gesturePointLeft,
   pointRight: gesturePointRight,
   // pointUp: gesturePointUp,
+  spock: gestureSpock,
+  stop: gestureStop,
 }
 
 

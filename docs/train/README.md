@@ -19,15 +19,14 @@ sidebarDepth: 2
           <span class="gesture-emoji" gesture="thumbDown">👎</span>
           <span class="gesture-emoji" gesture="pointLeft">👈</span>
           <span class="gesture-emoji" gesture="pointRight">👉</span>
-          <span class="gesture-emoji" gesture="pointUp">☝</span>
-          <!-- 
+          <span class="gesture-emoji" gesture="stop">🤚</span>
           <span class="gesture-emoji" gesture="spock">🖖</span>
+          <!-- 
           <span class="gesture-emoji" gesture="horns">🤘</span>
+          <span class="gesture-emoji" gesture="pointUp">☝</span>
           <span class="gesture-emoji" gesture="callMe">🤙</span>
           <span class="gesture-emoji" gesture="ok">👌</span>
           <span class="gesture-emoji" gesture="love">🤟</span>
-          <span class="gesture-emoji" gesture="stop">🤚</span>
-          <span class="gesture-emoji" gesture="spread">🖐</span>
           <span class="gesture-emoji" gesture="fist">✊</span>
           -->
         </p>
