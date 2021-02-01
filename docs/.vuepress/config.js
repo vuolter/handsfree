@@ -152,6 +152,7 @@ module.exports = {
               ['/ref/method/update.md', '.update()'],
               ['/ref/method/unpause.md', '.unpause()'],
               ['/ref/method/use.md', '.use()'],
+              ['/ref/method/useGesture.md', '.useGesture()'],
             ]
           },
           {
@@ -215,9 +216,9 @@ module.exports = {
         path: '/extension/'
       },
       {
-        title: '🤖 Train gesture',
+        title: '🖖 Create gesture',
         collapsable: true,
-        path: '/train/'
+        path: '/create-gesture/'
       },
       {
         title: '🤝 Community',

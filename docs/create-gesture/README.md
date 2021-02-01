@@ -1,7 +1,7 @@
 ---
 sidebarDepth: 2
 ---
-# 🤖 Train Gesture
+# 🖖 Create Gesture
 
 <div class="row align-top">
   <div class="col-6"><div></div></div>
@@ -10,8 +10,8 @@ sidebarDepth: 2
       <section>
         <p>Select a model below to try one of the core gestures or create your own!</p>
         <select class="full-width">
-          <option value="handpose">Handpose (3D)</option>
           <option value="hands">Hands (2D)</option>
+          <option value="handpose">Handpose (3D)</option>
         </select>
         <p>
           <span class="gesture-emoji" gesture="victory">✌</span>
@@ -72,7 +72,7 @@ export default {
           let lastGestureHandpose = null
           let lastGestureHands = [null, null, null, null]
           
-          this.$root.handsfree.use('gestureEmojiDetector', ({hands}) => {
+          this.$root.handsfree.use('gestureEmojiDetector', ({hands, handpose}) => {
             if (hands?.gesture) {
               hands.gesture.forEach((gesture, n) => {
                 if (gesture && gesture.name !== lastGestureHands[n]) {
@@ -85,7 +85,7 @@ export default {
                 }
     
                 // Disable the gesture emoji if no gestures
-                if (!gesture?.name) {
+                if (lastGestureHands[n] && !gesture?.name) {
                   let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
                   if ($el) $el.classList.remove('active')
     
@@ -95,22 +95,22 @@ export default {
             }
 
             // Toggle the gesture emoji
-            // if (handpose?.gesture && handpose.gesture.name !== lastGesture) {
-            //   let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
-            //   if ($el) $el.classList.remove('active')
-            //   $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
-            //   if ($el) $el.classList.add('active')
+            if (handpose?.gesture && handpose.gesture.name !== lastGestureHandpose) {
+              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHandpose}"]`)
+              if ($el) $el.classList.remove('active')
+              $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
+              if ($el) $el.classList.add('active')
               
-            //   lastGesture = handpose.gesture.name
-            // }
+              lastGestureHandpose = handpose.gesture.name
+            }
 
-            // // Disable the gesture emoji if no gestures
-            // if (!handpose?.gesture?.name) {
-            //   let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
-            //   if ($el) $el.classList.remove('active')
+            // Disable the gesture emoji if no gestures
+            if (lastGestureHandpose && !handpose?.gesture?.name) {
+              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHandpose}"]`)
+              if ($el) $el.classList.remove('active')
 
-            //   lastGesture = null
-            // }
+              lastGestureHandpose = null
+            }
           })
         })
       } else {
