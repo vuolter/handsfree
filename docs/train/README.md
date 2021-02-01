@@ -47,11 +47,11 @@ export default {
         autostart: true,
 
         weboji: false,
-        hands: false,
+        hands: true,
+        handpose: false,
         facemesh: false,
         pose: false,
         holistic: false,
-        handpose: true,
 
         gesture: {
           victory: true,
@@ -69,28 +69,48 @@ export default {
     const checkHandsfree = () => {
       if (this.$root.handsfree) {
         this.$nextTick(() => {
-          let lastGesture = ''
+          let lastGestureHandpose = null
+          let lastGestureHands = [null, null, null, null]
           
-          this.$root.handsfree.use('gestureEmojiDetector', ({handpose}) => {
-            if (!handpose) return
+          this.$root.handsfree.use('gestureEmojiDetector', ({hands}) => {
+            if (hands?.gesture) {
+              hands.gesture.forEach((gesture, n) => {
+                if (gesture && gesture.name !== lastGestureHands[n]) {
+                  let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
+                  if ($el) $el.classList.remove('active')
+                  $el = document.querySelector(`.gesture-emoji[gesture="${gesture.name}"]`)
+                  if ($el) $el.classList.add('active')
+                  
+                  lastGestureHands[n] = gesture.name
+                }
+    
+                // Disable the gesture emoji if no gestures
+                if (!gesture?.name) {
+                  let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
+                  if ($el) $el.classList.remove('active')
+    
+                  lastGestureHands[n] = null
+                }
+              })
+            }
 
             // Toggle the gesture emoji
-            if (handpose.gesture && handpose.gesture.name !== lastGesture) {
-              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
-              if ($el) $el.classList.remove('active')
-              $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
-              if ($el) $el.classList.add('active')
+            // if (handpose?.gesture && handpose.gesture.name !== lastGesture) {
+            //   let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
+            //   if ($el) $el.classList.remove('active')
+            //   $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
+            //   if ($el) $el.classList.add('active')
               
-              lastGesture = handpose.gesture.name
-            }
+            //   lastGesture = handpose.gesture.name
+            // }
 
-            // Disable the gesture emoji if no gestures
-            if (!handpose.gesture?.name) {
-              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
-              if ($el) $el.classList.remove('active')
+            // // Disable the gesture emoji if no gestures
+            // if (!handpose?.gesture?.name) {
+            //   let $el = document.querySelector(`.gesture-emoji[gesture="${lastGesture}"]`)
+            //   if ($el) $el.classList.remove('active')
 
-              lastGesture = null
-            }
+            //   lastGesture = null
+            // }
           })
         })
       } else {

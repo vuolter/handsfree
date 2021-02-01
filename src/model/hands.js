@@ -228,10 +228,16 @@ export default class HandsModel extends BaseModel {
   getGesture () {
     let gestures = [null, null, null, null]
 
-    this.data.landmarks.forEach((landmarks, hand) => {
+    this.data.landmarks.forEach((landmarksObj, hand) => {
       if (this.data.landmarksVisible[hand]) {
+        // Convert object to array
+        const landmarks = []
+        for (let i = 0; i < 21; i++) {
+          landmarks.push([landmarksObj[i].x * window.outerWidth, landmarksObj[i].y * window.outerHeight, 0])
+        }
+        
+        // Estimate
         const estimate = this.gestureEstimator.estimate(landmarks, 7.5)
-  
         if (estimate.gestures.length) {
           gestures[hand] = estimate.gestures.reduce((p, c) => {
             return (p.confidence > c.confidence) ? p : c
