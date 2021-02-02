@@ -242,6 +242,7 @@ export default class HandsModel extends BaseModel {
           gestures[hand] = estimate.gestures.reduce((p, c) => {
             return (p.confidence > c.confidence) ? p : c
           })
+          gestures[hand].pose = estimate.poseData
         }
       }
     })

@@ -6,14 +6,16 @@ sidebarDepth: 2
 <div class="row align-top">
   <div class="col-6"><div></div></div>
   <div class="col-6">
-    <Window title="Core gestures">
+    <Window title="Step 1: Choose a model">
       <section>
-        <p>Select a model below to try one of the core gestures or create your own!</p>
-        <select class="full-width">
-          <option value="hands">Hands (2D)</option>
-          <option value="handpose">Handpose (3D)</option>
-        </select>
+        <p>To begin, select a model below:</p>
         <p>
+          <select id="gesture-model-selector" class="full-width" @change="updateModel">
+            <option value="hands">🖐🖐 MediaPipe Hands (2D)</option>
+            <option value="handpose">🖐 TensorFLow Handpose (3D)</option>
+          </select>
+        </p>
+        <!-- <p>
           <span class="gesture-emoji" gesture="victory">✌</span>
           <span class="gesture-emoji" gesture="thumbUp">👍</span>
           <span class="gesture-emoji" gesture="thumbDown">👎</span>
@@ -26,8 +28,13 @@ sidebarDepth: 2
           <span class="gesture-emoji" gesture="fist">✊</span>
           <span class="gesture-emoji" gesture="ok">👌</span>
           <span class="gesture-emoji" gesture="callMe">🤙</span>
-        </p>
-        <div>
+        </p> -->
+        <div class="model-button-container model-button-container-hands">
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Start Hands" text-on="Stop Hands Model" :opts="demoOpts" />
+          <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Start Hands</button>
+        </div>
+        <div class="model-button-container model-button-container-handpose hidden">
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Start Handpose" text-on="Stop Handpose Model" :opts="demoOpts" />
           <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
           <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Start Handpose</button>
@@ -131,6 +138,21 @@ export default {
      */
     startDemo () {
       this.$root.handsfree.update(this.demoOpts)
+    },
+
+    /**
+     * Change the model and update buttons
+     */
+    updateModel (ev) {
+      const model = ev.target.value
+
+      document.querySelectorAll('.model-button-container').forEach($el => {
+        if ($el.classList.contains(`model-button-container-${model}`)) {
+          $el.classList.remove('hidden')
+        } else {
+          $el.classList.add('hidden')
+        }
+      })
     }
   }
 }
