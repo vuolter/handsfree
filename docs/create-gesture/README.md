@@ -73,8 +73,11 @@ sidebarDepth: 2
 </Window>
 
 
-
-
+<Window title="Step 3: Clean Data">
+  <p>Click on any of the frames below that don't look right to remove them. The cleaner your data, the better the results!</p>
+  <div ref="recordingCanvasContainer" class="row align-top">
+  </div>
+</Window>
 
 
 
@@ -202,7 +205,7 @@ export default {
       if (!this.$root.handsfree.isLooping) {
         this.startDemo(this.$refs.modelSelector.value, this.startRecordingShapes)
       } else {
-        countdown = 4
+        countdown = 0
         this.$refs.recordLandmarks.disabled = true
         this.countdown()
       }
@@ -247,6 +250,41 @@ export default {
     stopRecordingShapes () {
       this.$refs.recordLandmarks.disabled = false
       this.$refs.recordLandmarks.innerText = 'Record Landmarks'
+      this.renderRecording()
+    },
+
+    /**
+     * Displays a grid of all the shapes
+     */
+    renderRecording () {
+      recordedShapes.forEach(frame => {
+        const $wrap = document.createElement('DIV')
+        $wrap.classList.add('landmark-canvas-wrap', 'col-5')
+
+        const $canvas = document.createElement('CANVAS')
+        $canvas.classList.add('landmark-canvas')
+        
+        $canvas.width = this.$root.handsfree.debug.$canvas.hands.width
+        $canvas.height = this.$root.handsfree.debug.$canvas.hands.height
+
+        $wrap.appendChild($canvas)
+        this.$refs.recordingCanvasContainer.appendChild($wrap)
+
+        this.renderHand($canvas, frame)
+      })
+    },
+
+    /**
+     * Renders the landmark into each canvas
+     */
+    renderHand ($canvas, frame) {
+      const context = $canvas.getContext('2d')
+      
+      // Draw skeletons
+      frame.landmarks.forEach(landmarks => {
+        drawConnectors(context, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5})
+        drawLandmarks(context, landmarks, {color: '#FF0000', lineWidth: 2})
+      })
     }
   }
 }
@@ -262,4 +300,16 @@ export default {
 
   &.active
     opacity 1
+
+.landmark-canvas-wrap
+  padding 3px
+  box-sizing border-box
+  
+.landmark-canvas
+  background #222
+  width 100%
+
+  &:hover
+    opacity 0.5
+    background #666
 </style>
