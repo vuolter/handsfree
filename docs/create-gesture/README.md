@@ -30,14 +30,14 @@ sidebarDepth: 2
           <span class="gesture-emoji" gesture="callMe">🤙</span>
         </p> -->
         <div class="model-button-container model-button-container-hands">
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Start Hands" text-on="Stop Hands Model" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Start Hands" text-on="Stop Hands Model" :opts="demoOpts.hands" />
           <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Start Hands</button>
+          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo('hands')"><Fa-Video /> Start Hands</button>
         </div>
         <div class="model-button-container model-button-container-handpose hidden">
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Start Handpose" text-on="Stop Handpose Model" :opts="demoOpts" />
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-handpose" text-off="Start Handpose" text-on="Stop Handpose Model" :opts="demoOpts.handpose" />
           <button class="handsfree-show-when-started-without-handpose handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Start Handpose</button>
+          <button class="handsfree-show-when-started-without-handpose handsfree-hide-when-loading" @click="startDemo('handpose')"><Fa-Video /> Start Handpose</button>
         </div>
       </section>
     </Window>
@@ -51,18 +51,23 @@ export default {
   data () {
     return {
       demoOpts: {
-        autostart: true,
-
-        weboji: false,
-        hands: true,
-        handpose: false,
-        facemesh: false,
-        pose: false,
-        holistic: false,
-
-        gesture: {
-          victory: true,
-          thumbDown: true
+        hands: {
+          autostart: true,
+          weboji: false,
+          hands: true,
+          handpose: false,
+          facemesh: false,
+          pose: false,
+          holistic: false,
+        },
+        handpose: {
+          autostart: true,
+          weboji: false,
+          hands: false,
+          handpose: true,
+          facemesh: false,
+          pose: false,
+          holistic: false,
         }
       }
     }
@@ -135,9 +140,10 @@ export default {
   methods: {
     /**
      * Start the page with our preset options
+     * @param {string} model The name of the model to switch to
      */
-    startDemo () {
-      this.$root.handsfree.update(this.demoOpts)
+    startDemo (model) {
+      this.$root.handsfree.update(this.demoOpts[model])
     },
 
     /**
