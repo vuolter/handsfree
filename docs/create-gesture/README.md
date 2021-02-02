@@ -15,20 +15,6 @@ sidebarDepth: 2
             <option value="handpose">🖐 TensorFLow Handpose (3D)</option>
           </select>
         </p>
-        <!-- <p>
-          <span class="gesture-emoji" gesture="victory">✌</span>
-          <span class="gesture-emoji" gesture="thumbUp">👍</span>
-          <span class="gesture-emoji" gesture="thumbDown">👎</span>
-          <span class="gesture-emoji" gesture="pointLeft">👈</span>
-          <span class="gesture-emoji" gesture="pointRight">👉</span>
-          <span class="gesture-emoji" gesture="stop">🤚</span>
-          <span class="gesture-emoji" gesture="spock">🖖</span>
-          <span class="gesture-emoji" gesture="horns">🤘</span>
-          <span class="gesture-emoji" gesture="love">🤟</span>
-          <span class="gesture-emoji" gesture="fist">✊</span>
-          <span class="gesture-emoji" gesture="ok">👌</span>
-          <span class="gesture-emoji" gesture="callMe">🤙</span>
-        </p> -->
         <div class="model-button-container model-button-container-hands">
           <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Start Hands" text-on="Stop Hands Model" :opts="demoOpts.hands" />
           <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
@@ -43,6 +29,24 @@ sidebarDepth: 2
     </Window>
   </div>
 </div>
+
+<Window title="Step 2: Collect samples">
+  <div class="row align-top">
+    <div class="col-6">
+      <fieldset>
+        <legend>Current Shape</legend>
+        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view">
+        </ul>
+      </fieldset>
+    </div>
+  </div>
+</Window>
+
+
+
+
+
+
 
 
 <!-- Code -->
@@ -83,47 +87,9 @@ export default {
         this.$nextTick(() => {
           let lastGestureHandpose = null
           let lastGestureHands = [null, null, null, null]
+          let currentShapeHands = ''
           
-          this.$root.handsfree.use('gestureEmojiDetector', ({hands, handpose}) => {
-            if (hands?.gesture) {
-              hands.gesture.forEach((gesture, n) => {
-                if (gesture && gesture.name !== lastGestureHands[n]) {
-                  let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
-                  if ($el) $el.classList.remove('active')
-                  $el = document.querySelector(`.gesture-emoji[gesture="${gesture.name}"]`)
-                  if ($el) $el.classList.add('active')
-                  
-                  lastGestureHands[n] = gesture.name
-                }
-    
-                // Disable the gesture emoji if no gestures
-                if (lastGestureHands[n] && !gesture?.name) {
-                  let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
-                  if ($el) $el.classList.remove('active')
-    
-                  lastGestureHands[n] = null
-                }
-              })
-            }
-
-            // Toggle the gesture emoji
-            if (handpose?.gesture && handpose.gesture.name !== lastGestureHandpose) {
-              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHandpose}"]`)
-              if ($el) $el.classList.remove('active')
-              $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
-              if ($el) $el.classList.add('active')
-              
-              lastGestureHandpose = handpose.gesture.name
-            }
-
-            // Disable the gesture emoji if no gestures
-            if (lastGestureHandpose && !handpose?.gesture?.name) {
-              let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHandpose}"]`)
-              if ($el) $el.classList.remove('active')
-
-              lastGestureHandpose = null
-            }
-          })
+          this.$root.handsfree.use('displayShape', this.displayShape)
         })
       } else {
         setTimeout(checkHandsfree, 5)
@@ -159,6 +125,35 @@ export default {
           $el.classList.add('hidden')
         }
       })
+    },
+
+    /**
+     * Shows what the current model shape is
+     */
+    displayShape (data) {
+      // MediaPipe Hands
+      if (data.hands && data.hands.gesture) {
+        let shape = ''
+        
+        data.hands.gesture.forEach((gesture, hand) => {
+          if (gesture) {
+            shape += `<li>🖐 Hand # ${hand}</li>`
+            shape += `<li>Thumb | ${gesture.pose[0][1]} | ${gesture.pose[0][2]}</li>`
+            shape += `<li>Index | ${gesture.pose[1][1]} | ${gesture.pose[1][2]}</li>`
+            shape += `<li>Middle | ${gesture.pose[2][1]} | ${gesture.pose[2][2]}</li>`
+            shape += `<li>Ring | ${gesture.pose[3][1]} | ${gesture.pose[3][2]}</li>`
+            shape += `<li>Pinky | ${gesture.pose[4][1]} | ${gesture.pose[4][2]}</li>`
+            shape += `<li>--------</li>`
+            shape += '<li></li>'
+          }
+        })
+        this.$refs.currentShapeBox.innerHTML = shape
+      }
+
+      // TensorFlow Handpose
+      if (data.handpose) {
+
+      }
     }
   }
 }
