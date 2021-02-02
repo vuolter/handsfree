@@ -34,7 +34,7 @@ sidebarDepth: 2
     <div class="col-6">
       <fieldset>
         <legend>Current Shape</legend>
-        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view" style="min-height: 430px">
+        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view" style="min-height: 220px">
           <li>&nbsp;</li>
           <li>&nbsp;</li>
           <li>&nbsp;</li>
@@ -364,7 +364,7 @@ export default {
         if (shape.removed) return
         const gesture = shape.gesture.find(gesture => !!gesture)
 
-        if (gesture.pose) {
+        if (gesture?.pose) {
           const landmarks = shape.landmarks.find(landmarks => !!landmarks)
 
           // loop through each finger
