@@ -82,6 +82,7 @@ sidebarDepth: 2
 <!-- Code -->
 <script>
 let recordedShapes = []
+let countdown = 3
 
 export default {
   data () {
@@ -201,8 +202,23 @@ export default {
       if (!this.$root.handsfree.isLooping) {
         this.startDemo(this.$refs.modelSelector.value, this.startRecordingShapes)
       } else {
-        this.$root.handsfree.plugin.recordShapes.enable()
+        countdown = 4
         this.$refs.recordLandmarks.disabled = true
+        this.countdown()
+      }
+    },
+
+    /**
+     * Handle the countdown
+     */
+    countdown () {
+      if (--countdown > 0) {
+        this.$refs.recordLandmarks.innerText = `${countdown}...`
+        setTimeout(() => {
+          this.countdown()
+        }, 1000)
+      } else {
+        this.$root.handsfree.plugin.recordShapes.enable()
         this.$refs.recordLandmarks.innerText = 'Recording...'
       }
     },
