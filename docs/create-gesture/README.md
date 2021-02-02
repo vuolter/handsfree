@@ -257,7 +257,7 @@ export default {
      * Displays a grid of all the shapes
      */
     renderRecording () {
-      recordedShapes.forEach(frame => {
+      recordedShapes.forEach((recording, frame) => {
         const $wrap = document.createElement('DIV')
         $wrap.classList.add('landmark-canvas-wrap', 'col-5')
 
@@ -266,11 +266,12 @@ export default {
         
         $canvas.width = this.$root.handsfree.debug.$canvas.hands.width
         $canvas.height = this.$root.handsfree.debug.$canvas.hands.height
+        $canvas.addEventListener('click', () => this.toggleFrame($canvas, frame))
 
         $wrap.appendChild($canvas)
         this.$refs.recordingCanvasContainer.appendChild($wrap)
 
-        this.renderHand($canvas, frame)
+        this.renderHand($canvas, recording)
       })
     },
 
@@ -285,6 +286,13 @@ export default {
         drawConnectors(context, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5})
         drawLandmarks(context, landmarks, {color: '#FF0000', lineWidth: 2})
       })
+    },
+
+    /**
+     * Select a frame on/off for compiling
+     */
+    toggleFrame ($canvas, frame) {
+      
     }
   }
 }

@@ -210,11 +210,11 @@ module.exports = {
           }
         ]
       },
-      {
-        title: '🌐 Handsfree Browser Extension (in development)',
-        collapsable: true,
-        path: '/extension/'
-      },
+      // {
+      //   title: '🌐 Handsfree Browser Extension (in development)',
+      //   collapsable: true,
+      //   path: '/extension/'
+      // },
       {
         title: '🖖 Create gesture',
         collapsable: true,
