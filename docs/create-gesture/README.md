@@ -10,7 +10,7 @@ sidebarDepth: 2
       <section>
         <p>To begin, select a model below:</p>
         <p>
-          <select id="gesture-model-selector" class="full-width" @change="updateModel">
+          <select ref="modelSelector" class="full-width" @change="updateModel">
             <option value="hands">🖐🖐 MediaPipe Hands (2D)</option>
             <option value="handpose">🖐 TensorFLow Handpose (3D)</option>
           </select>
@@ -39,6 +39,16 @@ sidebarDepth: 2
         </ul>
       </fieldset>
     </div>
+    <div class="col-6">
+      <ol>
+        <li>Click the button below to record landmarks for 3 seconds</li>
+        <li>Move your hands around slightly to capture subtle variations</li>
+      </ol>
+      <div>
+        <button ref="recordLandmarks" class="handsfree-hide-when-loading full-width" @click="startRecordingShapes">Record landmarks</button>
+        <button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading...</button>
+      </div>
+    </div>
   </div>
 </Window>
 
@@ -51,6 +61,8 @@ sidebarDepth: 2
 
 <!-- Code -->
 <script>
+let recordedShapes = []
+
 export default {
   data () {
     return {
@@ -85,11 +97,13 @@ export default {
     const checkHandsfree = () => {
       if (this.$root.handsfree) {
         this.$nextTick(() => {
-          let lastGestureHandpose = null
-          let lastGestureHands = [null, null, null, null]
-          let currentShapeHands = ''
-          
           this.$root.handsfree.use('displayShape', this.displayShape)
+
+          this.$root.handsfree.use('recordShapes', {
+            enabled: false,
+            onFrame: this.$root.handsfree.throttle(this.recordShapes, 100),
+            onDisable: this.stopRecordingShapes
+          })
         })
       } else {
         setTimeout(checkHandsfree, 5)
@@ -100,16 +114,18 @@ export default {
   },
 
   destroyed () {
-    this.$root.handsfree.plugin.gestureEmojiDetector.disable()
+    this.$root.handsfree.plugin.displayShape.disable()
+    this.$root.handsfree.plugin.recordShapes.disable()
   },
 
   methods: {
     /**
      * Start the page with our preset options
      * @param {string} model The name of the model to switch to
+     * @param {Function} callback 
      */
-    startDemo (model) {
-      this.$root.handsfree.update(this.demoOpts[model])
+    startDemo (model, callback) {
+      this.$root.handsfree.update(this.demoOpts[model], callback)
     },
 
     /**
@@ -151,9 +167,47 @@ export default {
       }
 
       // TensorFlow Handpose
-      if (data.handpose) {
+      // @todo
+      // if (data.handpose) {}
+    },
 
+    /**
+     * Records the gesture shapes over 3 seconds
+     */
+    startRecordingShapes () {
+      if (!this.$root.handsfree.isLooping) {
+        this.startDemo(this.$refs.modelSelector.value, this.startRecordingShapes)
+      } else {
+        this.$root.handsfree.plugin.recordShapes.enable()
+        this.$refs.recordLandmarks.disabled = true
+        this.$refs.recordLandmarks.innerText = 'Recording...'
       }
+    },
+
+    /**
+     * Record landmarks and the shape
+     */
+    recordShapes (data) {
+      if (data.hands) {
+        recordedShapes.push({
+          gesture: data.hands.gesture,
+          landmarks: data.hands.landmarks
+        })
+      }
+      // @todo
+      // if (data.handpose) {}
+
+      if (recordedShapes.length > 29) {
+        this.$root.handsfree.plugin.recordShapes.disable()
+      }
+    },
+
+    /**
+     * Stop recording landmarks/shapes and re-enable button
+     */
+    stopRecordingShapes () {
+      this.$refs.recordLandmarks.disabled = false
+      this.$refs.recordLandmarks.innerText = 'Record Landmarks'
     }
   }
 }
