@@ -59,7 +59,7 @@ sidebarDepth: 2
             <label for="radio-1-hands">1 Hand</label>
           </div>
           <div class="field-row">
-            <input id="radio-2-hands" type="radio" name="radio-number-hands">
+            <input id="radio-2-hands" disabled type="radio" name="radio-number-hands">
             <label for="radio-2-hands">2 Hands</label>
           </div>
         </fieldset>
@@ -74,8 +74,20 @@ sidebarDepth: 2
 
 
 <Window title="Step 3: Clean Data">
-  <p>Click on any of the frames below that don't look right to remove them. The cleaner your data, the better the results!</p>
+  <p>Click on any of the frames below that don't look right to remove them. The final gesture description does not use a neural network, so the number of samples isn't as important as the quality!</p>
   <div ref="recordingCanvasContainer" class="row align-top">
+  </div>
+</Window>
+
+<Window title="Step 4: Gesture Description">
+  <div class="row align-top">
+    <div class="col-6">
+      <fieldset>
+        <legend>Gesture Description</legend>
+        <textarea ref="gestureDescriptionJSON" style="width: 100%" rows=20></textarea>
+      </fieldset>
+    </div>
+    <div class="col-6"></div>
   </div>
 </Window>
 
@@ -84,17 +96,21 @@ sidebarDepth: 2
 
 <!-- Code -->
 <script>
-let recordedShapes = []
 let countdown = 3
 
 export default {
   data () {
     return {
+      recordedShapes: [],
+
       demoOpts: {
         hands: {
           autostart: true,
           weboji: false,
-          hands: true,
+          hands: {
+            enabled: true,
+            maxNumHands: 1
+          },
           handpose: false,
           facemesh: false,
           pose: false,
@@ -126,6 +142,7 @@ export default {
           this.$root.handsfree.use('recordShapes', {
             enabled: false,
             onFrame: this.$root.handsfree.throttle(this.recordShapes, 100),
+            onEnable: this.resetShapes,
             onDisable: this.stopRecordingShapes
           })
         })
@@ -168,6 +185,13 @@ export default {
     },
 
     /**
+     * Clears out the recorded shapes
+     */
+    resetShapes () {
+      this.recordedShapes = []
+    },
+
+    /**
      * Shows what the current model shape is
      */
     displayShape (data) {
@@ -175,21 +199,20 @@ export default {
       if (data.hands && data.hands.gesture) {
         let shape = ''
         const gestures = data.hands.gesture
+        const gesture = gestures.find(gesture => !!gesture)
         
-        gestures.slice(0, 2).forEach((gesture, hand) => {
-          if (gesture) {
-            shape += `<li>🖐 Hand # ${hand}</li>`
-            shape += `<li>Thumb | ${gesture.pose[0][1]} | ${gesture.pose[0][2]}</li>`
-            shape += `<li>Index | ${gesture.pose[1][1]} | ${gesture.pose[1][2]}</li>`
-            shape += `<li>Middle | ${gesture.pose[2][1]} | ${gesture.pose[2][2]}</li>`
-            shape += `<li>Ring | ${gesture.pose[3][1]} | ${gesture.pose[3][2]}</li>`
-            shape += `<li>Pinky | ${gesture.pose[4][1]} | ${gesture.pose[4][2]}</li>`
-            shape += `<li>--------</li>`
-            shape += '<li></li>'
-          } else {
-            shape += '<li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>'
-          }
-        })
+        if (gesture) {
+          shape += `<li>Thumb | ${gesture.pose[0][1]} | ${gesture.pose[0][2]}</li>`
+          shape += `<li>Index | ${gesture.pose[1][1]} | ${gesture.pose[1][2]}</li>`
+          shape += `<li>Middle | ${gesture.pose[2][1]} | ${gesture.pose[2][2]}</li>`
+          shape += `<li>Ring | ${gesture.pose[3][1]} | ${gesture.pose[3][2]}</li>`
+          shape += `<li>Pinky | ${gesture.pose[4][1]} | ${gesture.pose[4][2]}</li>`
+          shape += `<li>--------</li>`
+          shape += '<li></li>'
+        } else {
+          shape += '<li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>'
+        }
+
         this.$refs.currentShapeBox.innerHTML = shape
       }
 
@@ -231,7 +254,7 @@ export default {
      */
     recordShapes (data) {
       if (data.hands) {
-        recordedShapes.push({
+        this.recordedShapes.push({
           gesture: data.hands.gesture,
           landmarks: data.hands.landmarks
         })
@@ -239,7 +262,7 @@ export default {
       // @todo
       // if (data.handpose) {}
 
-      if (recordedShapes.length > 29) {
+      if (this.recordedShapes.length > 29) {
         this.$root.handsfree.plugin.recordShapes.disable()
       }
     },
@@ -257,7 +280,9 @@ export default {
      * Displays a grid of all the shapes
      */
     renderRecording () {
-      recordedShapes.forEach((recording, frame) => {
+      this.$refs.recordingCanvasContainer.innerHTML = ''
+      
+      this.recordedShapes.forEach((recording, frame) => {
         const $wrap = document.createElement('DIV')
         $wrap.classList.add('landmark-canvas-wrap', 'col-5')
 
@@ -272,6 +297,7 @@ export default {
         this.$refs.recordingCanvasContainer.appendChild($wrap)
 
         this.renderHand($canvas, recording)
+        this.generateGestureDescription()
       })
     },
 
@@ -290,9 +316,77 @@ export default {
 
     /**
      * Select a frame on/off for compiling
+     * - Regenerates gesture description each time
      */
     toggleFrame ($canvas, frame) {
+      if ($canvas.classList.contains('removed')) {
+        $canvas.classList.remove('removed')
+        this.recordedShapes[frame].removed = false
+      } else {
+        $canvas.classList.add('removed')
+        this.recordedShapes[frame].removed = true
+      }
+
+      this.generateGestureDescription()
+    },
+
+    /**
+     * Generates the gesture description as JSON
+     */
+    generateGestureDescription () {
+      const description = {
+        Thumb: {
+          curl: {},
+          direction: {}
+        },
+        Index: {
+          curl: {},
+          direction: {}
+        },
+        Middle: {
+          curl: {},
+          direction: {}
+        },
+        Ring: {
+          curl: {},
+          direction: {}
+        },
+        Pinky: {
+          curl: {},
+          direction: {}
+        },
+      }
       
+      const numHands = document.querySelector('[name="radio-number-hands"]:checked').value
+
+      // Loop through each frame
+      this.recordedShapes.forEach(shape => {
+        if (shape.removed) return
+        const gesture = shape.gesture.find(gesture => !!gesture)
+
+        if (gesture.pose) {
+          const landmarks = shape.landmarks.find(landmarks => !!landmarks)
+
+          // loop through each finger
+          gesture.pose.forEach(finger => {
+            // Tally same curls
+            if (!description[finger[0]].curl[finger[1]]) {
+              description[finger[0]].curl[finger[1]] = 1
+            } else {
+              description[finger[0]].curl[finger[1]]++
+            }
+  
+            // Tally same directions
+            if (!description[finger[0]].direction[finger[2]]) {
+              description[finger[0]].direction[finger[2]] = 1
+            } else {
+              description[finger[0]].direction[finger[2]]++
+            }
+          })
+        }
+      })
+
+      this.$refs.gestureDescriptionJSON.value = JSON.stringify(description, null, 2)
     }
   }
 }
@@ -316,8 +410,13 @@ export default {
 .landmark-canvas
   background #222
   width 100%
+  transform scale(-1, 1)
 
   &:hover
     opacity 0.5
     background #666
+  
+  &.removed
+    opacity 0.35
+    background #999
 </style>
