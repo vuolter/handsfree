@@ -11,8 +11,7 @@ sidebarDepth: 2
         <p>To begin, select a model below:</p>
         <p>
           <select ref="modelSelector" class="full-width" @change="updateModel">
-            <option value="hands">🖐🖐 MediaPipe Hands (2D)</option>
-            <option value="handpose">🖐 TensorFLow Handpose (3D)</option>
+            <option value="hands">🖐 MediaPipe Hands</option>
           </select>
         </p>
         <div class="model-button-container model-button-container-hands">
@@ -35,15 +34,36 @@ sidebarDepth: 2
     <div class="col-6">
       <fieldset>
         <legend>Current Shape</legend>
-        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view">
+        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view" style="min-height: 430px">
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
         </ul>
       </fieldset>
     </div>
     <div class="col-6">
       <ol>
+        <li>Select the number of hands required for this gesture to work</li>
         <li>Click the button below to record landmarks for 3 seconds</li>
         <li>Move your hands around slightly to capture subtle variations</li>
       </ol>
+      <p>
+        <fieldset>
+          <legend>Number of hands</legend>
+          <div class="field-row">
+            <input id="radio-1-hands" type="radio" name="radio-number-hands" checked>
+            <label for="radio-1-hands">1 Hand</label>
+          </div>
+          <div class="field-row">
+            <input id="radio-2-hands" type="radio" name="radio-number-hands">
+            <label for="radio-2-hands">2 Hands</label>
+          </div>
+        </fieldset>
+      </p>
       <div>
         <button ref="recordLandmarks" class="handsfree-hide-when-loading full-width" @click="startRecordingShapes">Record landmarks</button>
         <button disabled class="handsfree-show-when-loading"><Fa-Spinner spin /> Loading...</button>
@@ -150,8 +170,9 @@ export default {
       // MediaPipe Hands
       if (data.hands && data.hands.gesture) {
         let shape = ''
+        const gestures = data.hands.gesture
         
-        data.hands.gesture.forEach((gesture, hand) => {
+        gestures.slice(0, 2).forEach((gesture, hand) => {
           if (gesture) {
             shape += `<li>🖐 Hand # ${hand}</li>`
             shape += `<li>Thumb | ${gesture.pose[0][1]} | ${gesture.pose[0][2]}</li>`
@@ -161,6 +182,8 @@ export default {
             shape += `<li>Pinky | ${gesture.pose[4][1]} | ${gesture.pose[4][2]}</li>`
             shape += `<li>--------</li>`
             shape += '<li></li>'
+          } else {
+            shape += '<li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>'
           }
         })
         this.$refs.currentShapeBox.innerHTML = shape
