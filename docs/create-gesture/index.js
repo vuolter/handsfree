@@ -1,6 +1,10 @@
-import { last } from "lodash"
-
+/**
+ * The Gesture Creator
+ * @see /create-gesture/
+ */
 let countdown = 3
+import {drawConnectors, drawLandmarks} from '../.vuepress/public/handsfreejs/@mediapipe/drawing_utils.js'
+const HAND_CONNECTIONS = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]]
 
 export default {
   filters: {
@@ -10,7 +14,6 @@ export default {
   data () {
     // Load last created gesture
     let lastGesture = localStorage.lastCreatedGesture || {}
-
     if (typeof lastGesture === 'string') {
       try {
         lastGesture = JSON.parse(lastGesture)
@@ -57,21 +60,25 @@ export default {
   },
 
   /**
-   * Creates a plugin that highlights emojis
+   * Creates a plugins
    */
   mounted () {
     // Recursive because of the way we're loading handsfree into the docs
     const checkHandsfree = () => {
       if (this.$root.handsfree) {
+        // @fixme turn this into a vuex listener/dispatch
         this.$nextTick(() => {
           this.$root.handsfree.use('displayShape', this.displayShape)
-
           this.$root.handsfree.use('recordShapes', {
             enabled: false,
             onFrame: this.$root.handsfree.throttle(this.recordShapes, 100),
             onEnable: this.resetShapes,
             onDisable: this.stopRecordingShapes
           })
+
+          if (this.recordedShapes.length) {
+            this.renderRecording()
+          }
         })
       } else {
         setTimeout(checkHandsfree, 5)

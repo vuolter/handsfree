@@ -120,6 +120,7 @@ export default CreateGesture
   background #222
   width 100%
   transform scale(-1, 1)
+  cursor pointer
 
   &:hover
     opacity 0.5
