@@ -1,3 +1,5 @@
+import { last } from "lodash"
+
 let countdown = 3
 
 export default {
@@ -6,11 +8,27 @@ export default {
   },
   
   data () {
+    // Load last created gesture
+    let lastGesture = localStorage.lastCreatedGesture || {}
+
+    if (typeof lastGesture === 'string') {
+      try {
+        lastGesture = JSON.parse(lastGesture)
+      } catch (err) {
+        console.error(err)
+        lastGesture = {}
+      }
+    }
+
     return {
-      recordedShapes: [],
+      // The currently selected model
+      currentModel: 'hands',
+      
+      // Contains all the captured shapes during recording
+      recordedShapes: lastGesture.recordedShapes || [],
 
       // this is the object that is represented in the textarea
-      gestureJSON: [],
+      gestureJSON: lastGesture.gesture || [],
 
       demoOpts: {
         hands: {
@@ -83,6 +101,7 @@ export default {
      */
     updateModel (ev) {
       const model = ev.target.value
+      this.currentModel = model
 
       document.querySelectorAll('.model-button-container').forEach($el => {
         if ($el.classList.contains(`model-button-container-${model}`)) {
@@ -206,8 +225,9 @@ export default {
         this.$refs.recordingCanvasContainer.appendChild($wrap)
 
         this.renderHand($canvas, recording)
-        this.generateGestureDescription()
       })
+
+      this.generateGestureDescription()
     },
 
     /**
@@ -241,6 +261,7 @@ export default {
 
     /**
      * Generates the gesture description as JSON
+     * - Adds the gesture to handsfree.gesture.lastCreated
      */
     generateGestureDescription () {
       const json = []
@@ -332,6 +353,16 @@ export default {
       
       // Parse the description into a fingerpose object
       this.gestureJSON = json
+      localStorage.lastCreatedGesture = JSON.stringify({
+        gesture: json,
+        models: this.currentModel,
+        recordedShapes: this.recordedShapes
+      })
+
+      // this.$root.handsfree.useGesture('lastCreated', json, {
+      //   models: this.currentModel,
+      //   tags: 'demo'
+      // })
     }
   }
 }
