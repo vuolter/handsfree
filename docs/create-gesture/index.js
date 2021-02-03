@@ -10,7 +10,7 @@ export default {
       recordedShapes: [],
 
       // this is the object that is represented in the textarea
-      gestureJSON: {},
+      gestureJSON: [],
 
       demoOpts: {
         hands: {
@@ -243,6 +243,8 @@ export default {
      * Generates the gesture description as JSON
      */
     generateGestureDescription () {
+      const json = []
+      
       const description = {
         Thumb: {
           curl: {},
@@ -291,7 +293,24 @@ export default {
         }
       })
 
-      this.$refs.gestureDescriptionJSON.value = JSON.stringify(description, null, 2)
+      Object.keys(description).forEach(fingerKey => {
+        const finger = description[fingerKey]
+        
+        // Add curls
+        Object.keys(finger.curl).forEach(curlKey => {
+          curlKey = curlKey.split(' ').join('')
+          json.push(['addCurl', fingerKey, curlKey, 1])
+        })
+
+        // Add direction
+        Object.keys(finger.direction).forEach(directionKey => {
+          directionKey = directionKey.split(' ').join('')
+          json.push(['addDirection', fingerKey, directionKey, 1])
+        })
+      })
+      
+      // Parse the description into a fingerpose object
+      this.gestureJSON = json
     }
   }
 }
