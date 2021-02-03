@@ -293,19 +293,40 @@ export default {
         }
       })
 
+      // Create the final description
       Object.keys(description).forEach(fingerKey => {
         const finger = description[fingerKey]
+
+        // Get the highest curl value
+        const curls = Object.keys(finger.curl).map(key => {
+          return finger.curl[key]
+        })
+        const maxCurl = curls[curls.indexOf(Math.max(...curls))]
         
         // Add curls
         Object.keys(finger.curl).forEach(curlKey => {
-          curlKey = curlKey.split(' ').join('')
-          json.push(['addCurl', fingerKey, curlKey, 1])
+          json.push([
+            'addCurl',
+            fingerKey,
+            curlKey.split(' ').join(''),
+            finger.curl[curlKey] / maxCurl
+          ])
         })
 
+        // Get the highest direction value
+        const directions = Object.keys(finger.direction).map(key => {
+          return finger.direction[key]
+        })
+        const maxDirection = directions[directions.indexOf(Math.max(...directions))]
+        
         // Add direction
         Object.keys(finger.direction).forEach(directionKey => {
-          directionKey = directionKey.split(' ').join('')
-          json.push(['addDirection', fingerKey, directionKey, 1])
+          json.push([
+            'addDirection',
+            fingerKey,
+            directionKey.split(' ').join(''),
+            finger.direction[directionKey] / maxDirection
+          ])
         })
       })
       
