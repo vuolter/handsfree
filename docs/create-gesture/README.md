@@ -84,13 +84,13 @@ sidebarDepth: 2
     <div class="col-6">
       <fieldset>
         <legend>Gesture Description</legend>
-        <textarea readonly ref="gestureDescriptionJSON" style="width: 100%" rows=20 :value="gestureJSON | prettyPrintJSON"></textarea>
+        <textarea readonly ref="gestureDescriptionJSON" style="width: 100%" rows=20 :value="gesture | prettyPrintJSON"></textarea>
       </fieldset>
     </div>
     <div class="col-6">
       <div class="field-row-stacked">
         <label for="input-gesture-name">Gesture Name (no spaces):</label>
-        <input id="input-gesture-name" type="text" v-model="gestureName" @input="onGestureNameUpdate" />
+        <input id="input-gesture-name" type="text" v-model="gesture.name" @input="onGestureNameUpdate" />
       </div>
     </div>
   </div>

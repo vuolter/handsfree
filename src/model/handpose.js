@@ -303,6 +303,7 @@ export default class HandposeModel extends BaseModel {
    */
   getGesture () {
     let gesture = null
+    if (!this.gestureEstimator) return gesture
 
     if (this.data.landmarks && this.gestureEstimator) {
       const estimate = this.gestureEstimator.estimate(this.data.landmarks, 7.5)

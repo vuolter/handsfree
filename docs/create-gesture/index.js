@@ -24,16 +24,15 @@ export default {
     }
 
     return {
-      // The currently selected model
-      currentModel: 'hands',
-      
       // Contains all the captured shapes during recording
       recordedShapes: lastGesture.recordedShapes || [],
 
       // this is the object that is represented in the textarea
-      gestureJSON: lastGesture.gesture || [],
-
-      gestureName: lastGesture.name || 'untitled',
+      gesture: lastGesture.gesture || {
+        name: 'untitled',
+        models: 'hands',
+        description: []
+      },
 
       demoOpts: {
         hands: {
@@ -111,7 +110,7 @@ export default {
      */
     updateModel (ev) {
       const model = ev.target.value
-      this.currentModel = model
+      this.gesture.models = model
 
       document.querySelectorAll('.model-button-container').forEach($el => {
         if ($el.classList.contains(`model-button-container-${model}`)) {
@@ -362,12 +361,11 @@ export default {
       })
       
       // Parse the description into a fingerpose object
-      json.name = this.gestureName
-      this.gestureJSON = json
+      this.gesture.description = json
       this.saveGesture()      
 
       this.$root.handsfree.useGesture('lastCreated', json, {
-        models: this.currentModel,
+        models: this.gesture.models,
         algorithm: 'fingerpose'
       })
     },
@@ -385,11 +383,11 @@ export default {
      * Persist the gesture name to localStroage
      */
     onGestureNameUpdate () {
-      if (this.gestureName.indexOf(' ') >= 0) {
-        this.gestureName = this.gestureName.split(' ').join('')
+      if (this.gesture.name.indexOf(' ') >= 0) {
+        this.gesture.name = this.gesture.name.split(' ').join('')
       }
-      if (!this.gestureName) {
-        this.gestureName = 'untitled'
+      if (!this.gesture.name) {
+        this.gesture.name = 'untitled'
       }
       
       this.saveGesture()
@@ -400,9 +398,7 @@ export default {
      */
     saveGesture () {
       localStorage.lastCreatedGesture = JSON.stringify({
-        name: this.gestureName,
-        gesture: this.gestureJSON,
-        models: this.currentModel,
+        ...this.gesture,
         recordedShapes: this.recordedShapes
       })
     }

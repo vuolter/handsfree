@@ -227,6 +227,7 @@ export default class HandsModel extends BaseModel {
    */
   getGesture () {
     let gestures = [null, null, null, null]
+    if (!this.gestureEstimator) return gestures
 
     this.data.landmarks.forEach((landmarksObj, hand) => {
       if (this.data.landmarksVisible[hand]) {
