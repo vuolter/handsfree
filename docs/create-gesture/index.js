@@ -8,7 +8,7 @@ const HAND_CONNECTIONS = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],
 
 export default {
   filters: {
-    prettyPrintJSON (obj) {return JSON.stringify(obj, null, 2)}
+    prettyPrintJSON (obj) {return `handsfree.useGesture(${JSON.stringify(obj, null, 2)})`}
   },
   
   data () {
@@ -23,16 +23,28 @@ export default {
       }
     }
 
+    const gesture = Object.assign({}, lastGesture)
+    delete gesture.recordedShapes
+    delete gesture.fingerWeights
+
     return {
       // Contains all the captured shapes during recording
       recordedShapes: lastGesture.recordedShapes || [],
 
       // this is the object that is represented in the textarea
-      gesture: lastGesture.gesture || {
+      gesture: gesture.name ? gesture : {
         name: 'untitled',
         algorithm: 'fingerpose',
         models: 'hands',
         description: []
+      },
+
+      fingerWeights: lastGesture.fingerWeights || {
+        Thumb: null,
+        Index: null,
+        Middle: null,
+        Ring: null,
+        Pinky: null
       },
 
       demoOpts: {
@@ -360,6 +372,13 @@ export default {
           ])
         })
       })
+
+      // Add finger weights
+      Object.keys(this.fingerWeights).forEach(key => {
+        if (this.fingerWeights[key]) {
+          json.push(['setWeight', key, 2])
+        }
+      })
       
       // Parse the description into a fingerpose object
       this.gesture.description = json
@@ -377,6 +396,10 @@ export default {
       }
     },
 
+    updateFingerWeight () {
+      this.generateGestureDescription()
+    },
+    
     /**
      * Persist the gesture name to localStroage
      */
@@ -384,6 +407,7 @@ export default {
       if (this.gesture.name.indexOf(' ') >= 0) {
         this.gesture.name = this.gesture.name.split(' ').join('')
       }
+
       if (!this.gesture.name) {
         this.gesture.name = 'untitled'
       }
@@ -397,7 +421,8 @@ export default {
     saveGesture () {
       localStorage.lastCreatedGesture = JSON.stringify({
         ...this.gesture,
-        recordedShapes: this.recordedShapes
+        recordedShapes: this.recordedShapes,
+        fingerWeights: this.fingerWeights
       })
     }
   }

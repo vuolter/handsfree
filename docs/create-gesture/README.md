@@ -72,7 +72,6 @@ sidebarDepth: 2
   </div>
 </Window>
 
-
 <Window title="Step 3: Clean Data">
   <p>Click on any of the frames below that don't look right to remove them. The final gesture description does not use a neural network, so the number of samples isn't as important as the quality!</p>
   <div ref="recordingCanvasContainer" class="row align-top">
@@ -89,21 +88,45 @@ sidebarDepth: 2
     </div>
     <div class="col-6">
       <div class="field-row-stacked">
-        <label for="input-gesture-name">Gesture Name (no spaces):</label>
+        <label for="input-gesture-name"><strong>Gesture Name (no spaces):</strong></label>
         <input id="input-gesture-name" type="text" v-model="gesture.name" @input="onGestureNameUpdate" />
       </div>
+      <br>
+      <fieldset>
+        <legend>Emphasize Fingers</legend>
+        <div class="field-row">
+          <input id="finger-weight-thumb" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Thumb" @change="updateFingerWeight">
+          <label for="finger-weight-thumb">Thumb</label>
+        </div>
+        <div class="field-row">
+          <input id="finger-weight-index" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Index" @change="updateFingerWeight">
+          <label for="finger-weight-index">Index</label>
+        </div>
+        <div class="field-row">
+          <input id="finger-weight-middle" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Middle" @change="updateFingerWeight">
+          <label for="finger-weight-middle">Middle</label>
+        </div>
+        <div class="field-row">
+          <input id="finger-weight-ring" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Ring" @change="updateFingerWeight">
+          <label for="finger-weight-ring">Ring</label>
+        </div>
+        <div class="field-row">
+          <input id="finger-weight-pinky" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Pinky" @change="updateFingerWeight">
+          <label for="finger-weight-pinky">Pinky</label>
+        </div>
+      </fieldset>
     </div>
   </div>
 </Window>
 
-<Window title="Step 5: Test Gesture">
+<Window title="Step 5: Your Gesture Library">
   <div class="row align-top">
     <div class="col-6">
+      <p>
+        <strong>Active Gesture:</strong> <span ref="currentGesture"></span>
+      </p>
     </div>
     <div class="col-6">
-      <p>
-        <strong>Current Gesture:</strong> <span ref="currentGesture"></span>
-      </p>
     </div>
   </div>
 </Window>
