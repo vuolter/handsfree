@@ -616,18 +616,16 @@ class Handsfree {
    * Adds a callback to be called whenever a gesture is detected
    * @see https://handsfree.js.org/ref/method/useGesture
    * 
-   * @param {String} name The gesture name
-   * @param {String} description The gesture description
-   * @param {Object|Function} config The config object, or a callback
+   * @param {Object} config The config object
    * @returns {Gesture} The gesture object
    */
-  useGesture (name, description, config) {
+  useGesture (config) {
     config = merge({},
       {
         // Stores the gestures name for internal use
-        name,
+        name: 'untitled',
         // The description
-        description,
+        description: [],
         // The model this gesture works with
         models: [],
         // Gesture tags for quickly turning them on/off
@@ -649,27 +647,27 @@ class Handsfree {
     }
     config.tags.forEach(tag => {
       if (!this.taggedGestures[tag]) this.taggedGestures[tag] = []
-      this.taggedGestures[tag].push(name)
+      this.taggedGestures[tag].push(config.name)
     })
 
     // Create the gesture
     switch (config.algorithm) {
       case 'fingerpose':
-        this.gesture[name] = new GestureFingerpose(config, this)
+        this.gesture[config.name] = new GestureFingerpose(config, this)
         break
     }
 
     // Store a reference to the gesture to simplify things
     if (config.models.length) {
       config.models.forEach(modelName => {
-        this.model[modelName].gestures.push(name)
+        this.model[modelName].gestures.push(config.name)
         this.model[modelName].updateGestureEstimator()
       })
     } else {
-      this.taggedGestures.untagged.push(name)
+      this.taggedGestures.untagged.push(config.name)
     }
 
-    return this.gesture[name]
+    return this.gesture[config.name]
   }
 
 

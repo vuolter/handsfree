@@ -23,6 +23,7 @@ export default class HandposeModel extends BaseModel {
     // 8 = Index finger tip
     // 12 = Middle finger tip
     this.palmPoints = [0, 1, 2, 5, 9, 13, 17]
+    this.gestureEstimator = new fingerpose.GestureEstimator([])
   }
 
   loadDependencies (callback) {
@@ -293,8 +294,6 @@ export default class HandposeModel extends BaseModel {
 
     if (activeGestures.length) {
       this.gestureEstimator = new fingerpose.GestureEstimator(gestureDescriptions)
-    } else {
-      this.gestureEstimator = null
     }
   }
   
@@ -303,7 +302,6 @@ export default class HandposeModel extends BaseModel {
    */
   getGesture () {
     let gesture = null
-    if (!this.gestureEstimator) return gesture
 
     if (this.data.landmarks && this.gestureEstimator) {
       const estimate = this.gestureEstimator.estimate(this.data.landmarks, 7.5)

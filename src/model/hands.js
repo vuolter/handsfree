@@ -7,6 +7,7 @@ export default class HandsModel extends BaseModel {
     this.name = 'hands'
 
     this.palmPoints = [0, 5, 9, 13, 17]
+    this.gestureEstimator = new fingerpose.GestureEstimator([])
   }
 
   loadDependencies (callback) {
@@ -217,8 +218,6 @@ export default class HandsModel extends BaseModel {
 
     if (activeGestures.length) {
       this.gestureEstimator = new fingerpose.GestureEstimator(gestureDescriptions)
-    } else {
-      this.gestureEstimator = null
     }
   }
   
@@ -227,7 +226,6 @@ export default class HandsModel extends BaseModel {
    */
   getGesture () {
     let gestures = [null, null, null, null]
-    if (!this.gestureEstimator) return gestures
 
     this.data.landmarks.forEach((landmarksObj, hand) => {
       if (this.data.landmarksVisible[hand]) {

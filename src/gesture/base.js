@@ -20,7 +20,7 @@ export default class BaseGesture {
       handsfreeGestureConfig = { enabled: handsfreeGestureConfig }
     }
 
-    // Disable plugins via new Handsfree(config)
+    // Disable gestures via new Handsfree(config)
     if (typeof handsfreeGestureConfig === 'object') {
       merge(this.config, handsfreeGestureConfig)
       if (typeof handsfreeGestureConfig.enabled === 'boolean') {

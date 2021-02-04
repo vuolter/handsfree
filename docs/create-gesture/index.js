@@ -30,6 +30,7 @@ export default {
       // this is the object that is represented in the textarea
       gesture: lastGesture.gesture || {
         name: 'untitled',
+        algorithm: 'fingerpose',
         models: 'hands',
         description: []
       },
@@ -364,10 +365,7 @@ export default {
       this.gesture.description = json
       this.saveGesture()      
 
-      this.$root.handsfree.useGesture('lastCreated', json, {
-        models: this.gesture.models,
-        algorithm: 'fingerpose'
-      })
+      this.$root.handsfree.useGesture(this.gesture)
     },
 
     /**
