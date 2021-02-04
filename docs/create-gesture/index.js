@@ -243,6 +243,8 @@ export default {
         $canvas.height = this.$root.handsfree.debug.$canvas.hands.height
         $canvas.addEventListener('click', () => this.toggleFrame($canvas, frame))
 
+        recording.removed && $canvas.classList.add('removed')
+        
         $wrap.appendChild($canvas)
         this.$refs.recordingCanvasContainer.appendChild($wrap)
 
