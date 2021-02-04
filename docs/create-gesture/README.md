@@ -87,7 +87,24 @@ sidebarDepth: 2
         <textarea readonly ref="gestureDescriptionJSON" style="width: 100%" rows=20 :value="gestureJSON | prettyPrintJSON"></textarea>
       </fieldset>
     </div>
-    <div class="col-6"></div>
+    <div class="col-6">
+      <div class="field-row-stacked">
+        <label for="input-gesture-name">Gesture Name (no spaces):</label>
+        <input id="input-gesture-name" type="text" v-model="gestureName" @input="onGestureNameUpdate" />
+      </div>
+    </div>
+  </div>
+</Window>
+
+<Window title="Step 5: Test Gesture">
+  <div class="row align-top">
+    <div class="col-6">
+    </div>
+    <div class="col-6">
+      <p>
+        <strong>Current Gesture:</strong> <span ref="currentGesture"></span>
+      </p>
+    </div>
   </div>
 </Window>
 

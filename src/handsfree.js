@@ -81,18 +81,18 @@ const corePlugins = {
 }
 
 const coreGestures = {
-  victory: gestureVictory,
-  thumbDown: gestureThumbDown,
-  thumbUp: gestureThumbUp,
-  pointLeft: gesturePointLeft,
-  pointRight: gesturePointRight,
-  spock: gestureSpock,
-  stop: gestureStop,
-  horns: gestureHorns,
-  love: gestureLove,
-  fist: gestureFist,
-  ok: gestureOk,
-  callMe: gestureCallMe,
+  // victory: gestureVictory,
+  // thumbDown: gestureThumbDown,
+  // thumbUp: gestureThumbUp,
+  // pointLeft: gesturePointLeft,
+  // pointRight: gesturePointRight,
+  // spock: gestureSpock,
+  // stop: gestureStop,
+  // horns: gestureHorns,
+  // love: gestureLove,
+  // fist: gestureFist,
+  // ok: gestureOk,
+  // callMe: gestureCallMe,
 }
 
 

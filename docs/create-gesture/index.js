@@ -33,6 +33,8 @@ export default {
       // this is the object that is represented in the textarea
       gestureJSON: lastGesture.gesture || [],
 
+      gestureName: lastGesture.name || 'untitled',
+
       demoOpts: {
         hands: {
           autostart: true,
@@ -75,6 +77,7 @@ export default {
             onEnable: this.resetShapes,
             onDisable: this.stopRecordingShapes
           })
+          this.$root.handsfree.use('displayCurrentGesture', this.displayCurrentGesture)
 
           if (this.recordedShapes.length) {
             this.renderRecording()
@@ -359,17 +362,49 @@ export default {
       })
       
       // Parse the description into a fingerpose object
+      json.name = this.gestureName
       this.gestureJSON = json
+      this.saveGesture()      
+
+      this.$root.handsfree.useGesture('lastCreated', json, {
+        models: this.currentModel,
+        algorithm: 'fingerpose'
+      })
+    },
+
+    /**
+     * Displays the currently active gesture
+     */
+    displayCurrentGesture (data) {
+      if (data.hands?.gesture?.[0]) {
+        this.$refs.currentGesture.innerText = data.hands.gesture[0].name
+      }
+    },
+
+    /**
+     * Persist the gesture name to localStroage
+     */
+    onGestureNameUpdate () {
+      if (this.gestureName.indexOf(' ') >= 0) {
+        this.gestureName = this.gestureName.split(' ').join('')
+      }
+      if (!this.gestureName) {
+        this.gestureName = 'untitled'
+      }
+      
+      this.saveGesture()
+    },
+
+    /**
+     * Saves the gesture to localStorage
+     */
+    saveGesture () {
       localStorage.lastCreatedGesture = JSON.stringify({
-        gesture: json,
+        name: this.gestureName,
+        gesture: this.gestureJSON,
         models: this.currentModel,
         recordedShapes: this.recordedShapes
       })
-
-      // this.$root.handsfree.useGesture('lastCreated', json, {
-      //   models: this.currentModel,
-      //   tags: 'demo'
-      // })
     }
   }
 }
