@@ -64,6 +64,11 @@ import gesturePointRight from './gesture/hands/pointRight.js'
 import gesturePointLeft from './gesture/hands/pointLeft.js'
 import gesturePointUp from './gesture/hands/pointUp.js'
 import gesturePointDown from './gesture/hands/pointDown.js'
+import gestureSpock from './gesture/hands/spock.js'
+import gestureCallMe from './gesture/hands/callMe.js'
+import gestureOk from './gesture/hands/ok.js'
+import gestureStop from './gesture/hands/stop.js'
+import gestureVictory from './gesture/hands/victory.js'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -81,6 +86,11 @@ const coreGestures = {
   pointLeft: gesturePointLeft,
   pointUp: gesturePointUp,
   pointDown: gesturePointDown,
+  spock: gestureSpock,
+  callMe: gestureCallMe,
+  ok: gestureOk,
+  stop: gestureStop,
+  victory: gestureVictory,
 }
 
 
