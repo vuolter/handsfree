@@ -60,6 +60,8 @@ import pluginPalmPointers  from './plugin/hands/palmPointers'
 // Gesture Definitions
 import gestureLove from './gesture/hands/love.js'
 import gestureHorns from './gesture/hands/horns.js'
+import gesturePointRight from './gesture/hands/pointRight.js'
+import gesturePointLeft from './gesture/hands/pointLeft.js'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -72,7 +74,9 @@ const corePlugins = {
 
 const coreGestures = {
   love: gestureLove,
-  horns: gestureHorns
+  horns: gestureHorns,
+  pointRight: gesturePointRight,
+  pointLeft: gesturePointLeft,
 }
 
 

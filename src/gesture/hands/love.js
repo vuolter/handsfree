@@ -3,6 +3,7 @@ export default {
   "name": "love",
   "algorithm": "fingerpose",
   "models": "hands",
+  "tags": ["core"],
   "confidence": 7.5,
   "description": [
     [
@@ -122,6 +123,5 @@ export default {
       "Pinky",
       2
     ]
-  ],
-  "enabled": false
+  ]
 }

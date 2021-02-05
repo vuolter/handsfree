@@ -1,34 +1,28 @@
-// 🤘
+// 👈
 export default {
-  "name": "horns",
+  "name": "pointLeft",
   "algorithm": "fingerpose",
   "models": "hands",
   "tags": ["core"],
-  "confidence": 7.5,
+  "confidence": "7.5",
   "description": [
     [
       "addCurl",
       "Thumb",
       "HalfCurl",
+      0.15384615384615385
+    ],
+    [
+      "addCurl",
+      "Thumb",
+      "NoCurl",
       1
     ],
     [
       "addDirection",
       "Thumb",
-      "DiagonalUpRight",
-      0.1
-    ],
-    [
-      "addDirection",
-      "Thumb",
-      "VerticalUp",
+      "HorizontalRight",
       1
-    ],
-    [
-      "addDirection",
-      "Thumb",
-      "DiagonalUpLeft",
-      0.4
     ],
     [
       "addCurl",
@@ -39,88 +33,84 @@ export default {
     [
       "addDirection",
       "Index",
-      "VerticalUp",
-      0.875
+      "HorizontalRight",
+      1
     ],
     [
       "addDirection",
       "Index",
-      "DiagonalUpLeft",
-      1
-    ],
-    [
-      "addCurl",
-      "Middle",
-      "FullCurl",
-      1
-    ],
-    [
-      "addDirection",
-      "Middle",
-      "DiagonalUpLeft",
-      1
-    ],
-    [
-      "addDirection",
-      "Middle",
-      "VerticalUp",
-      0.875
-    ],
-    [
-      "addCurl",
-      "Ring",
-      "FullCurl",
-      1
-    ],
-    [
-      "addDirection",
-      "Ring",
-      "DiagonalUpRight",
-      0.08695652173913043
-    ],
-    [
-      "addDirection",
-      "Ring",
-      "VerticalUp",
-      1
-    ],
-    [
-      "addDirection",
-      "Ring",
-      "DiagonalUpLeft",
-      0.21739130434782608
-    ],
-    [
-      "addCurl",
-      "Pinky",
-      "NoCurl",
-      1
-    ],
-    [
-      "addDirection",
-      "Pinky",
       "DiagonalUpRight",
       0.42857142857142855
     ],
     [
+      "addCurl",
+      "Middle",
+      "HalfCurl",
+      0.2222222222222222
+    ],
+    [
+      "addCurl",
+      "Middle",
+      "FullCurl",
+      1
+    ],
+    [
+      "addCurl",
+      "Middle",
+      "NoCurl",
+      0.4444444444444444
+    ],
+    [
+      "addDirection",
+      "Middle",
+      "HorizontalRight",
+      1
+    ],
+    [
+      "addDirection",
+      "Middle",
+      "DiagonalUpRight",
+      0.42857142857142855
+    ],
+    [
+      "addCurl",
+      "Ring",
+      "FullCurl",
+      1
+    ],
+    [
+      "addCurl",
+      "Ring",
+      "HalfCurl",
+      0.07142857142857142
+    ],
+    [
+      "addDirection",
+      "Ring",
+      "HorizontalRight",
+      1
+    ],
+    [
+      "addCurl",
+      "Pinky",
+      "FullCurl",
+      1
+    ],
+    [
+      "addCurl",
+      "Pinky",
+      "HalfCurl",
+      0.034482758620689655
+    ],
+    [
       "addDirection",
       "Pinky",
-      "VerticalUp",
+      "HorizontalRight",
       1
     ],
     [
       "setWeight",
-      "Thumb",
-      2
-    ],
-    [
-      "setWeight",
       "Index",
-      2
-    ],
-    [
-      "setWeight",
-      "Pinky",
       2
     ]
   ]
