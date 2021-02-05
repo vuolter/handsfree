@@ -95,5 +95,6 @@ export default {
       "Index",
       2
     ]
-  ]
+  ],
+  "enabled": false
 }

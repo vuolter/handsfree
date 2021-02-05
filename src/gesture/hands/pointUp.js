@@ -1,28 +1,34 @@
-// 🤟
+// ☝
 export default {
-  "name": "love",
+  "name": "pointUp",
   "algorithm": "fingerpose",
   "models": "hands",
   "tags": ["core"],
-  "confidence": 7.5,
+  "confidence": "7.5",
   "description": [
     [
       "addCurl",
       "Thumb",
-      "NoCurl",
+      "HalfCurl",
       1
+    ],
+    [
+      "addDirection",
+      "Thumb",
+      "VerticalUp",
+      1
+    ],
+    [
+      "addDirection",
+      "Thumb",
+      "DiagonalUpRight",
+      0.35
     ],
     [
       "addDirection",
       "Thumb",
       "DiagonalUpLeft",
-      1
-    ],
-    [
-      "addDirection",
-      "Thumb",
-      "HorizontalLeft",
-      0.5789473684210527
+      0.15
     ],
     [
       "addCurl",
@@ -40,7 +46,7 @@ export default {
       "addDirection",
       "Index",
       "DiagonalUpLeft",
-      0.875
+      0.25
     ],
     [
       "addCurl",
@@ -51,14 +57,14 @@ export default {
     [
       "addDirection",
       "Middle",
-      "VerticalUp",
+      "DiagonalUpLeft",
       1
     ],
     [
       "addDirection",
       "Middle",
-      "DiagonalUpLeft",
-      1
+      "VerticalUp",
+      0.5
     ],
     [
       "addCurl",
@@ -69,58 +75,48 @@ export default {
     [
       "addDirection",
       "Ring",
-      "VerticalUp",
+      "DiagonalUpLeft",
       1
     ],
     [
       "addDirection",
       "Ring",
-      "DiagonalUpRight",
-      0.18181818181818182
+      "VerticalUp",
+      0.5294117647058824
     ],
     [
       "addDirection",
       "Ring",
-      "DiagonalUpLeft",
-      0.18181818181818182
+      "DiagonalUpRight",
+      0.23529411764705882
     ],
     [
       "addCurl",
       "Pinky",
-      "NoCurl",
-      1
-    ],
-    [
-      "addDirection",
-      "Pinky",
-      "VerticalUp",
+      "FullCurl",
       1
     ],
     [
       "addDirection",
       "Pinky",
       "DiagonalUpRight",
-      0.47368421052631576
+      1
+    ],
+    [
+      "addDirection",
+      "Pinky",
+      "VerticalUp",
+      0.7692307692307693
     ],
     [
       "addDirection",
       "Pinky",
       "DiagonalUpLeft",
-      0.10526315789473684
-    ],
-    [
-      "setWeight",
-      "Thumb",
-      2
+      0.5384615384615384
     ],
     [
       "setWeight",
       "Index",
-      2
-    ],
-    [
-      "setWeight",
-      "Pinky",
       2
     ]
   ],

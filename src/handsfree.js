@@ -62,6 +62,8 @@ import gestureLove from './gesture/hands/love.js'
 import gestureHorns from './gesture/hands/horns.js'
 import gesturePointRight from './gesture/hands/pointRight.js'
 import gesturePointLeft from './gesture/hands/pointLeft.js'
+import gesturePointUp from './gesture/hands/pointUp.js'
+import gesturePointDown from './gesture/hands/pointDown.js'
 
 const corePlugins = {
   facePointer: pluginFacePointer,
@@ -77,6 +79,8 @@ const coreGestures = {
   horns: gestureHorns,
   pointRight: gesturePointRight,
   pointLeft: gesturePointLeft,
+  pointUp: gesturePointUp,
+  pointDown: gesturePointDown,
 }
 
 
@@ -654,6 +658,41 @@ class Handsfree {
     return this.gesture[config.name]
   }
 
+  /**
+   * Enable gestures by tags
+   * @see https://handsfree.js.org/ref/method/enableGestures
+   * 
+   * @param {string|object} tags (Optional) The gestures with tags to enable. Enables all if null
+   */
+  enableGestures (tags) {
+    // Sanitize
+    if (typeof tags === 'string') tags = [tags]
+    if (!tags) tags = Object.keys(this.taggedGestures)
+
+    tags.forEach(tag => {
+      this.taggedGestures[tag].forEach(gestureName => {
+        this.gesture[gestureName].enable()
+      })
+    })
+  }
+
+  /**
+   * Disable Gestures by tags
+   * @see https://handsfree.js.org/ref/method/disableGestures
+   * 
+   * @param {string|object} tags (Optional) The Gestures with tags to disable. Disables all if null
+   */
+  disableGestures (tags) {
+    // Sanitize
+    if (typeof tags === 'string') tags = [tags]
+    if (!tags) tags = Object.keys(this.taggedGestures)
+
+    tags.forEach(tag => {
+      this.taggedGestures[tag].forEach(gestureName => {
+        this.gesture[gestureName].disable()
+      })
+    })
+  }
 
 
 

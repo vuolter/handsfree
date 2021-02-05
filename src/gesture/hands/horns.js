@@ -123,5 +123,6 @@ export default {
       "Pinky",
       2
     ]
-  ]
+  ],
+  "enabled": false
 }
