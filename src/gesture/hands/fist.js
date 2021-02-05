@@ -1,6 +1,6 @@
 // ✊
 export default {
-  "name": "powerFist",
+  "name": "fist",
   "algorithm": "fingerpose",
   "models": "hands",
   "tags": ["core"],
