@@ -34,7 +34,8 @@ sidebarDepth: 2
     <div class="col-6">
       <fieldset>
         <legend>Current Shape</legend>
-        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view" style="min-height: 220px">
+        <!-- @fixme use textarea -->
+        <ul ref="currentShapeBox" class="mt-0 mb-0 tree-view" style="min-height: 220px;">
           <li>&nbsp;</li>
           <li>&nbsp;</li>
           <li>&nbsp;</li>
@@ -95,43 +96,47 @@ sidebarDepth: 2
       <fieldset>
         <legend>Emphasize Fingers</legend>
         <div class="field-row">
-          <input id="finger-weight-thumb" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Thumb" @change="updateFingerWeight">
+          <input id="finger-weight-thumb" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Thumb" @change="generateGestureDescription">
           <label for="finger-weight-thumb">Thumb</label>
         </div>
         <div class="field-row">
-          <input id="finger-weight-index" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Index" @change="updateFingerWeight">
+          <input id="finger-weight-index" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Index" @change="generateGestureDescription">
           <label for="finger-weight-index">Index</label>
         </div>
         <div class="field-row">
-          <input id="finger-weight-middle" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Middle" @change="updateFingerWeight">
+          <input id="finger-weight-middle" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Middle" @change="generateGestureDescription">
           <label for="finger-weight-middle">Middle</label>
         </div>
         <div class="field-row">
-          <input id="finger-weight-ring" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Ring" @change="updateFingerWeight">
+          <input id="finger-weight-ring" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Ring" @change="generateGestureDescription">
           <label for="finger-weight-ring">Ring</label>
         </div>
         <div class="field-row">
-          <input id="finger-weight-pinky" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Pinky" @change="updateFingerWeight">
+          <input id="finger-weight-pinky" type="checkbox" name="radio-number-hands" v-model="fingerWeights.Pinky" @change="generateGestureDescription">
           <label for="finger-weight-pinky">Pinky</label>
+        </div>
+      </fieldset>
+      <br>
+      <fieldset>
+        <legend>Confidence: <span v-html="gesture.confidence"></span></legend>
+        <div class="field-row">
+          <label for="range-confidence">0</label>
+          <input id="range-confidence" type="range" step="0.25" min="0" max="10" value="7.5" @change="generateGestureDescription" v-model="gesture.confidence" />
+          <label for="range-confidence">10</label>
         </div>
       </fieldset>
     </div>
   </div>
 </Window>
 
-<Window title="Step 5: Your Gesture Library">
-  <div class="row align-top">
-    <div class="col-6">
-      <p>
-        <strong>Active Gesture:</strong> <span ref="currentGesture"></span>
-      </p>
-    </div>
-    <div class="col-6">
-    </div>
+<div class="row align-top">
+  <div class="col-6">
+    <Window title="Predicted Gesture">
+      <div><strong>Name:</strong> <span v-html="currentGesture.name"></span></div>
+      <div><strong>Confidence:</strong> <span v-html="currentGesture.confidence"></span></div>
+    </Window>
   </div>
-</Window>
-
-
+</div>
 
 
 <!-- Code -->

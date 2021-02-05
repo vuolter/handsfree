@@ -31,11 +31,18 @@ export default {
       // Contains all the captured shapes during recording
       recordedShapes: lastGesture.recordedShapes || [],
 
+      // The current predicted gesture
+      currentGesture: {
+        name: null,
+        confidence: 0
+      },
+
       // this is the object that is represented in the textarea
       gesture: gesture.name ? gesture : {
         name: 'untitled',
         algorithm: 'fingerpose',
         models: 'hands',
+        confidence: 7.5,
         description: []
       },
 
@@ -394,7 +401,12 @@ export default {
      */
     displayCurrentGesture (data) {
       if (data.hands?.gesture?.[0]) {
-        this.$refs.currentGesture.innerText = data.hands.gesture[0].name
+        this.currentGesture = data.hands.gesture[0]
+      } else {
+        this.currentGesture = {
+          name: null,
+          confidence: 0
+        }
       }
     },
 
@@ -423,6 +435,7 @@ export default {
     saveGesture () {
       localStorage.lastCreatedGesture = JSON.stringify({
         ...this.gesture,
+        enabled: true,
         recordedShapes: this.recordedShapes,
         fingerWeights: this.fingerWeights
       })

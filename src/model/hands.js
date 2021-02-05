@@ -175,7 +175,8 @@ export default class HandsModel extends BaseModel {
     
     // Build the gesture descriptions
     this.gestures.forEach(name => {
-      this.handsfree.gesture[name].enabled && activeGestures.push(name)
+      if (!this.handsfree.gesture[name].enabled) return
+      activeGestures.push(name)
       
       // Loop through the description and compile it
       if (!this.handsfree.gesture[name].compiledDescription && this.handsfree.gesture[name].enabled) {
@@ -239,12 +240,24 @@ export default class HandsModel extends BaseModel {
         const estimate = this.gestureEstimator.estimate(landmarks, 7.5)
         if (estimate.gestures.length) {
           gestures[hand] = estimate.gestures.reduce((p, c) => {
-            return (p.confidence > c.confidence) ? p : c
+            const requiredConfidence = this.handsfree.gesture[c.name].confidence
+            return (c.confidence >= requiredConfidence && c.confidence > p.confidence) ? c : p
           })
         } else {
           gestures[hand] = {
             name: '',
             confidence: 0
+          }
+        }
+
+        // Must pass confidence
+        if (gestures[hand].name) {
+          const requiredConfidence = this.handsfree.gesture[gestures[hand].name].confidence
+          if (gestures[hand].confidence < requiredConfidence) {
+            gestures[hand] = {
+              name: '',
+              confidence: 0
+            }
           }
         }
 
