@@ -125,6 +125,14 @@ sidebarDepth: 2
           <label for="range-confidence">10</label>
         </div>
       </fieldset>
+      <br>
+      <fieldset>
+        <legend>Mirroring</legend>
+        <div class="field-row">
+          <input id="mirror-horiz" type="checkbox" @change="generateGestureDescription" v-model="mirror.horiz" />
+          <label for="mirror-horiz">Mirror horizontally</label>
+        </div>
+      </fieldset>
     </div>
   </div>
 </Window>

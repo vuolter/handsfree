@@ -4,7 +4,9 @@
  */
 let countdown = 3
 import {drawConnectors, drawLandmarks} from '../.vuepress/public/handsfreejs/@mediapipe/drawing_utils.js'
-const HAND_CONNECTIONS = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]]
+
+// @see '../.vuepress/public/handsfreejs/@mediapipe/hands.js'
+const HAND_CONNECTIONS = [[0,1], [1,2], [2,3], [3,4], [0,5], [5,6], [6,7], [7,8], [5,9], [9,10], [10,11], [11,12], [9,13], [13,14], [14,15], [15,16], [13,17], [0,17], [17,18], [18,19], [19,20]]
 
 export default {
   filters: {
@@ -26,6 +28,7 @@ export default {
     const gesture = Object.assign({}, lastGesture)
     delete gesture.recordedShapes
     delete gesture.fingerWeights
+    delete gesture.mirror
 
     return {
       // Contains all the captured shapes during recording
@@ -46,12 +49,19 @@ export default {
         description: []
       },
 
+      // Adds weights to fingers
       fingerWeights: lastGesture.fingerWeights || {
         Thumb: null,
         Index: null,
         Middle: null,
         Ring: null,
         Pinky: null
+      },
+
+      // Mirrors the hand
+      mirror: lastGesture.mirror || {
+        horiz: false,
+        vert: false
       },
 
       demoOpts: {
@@ -295,7 +305,7 @@ export default {
      * - Adds the gesture to handsfree.gesture.lastCreated
      */
     generateGestureDescription () {
-      const json = []
+      let json = []
       
       const description = {
         Thumb: {
@@ -381,14 +391,61 @@ export default {
           ])
         })
       })
+      
+      // Apply mirroring
+      if (this.mirror.horiz) {
+        const newRows = []
+        
+        json.forEach(row => {
+          let newRow = []
+          
+          if (row[0] === 'addDirection') {
+            if (row[2].indexOf('UpLeft') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('UpLeft', 'UpRight')
+              console.log(row[2], newRow[2])
+            } else if (row[2].indexOf('UpRight') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('UpRight', 'UpLeft')
+              console.log(row[2], newRow[2])
+            } else if (row[2].indexOf('DownLeft') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('DownLeft', 'DownRight')
+              console.log(row[2], newRow[2])
+            } else if (row[2].indexOf('DownRight') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('DownRight', 'DownLeft')
+              console.log(row[2], newRow[2])
+            } else if (row[2].indexOf('Right') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('Right', 'Left')
+              console.log(row[2], newRow[2])
+            } else if (row[2].indexOf('Left') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('Left', 'Right')
+              console.log(row[2], newRow[2])
+            }
+          }
 
+          // Build the new rows
+          if (newRow.length) {
+            newRows.push(newRow)
+          }
+        })
+
+        // Add new rows to json
+        if (newRows.length) {
+          json = json.concat(newRows)
+        }
+      }
+      
       // Add finger weights
       Object.keys(this.fingerWeights).forEach(key => {
         if (this.fingerWeights[key]) {
           json.push(['setWeight', key, 2])
         }
       })
-      
+
       // Parse the description into a fingerpose object
       this.gesture.description = json
       this.saveGesture()      
@@ -436,6 +493,7 @@ export default {
       localStorage.lastCreatedGesture = JSON.stringify({
         ...this.gesture,
         enabled: true,
+        mirror: this.mirror,
         recordedShapes: this.recordedShapes,
         fingerWeights: this.fingerWeights
       })
