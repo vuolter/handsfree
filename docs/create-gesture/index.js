@@ -403,27 +403,21 @@ export default {
             if (row[2].indexOf('UpLeft') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('UpLeft', 'UpRight')
-              console.log(row[2], newRow[2])
             } else if (row[2].indexOf('UpRight') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('UpRight', 'UpLeft')
-              console.log(row[2], newRow[2])
             } else if (row[2].indexOf('DownLeft') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('DownLeft', 'DownRight')
-              console.log(row[2], newRow[2])
             } else if (row[2].indexOf('DownRight') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('DownRight', 'DownLeft')
-              console.log(row[2], newRow[2])
             } else if (row[2].indexOf('Right') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('Right', 'Left')
-              console.log(row[2], newRow[2])
             } else if (row[2].indexOf('Left') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('Left', 'Right')
-              console.log(row[2], newRow[2])
             }
           }
 
