@@ -392,7 +392,7 @@ export default {
         })
       })
       
-      // Apply mirroring
+      // Apply horizontal mirroring
       if (this.mirror.horiz) {
         const newRows = []
         
@@ -418,6 +418,47 @@ export default {
             } else if (row[2].indexOf('Left') > -1) {
               newRow = row.slice()
               newRow[2] = newRow[2].replace('Left', 'Right')
+            }
+          }
+
+          // Build the new rows
+          if (newRow.length) {
+            newRows.push(newRow)
+          }
+        })
+
+        // Add new rows to json
+        if (newRows.length) {
+          json = json.concat(newRows)
+        }
+      }
+
+      // Apply vertical mirroring
+      if (this.mirror.vert) {
+        const newRows = []
+        
+        json.forEach(row => {
+          let newRow = []
+          
+          if (row[0] === 'addDirection') {
+            if (row[2].indexOf('UpLeft') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('UpLeft', 'DownLeft')
+            } else if (row[2].indexOf('UpRight') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('UpRight', 'DownRight')
+            } else if (row[2].indexOf('DownLeft') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('DownLeft', 'UpLeft')
+            } else if (row[2].indexOf('DownRight') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('DownRight', 'UpRight')
+            } else if (row[2].indexOf('Up') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('Up', 'Down')
+            } else if (row[2].indexOf('Down') > -1) {
+              newRow = row.slice()
+              newRow[2] = newRow[2].replace('Down', 'Up')
             }
           }
 

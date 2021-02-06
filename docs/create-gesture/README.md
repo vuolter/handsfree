@@ -132,6 +132,10 @@ sidebarDepth: 2
           <input id="mirror-horiz" type="checkbox" @change="generateGestureDescription" v-model="mirror.horiz" />
           <label for="mirror-horiz">Mirror horizontally</label>
         </div>
+        <div class="field-row">
+          <input id="mirror-vert" type="checkbox" @change="generateGestureDescription" v-model="mirror.vert" />
+          <label for="mirror-vert">Mirror vertically</label>
+        </div>
       </fieldset>
     </div>
   </div>
