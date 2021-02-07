@@ -16,7 +16,7 @@ next: false
 
 This project couldn't have been possible without:
 
-- Invitations to residencies at [The STUDIO for Creative Inquiry]() (Spring 2019, 2021)
+- Invitations to residencies at [The STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org/) (Spring 2019, 2021)
 - Grant from [Glitch.com](https://glitch.com) (Winter 2019)
 - Grant from the School of AI Grant (Fall 2018)
 - Grant from [Google PAIR](https://pair.withgoogle.com/) (Spring 2018)
@@ -46,6 +46,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-02-06 | 8.3.0 | Adds basic gesture support through the [Gesture Creator](/create-gesture/). This is still mostly undocumented
 | 2020-01-28 | 8.2.6 | Adds `handsfree.data.hands.landmarks` and `handsfree.data.hands.landmarksVisible` to [MediaPipe Hands](/ref/model/hands/), which contain the landmarks for each hand in specific indexes:<br>`.landmarks[0] === Left Hand, Person #1`<br>`.landmarks[1] === Right Hand, Person #1`<br>`.landmarks[2] === Left Hand, Person #2`<br>`.landmarks[3] === Right Hand, Person #2`
 | 2020-01-27 | 8.2.4 | Improved the [pinchScroll plugin](/ref/plugin/pinchScroll/) so that it continuously scrolls (instead of having to release and pinch again); `.handsfree-started` is added to body of a [client install](http://localhost:8080/ref/prop/config.html#isclient) (useful in Browser Extensions); merges the [Handsfree Browser Extension](/extension/) to improve iteration feedback cycle (not documented yet); disabling the last active model turns off the camera; fixes a few [Weboji](/ref/model/weboji/) bugs that prevented it from working with other models
 | 2020-01-25 | 8.2.3 | [palmPointers plugin](/ref/plugin/palmPointers/) and [faceClick](/ref/plugin/faceClick/) now emit `mousedown`, `mousemove`, `mousedrag`, and `mouseup` instead of just `click`

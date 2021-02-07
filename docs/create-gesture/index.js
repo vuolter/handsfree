@@ -14,8 +14,12 @@ export default {
   },
   
   data () {
+    let lastGesture = {}
     // Load last created gesture
-    let lastGesture = localStorage.lastCreatedGesture || {}
+    if (process.isClient) {
+      lastGesture = localStorage.lastCreatedGesture || {}
+    }
+    
     if (typeof lastGesture === 'string') {
       try {
         lastGesture = JSON.parse(lastGesture)

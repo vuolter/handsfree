@@ -16,23 +16,36 @@
       // Whether the model is enabled or not
       this.enabled = config.enabled;
 
-      // Collection of plugins
+      // Collection of plugins and gestures
       this.plugins = [];
+      this.gestures = [];
+      this.gestureEstimator = null;
 
       setTimeout(() => {
+        // Get data
         const getData = this.getData;
-        
         this.getData = async () => {
-          const data = await getData.apply(this, arguments);
+          let data = await getData.apply(this, arguments) || {};
+          data.gesture = this.getGesture();
           this.runPlugins();
           return data
+        };
+        
+        // Get gesture
+        let getGesture = this.getGesture;
+        this.getGesture = () => {
+          if (!getGesture) {
+            getGesture = function () {};
+          }
+          return getGesture.apply(this, arguments)
         };
       }, 0);
     }
 
     // Implement in the model class
-    loadDependencies (callback) {}
+    loadDependencies () {}
     updateData () {}
+    updateGestureEstimator () {}
 
     /**
      * Enable model
@@ -121,12 +134,39 @@
     }
   }
 
+  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  function getDefaultExportFromCjs (x) {
+  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+  }
+
+  function createCommonjsModule(fn, basedir, module) {
+  	return module = {
+  		path: basedir,
+  		exports: {},
+  		require: function (path, base) {
+  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+  		}
+  	}, fn(module, module.exports), module.exports;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+  }
+
+  var fingerpose = createCommonjsModule(function (module, exports) {
+  !function(t,e){module.exports=e();}("undefined"!=typeof self?self:commonjsGlobal,(function(){return function(t){var e={};function n(r){if(e[r])return e[r].exports;var i=e[r]={i:r,l:!1,exports:{}};return t[r].call(i.exports,i,i.exports,n),i.l=!0,i.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r});},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0});},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(r,i,function(e){return t[e]}.bind(null,i));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=0)}([function(t,e,n){n.r(e);var r={};function i(t){return (i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}n.r(r),n.d(r,"VictoryGesture",(function(){return C})),n.d(r,"ThumbsUpGesture",(function(){return j}));var o={Thumb:0,Index:1,Middle:2,Ring:3,Pinky:4,all:[0,1,2,3,4],nameMapping:{0:"Thumb",1:"Index",2:"Middle",3:"Ring",4:"Pinky"},pointsMapping:{0:[[0,1],[1,2],[2,3],[3,4]],1:[[0,5],[5,6],[6,7],[7,8]],2:[[0,9],[9,10],[10,11],[11,12]],3:[[0,13],[13,14],[14,15],[15,16]],4:[[0,17],[17,18],[18,19],[19,20]]},getName:function(t){return void 0!==i(this.nameMapping[t])&&this.nameMapping[t]},getPoints:function(t){return void 0!==i(this.pointsMapping[t])&&this.pointsMapping[t]}},a={NoCurl:0,HalfCurl:1,FullCurl:2,nameMapping:{0:"No Curl",1:"Half Curl",2:"Full Curl"},getName:function(t){return void 0!==i(this.nameMapping[t])&&this.nameMapping[t]}},l={VerticalUp:0,VerticalDown:1,HorizontalLeft:2,HorizontalRight:3,DiagonalUpRight:4,DiagonalUpLeft:5,DiagonalDownRight:6,DiagonalDownLeft:7,nameMapping:{0:"Vertical Up",1:"Vertical Down",2:"Horizontal Left",3:"Horizontal Right",4:"Diagonal Up Right",5:"Diagonal Up Left",6:"Diagonal Down Right",7:"Diagonal Down Left"},getName:function(t){return void 0!==i(this.nameMapping[t])&&this.nameMapping[t]}};function u(t){if("undefined"==typeof Symbol||null==t[Symbol.iterator]){if(Array.isArray(t)||(t=function(t,e){if(!t)return;if("string"==typeof t)return c(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(n);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return c(t,e)}(t))){var e=0,n=function(){};return {s:n,n:function(){return e>=t.length?{done:!0}:{done:!1,value:t[e++]}},e:function(t){throw t},f:n}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var r,i,o=!0,a=!1;return {s:function(){r=t[Symbol.iterator]();},n:function(){var t=r.next();return o=t.done,t},e:function(t){a=!0,i=t;},f:function(){try{o||null==r.return||r.return();}finally{if(a)throw i}}}}function c(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function f(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r);}return n}function s(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function h(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r);}}var d=function(){function t(e){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.options=function(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?f(Object(n),!0).forEach((function(e){s(t,e,n[e]);})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):f(Object(n)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(n,e));}));}return t}({},{HALF_CURL_START_LIMIT:60,NO_CURL_START_LIMIT:130,DISTANCE_VOTE_POWER:1.1,SINGLE_ANGLE_VOTE_POWER:.9,TOTAL_ANGLE_VOTE_POWER:1.6},{},e);}var e,n;return e=t,(n=[{key:"estimate",value:function(t){var e,n=[],r=[],i=u(o.all);try{for(i.s();!(e=i.n()).done;){var a,l=e.value,c=o.getPoints(l),f=[],s=[],h=u(c);try{for(h.s();!(a=h.n()).done;){var d=a.value,p=t[d[0]],y=t[d[1]],g=this.getSlopes(p,y),v=g[0],m=g[1];f.push(v),s.push(m);}}catch(t){h.e(t);}finally{h.f();}n.push(f),r.push(s);}}catch(t){i.e(t);}finally{i.f();}var b,D=[],w=[],O=u(o.all);try{for(O.s();!(b=O.n()).done;){var M=b.value,S=M==o.Thumb?1:0,T=o.getPoints(M),C=t[T[S][0]],R=t[T[S+1][1]],A=t[T[3][1]],L=this.estimateFingerCurl(C,R,A),_=this.calculateFingerDirection(C,R,A,n[M].slice(S));D[M]=L,w[M]=_;}}catch(t){O.e(t);}finally{O.f();}return {curls:D,directions:w}}},{key:"getSlopes",value:function(t,e){var n=this.calculateSlope(t[0],t[1],e[0],e[1]);return 2==t.length?n:[n,this.calculateSlope(t[1],t[2],e[1],e[2])]}},{key:"angleOrientationAt",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1,n=0,r=0,i=0;return t>=75&&t<=105?n=1*e:t>=25&&t<=155?r=1*e:i=1*e,[n,r,i]}},{key:"estimateFingerCurl",value:function(t,e,n){var r=t[0]-e[0],i=t[0]-n[0],o=e[0]-n[0],l=t[1]-e[1],u=t[1]-n[1],c=e[1]-n[1],f=t[2]-e[2],s=t[2]-n[2],h=e[2]-n[2],d=Math.sqrt(r*r+l*l+f*f),p=Math.sqrt(i*i+u*u+s*s),y=Math.sqrt(o*o+c*c+h*h),g=(y*y+d*d-p*p)/(2*y*d);g>1?g=1:g<-1&&(g=-1);var v=Math.acos(g);return (v=57.2958*v%180)>this.options.NO_CURL_START_LIMIT?a.NoCurl:v>this.options.HALF_CURL_START_LIMIT?a.HalfCurl:a.FullCurl}},{key:"estimateHorizontalDirection",value:function(t,e,n,r){return r==Math.abs(t)?t>0?l.HorizontalLeft:l.HorizontalRight:r==Math.abs(e)?e>0?l.HorizontalLeft:l.HorizontalRight:n>0?l.HorizontalLeft:l.HorizontalRight}},{key:"estimateVerticalDirection",value:function(t,e,n,r){return r==Math.abs(t)?t<0?l.VerticalDown:l.VerticalUp:r==Math.abs(e)?e<0?l.VerticalDown:l.VerticalUp:n<0?l.VerticalDown:l.VerticalUp}},{key:"estimateDiagonalDirection",value:function(t,e,n,r,i,o,a,u){var c=this.estimateVerticalDirection(t,e,n,r),f=this.estimateHorizontalDirection(i,o,a,u);return c==l.VerticalUp?f==l.HorizontalLeft?l.DiagonalUpLeft:l.DiagonalUpRight:f==l.HorizontalLeft?l.DiagonalDownLeft:l.DiagonalDownRight}},{key:"calculateFingerDirection",value:function(t,e,n,r){var i=t[0]-e[0],o=t[0]-n[0],a=e[0]-n[0],l=t[1]-e[1],c=t[1]-n[1],f=e[1]-n[1],s=Math.max(Math.abs(i),Math.abs(o),Math.abs(a)),h=Math.max(Math.abs(l),Math.abs(c),Math.abs(f)),d=0,p=0,y=0,g=h/(s+1e-5);g>1.5?d+=this.options.DISTANCE_VOTE_POWER:g>.66?p+=this.options.DISTANCE_VOTE_POWER:y+=this.options.DISTANCE_VOTE_POWER;var v=Math.sqrt(i*i+l*l),m=Math.sqrt(o*o+c*c),b=Math.sqrt(a*a+f*f),D=Math.max(v,m,b),w=t[0],O=t[1],M=n[0],S=n[1];D==v?(M=n[0],S=n[1]):D==b&&(w=e[0],O=e[1]);var T=[w,O],C=[M,S],R=this.getSlopes(T,C),A=this.angleOrientationAt(R,this.options.TOTAL_ANGLE_VOTE_POWER);d+=A[0],p+=A[1],y+=A[2];var L,_=u(r);try{for(_.s();!(L=_.n()).done;){var j=L.value,E=this.angleOrientationAt(j,this.options.SINGLE_ANGLE_VOTE_POWER);d+=E[0],p+=E[1],y+=E[2];}}catch(t){_.e(t);}finally{_.f();}return d==Math.max(d,p,y)?this.estimateVerticalDirection(c,l,f,h):y==Math.max(p,y)?this.estimateHorizontalDirection(o,i,a,s):this.estimateDiagonalDirection(c,l,f,h,o,i,a,s)}},{key:"calculateSlope",value:function(t,e,n,r){var i=(e-r)/(t-n),o=180*Math.atan(i)/Math.PI;return o<=0?o=-o:o>0&&(o=180-o),o}}])&&h(e.prototype,n),t}();function p(t){if("undefined"==typeof Symbol||null==t[Symbol.iterator]){if(Array.isArray(t)||(t=function(t,e){if(!t)return;if("string"==typeof t)return y(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(n);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return y(t,e)}(t))){var e=0,n=function(){};return {s:n,n:function(){return e>=t.length?{done:!0}:{done:!1,value:t[e++]}},e:function(t){throw t},f:n}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var r,i,o=!0,a=!1;return {s:function(){r=t[Symbol.iterator]();},n:function(){var t=r.next();return o=t.done,t},e:function(t){a=!0,i=t;},f:function(){try{o||null==r.return||r.return();}finally{if(a)throw i}}}}function y(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function g(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function v(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r);}}var m=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};g(this,t),this.estimator=new d(n),this.gestures=e;}var e,n;return e=t,(n=[{key:"estimate",value:function(t,e){var n,r=[],i=this.estimator.estimate(t),u=[],c=p(o.all);try{for(c.s();!(n=c.n()).done;){var f=n.value;u.push([o.getName(f),a.getName(i.curls[f]),l.getName(i.directions[f])]);}}catch(t){c.e(t);}finally{c.f();}var s,h=p(this.gestures);try{for(h.s();!(s=h.n()).done;){var d=s.value,y=d.matchAgainst(i.curls,i.directions);y>=e&&r.push({name:d.name,confidence:y});}}catch(t){h.e(t);}finally{h.f();}return {poseData:u,gestures:r}}}])&&v(e.prototype,n),t}();function b(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],r=!0,i=!1,o=void 0;try{for(var a,l=t[Symbol.iterator]();!(r=(a=l.next()).done)&&(n.push(a.value),!e||n.length!==e);r=!0);}catch(t){i=!0,o=t;}finally{try{r||null==l.return||l.return();}finally{if(i)throw o}}return n}(t,e)||w(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function D(t){if("undefined"==typeof Symbol||null==t[Symbol.iterator]){if(Array.isArray(t)||(t=w(t))){var e=0,n=function(){};return {s:n,n:function(){return e>=t.length?{done:!0}:{done:!1,value:t[e++]}},e:function(t){throw t},f:n}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var r,i,o=!0,a=!1;return {s:function(){r=t[Symbol.iterator]();},n:function(){var t=r.next();return o=t.done,t},e:function(t){a=!0,i=t;},f:function(){try{o||null==r.return||r.return();}finally{if(a)throw i}}}}function w(t,e){if(t){if("string"==typeof t)return O(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);return "Object"===n&&t.constructor&&(n=t.constructor.name),"Map"===n||"Set"===n?Array.from(n):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?O(t,e):void 0}}function O(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function M(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r);}}var S=function(){function t(e){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.name=e,this.curls={},this.directions={},this.weights=[1,1,1,1,1],this.weightsRelative=[1,1,1,1,1];}var e,n;return e=t,(n=[{key:"addCurl",value:function(t,e,n){void 0===this.curls[t]&&(this.curls[t]=[]),this.curls[t].push([e,n]);}},{key:"addDirection",value:function(t,e,n){void 0===this.directions[t]&&(this.directions[t]=[]),this.directions[t].push([e,n]);}},{key:"setWeight",value:function(t,e){this.weights[t]=e;var n=this.weights.reduce((function(t,e){return t+e}),0);this.weightsRelative=this.weights.map((function(t){return 5*t/n}));}},{key:"matchAgainst",value:function(t,e){var n=0;for(var r in t){var i=t[r],o=this.curls[r];if(void 0!==o){var a,l=D(o);try{for(l.s();!(a=l.n()).done;){var u=b(a.value,2),c=u[0],f=u[1];if(i==c){n+=f*this.weightsRelative[r];break}}}catch(t){l.e(t);}finally{l.f();}}else n+=this.weightsRelative[r];}for(var s in e){var h=e[s],d=this.directions[s];if(void 0!==d){var p,y=D(d);try{for(y.s();!(p=y.n()).done;){var g=b(p.value,2),v=g[0],m=g[1];if(h==v){n+=m*this.weightsRelative[s];break}}}catch(t){y.e(t);}finally{y.f();}}else n+=this.weightsRelative[s];}return n}}])&&M(e.prototype,n),t}(),T=new S("victory");T.addCurl(o.Thumb,a.HalfCurl,.5),T.addCurl(o.Thumb,a.NoCurl,.5),T.addDirection(o.Thumb,l.VerticalUp,1),T.addDirection(o.Thumb,l.DiagonalUpLeft,1),T.addCurl(o.Index,a.NoCurl,1),T.addDirection(o.Index,l.VerticalUp,.75),T.addDirection(o.Index,l.DiagonalUpLeft,1),T.addCurl(o.Middle,a.NoCurl,1),T.addDirection(o.Middle,l.VerticalUp,1),T.addDirection(o.Middle,l.DiagonalUpLeft,.75),T.addCurl(o.Ring,a.FullCurl,1),T.addDirection(o.Ring,l.VerticalUp,.2),T.addDirection(o.Ring,l.DiagonalUpLeft,1),T.addDirection(o.Ring,l.HorizontalLeft,.2),T.addCurl(o.Pinky,a.FullCurl,1),T.addDirection(o.Pinky,l.VerticalUp,.2),T.addDirection(o.Pinky,l.DiagonalUpLeft,1),T.addDirection(o.Pinky,l.HorizontalLeft,.2),T.setWeight(o.Index,2),T.setWeight(o.Middle,2);var C=T,R=new S("thumbs_up");R.addCurl(o.Thumb,a.NoCurl,1),R.addDirection(o.Thumb,l.VerticalUp,1),R.addDirection(o.Thumb,l.DiagonalUpLeft,.25),R.addDirection(o.Thumb,l.DiagonalUpRight,.25);for(var A=0,L=[o.Index,o.Middle,o.Ring,o.Pinky];A<L.length;A++){var _=L[A];R.addCurl(_,a.FullCurl,1),R.addDirection(_,l.HorizontalLeft,1),R.addDirection(_,l.HorizontalRight,1);}var j=R;e.default={GestureEstimator:m,GestureDescription:S,Finger:o,FingerCurl:a,FingerDirection:l,Gestures:r};}]).default}));
+  });
+
+  var fingerpose$1 = /*@__PURE__*/getDefaultExportFromCjs(fingerpose);
+
   class HandsModel extends BaseModel {
     constructor (handsfree, config) {
       super(handsfree, config);
       this.name = 'hands';
 
       this.palmPoints = [0, 5, 9, 13, 17];
+      this.gestureEstimator = new fingerpose$1.GestureEstimator([]);
     }
 
     loadDependencies (callback) {
@@ -197,6 +237,7 @@
      */
     async getData () {
       this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video});
+      return this.data
     }
     // Called through this.api.onResults
     dataReceived (results) {
@@ -283,6 +324,108 @@
         }
       }
     }
+
+    /**
+     * Updates the gesture estimator
+     */
+    updateGestureEstimator () {
+      const activeGestures = [];
+      const gestureDescriptions = [];
+      
+      // Build the gesture descriptions
+      this.gestures.forEach(name => {
+        if (!this.handsfree.gesture[name].enabled) return
+        activeGestures.push(name);
+        
+        // Loop through the description and compile it
+        if (!this.handsfree.gesture[name].compiledDescription && this.handsfree.gesture[name].enabled) {
+          const description = new fingerpose$1.GestureDescription(name);
+
+          this.handsfree.gesture[name].description.forEach(pose => {
+            // Build the description
+            switch (pose[0]) {
+              case 'addCurl':
+                description[pose[0]](
+                  fingerpose$1.Finger[pose[1]],
+                  fingerpose$1.FingerCurl[pose[2]],
+                  pose[3]
+                );
+              break
+              case 'addDirection':
+                description[pose[0]](
+                  fingerpose$1.Finger[pose[1]],
+                  fingerpose$1.FingerDirection[pose[2]],
+                  pose[3]
+                );
+              break
+              case 'setWeight':
+                description[pose[0]](
+                  fingerpose$1.Finger[pose[1]],
+                  pose[2]
+                );
+              break
+            }
+          });
+
+          this.handsfree.gesture[name].compiledDescription = description;
+        }
+      });
+
+      // Create the gesture estimator
+      activeGestures.forEach(gesture => {
+        gestureDescriptions.push(this.handsfree.gesture[gesture].compiledDescription);
+      });
+
+      if (activeGestures.length) {
+        this.gestureEstimator = new fingerpose$1.GestureEstimator(gestureDescriptions);
+      }
+    }
+    
+    /**
+     * Gets current gesture
+     */
+    getGesture () {
+      let gestures = [null, null, null, null];
+
+      this.data.landmarks.forEach((landmarksObj, hand) => {
+        if (this.data.landmarksVisible[hand]) {
+          // Convert object to array
+          const landmarks = [];
+          for (let i = 0; i < 21; i++) {
+            landmarks.push([landmarksObj[i].x * window.outerWidth, landmarksObj[i].y * window.outerHeight, 0]);
+          }
+          
+          // Estimate
+          const estimate = this.gestureEstimator.estimate(landmarks, 7.5);
+          if (estimate.gestures.length) {
+            gestures[hand] = estimate.gestures.reduce((p, c) => {
+              const requiredConfidence = this.handsfree.gesture[c.name].confidence;
+              return (c.confidence >= requiredConfidence && c.confidence > p.confidence) ? c : p
+            });
+          } else {
+            gestures[hand] = {
+              name: '',
+              confidence: 0
+            };
+          }
+
+          // Must pass confidence
+          if (gestures[hand].name) {
+            const requiredConfidence = this.handsfree.gesture[gestures[hand].name].confidence;
+            if (gestures[hand].confidence < requiredConfidence) {
+              gestures[hand] = {
+                name: '',
+                confidence: 0
+              };
+            }
+          }
+
+          gestures[hand].pose = estimate.poseData;
+        }
+      });
+
+      return gestures
+    }  
   }
 
   class FacemeshModel extends BaseModel {
@@ -648,6 +791,7 @@
       // 8 = Index finger tip
       // 12 = Middle finger tip
       this.palmPoints = [0, 1, 2, 5, 9, 13, 17];
+      this.gestureEstimator = new fingerpose$1.GestureEstimator([]);
     }
 
     loadDependencies (callback) {
@@ -864,6 +1008,80 @@
         -(y-this.handsfree.debug.$video.videoHeight / 2), // in threejs, +y is up
         -z
       )
+    }
+
+    /**
+     * Updates the gesture estimator
+     */
+    updateGestureEstimator () {
+      const activeGestures = [];
+      const gestureDescriptions = [];
+      
+      // Build the gesture descriptions
+      this.gestures.forEach(name => {
+        this.handsfree.gesture[name].enabled && activeGestures.push(name);
+        
+        // Loop through the description and compile it
+        if (!this.handsfree.gesture[name].compiledDescription && this.handsfree.gesture[name].enabled) {
+          const description = new fingerpose$1.GestureDescription(name);
+
+          this.handsfree.gesture[name].description.forEach(pose => {
+            // Build the description
+            switch (pose[0]) {
+              case 'addCurl':
+                description[pose[0]](
+                  fingerpose$1.Finger[pose[1]],
+                  fingerpose$1.FingerCurl[pose[2]],
+                  pose[3]
+                );
+              break
+              case 'addDirection':
+                description[pose[0]](
+                  fingerpose$1.Finger[pose[1]],
+                  fingerpose$1.FingerDirection[pose[2]],
+                  pose[3]
+                );
+              break
+              case 'setWeight':
+                description[pose[0]](
+                  fingerpose$1.Finger[pose[1]],
+                  pose[2]
+                );
+              break
+            }
+          });
+
+          this.handsfree.gesture[name].compiledDescription = description;
+        }
+      });
+
+      // Create the gesture estimator
+      activeGestures.forEach(gesture => {
+        gestureDescriptions.push(this.handsfree.gesture[gesture].compiledDescription);
+      });
+
+      if (activeGestures.length) {
+        this.gestureEstimator = new fingerpose$1.GestureEstimator(gestureDescriptions);
+      }
+    }
+    
+    /**
+     * Gets current gesture
+     */
+    getGesture () {
+      let gesture = null;
+
+      if (this.data.landmarks && this.gestureEstimator) {
+        const estimate = this.gestureEstimator.estimate(this.data.landmarks, 7.5);
+
+        if (estimate.gestures.length) {
+          gesture = estimate.gestures.reduce((p, c) => {
+            return (p.confidence > c.confidence) ? p : c
+          });
+        }
+      }
+
+      return gesture
     }
   }
 
@@ -1252,22 +1470,6 @@
 
   var _stackHas = stackHas;
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-  function createCommonjsModule(fn, basedir, module) {
-  	return module = {
-  		path: basedir,
-  		exports: {},
-  		require: function (path, base) {
-  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-  		}
-  	}, fn(module, module.exports), module.exports;
-  }
-
-  function commonjsRequire () {
-  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-  }
-
   /** Detect free variable `global` from Node.js. */
   var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
@@ -1282,9 +1484,9 @@
   var _root = root;
 
   /** Built-in value references. */
-  var Symbol = _root.Symbol;
+  var Symbol$1 = _root.Symbol;
 
-  var _Symbol = Symbol;
+  var _Symbol = Symbol$1;
 
   /** Used for built-in method references. */
   var objectProto = Object.prototype;
@@ -3357,6 +3559,282 @@
   }
 
   /**
+   * The base gesture class
+   * - When you do `handsfree.useGesture()` it actually extends this class
+   */
+  class BaseGesture {
+    constructor (gesture, handsfree) {
+      // Props
+      this.handsfree = handsfree;
+
+      // Copy properties and methods from plugin into class
+      Object.keys(gesture).forEach((prop) => {
+        this[prop] = gesture[prop];
+      });
+
+      // handsfree.config.gesture[name] overwrites gesture.config
+      let handsfreeGestureConfig = handsfree.config?.gesture?.[gesture.name];
+      if (typeof handsfreeGestureConfig === 'boolean') {
+        handsfreeGestureConfig = { enabled: handsfreeGestureConfig };
+      }
+
+      // Disable gestures via new Handsfree(config)
+      if (typeof handsfreeGestureConfig === 'object') {
+        merge_1(this.config, handsfreeGestureConfig);
+        if (typeof handsfreeGestureConfig.enabled === 'boolean') {
+          this.enabled = handsfreeGestureConfig.enabled;
+        }
+      }
+    }
+
+    /**
+     * Toggle gesture
+     */
+    enable () {
+      this.enabled = true;
+      this.updateGestureEstimator();
+    }
+    disable () {
+      this.enabled = false;
+      this.updateGestureEstimator();
+    }
+
+    /**
+     * Update the estimator when a gesture is toggled
+     */
+    updateGestureEstimator () {
+      this.models.forEach(name => {
+        this.handsfree.model[name].updateGestureEstimator();
+      });
+    }
+  }
+
+  class GestureFingerpose extends BaseGesture {
+    constructor (handsfree, config) {
+      super(handsfree, config);
+      this.algorithm = 'fingerpose';
+
+      // Contains the fingerpose GestureDescription
+      this.compiledDescription = null;
+    }
+  }
+
+  /**
+   * The following are all the defaults
+   * 
+   * @see https://handsfree.js.org/ref/prop/config
+   */
+  var defaultConfig = {
+    // Whether to automatically start or not
+    // This works both during instantiation or with .update()
+    autostart: false,
+    
+    // Use CDN by default
+    assetsPath: 'https://unpkg.com/handsfree@8.3.0/build/lib/assets',
+    
+    // This will load everything but the models. This is useful when you want to use run inference
+    // on another device or context but run the plugins on the current device
+    isClient: false,
+
+    // Gesture config
+    gesture: {},
+
+    // Setup config. Ignore this to have everything done for you automatically
+    setup: {
+      // The canvas element to use for rendering debug info like skeletons and keypoints
+      canvas: {
+        weboji: {
+          // The canvas element to hold the skeletons and keypoints for weboji model
+          $el: null,
+          width: 1280,
+          height: 720
+        },
+        hands: {
+          // The canvas element to hold the skeletons and keypoints for hand model
+          $el: null,
+          width: 1280,
+          height: 720
+        },
+        handpose: {
+          // The canvas element to hold the skeletons and keypoints for hand model
+          $el: null,
+          width: 1280,
+          height: 720
+        },
+        holistic: {
+          // The canvas element to hold the skeletons and keypoints for holistic model
+          $el: null,
+          width: 1280,
+          height: 720
+        },
+        pose: {
+          // The canvas element to hold the skeletons and keypoints for pose model
+          $el: null,
+          width: 1280,
+          height: 720
+        },
+        facemesh: {
+          // The canvas element to hold the skeletons and keypoints for facemesh model
+          $el: null,
+          width: 1280,
+          height: 720
+        }
+      },
+      // The video source to use. If not present, one will be created to capture webcam
+      video: {
+        // The video element to hold the webcam stream
+        $el: null,
+        width: 1280,
+        height: 720
+      },
+      // The wrapping element
+      wrap: {
+        // The element to put the video and canvas inside of
+        $el: null,
+        // The parent element
+        $parent: null
+      }
+    },
+
+    // Weboji model
+    weboji: {
+      enabled: false,
+      throttle: 0,
+
+      videoSettings: {
+        // The video, canvas, or image element
+        // Omit this to auto create a <VIDEO> with the webcam
+        videoElement: null,
+
+        // ID of the device to use
+        // Omit this to use the system default
+        deviceId: null,
+
+        // Which camera to use on the device
+        // Possible values: 'user' (front), 'environment' (back)
+        facingMode: 'user',
+
+        // Video dimensions
+        idealWidth: 320,
+        idealHeight: 240,
+        minWidth: 240,
+        maxWidth: 1280,
+        minHeight: 240,
+        maxHeight: 1280
+      },
+
+      // Thresholds needed before these are considered "activated"
+      // - Ranges from 0 (not active) to 1 (fully active)
+      morphs: {
+        threshold: {
+          smileRight: 0.7,
+          smileLeft: 0.7,
+          browLeftDown: 0.8,
+          browRightDown: 0.8,
+          browLeftUp: 0.8,
+          browRightUp: 0.8,
+          eyeLeftClosed: 0.4,
+          eyeRightClosed: 0.4,
+          mouthOpen: 0.3,
+          mouthRound: 0.8,
+          upperLip: 0.5
+        }
+      }
+    },
+
+    // Hands model
+    hands: {
+      enabled: false,
+      // The maximum number of hands to detect [0 - 4]
+      maxNumHands: 2,
+
+      // Minimum confidence [0 - 1] for a hand to be considered detected
+      minDetectionConfidence: 0.5,
+
+      // Minimum confidence [0 - 1] for the landmark tracker to be considered detected
+      // Higher values are more robust at the expense of higher latency
+      minTrackingConfidence: 0.5
+    },
+
+    // Facemesh model
+    facemesh: {
+      enabled: false,
+      // The maximum number of faces to detect [1 - 4]
+      maxNumFaces: 1,
+
+      // Minimum confidence [0 - 1] for a face to be considered detected
+      minDetectionConfidence: 0.5,
+      
+      // Minimum confidence [0 - 1] for the landmark tracker to be considered detected
+      // Higher values are more robust at the expense of higher latency
+      minTrackingConfidence: 0.5
+    },
+
+    // Pose model
+    pose: {
+      enabled: false,
+      
+      // Outputs only the top 25 pose landmarks if true,
+      // otherwise shows all 33 full body pose landmarks
+      // - Note: Setting this to true may result in better accuracy 
+      upperBodyOnly: false,
+
+      // Helps reduce jitter over multiple frames if true
+      smoothLandmarks: true,
+
+      // Minimum confidence [0 - 1] for a person detection to be considered detected
+      minDetectionConfidence: 0.5,
+
+      // Minimum confidence [0 - 1] for the pose tracker to be considered detected
+      // Higher values are more robust at the expense of higher latency
+      minTrackingConfidence: 0.5
+    },
+
+    // Holistic model
+    holistic: {
+      enabled: false,
+      
+      // Outputs only the top 25 pose landmarks if true,
+      // otherwise shows all 33 full body pose landmarks
+      // - Note: Setting this to true may result in better accuracy 
+      upperBodyOnly: true,
+
+      // Helps reduce jitter over multiple frames if true
+      smoothLandmarks: true,
+
+      // Minimum confidence [0 - 1] for a person detection to be considered detected
+      minDetectionConfidence: 0.5,
+          
+      // Minimum confidence [0 - 1] for the pose tracker to be considered detected
+      // Higher values are more robust at the expense of higher latency
+      minTrackingConfidence: 0.5
+    },
+
+    handpose: {
+      enabled: false,
+
+      // The backend to use: 'webgl' or 'wasm'
+      // 🚨 Currently only webgl is supported
+      backend: 'webgl',
+
+      // How many frames to go without running the bounding box detector. 
+      // Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
+      maxContinuousChecks: Infinity,
+
+      // Threshold for discarding a prediction
+      detectionConfidence: 0.8,
+
+      // A float representing the threshold for deciding whether boxes overlap too much in non-maximum suppression. Must be between [0, 1]
+      iouThreshold: 0.3,
+
+      // A threshold for deciding when to remove boxes based on score in non-maximum suppression.
+      scoreThreshold: 0.75
+    },
+
+    plugin: {}
+  };
+
+  /**
    * Gets the timestamp of the number of milliseconds that have elapsed since
    * the Unix epoch (1 January 1970 00:00:00 UTC).
    *
@@ -3723,218 +4201,6 @@
   }
 
   var throttle_1 = throttle;
-
-  /**
-   * The following are all the defaults
-   * 
-   * @see https://handsfree.js.org/ref/prop/config
-   */
-  var defaultConfig = {
-    // Whether to automatically start or not
-    // This works both during instantiation or with .update()
-    autostart: false,
-    
-    // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.2.6/build/lib/assets',
-    
-    // This will load everything but the models. This is useful when you want to use run inference
-    // on another device or context but run the plugins on the current device
-    isClient: false,
-
-    // Setup config. Ignore this to have everything done for you automatically
-    setup: {
-      // The canvas element to use for rendering debug info like skeletons and keypoints
-      canvas: {
-        weboji: {
-          // The canvas element to hold the skeletons and keypoints for weboji model
-          $el: null,
-          width: 1280,
-          height: 720
-        },
-        hands: {
-          // The canvas element to hold the skeletons and keypoints for hand model
-          $el: null,
-          width: 1280,
-          height: 720
-        },
-        handpose: {
-          // The canvas element to hold the skeletons and keypoints for hand model
-          $el: null,
-          width: 1280,
-          height: 720
-        },
-        holistic: {
-          // The canvas element to hold the skeletons and keypoints for holistic model
-          $el: null,
-          width: 1280,
-          height: 720
-        },
-        pose: {
-          // The canvas element to hold the skeletons and keypoints for pose model
-          $el: null,
-          width: 1280,
-          height: 720
-        },
-        facemesh: {
-          // The canvas element to hold the skeletons and keypoints for facemesh model
-          $el: null,
-          width: 1280,
-          height: 720
-        }
-      },
-      // The video source to use. If not present, one will be created to capture webcam
-      video: {
-        // The video element to hold the webcam stream
-        $el: null,
-        width: 1280,
-        height: 720
-      },
-      // The wrapping element
-      wrap: {
-        // The element to put the video and canvas inside of
-        $el: null,
-        // The parent element
-        $parent: null
-      }
-    },
-
-    // Weboji model
-    weboji: {
-      enabled: false,
-      throttle: 0,
-
-      videoSettings: {
-        // The video, canvas, or image element
-        // Omit this to auto create a <VIDEO> with the webcam
-        videoElement: null,
-
-        // ID of the device to use
-        // Omit this to use the system default
-        deviceId: null,
-
-        // Which camera to use on the device
-        // Possible values: 'user' (front), 'environment' (back)
-        facingMode: 'user',
-
-        // Video dimensions
-        idealWidth: 320,
-        idealHeight: 240,
-        minWidth: 240,
-        maxWidth: 1280,
-        minHeight: 240,
-        maxHeight: 1280
-      },
-
-      // Thresholds needed before these are considered "activated"
-      // - Ranges from 0 (not active) to 1 (fully active)
-      morphs: {
-        threshold: {
-          smileRight: 0.7,
-          smileLeft: 0.7,
-          browLeftDown: 0.8,
-          browRightDown: 0.8,
-          browLeftUp: 0.8,
-          browRightUp: 0.8,
-          eyeLeftClosed: 0.4,
-          eyeRightClosed: 0.4,
-          mouthOpen: 0.3,
-          mouthRound: 0.8,
-          upperLip: 0.5
-        }
-      }
-    },
-
-    // Hands model
-    hands: {
-      enabled: false,
-      // The maximum number of hands to detect [0 - 4]
-      maxNumHands: 2,
-
-      // Minimum confidence [0 - 1] for a hand to be considered detected
-      minDetectionConfidence: 0.5,
-
-      // Minimum confidence [0 - 1] for the landmark tracker to be considered detected
-      // Higher values are more robust at the expense of higher latency
-      minTrackingConfidence: 0.5
-    },
-
-    // Facemesh model
-    facemesh: {
-      enabled: false,
-      // The maximum number of faces to detect [1 - 4]
-      maxNumFaces: 1,
-
-      // Minimum confidence [0 - 1] for a face to be considered detected
-      minDetectionConfidence: 0.5,
-      
-      // Minimum confidence [0 - 1] for the landmark tracker to be considered detected
-      // Higher values are more robust at the expense of higher latency
-      minTrackingConfidence: 0.5
-    },
-
-    // Pose model
-    pose: {
-      enabled: false,
-      
-      // Outputs only the top 25 pose landmarks if true,
-      // otherwise shows all 33 full body pose landmarks
-      // - Note: Setting this to true may result in better accuracy 
-      upperBodyOnly: false,
-
-      // Helps reduce jitter over multiple frames if true
-      smoothLandmarks: true,
-
-      // Minimum confidence [0 - 1] for a person detection to be considered detected
-      minDetectionConfidence: 0.5,
-
-      // Minimum confidence [0 - 1] for the pose tracker to be considered detected
-      // Higher values are more robust at the expense of higher latency
-      minTrackingConfidence: 0.5
-    },
-
-    // Holistic model
-    holistic: {
-      enabled: false,
-      
-      // Outputs only the top 25 pose landmarks if true,
-      // otherwise shows all 33 full body pose landmarks
-      // - Note: Setting this to true may result in better accuracy 
-      upperBodyOnly: true,
-
-      // Helps reduce jitter over multiple frames if true
-      smoothLandmarks: true,
-
-      // Minimum confidence [0 - 1] for a person detection to be considered detected
-      minDetectionConfidence: 0.5,
-          
-      // Minimum confidence [0 - 1] for the pose tracker to be considered detected
-      // Higher values are more robust at the expense of higher latency
-      minTrackingConfidence: 0.5
-    },
-
-    handpose: {
-      enabled: false,
-
-      // The backend to use: 'webgl' or 'wasm'
-      // 🚨 Currently only webgl is supported
-      backend: 'webgl',
-
-      // How many frames to go without running the bounding box detector. 
-      // Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
-      maxContinuousChecks: Infinity,
-
-      // Threshold for discarding a prediction
-      detectionConfidence: 0.8,
-
-      // A float representing the threshold for deciding whether boxes overlap too much in non-maximum suppression. Must be between [0, 1]
-      iouThreshold: 0.3,
-
-      // A threshold for deciding when to remove boxes based on score in non-maximum suppression.
-      scoreThreshold: 0.75
-    },
-
-    plugin: {}
-  };
 
   /*!
    * VERSION: 2.1.3
@@ -7493,6 +7759,1608 @@
     }
   };
 
+  // 🤟
+  var gestureLove = {
+    "name": "love",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": 7.5,
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "HorizontalLeft",
+        0.5789473684210527
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        0.875
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.18181818181818182
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.18181818181818182
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        0.47368421052631576
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpLeft",
+        0.10526315789473684
+      ],
+      [
+        "setWeight",
+        "Thumb",
+        2
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ],
+      [
+        "setWeight",
+        "Pinky",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 🤘
+  var gestureHorns = {
+    "name": "horns",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": 7.5,
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "HalfCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpRight",
+        0.1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        0.4
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        0.875
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        0.875
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.08695652173913043
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.21739130434782608
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        0.42857142857142855
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        1
+      ],
+      [
+        "setWeight",
+        "Thumb",
+        2
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ],
+      [
+        "setWeight",
+        "Pinky",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 👉
+  var gesturePointRight = {
+    "name": "pointRight",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        0.42857142857142855
+      ],
+      [
+        "addDirection",
+        "Index",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        0.42857142857142855
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.034482758620689655
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalDownLeft",
+        0.07142857142857142
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 👈
+  var gesturePointLeft = {
+    "name": "pointLeft",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "HalfCurl",
+        0.15384615384615385
+      ],
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "HorizontalRight",
+        1
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "HorizontalRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpRight",
+        0.42857142857142855
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "HalfCurl",
+        0.2222222222222222
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "NoCurl",
+        0.4444444444444444
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "HorizontalRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpRight",
+        0.42857142857142855
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "HalfCurl",
+        0.07142857142857142
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "HorizontalRight",
+        1
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "HalfCurl",
+        0.034482758620689655
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "HorizontalRight",
+        1
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // ☝
+  var gesturePointUp = {
+    "name": "pointUp",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "HalfCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpRight",
+        0.35
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        0.15
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        0.25
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        0.5
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        0.5294117647058824
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.23529411764705882
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        0.7692307692307693
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpLeft",
+        0.5384615384615384
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 👇
+  var gesturePointDown = {
+    "name": "pointDown",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalDown",
+        0.7647058823529411
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalDownRight",
+        1
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalDown",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalDownLeft",
+        0.15384615384615385
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalDown",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalDownRight",
+        0.034482758620689655
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalDown",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalDownRight",
+        0.1111111111111111
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalDownRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalDown",
+        0.6666666666666666
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 🖖
+  var gestureSpock = {
+    "name": "spock",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "HorizontalLeft",
+        0.5789473684210527
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        0.7647058823529411
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        0.7647058823529411
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 🤙
+  var gestureCallMe = {
+    "name": "callMe",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "HorizontalLeft",
+        0.36363636363636365
+      ],
+      [
+        "addCurl",
+        "Index",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        0.36363636363636365
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalDownLeft",
+        0.1111111111111111
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalDownLeft",
+        0.30434782608695654
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalDownLeft",
+        0.7647058823529411
+      ],
+      [
+        "setWeight",
+        "Thumb",
+        2
+      ],
+      [
+        "setWeight",
+        "Pinky",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 👌
+  var gestureOk = {
+    "name": "ok",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "HalfCurl",
+        1
+      ],
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        0.6666666666666666
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "HorizontalLeft",
+        0.25
+      ],
+      [
+        "addCurl",
+        "Index",
+        "FullCurl",
+        1
+      ],
+      [
+        "addCurl",
+        "Index",
+        "HalfCurl",
+        0.7647058823529411
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        0.7647058823529411
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.8666666666666667
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.13333333333333333
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        0.5
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        1
+      ],
+      [
+        "setWeight",
+        "Thumb",
+        2
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // ✋
+  var gestureStop = {
+    "name": "stop",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        0.6666666666666666
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        0.42857142857142855
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        0.42857142857142855
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.38095238095238093
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.047619047619047616
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        0.13043478260869565
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpLeft",
+        0.17391304347826086
+      ]
+    ],
+    "enabled": true
+  };
+
+  // ✌
+  var gestureVictory = {
+    "name": "victory",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addCurl",
+        "Thumb",
+        "HalfCurl",
+        0.5789473684210527
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalUp",
+        0.42857142857142855
+      ],
+      [
+        "addCurl",
+        "Index",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        0.875
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpRight",
+        0.36363636363636365
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.5789473684210527
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        0.6666666666666666
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        1
+      ],
+      [
+        "setWeight",
+        "Index",
+        2
+      ],
+      [
+        "setWeight",
+        "Middle",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // ✊
+  var gestureFist = {
+    "name": "fist",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "HalfCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpRight",
+        0.6428571428571429
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        0.5
+      ],
+      [
+        "addCurl",
+        "Index",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "VerticalUp",
+        0.15384615384615385
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "VerticalUp",
+        0.7647058823529411
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "VerticalUp",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpRight",
+        0.26666666666666666
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.7333333333333333
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpRight",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "VerticalUp",
+        1
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 👍
+  var gestureThumbUp = {
+    "name": "thumbUp",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalUp",
+        0.5789473684210527
+      ],
+      [
+        "addCurl",
+        "Index",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalUpLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "HorizontalLeft",
+        0.2
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalUpLeft",
+        0.7647058823529411
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalUpLeft",
+        0.07142857142857142
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "setWeight",
+        "Thumb",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
+  // 👎
+  var gestureThumbDown = {
+    "name": "thumbDown",
+    "algorithm": "fingerpose",
+    "models": "hands",
+    "tags": ["core"],
+    "confidence": "7.5",
+    "description": [
+      [
+        "addCurl",
+        "Thumb",
+        "NoCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "DiagonalDownLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Thumb",
+        "VerticalDown",
+        0.5789473684210527
+      ],
+      [
+        "addCurl",
+        "Index",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "DiagonalDownLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Index",
+        "HorizontalLeft",
+        0.2
+      ],
+      [
+        "addCurl",
+        "Middle",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "DiagonalDownLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Middle",
+        "HorizontalLeft",
+        0.6666666666666666
+      ],
+      [
+        "addCurl",
+        "Ring",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Ring",
+        "DiagonalDownLeft",
+        0.30434782608695654
+      ],
+      [
+        "addCurl",
+        "Pinky",
+        "FullCurl",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "HorizontalLeft",
+        1
+      ],
+      [
+        "addDirection",
+        "Pinky",
+        "DiagonalUpLeft",
+        0.15384615384615385
+      ],
+      [
+        "setWeight",
+        "Thumb",
+        2
+      ]
+    ],
+    "enabled": false
+  };
+
   /*
             ✨
             (\.   \      ,/)
@@ -7506,7 +9374,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.2.6
+                  8.3.0
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -7522,9 +9390,10 @@
     #1 Setup
     #2 Loop
     #3 Plugins
-    #4 Events
-    #5 Helpers
-    #6 Debugger
+    #4 Gestures
+    #5 Events
+    #6 Helpers
+    #7 Debugger
 
   */
 
@@ -7537,6 +9406,22 @@
     palmPointers: pluginPalmPointers,
   };
 
+  const coreGestures = {
+    love: gestureLove,
+    horns: gestureHorns,
+    pointRight: gesturePointRight,
+    pointLeft: gesturePointLeft,
+    pointUp: gesturePointUp,
+    pointDown: gesturePointDown,
+    spock: gestureSpock,
+    callMe: gestureCallMe,
+    ok: gestureOk,
+    stop: gestureStop,
+    victory: gestureVictory,
+    fist: gestureFist,
+    thumbUp: gestureThumbUp,
+    thumbDown: gestureThumbDown,
+  };
 
 
   /* ////////////////////////// #1 SETUP /////////////////////////
@@ -7570,7 +9455,7 @@
       
       // Assign the instance ID
       this.id = ++id;
-      this.version = '8.2.6';
+      this.version = '8.3.0';
       this.data = {};
 
       // Dependency management
@@ -7592,6 +9477,12 @@
       this.taggedPlugins = {
         untagged: []
       };
+
+      // Gestures
+      this.gesture = {};
+      this.taggedGestures = {
+        untagged: []
+      };
       
       // Clean config and set defaults
       this.config = this.cleanConfig(config);
@@ -7600,6 +9491,7 @@
       this.setupDebugger();
       this.prepareModels();
       this.loadCorePlugins();
+      this.loadCoreGestures();
 
       // Start tracking when all models are loaded
       this.hasAddedBodyClass = false;
@@ -7690,7 +9582,14 @@
         if (typeof config.plugin[plugin] === 'boolean') {
           config.plugin[plugin] = {enabled: config.plugin[plugin]};
         }
-      });        
+      });
+
+      // Map gesture booleans to objects
+      config.gesture && Object.keys(config.gesture).forEach(gesture => {
+        if (typeof config.gesture[gesture] === 'boolean') {
+          config.gesture[gesture] = {enabled: config.gesture[gesture]};
+        }
+      });
 
       return merge_1({}, defaults, config)
     }
@@ -7722,6 +9621,17 @@
             this.plugin[plugin].enable();
           } else {
             this.plugin[plugin].disable();
+          }
+        }
+      });
+
+      // Enable gestures
+      config.gesture && Object.keys(config.gesture).forEach(gesture => {
+        if (typeof config.gesture[gesture].enabled === 'boolean') {
+          if (config.gesture[gesture].enabled) {
+            this.gesture[gesture].enable();
+          } else {
+            this.gesture[gesture].disable();
           }
         }
       });
@@ -7789,7 +9699,14 @@
         if (typeof this.config.plugin?.[plugin]?.enabled === 'boolean' && this.config.plugin[plugin].enabled) {
           this.plugin[plugin].enable();
         }
-      });    
+      });
+
+      // Enable initial gestures
+      Object.keys(this.config.gesture).forEach(gesture => {
+        if (typeof this.config.gesture?.[gesture]?.enabled === 'boolean' && this.config.gesture[gesture].enabled) {
+          this.gesture[gesture].enable();
+        }
+      });
     }
 
     /**
@@ -7836,6 +9753,8 @@
           model.getData();
         }
       });
+
+      // Emit data
       this.emit('data', this.data);
 
       // Run untagged plugins
@@ -7903,7 +9822,7 @@
           enabled: true,
           // A set of default config values the user can override during instanciation
           config: {},
-          // (instance) => Called on every frame
+          // (instance) => Called on every frame. The callback is mapped to this
           onFrame: null,
           // (instance) => Called when the plugin is first used
           onUse: null,
@@ -8006,10 +9925,119 @@
       });
     }
 
+    
+    
+
+
+  /* //////////////////////// #4 GESTURES /////////////////////////
+
+   ██████╗ ███████╗███████╗████████╗██╗   ██╗██████╗ ███████╗███████╗
+  ██╔════╝ ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗██╔════╝██╔════╝
+  ██║  ███╗█████╗  ███████╗   ██║   ██║   ██║██████╔╝█████╗  ███████╗
+  ██║   ██║██╔══╝  ╚════██║   ██║   ██║   ██║██╔══██╗██╔══╝  ╚════██║
+  ╚██████╔╝███████╗███████║   ██║   ╚██████╔╝██║  ██║███████╗███████║
+   ╚═════╝ ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+                                                                     
+    /////////////////////////////////////////////////////////////*/
+
+    /**
+     * Adds a callback to be called whenever a gesture is detected
+     * @see https://handsfree.js.org/ref/method/useGesture
+     * 
+     * @param {Object} config The config object
+     * @returns {Gesture} The gesture object
+     */
+    useGesture (config) {
+      config = merge_1({},
+        {
+          // Stores the gestures name for internal use
+          name: 'untitled',
+          // The description
+          description: [],
+          // The model this gesture works with
+          models: [],
+          // Gesture tags for quickly turning them on/off
+          tags: [],
+          // Whether the gesture is enabled or not
+          enabled: true,
+        },
+        config
+      );
+
+      // Sanitize
+      if (typeof config.models === 'string') {
+        config.models = [config.models];
+      }
+
+      // Setup gesture tags
+      if (typeof config.tags === 'string') {
+        config.tags = [config.tags];
+      }
+      config.tags.forEach(tag => {
+        if (!this.taggedGestures[tag]) this.taggedGestures[tag] = [];
+        this.taggedGestures[tag].push(config.name);
+      });
+
+      // Create the gesture
+      switch (config.algorithm) {
+        case 'fingerpose':
+          this.gesture[config.name] = new GestureFingerpose(config, this);
+          break
+      }
+
+      // Store a reference to the gesture to simplify things
+      if (config.models.length) {
+        config.models.forEach(modelName => {
+          this.model[modelName].gestures.push(config.name);
+          this.model[modelName].updateGestureEstimator();
+        });
+      } else {
+        this.taggedGestures.untagged.push(config.name);
+      }
+
+      return this.gesture[config.name]
+    }
+
+    /**
+     * Enable gestures by tags
+     * @see https://handsfree.js.org/ref/method/enableGestures
+     * 
+     * @param {string|object} tags (Optional) The gestures with tags to enable. Enables all if null
+     */
+    enableGestures (tags) {
+      // Sanitize
+      if (typeof tags === 'string') tags = [tags];
+      if (!tags) tags = Object.keys(this.taggedGestures);
+
+      tags.forEach(tag => {
+        this.taggedGestures[tag].forEach(gestureName => {
+          this.gesture[gestureName].enable();
+        });
+      });
+    }
+
+    /**
+     * Disable Gestures by tags
+     * @see https://handsfree.js.org/ref/method/disableGestures
+     * 
+     * @param {string|object} tags (Optional) The Gestures with tags to disable. Disables all if null
+     */
+    disableGestures (tags) {
+      // Sanitize
+      if (typeof tags === 'string') tags = [tags];
+      if (!tags) tags = Object.keys(this.taggedGestures);
+
+      tags.forEach(tag => {
+        this.taggedGestures[tag].forEach(gestureName => {
+          this.gesture[gestureName].disable();
+        });
+      });
+    }
 
 
 
-  /* ///////////////////////// #4 EVENTS /////////////////////////
+
+  /* ///////////////////////// #5 EVENTS /////////////////////////
 
         ███████╗██╗   ██╗███████╗███╗   ██╗████████╗███████╗
         ██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
@@ -8050,7 +10078,7 @@
 
 
 
-  /* //////////////////////// #5 HELPERS /////////////////////////
+  /* //////////////////////// #6 HELPERS /////////////////////////
 
       ██╗  ██╗███████╗██╗     ██████╗ ███████╗██████╗ ███████╗
       ██║  ██║██╔════╝██║     ██╔══██╗██╔════╝██╔══██╗██╔════╝
@@ -8140,8 +10168,17 @@
       });    
     }
 
+    /**
+     * Loads all the core plugins (see #6)
+     */
+    loadCoreGestures () {
+      Object.keys(coreGestures).forEach(name => {
+        this.useGesture(coreGestures[name]);
+      });    
+    }
 
-  /* //////////////////////// #6 DEBUGGER ////////////////////////
+
+  /* //////////////////////// #7 DEBUGGER ////////////////////////
 
   ██████╗ ███████╗██████╗ ██╗   ██╗ ██████╗  ██████╗ ███████╗██████╗ 
   ██╔══██╗██╔════╝██╔══██╗██║   ██║██╔════╝ ██╔════╝ ██╔════╝██╔══██╗
