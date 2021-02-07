@@ -272,7 +272,7 @@ html
       margin-left var(--checkbox-total-width)
       &::before
         content ""
-        position absolute
+        position relative
         left calc(-1 * (var(--checkbox-total-width-precalc)))
         display inline-block
         width var(--checkbox-width)
@@ -295,9 +295,8 @@ html
         height var(--checkmark-width)
         position absolute
         top var(--checkmark-top)
-        left calc(
-      -1 * (var(--checkbox-total-width-precalc)) + var(--checkmark-left)
-    )
+        left calc(-1 * (var(--checkbox-total-width-precalc)) + var(--checkmark-left) + 4px)
+        left 3px
         background url("/icon/checkmark.svg")
 
   input[type="checkbox"][disabled]
@@ -457,6 +456,7 @@ html
       outline 1px dotted var(--link-blue)
 
   // Sidebar
+  .tree-view,
   .sidebar > ul
     &.tree-view,
     &.sidebar-links

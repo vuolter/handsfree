@@ -152,6 +152,7 @@ module.exports = {
               ['/ref/method/update.md', '.update()'],
               ['/ref/method/unpause.md', '.unpause()'],
               ['/ref/method/use.md', '.use()'],
+              ['/ref/method/useGesture.md', '.useGesture()'],
             ]
           },
           {
@@ -209,10 +210,15 @@ module.exports = {
           }
         ]
       },
+      // {
+      //   title: '🌐 Handsfree Browser Extension (in development)',
+      //   collapsable: true,
+      //   path: '/extension/'
+      // },
       {
-        title: '🌐 Handsfree Browser Extension (in development)',
+        title: '🖖 Create gesture',
         collapsable: true,
-        path: '/extension/'
+        path: '/create-gesture/'
       },
       {
         title: '🤝 Community',

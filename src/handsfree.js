@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.2.6
+                8.3.0
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -27,9 +27,10 @@
   #1 Setup
   #2 Loop
   #3 Plugins
-  #4 Events
-  #5 Helpers
-  #6 Debugger
+  #4 Gestures
+  #5 Events
+  #6 Helpers
+  #7 Debugger
 
 */
 
@@ -40,10 +41,12 @@ import HolisticModel from './model/holistic'
 import HandposeModel from './model/handpose'
 import WebojiModel from './model/weboji'
 import PluginBase from './Plugin/base.js'
+import GestureFingerpose from './Gesture/Fingerpose.js'
+import defaultConfig from './defaultConfig.js'
+
 import merge from 'lodash/merge'
 import throttle from 'lodash/throttle'
-import defaultConfig from './defaultConfig.js'
-import {TweenMax} from "gsap/TweenMaxBase"
+import {TweenMax} from 'gsap/TweenMaxBase'
 
 // Plugins
 import pluginFacePointer from './plugin/weboji/facePointer'
@@ -54,6 +57,22 @@ import pluginPinchScroll  from './plugin/hands/pinchScroll'
 import pluginPinchers  from './plugin/hands/pinchers'
 import pluginPalmPointers  from './plugin/hands/palmPointers'
 
+// Gesture Definitions
+import gestureLove from './gesture/hands/love.js'
+import gestureHorns from './gesture/hands/horns.js'
+import gesturePointRight from './gesture/hands/pointRight.js'
+import gesturePointLeft from './gesture/hands/pointLeft.js'
+import gesturePointUp from './gesture/hands/pointUp.js'
+import gesturePointDown from './gesture/hands/pointDown.js'
+import gestureSpock from './gesture/hands/spock.js'
+import gestureCallMe from './gesture/hands/callMe.js'
+import gestureOk from './gesture/hands/ok.js'
+import gestureStop from './gesture/hands/stop.js'
+import gestureVictory from './gesture/hands/victory.js'
+import gestureFist from './gesture/hands/fist.js'
+import gestureThumbUp from './gesture/hands/thumbUp.js'
+import gestureThumbDown from './gesture/hands/thumbDown.js'
+
 const corePlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
@@ -63,6 +82,22 @@ const corePlugins = {
   palmPointers: pluginPalmPointers,
 }
 
+const coreGestures = {
+  love: gestureLove,
+  horns: gestureHorns,
+  pointRight: gesturePointRight,
+  pointLeft: gesturePointLeft,
+  pointUp: gesturePointUp,
+  pointDown: gesturePointDown,
+  spock: gestureSpock,
+  callMe: gestureCallMe,
+  ok: gestureOk,
+  stop: gestureStop,
+  victory: gestureVictory,
+  fist: gestureFist,
+  thumbUp: gestureThumbUp,
+  thumbDown: gestureThumbDown,
+}
 
 
 /* ////////////////////////// #1 SETUP /////////////////////////
@@ -96,7 +131,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.2.6'
+    this.version = '8.3.0'
     this.data = {}
 
     // Dependency management
@@ -118,6 +153,12 @@ class Handsfree {
     this.taggedPlugins = {
       untagged: []
     }
+
+    // Gestures
+    this.gesture = {}
+    this.taggedGestures = {
+      untagged: []
+    }
     
     // Clean config and set defaults
     this.config = this.cleanConfig(config)
@@ -126,6 +167,7 @@ class Handsfree {
     this.setupDebugger()
     this.prepareModels()
     this.loadCorePlugins()
+    this.loadCoreGestures()
 
     // Start tracking when all models are loaded
     this.hasAddedBodyClass = false
@@ -216,7 +258,14 @@ class Handsfree {
       if (typeof config.plugin[plugin] === 'boolean') {
         config.plugin[plugin] = {enabled: config.plugin[plugin]}
       }
-    })        
+    })
+
+    // Map gesture booleans to objects
+    config.gesture && Object.keys(config.gesture).forEach(gesture => {
+      if (typeof config.gesture[gesture] === 'boolean') {
+        config.gesture[gesture] = {enabled: config.gesture[gesture]}
+      }
+    })
 
     return merge({}, defaults, config)
   }
@@ -248,6 +297,17 @@ class Handsfree {
           this.plugin[plugin].enable()
         } else {
           this.plugin[plugin].disable()
+        }
+      }
+    })
+
+    // Enable gestures
+    config.gesture && Object.keys(config.gesture).forEach(gesture => {
+      if (typeof config.gesture[gesture].enabled === 'boolean') {
+        if (config.gesture[gesture].enabled) {
+          this.gesture[gesture].enable()
+        } else {
+          this.gesture[gesture].disable()
         }
       }
     })
@@ -315,7 +375,14 @@ class Handsfree {
       if (typeof this.config.plugin?.[plugin]?.enabled === 'boolean' && this.config.plugin[plugin].enabled) {
         this.plugin[plugin].enable()
       }
-    })    
+    })
+
+    // Enable initial gestures
+    Object.keys(this.config.gesture).forEach(gesture => {
+      if (typeof this.config.gesture?.[gesture]?.enabled === 'boolean' && this.config.gesture[gesture].enabled) {
+        this.gesture[gesture].enable()
+      }
+    })
   }
 
   /**
@@ -362,6 +429,8 @@ class Handsfree {
         model.getData()
       }
     })
+
+    // Emit data
     this.emit('data', this.data)
 
     // Run untagged plugins
@@ -429,7 +498,7 @@ class Handsfree {
         enabled: true,
         // A set of default config values the user can override during instanciation
         config: {},
-        // (instance) => Called on every frame
+        // (instance) => Called on every frame. The callback is mapped to this
         onFrame: null,
         // (instance) => Called when the plugin is first used
         onUse: null,
@@ -532,10 +601,119 @@ class Handsfree {
     })
   }
 
+  
+  
+
+
+/* //////////////////////// #4 GESTURES /////////////////////////
+
+ ██████╗ ███████╗███████╗████████╗██╗   ██╗██████╗ ███████╗███████╗
+██╔════╝ ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗██╔════╝██╔════╝
+██║  ███╗█████╗  ███████╗   ██║   ██║   ██║██████╔╝█████╗  ███████╗
+██║   ██║██╔══╝  ╚════██║   ██║   ██║   ██║██╔══██╗██╔══╝  ╚════██║
+╚██████╔╝███████╗███████║   ██║   ╚██████╔╝██║  ██║███████╗███████║
+ ╚═════╝ ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+                                                                   
+  /////////////////////////////////////////////////////////////*/
+
+  /**
+   * Adds a callback to be called whenever a gesture is detected
+   * @see https://handsfree.js.org/ref/method/useGesture
+   * 
+   * @param {Object} config The config object
+   * @returns {Gesture} The gesture object
+   */
+  useGesture (config) {
+    config = merge({},
+      {
+        // Stores the gestures name for internal use
+        name: 'untitled',
+        // The description
+        description: [],
+        // The model this gesture works with
+        models: [],
+        // Gesture tags for quickly turning them on/off
+        tags: [],
+        // Whether the gesture is enabled or not
+        enabled: true,
+      },
+      config
+    )
+
+    // Sanitize
+    if (typeof config.models === 'string') {
+      config.models = [config.models]
+    }
+
+    // Setup gesture tags
+    if (typeof config.tags === 'string') {
+      config.tags = [config.tags]
+    }
+    config.tags.forEach(tag => {
+      if (!this.taggedGestures[tag]) this.taggedGestures[tag] = []
+      this.taggedGestures[tag].push(config.name)
+    })
+
+    // Create the gesture
+    switch (config.algorithm) {
+      case 'fingerpose':
+        this.gesture[config.name] = new GestureFingerpose(config, this)
+        break
+    }
+
+    // Store a reference to the gesture to simplify things
+    if (config.models.length) {
+      config.models.forEach(modelName => {
+        this.model[modelName].gestures.push(config.name)
+        this.model[modelName].updateGestureEstimator()
+      })
+    } else {
+      this.taggedGestures.untagged.push(config.name)
+    }
+
+    return this.gesture[config.name]
+  }
+
+  /**
+   * Enable gestures by tags
+   * @see https://handsfree.js.org/ref/method/enableGestures
+   * 
+   * @param {string|object} tags (Optional) The gestures with tags to enable. Enables all if null
+   */
+  enableGestures (tags) {
+    // Sanitize
+    if (typeof tags === 'string') tags = [tags]
+    if (!tags) tags = Object.keys(this.taggedGestures)
+
+    tags.forEach(tag => {
+      this.taggedGestures[tag].forEach(gestureName => {
+        this.gesture[gestureName].enable()
+      })
+    })
+  }
+
+  /**
+   * Disable Gestures by tags
+   * @see https://handsfree.js.org/ref/method/disableGestures
+   * 
+   * @param {string|object} tags (Optional) The Gestures with tags to disable. Disables all if null
+   */
+  disableGestures (tags) {
+    // Sanitize
+    if (typeof tags === 'string') tags = [tags]
+    if (!tags) tags = Object.keys(this.taggedGestures)
+
+    tags.forEach(tag => {
+      this.taggedGestures[tag].forEach(gestureName => {
+        this.gesture[gestureName].disable()
+      })
+    })
+  }
 
 
 
-/* ///////////////////////// #4 EVENTS /////////////////////////
+
+/* ///////////////////////// #5 EVENTS /////////////////////////
 
       ███████╗██╗   ██╗███████╗███╗   ██╗████████╗███████╗
       ██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
@@ -576,7 +754,7 @@ class Handsfree {
 
 
 
-/* //////////////////////// #5 HELPERS /////////////////////////
+/* //////////////////////// #6 HELPERS /////////////////////////
 
     ██╗  ██╗███████╗██╗     ██████╗ ███████╗██████╗ ███████╗
     ██║  ██║██╔════╝██║     ██╔══██╗██╔════╝██╔══██╗██╔════╝
@@ -666,8 +844,17 @@ class Handsfree {
     })    
   }
 
+  /**
+   * Loads all the core plugins (see #6)
+   */
+  loadCoreGestures () {
+    Object.keys(coreGestures).forEach(name => {
+      this.useGesture(coreGestures[name])
+    })    
+  }
 
-/* //////////////////////// #6 DEBUGGER ////////////////////////
+
+/* //////////////////////// #7 DEBUGGER ////////////////////////
 
 ██████╗ ███████╗██████╗ ██╗   ██╗ ██████╗  ██████╗ ███████╗██████╗ 
 ██╔══██╗██╔════╝██╔══██╗██║   ██║██╔════╝ ██╔════╝ ██╔════╝██╔══██╗

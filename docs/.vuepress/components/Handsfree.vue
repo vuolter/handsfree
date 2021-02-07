@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import HandsfreeToggle from './HandsfreeToggle'
-
 /**
  * A global component designed to setup Handsfree.js
  * - Adds the Handsfree Toggle to navbar
@@ -58,7 +56,7 @@ export default {
     🧙‍♂️ Presenting 🧙‍♀️
 
        Handsfree.js
-          8.2.6
+          8.3.0
 
 https://github.com/midiblocks/handsfree
 https://github.com/sponsors/midiblocks

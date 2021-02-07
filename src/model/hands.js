@@ -1,4 +1,5 @@
 import BaseModel from './base.js'
+import fingerpose from 'fingerpose'
 
 export default class HandsModel extends BaseModel {
   constructor (handsfree, config) {
@@ -6,6 +7,7 @@ export default class HandsModel extends BaseModel {
     this.name = 'hands'
 
     this.palmPoints = [0, 5, 9, 13, 17]
+    this.gestureEstimator = new fingerpose.GestureEstimator([])
   }
 
   loadDependencies (callback) {
@@ -76,6 +78,7 @@ export default class HandsModel extends BaseModel {
    */
   async getData () {
     this.dependenciesLoaded && await this.api.send({image: this.handsfree.debug.$video})
+    return this.data
   }
   // Called through this.api.onResults
   dataReceived (results) {
@@ -162,4 +165,106 @@ export default class HandsModel extends BaseModel {
       }
     }
   }
+
+  /**
+   * Updates the gesture estimator
+   */
+  updateGestureEstimator () {
+    const activeGestures = []
+    const gestureDescriptions = []
+    
+    // Build the gesture descriptions
+    this.gestures.forEach(name => {
+      if (!this.handsfree.gesture[name].enabled) return
+      activeGestures.push(name)
+      
+      // Loop through the description and compile it
+      if (!this.handsfree.gesture[name].compiledDescription && this.handsfree.gesture[name].enabled) {
+        const description = new fingerpose.GestureDescription(name)
+
+        this.handsfree.gesture[name].description.forEach(pose => {
+          // Build the description
+          switch (pose[0]) {
+            case 'addCurl':
+              description[pose[0]](
+                fingerpose.Finger[pose[1]],
+                fingerpose.FingerCurl[pose[2]],
+                pose[3]
+              )
+            break
+            case 'addDirection':
+              description[pose[0]](
+                fingerpose.Finger[pose[1]],
+                fingerpose.FingerDirection[pose[2]],
+                pose[3]
+              )
+            break
+            case 'setWeight':
+              description[pose[0]](
+                fingerpose.Finger[pose[1]],
+                pose[2]
+              )
+            break
+          }
+        })
+
+        this.handsfree.gesture[name].compiledDescription = description
+      }
+    })
+
+    // Create the gesture estimator
+    activeGestures.forEach(gesture => {
+      gestureDescriptions.push(this.handsfree.gesture[gesture].compiledDescription)
+    })
+
+    if (activeGestures.length) {
+      this.gestureEstimator = new fingerpose.GestureEstimator(gestureDescriptions)
+    }
+  }
+  
+  /**
+   * Gets current gesture
+   */
+  getGesture () {
+    let gestures = [null, null, null, null]
+
+    this.data.landmarks.forEach((landmarksObj, hand) => {
+      if (this.data.landmarksVisible[hand]) {
+        // Convert object to array
+        const landmarks = []
+        for (let i = 0; i < 21; i++) {
+          landmarks.push([landmarksObj[i].x * window.outerWidth, landmarksObj[i].y * window.outerHeight, 0])
+        }
+        
+        // Estimate
+        const estimate = this.gestureEstimator.estimate(landmarks, 7.5)
+        if (estimate.gestures.length) {
+          gestures[hand] = estimate.gestures.reduce((p, c) => {
+            const requiredConfidence = this.handsfree.gesture[c.name].confidence
+            return (c.confidence >= requiredConfidence && c.confidence > p.confidence) ? c : p
+          })
+        } else {
+          gestures[hand] = {
+            name: '',
+            confidence: 0
+          }
+        }
+
+        // Must pass confidence
+        if (gestures[hand].name) {
+          const requiredConfidence = this.handsfree.gesture[gestures[hand].name].confidence
+          if (gestures[hand].confidence < requiredConfidence) {
+            gestures[hand] = {
+              name: '',
+              confidence: 0
+            }
+          }
+        }
+
+        gestures[hand].pose = estimate.poseData
+      }
+    })
+
+    return gestures
+  }  
 }

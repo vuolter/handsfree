@@ -10,23 +10,36 @@ export default class BaseModel {
     // Whether the model is enabled or not
     this.enabled = config.enabled
 
-    // Collection of plugins
+    // Collection of plugins and gestures
     this.plugins = []
+    this.gestures = []
+    this.gestureEstimator = null
 
     setTimeout(() => {
+      // Get data
       const getData = this.getData
-      
       this.getData = async () => {
-        const data = await getData.apply(this, arguments)
+        let data = await getData.apply(this, arguments) || {}
+        data.gesture = this.getGesture()
         this.runPlugins()
         return data
+      }
+      
+      // Get gesture
+      let getGesture = this.getGesture
+      this.getGesture = () => {
+        if (!getGesture) {
+          getGesture = function () {}
+        }
+        return getGesture.apply(this, arguments)
       }
     }, 0)
   }
 
   // Implement in the model class
-  loadDependencies (callback) {}
+  loadDependencies () {}
   updateData () {}
+  updateGestureEstimator () {}
 
   /**
    * Enable model

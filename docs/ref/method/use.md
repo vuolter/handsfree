@@ -1,7 +1,3 @@
----
-next: /ref/plugin/
----
-
 # Method: `handsfree.use()`
 
 ```js
@@ -13,7 +9,7 @@ This method creates a "plugin" and is the recommended way to work with Handsfree
 ## Parameters
 
 pluginName: String
-: (required) The name of the `plugin` to create. If the name is taken then this will overwrite existing plugin
+: (required) The name of the `plugin` to create. If the name is taken then this will overwrite the existing plugin
 
 config: Object | Function
 : (required) An object containing the plugin definition, or a callback function to run on every frame
