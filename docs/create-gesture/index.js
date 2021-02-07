@@ -108,6 +108,8 @@ export default {
           })
           this.$root.handsfree.use('displayCurrentGesture', this.displayCurrentGesture)
 
+          this.$root.handsfree.enableGestures('core')
+          
           if (this.recordedShapes.length) {
             this.renderRecording()
           }
@@ -123,6 +125,7 @@ export default {
   destroyed () {
     this.$root.handsfree.plugin.displayShape.disable()
     this.$root.handsfree.plugin.recordShapes.disable()
+    this.$root.handsfree.disableGestures('core')
   },
 
   methods: {

@@ -4,7 +4,12 @@ sidebarDepth: 2
 # 🖖 Create Gesture
 
 <div class="row align-top">
-  <div class="col-6"><div></div></div>
+  <div class="col-6">
+    <div class="custom-block tip">
+      <p class="custom-block-title">TIP</p>
+      <p>Video and documentation coming soon!</p>
+    </div>
+  </div>
   <div class="col-6">
     <Window title="Step 1: Choose a model">
       <section>
