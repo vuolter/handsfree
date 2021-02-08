@@ -539,6 +539,40 @@ export default {
         recordedShapes: this.recordedShapes,
         fingerWeights: this.fingerWeights
       })
+    },
+  
+    /**
+     * Reset the gesture
+     */
+    reset () {
+      localStorage.removeItem('lastCreatedGesture')
+
+      this.gesture = {
+        name: 'untitled',
+        algorithm: 'fingerpose',
+        models: 'hands',
+        confidence: 7.5,
+        description: []
+      }
+      this.recordedShapes = []
+      this.currentGesture = {
+        name: null,
+        confidence: 0
+      }
+      this.fingerWeights = {
+        Thumb: null,
+        Index: null,
+        Middle: null,
+        Ring: null,
+        Pinky: null
+      }
+      this.mirror = {
+        horiz: false,
+        vert: false
+      }
+
+      this.$refs.recordingCanvasContainer.innerHTML = ''
+      window.scrollTo(0, 0)
     }
-  }
+  },
 }
