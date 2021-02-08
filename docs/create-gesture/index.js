@@ -16,7 +16,7 @@ export default {
   data () {
     let lastGesture = {}
     // Load last created gesture
-    if (process.isClient) {
+    if (typeof localStorage !== 'undefined') {
       lastGesture = localStorage.lastCreatedGesture || {}
     }
     
