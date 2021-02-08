@@ -153,6 +153,11 @@ sidebarDepth: 2
       <div><strong>Confidence:</strong> <span v-html="currentGesture.confidence"></span></div>
     </Window>
   </div>
+  <div class="col-6">
+    <Window title="Clear and reset">
+      <button @click="reset" class="full-width">Start a new gesture</button>
+    </Window>
+  </div>
 </div>
 
 
