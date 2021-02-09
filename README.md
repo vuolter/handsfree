@@ -427,6 +427,7 @@ I'd also like to thank:
 - [@DavidNTompkins](https://github.com/DavidNTompkins)
 - [@digitalcoleman](https://github.com/digitalcoleman)
 - [@joewilbert](https://github.com/joewilbert)
+- [@sindresorhus](https://github.com/sindresorhus)
 - And everyone else!
 
 <br>

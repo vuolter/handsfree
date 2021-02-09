@@ -65,6 +65,39 @@ handsfree.start()
   </div>
 </blockquote>
 
+## Installing
+<TabPanel :tabs="tabs.installing">
+<div data-panel="CDN">
+<div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment">&lt;!-- Include Handsfree.js --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/handsfree@8.3.0/build/lib/assets/handsfree.css<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/handsfree@8.3.0/build/lib/handsfree.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+&nbsp;
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment">&lt;!-- Instantiate and start it --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token keyword">const</span> handsfree <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Handsfree</span><span class="token punctuation">(</span><span class="token punctuation">{</span>hands<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    handsfree<span class="token punctuation">.</span><span class="token function">enablePlugins</span><span class="token punctuation">(</span><span class="token string">'browser'</span><span class="token punctuation">)</span>
+    handsfree<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div>
+</div>
+<div data-panel="NPM" class="hidden">
+<div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># From your projects root</span>
+<span class="token function">npm</span> i handsfree
+</code></pre></div>
+<div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// Inside your app</span>
+<span class="token keyword">import</span> Handsfree <span class="token keyword">from</span> <span class="token string">'handsfree'</span>
+&nbsp;
+<span class="token keyword">const</span> handsfree <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Handsfree</span><span class="token punctuation">(</span><span class="token punctuation">{</span>hands<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+handsfree<span class="token punctuation">.</span><span class="token function">enablePlugins</span><span class="token punctuation">(</span><span class="token string">'browser'</span><span class="token punctuation">)</span>
+handsfree<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div>
+</div>
+</TabPanel>
+
 ## Installing from CDN
 
 ```html
@@ -226,6 +259,10 @@ export default {
           pinchScroll: {enabled: true},
           palmPointers: {enabled: true}
         }
+      },
+
+      tabs: {
+        installing: ['CDN', 'NPM']
       }
     }
   },
