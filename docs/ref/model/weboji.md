@@ -270,7 +270,6 @@ export default {
         hands: false,
         facemesh: false,
         pose: false,
-        holistic: false,
         handpose: false,
 
         plugin: {

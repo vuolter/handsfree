@@ -29,7 +29,6 @@ export default {
         weboji: false,
         hands: true,
         pose: false,
-        holistic: false,
         handpose: false,
         facemesh: false
       },

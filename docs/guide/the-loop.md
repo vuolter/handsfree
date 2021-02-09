@@ -16,7 +16,7 @@ Basic plugins are created with [handsfree.use(pluginName, callback)](/ref/method
 ```js
 // A plugin that console logs your data on every frame
 handsfree.use('consoleLogger', (data) => {
-  console.log(data.weboji.rotation, data.holistic.data.faceLandmarks)
+  console.log(data.weboji.rotation, data.pose.data.faceLandmarks)
 })
 ```
 
@@ -131,18 +131,6 @@ handfree.use('consoleLogger', (data) => {
   if (!data.weboji) return
 
   console.log(data.weboji)
-})
-```
-
-In some models, properties are only available if detected. For example, if the right hand is not visible in the [holistic model](/ref/model/holistic/) then the `.rightHandLandmarks` won't exist. Without checks, this could lead to undefined errors.
-
-In these cases it might be necessary to check if the property also exists by using the [Optional Chaining operator](https://www.joshwcomeau.com/operator-lookup?match=optional-chaining):
-
-```js
-handsfree.use('consoleLogger', (data) => {
-  if (!data.holistic?.rightHandLandmarks?.[0]) return
-
-  console.log(data.holistic.rightHandLandmarks[0])
 })
 ```
 

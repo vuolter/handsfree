@@ -67,7 +67,7 @@ handsfree.use('palmPointerBasic', {
     this.$pointer.style.left = `${x}px`
     this.$pointer.style.top = `${y}px`
     
-    // Store this in the holistic models data so that it can be used in other plugins
+    // Store this in the handpose models data so that it can be used in other plugins
     handpose.pointer = {x, y}
   }
 })

@@ -79,7 +79,6 @@ export default {
           handpose: false,
           facemesh: false,
           pose: false,
-          holistic: false,
         },
         handpose: {
           autostart: true,
@@ -88,7 +87,6 @@ export default {
           handpose: true,
           facemesh: false,
           pose: false,
-          holistic: false,
         }
       }
     }

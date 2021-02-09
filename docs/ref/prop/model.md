@@ -14,7 +14,7 @@ const handsfree = new Handsfree({handpose: true})
 
 handsfree.model.handpose.disable()
 handsfree.model.weboji.enable()
-handsfree.model.holistic.enable()
+handsfree.model.hands.enable()
 ```
 
 ## Manually getting data
@@ -45,5 +45,4 @@ handsfree.model.handpose.api
 handsfree.model.hands.api
 handsfree.model.pose.api
 handsfree.model.facemesh.api
-handsfree.model.holistic.api
 ```

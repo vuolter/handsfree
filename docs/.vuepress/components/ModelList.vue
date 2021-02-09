@@ -120,10 +120,6 @@ export default {
           autostart: true,
           pose: true
         },
-        holistic: {
-          autostart: true,
-          holistic: true
-        },
         handpose: {
           autostart: true,
           handpose: true

@@ -40,12 +40,6 @@ export default {
         width: 1280,
         height: 720
       },
-      holistic: {
-        // The canvas element to hold the skeletons and keypoints for holistic model
-        $el: null,
-        width: 1280,
-        height: 720
-      },
       pose: {
         // The canvas element to hold the skeletons and keypoints for pose model
         $el: null,
@@ -164,26 +158,6 @@ export default {
     // Minimum confidence [0 - 1] for a person detection to be considered detected
     minDetectionConfidence: 0.5,
 
-    // Minimum confidence [0 - 1] for the pose tracker to be considered detected
-    // Higher values are more robust at the expense of higher latency
-    minTrackingConfidence: 0.5
-  },
-
-  // Holistic model
-  holistic: {
-    enabled: false,
-    
-    // Outputs only the top 25 pose landmarks if true,
-    // otherwise shows all 33 full body pose landmarks
-    // - Note: Setting this to true may result in better accuracy 
-    upperBodyOnly: true,
-
-    // Helps reduce jitter over multiple frames if true
-    smoothLandmarks: true,
-
-    // Minimum confidence [0 - 1] for a person detection to be considered detected
-    minDetectionConfidence: 0.5,
-        
     // Minimum confidence [0 - 1] for the pose tracker to be considered detected
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5

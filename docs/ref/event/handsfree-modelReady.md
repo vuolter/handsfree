@@ -3,7 +3,7 @@ next: /ref/method/
 ---
 # Event: `handsfree-modelReady`
 
-This event is triggered on the `document` when a model is ready to be used. In addition to `handsfree-modelReady` you can also use `handsfree-webojiModelReady`, `handsfree-holisticModelReady`, and `handsfree-handposeModelReady` to zero in on specific models.
+This event is triggered on the `document` when a model is ready to be used. In addition to `handsfree-modelReady` you can also use `handsfree-webojiModelReady`, `handsfree-handsModelReady`, `handsfree-poseModelReady`, `handsfree-facemeshModelReady`, and `handsfree-handposeModelReady` to zero in on specific models.
 
 ## Receives
 
@@ -14,7 +14,7 @@ event
 
 ```js
 // Instantiate
-const handsfree = new Handsfree({handpose: true, holistic: true, weboji: true})
+const handsfree = new Handsfree({hands: true, pose: true, weboji: true})
 
 // Listen for the event
 // - This will get called 3 times since 3 models are being loaded
@@ -27,10 +27,7 @@ handsfree.on('modelReady', (event) => {
 handsfree.on('webojiModelReady', (event) => {
   console.log(event.detail)
 })
-handsfree.on('handposeModelReady', (event) => {
-  console.log(event.detail)
-})
-handsfree.on('holisticModelReady', (event) => {
+handsfree.on('handsModelReady', (event) => {
   console.log(event.detail)
 })
 

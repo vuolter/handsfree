@@ -178,8 +178,8 @@ handsfree.use('handTrackingSwitcher', {weboji} => {
 handsfree.update({
   // Disable weboji which is currently running
   weboji: false,
-  // Start the holistic model
-  holistic: true,
+  // Start the pose model
+  pose: true,
 
   // This is also how you configure (or pre-configure) a bunch of plugins at once
   plugin: {
@@ -199,7 +199,7 @@ handsfree.enablePlugins('music')
 
 // Overwrite our logger to display the original model APIs
 handsfree.plugin.logger.onFrame = (data) => {
-  console.log(handsfree.model.holistic?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
+  console.log(handsfree.model.pose?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
 

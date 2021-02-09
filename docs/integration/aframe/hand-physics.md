@@ -60,7 +60,6 @@ export default {
       weboji: false,
       hands: false,
       pose: false,
-      holistic: false,
       handpose: true,
       facemesh: false
     }

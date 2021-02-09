@@ -19,14 +19,14 @@ config: Object | Function
 ```js
 const handsfree = new Handsfree({
   weboji: true,
-  holistic: true,
-  handpose: true
+  pose: true,
+  hands: true
 })
 
 // A plugin that console logs your data on every frame
 // - The callback is mapped to handsfree.plugin.consoleLogger.onFrame(data => {})
 handsfree.use('consoleLogger', (data) => {
-  console.log(data.weboji, data.holistic, data.handpose)
+  console.log(data.weboji, data.pose, data.hands)
 })
 ```
 
@@ -48,7 +48,7 @@ handsfree.use('consoleLogger', {
   // Called on every frame
   // - If you only pass a callback, it'll get assigned to this method
   onFrame (data) {
-    console.log(data.weboji, data.holistic, data.handpose)
+    console.log(data.weboji, data.pose, data.hands)
   },
 
   // Called immediate after this plugin is added (whether it's enabled or not)

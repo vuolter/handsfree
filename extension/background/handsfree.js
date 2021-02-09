@@ -84,7 +84,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, respond) {
         ...configOverrides
       }
       const newConfig = {}
-      const keys = Object.keys(config).filter(key => ['weboji', 'hands', 'facemesh', 'pose', 'holistic', 'handpose'].indexOf(key) >= 0)
+      const keys = Object.keys(config).filter(key => ['weboji', 'hands', 'facemesh', 'pose', 'handpose'].indexOf(key) >= 0)
       keys.forEach(key => newConfig[key] = config[key])
       
       newConfig.autostart = !!handsfree.isLooping

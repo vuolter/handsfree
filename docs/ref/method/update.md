@@ -24,8 +24,8 @@ callback: function
 const handsfree = new Handsfree({weboji: true})
 handsfree.start()
 
-// Turn off weboji and turn on mediapipe holistic
-handsfree.update({weboji: false, holistic: true})
+// Turn off weboji and turn on mediapipe hands
+handsfree.update({weboji: false, hands: true})
 ```
 
 ## See Also

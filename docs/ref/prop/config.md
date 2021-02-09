@@ -110,10 +110,6 @@ See the [Facemesh Model](/ref/model/facemesh/#configuration) page
 
 See the [Pose Model](/ref/model/pose/#configuration) page
 
-### `.holistic`
-
-See the [Holistic Model](/ref/model/holistic/#configuration) page
-
 ### `.weboji`
 
 See the [Weboji Model](/ref/model/weboji/#configuration) page
