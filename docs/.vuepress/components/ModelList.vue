@@ -1,8 +1,10 @@
 <template lang="pug">
 div.mt-md
+  p Each of the following models can be combined and reconfigured in real time.
+
   .row.align-top
     .col-6
-      Window(title="Model: MediaPipe Hands")
+      Window(title="Model: MediaPipe Hands (2D)")
         router-link(to='/ref/model/hands.html')
           img(src='https://media0.giphy.com/media/y4S6WFaCUWvqHL7UA8/giphy.gif')
         p
@@ -19,6 +21,25 @@ div.mt-md
           button.handsfree-show-when-started-without-hands.handsfree-hide-when-loading(@click='start("hands")')
             Fa-Video
             | Try Hands
+
+    .col-6
+      Window(title="Model: TensorFlow Handpose (3D)")
+        router-link(to='/ref/model/handpose.html')
+          img(src='https://media1.giphy.com/media/qtDKTxsvD2fegGlRFr/giphy.gif')
+        p
+          router-link(to='/ref/model/handpose.html') 📚 TensorFlow Handpose documentation
+        ul
+          li 21 3D hand landmarks
+          li Can only track 1 hand at a time
+          li 📅 Extra helpers and plugins coming soon
+        div
+          HandsfreeToggle.full-width.handsfree-hide-when-started-without-handpose(text-off='Try Handpose' text-on='Stop Handpose' :opts='demo.handpose' @stop='stop("handpose")')
+          button.handsfree-show-when-started-without-handpose.handsfree-show-when-loading(disabled)
+            Fa-Spinner(spin)
+            | Loading...
+          button.handsfree-show-when-started-without-handpose.handsfree-hide-when-loading(@click='start("handpose")')
+            Fa-Video
+            | Try Handpose
 
     .col-6
       Window(title="Model: MediaPipe FaceMesh")
@@ -57,25 +78,6 @@ div.mt-md
           button.handsfree-show-when-started-without-pose.handsfree-hide-when-loading(@click='start("pose")')
             Fa-Video
             | Try Pose
-
-    .col-6
-      Window(title="Model: TensorFlow Handpose")
-        router-link(to='/ref/model/handpose.html')
-          img(src='https://media1.giphy.com/media/qtDKTxsvD2fegGlRFr/giphy.gif')
-        p
-          router-link(to='/ref/model/handpose.html') 📚 TensorFlow Handpose documentation
-        ul
-          li 21 3D hand landmarks
-          li Can only track 1 hand at a time
-          li 📅 Extra helpers and plugins coming soon
-        div
-          HandsfreeToggle.full-width.handsfree-hide-when-started-without-handpose(text-off='Try Handpose' text-on='Stop Handpose' :opts='demo.handpose' @stop='stop("handpose")')
-          button.handsfree-show-when-started-without-handpose.handsfree-show-when-loading(disabled)
-            Fa-Spinner(spin)
-            | Loading...
-          button.handsfree-show-when-started-without-handpose.handsfree-hide-when-loading(@click='start("handpose")')
-            Fa-Video
-            | Try Handpose
 
     .col-6
       Window(title="Model: TensorFlow Handpose")
