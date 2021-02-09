@@ -9,6 +9,17 @@ section.tab-panel(ref="panel")
 </template>
 
 <script>
+/**
+ * Represents a TabPanel
+ * 
+ * <TabPanel :tabs="[]">
+ *   <div data-panel="tabs[0]"></div>
+ *   <div data-panel="tabs[1]" class="hidden"></div>
+ *   <div data-panel="tabs[1]" class="hidden"></div>
+ * </TabPanel>
+ * 
+ * @property {Array} tabs A list of titles for tabs
+ */
 export default {
   name: 'Tabs',
 

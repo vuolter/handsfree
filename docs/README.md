@@ -68,6 +68,7 @@ handsfree.start()
 ## Installing
 <TabPanel :tabs="tabs.installing">
 <div data-panel="CDN">
+<p><strong>Note:</strong> Some models are over 10Mb+ and may take a few seconds to load.</p>
 <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
   <span class="token comment">&lt;!-- Include Handsfree.js --&gt;</span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/handsfree@8.3.0/build/lib/assets/handsfree.css<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
@@ -95,69 +96,28 @@ handsfree.start()
 handsfree<span class="token punctuation">.</span><span class="token function">enablePlugins</span><span class="token punctuation">(</span><span class="token string">'browser'</span><span class="token punctuation">)</span>
 handsfree<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre></div>
+<h3>Hosting the models yourself</h3>
+<p>By default, and for simplicity, the above will load models from the <a href="https://unpkg.com/browse/handsfree@8.3.0/build/lib/assets">Unpkg CDN</a>. This can be very slow. To host the models yourself (and to use offline) you can eject the models from the npm package into your project's public folder:</p>
+<div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># Move the models into your project's public directory</span>
+<span class="token comment"># - change PUBLIC below to where you keep your project's assets</span>
+&nbsp;
+<span class="token comment"># ON WINDOWS</span>
+xcopy /e node_modules<span class="token punctuation">\</span>handsfree<span class="token punctuation">\</span>build<span class="token punctuation">\</span>lib PUBLIC
+<span class="token comment"># EVERYWHERE ELSE</span>
+<span class="token function">cp</span> -r node_modules/handsfree/build/lib/* PUBLIC
+</code></pre></div>
+<div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> Handsfree <span class="token keyword">from</span> <span class="token string">'handsfree'</span>
+&nbsp;
+<span class="token keyword">const</span> handsfree <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Handsfree</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  hands<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token comment">// Set this to your where you moved the models into</span>
+  assetsPath<span class="token operator">:</span> <span class="token string">'/PUBLIC/assets'</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+handsfree<span class="token punctuation">.</span><span class="token function">enablePlugins</span><span class="token punctuation">(</span><span class="token string">'browser'</span><span class="token punctuation">)</span>
+handsfree<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div>
 </div>
 </TabPanel>
-
-## Installing from CDN
-
-```html
-<head>
-  <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.3.0/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.3.0/build/lib/handsfree.js"></script>
-</head>
-
-<body>
-  <!-- Instantiate and start it -->
-  <script>
-    const handsfree = new Handsfree({hands: true})
-    handsfree.enablePlugins('browser')
-    handsfree.start()
-  </script>
-</body>
-```
-
-## Installing from NPM
-
-```bash 
-# From your projects root
-npm i handsfree
-```
-
-```js
-// Inside your app
-import Handsfree from 'handsfree'
-
-const handsfree = new Handsfree({hands: true})
-handsfree.enablePlugins('browser')
-handsfree.start()
-```
-
-### Hosting the models yourself
-
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.3.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
-
-```bash
-# Move the models into your project's public directory
-# - change PUBLIC below to where you keep your project's assets
-
-# ON WINDOWS
-xcopy /e node_modules\handsfree\build\lib PUBLIC
-# EVERYWHERE ELSE
-cp -r node_modules/handsfree/build/lib/* PUBLIC
-```
-
-```js
-import Handsfree from 'handsfree'
-
-const handsfree = new Handsfree({
-  hands: true,
-  // Set this to your where you moved the models into
-  assetsPath: '/PUBLIC/assets',
-})
-handsfree.enablePlugins('browser')
-handsfree.start()
-```
 
 ## Models
 <ModelList />
