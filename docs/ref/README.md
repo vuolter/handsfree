@@ -6,12 +6,6 @@ next: /community/
 
 <br>
 
-<Content :page-key="$site.pages.find(p => p.path === '/ref/model/').key"/>
-
-<br>
-
----
-
 <Content :page-key="$site.pages.find(p => p.path === '/ref/event/').key"/>
 
 ---

@@ -29,24 +29,21 @@ handsfree.enablePlugins('browser')
 // Start tracking
 handsfree.start()
 ```
-
-<div class="window">
-  <div class="window-body">
-    <div class="row">
-      <div class="col-6"><img src="https://media4.giphy.com/media/tQ1vFtoMWWpgdCoJJj/giphy.gif"></div>
-      <div class="col-6">
-        <h2>Run the above code!</h2>
-        <ul>
-          <li>👌 Pinch your thumb and index to grab the page</li>
-          <li>↕ While pinched, move hand up and down to scroll page</li>
-        </ul>
-        <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Scroll page with hands" text-on="Stop Hands" :opts="demoOpts" />
-        <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-        <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Scroll page with hands</button>
-      </div>
+<Window title="Demo: Scroll pages handsfree">
+  <div class="row">
+    <div class="col-6"><img src="https://media4.giphy.com/media/tQ1vFtoMWWpgdCoJJj/giphy.gif"></div>
+    <div class="col-6">
+      <h2>Scroll pages handsfree!</h2>
+      <ul>
+        <li>👌 Pinch your thumb and index to grab the page</li>
+        <li>↕ While pinched, move hand up and down to scroll page</li>
+      </ul>
+      <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Scroll page with hands" text-on="Stop Hands" :opts="demoOpts" />
+      <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+      <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo"><Fa-Video /> Scroll page with hands</button>
     </div>
   </div>
-</div>
+</Window>
 
 <blockquote>
   <div class="verticle-middle-children space-children text-center">

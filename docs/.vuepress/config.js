@@ -98,7 +98,10 @@ module.exports = {
       {
         title: '🖖 Gestures',
         collapsable: true,
-        path: '/gesture/'
+        path: '/gesture/',
+        children: [
+          ['/gesture/create/', 'Create Gesture']
+        ]
       },
       {
         title: '🎮 Examples',
