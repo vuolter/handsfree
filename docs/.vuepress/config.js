@@ -84,6 +84,18 @@ module.exports = {
         path: '/'
       },
       {
+        title: '📦 Models',
+        path: '/ref/model/',
+        collapsable: true,
+        children: [
+          ['/ref/model/hands.md', '🖐 Hands (2D)'],
+          ['/ref/model/handpose.md', '🖐 Handpose (3D)'],
+          ['/ref/model/facemesh.md', '😏 FaceMesh'],
+          ['/ref/model/pose.md', '🤸‍♀️ Pose'],
+          ['/ref/model/weboji.md', '😉 Weboji'],
+        ]
+      },
+      {
         title: '📋 Guides',
         collapsable: true,
         path: '/guide/',
@@ -105,18 +117,6 @@ module.exports = {
         path: '/ref/',
         collapsable: true,
         children: [
-          {
-            title: '📦 Models',
-            path: '/ref/model/',
-            collapsable: true,
-            children: [
-              ['/ref/model/hands.md', '🖐 Hands (2D)'],
-              ['/ref/model/handpose.md', '🖐 Handpose (3D)'],
-              ['/ref/model/facemesh.md', '😏 FaceMesh'],
-              ['/ref/model/pose.md', '🤸‍♀️ Pose'],
-              ['/ref/model/weboji.md', '😉 Weboji'],
-            ]
-          },
           {
             title: '⚡ Events',
             path: '/ref/event/',
@@ -228,7 +228,7 @@ module.exports = {
           ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
           ['https://discord.gg/q96txF5Wf5', 'Discord'],
           ['https://twitter.com/midiblocks', 'Twitter'],
-          ['http://eepurl.com/hhD7S1', '📧 Newsletter']
+          ['https://www.getrevue.co/profile/midiblocks', '📧 Newsletter']
         ]
       },
       {
