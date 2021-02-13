@@ -24,7 +24,7 @@
 </div>
 
 <Window title="Look around the A-Frame Handsfree" style="height: 500px" :maximize='true'>
-  <iframe id="aframe" src="/integration/aframe/hand-physics/index.html" style="width: 100%; height: 100%"></iframe>
+  <iframe id="aframe" src="/example/aframe/hand-physics/index.html" style="width: 100%; height: 100%"></iframe>
 </Window>
 
 ## The basic approach

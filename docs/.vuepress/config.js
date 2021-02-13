@@ -96,6 +96,26 @@ module.exports = {
         ]
       },
       {
+        title: '🖖 Gestures',
+        collapsable: true,
+        path: '/gesture/'
+      },
+      {
+        title: '🎮 Examples',
+        collapsable: true,
+        path: '/example/',
+        children: [
+          {
+            title: 'A-Frame',
+            path: '/example/aframe/',
+            collapsable: true,
+            children: [
+              ['/example/aframe/look-around-handsfree.md', '"Look around" handsdfree']
+            ]
+          }
+        ]
+      },
+      {
         title: '📋 Guides',
         collapsable: true,
         path: '/guide/',
@@ -193,32 +213,11 @@ module.exports = {
           }
         ]
       },
-      {
-        title: '🧩 Integrations',
-        collapsable: true,
-        path: '/integration/',
-        children: [
-          {
-            title: 'A-Frame',
-            path: '/integration/aframe/',
-            collapsable: true,
-            children: [
-              ['/integration/aframe/look-around-handsfree.md', '"Look around" handsdfree'],
-              // ['/integration/aframe/hand-physics.md', 'Hand physics']
-            ]
-          }
-        ]
-      },
       // {
       //   title: '🌐 Handsfree Browser Extension (in development)',
       //   collapsable: true,
       //   path: '/extension/'
       // },
-      {
-        title: '🖖 Create gesture',
-        collapsable: true,
-        path: '/create-gesture/'
-      },
       {
         title: '🤝 Community',
         collapsable: true,

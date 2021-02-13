@@ -1,6 +1,6 @@
 ---
 prev: /
-next: /integration/
+next: /example/
 ---
 # 📋 Guides
 

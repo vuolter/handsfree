@@ -250,9 +250,9 @@ handsfree = new Handsfree({
 
 ## See also
 
-- Integrations
+- Examples
   - A-Frame
-    - ["Look around" handsfree](/integration/aframe/look-around-handsfree/)
+    - ["Look around" handsfree](/example/aframe/look-around-handsfree/)
 - Plugins
   - [faceClick](/ref/model/faceClick/)
   - [facePointer](/ref/model/facePointer/)
