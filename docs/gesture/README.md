@@ -35,85 +35,8 @@ The gesture API is still being experimental. However a migration tool will be pr
 
 
 <script>
-export default {
-  data: () => ({
-    demoOpts: {
-      autostart: true,
-      weboji: false,
-      hands: true,
-      handpose: false,
-      facemesh: false,
-      pose: false,
-    }
-  }),
-
-  mounted () {
-    /**
-     * Plugin to detect and toggle models
-     */
-    let lastGestureHandpose = null
-    let lastGestureHands = [null, null, null, null]
-    let currentShapeHands = ''
-
-    // Recursive because of the way we're loading handsfree into the docs
-    const checkHandsfree = () => {
-      if (this.$root.handsfree) {
-        this.$root.handsfree.enableGestures('core')
-        
-        this.$root.handsfree.use('gestureEmojiDetector', ({hands, handpose}) => {
-          if (hands?.gesture) {
-            hands.gesture.forEach((gesture, n) => {
-              if (gesture && gesture.name !== lastGestureHands[n]) {
-                let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
-                if ($el) $el.classList.remove('active')
-                $el = document.querySelector(`.gesture-emoji[gesture="${gesture.name}"]`)
-                if ($el) $el.classList.add('active')
-                
-                lastGestureHands[n] = gesture.name
-              }
-    
-              // Disable the gesture emoji if no gestures
-              if (lastGestureHands[n] && !gesture?.name) {
-                let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHands[n]}"]`)
-                if ($el) $el.classList.remove('active')
-    
-                lastGestureHands[n] = null
-              }
-            })
-          }
-    
-          // Toggle the gesture emoji
-          if (handpose?.gesture && handpose.gesture.name !== lastGestureHandpose) {
-            let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHandpose}"]`)
-            if ($el) $el.classList.remove('active')
-            $el = document.querySelector(`.gesture-emoji[gesture="${handpose.gesture.name}"]`)
-            if ($el) $el.classList.add('active')
-            
-            lastGestureHandpose = handpose.gesture.name
-          }
-    
-          // Disable the gesture emoji if no gestures
-          if (lastGestureHandpose && !handpose?.gesture?.name) {
-            let $el = document.querySelector(`.gesture-emoji[gesture="${lastGestureHandpose}"]`)
-            if ($el) $el.classList.remove('active')
-    
-            lastGestureHandpose = null
-          }
-        })
-      } else {
-        setTimeout(checkHandsfree, 5)
-      }
-    }
-
-    checkHandsfree()
-  },
-
-  methods: {
-    startDemo () {
-      this.$root.handsfree.update(this.demoOpts)
-    }
-  }
-}
+import Demo from './demo'
+export default Demo
 </script>
 
 <!-- Demo styles -->

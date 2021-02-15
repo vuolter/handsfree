@@ -56,22 +56,6 @@ import pluginPinchScroll  from './plugin/hands/pinchScroll'
 import pluginPinchers  from './plugin/hands/pinchers'
 import pluginPalmPointers  from './plugin/hands/palmPointers'
 
-// Gesture Definitions
-import gestureLove from './gesture/hands/love.js'
-import gestureHorns from './gesture/hands/horns.js'
-import gesturePointRight from './gesture/hands/pointRight.js'
-import gesturePointLeft from './gesture/hands/pointLeft.js'
-import gesturePointUp from './gesture/hands/pointUp.js'
-import gesturePointDown from './gesture/hands/pointDown.js'
-import gestureSpock from './gesture/hands/spock.js'
-import gestureCallMe from './gesture/hands/callMe.js'
-import gestureOk from './gesture/hands/ok.js'
-import gestureStop from './gesture/hands/stop.js'
-import gestureVictory from './gesture/hands/victory.js'
-import gestureFist from './gesture/hands/fist.js'
-import gestureThumbUp from './gesture/hands/thumbUp.js'
-import gestureThumbDown from './gesture/hands/thumbDown.js'
-
 const corePlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
@@ -79,23 +63,6 @@ const corePlugins = {
   pinchScroll: pluginPinchScroll,
   pinchers: pluginPinchers,
   palmPointers: pluginPalmPointers,
-}
-
-const coreGestures = {
-  love: gestureLove,
-  horns: gestureHorns,
-  pointRight: gesturePointRight,
-  pointLeft: gesturePointLeft,
-  pointUp: gesturePointUp,
-  pointDown: gesturePointDown,
-  spock: gestureSpock,
-  callMe: gestureCallMe,
-  ok: gestureOk,
-  stop: gestureStop,
-  victory: gestureVictory,
-  fist: gestureFist,
-  thumbUp: gestureThumbUp,
-  thumbDown: gestureThumbDown,
 }
 
 
@@ -165,7 +132,6 @@ class Handsfree {
     this.setupDebugger()
     this.prepareModels()
     this.loadCorePlugins()
-    this.loadCoreGestures()
 
     // Start tracking when all models are loaded
     this.hasAddedBodyClass = false
@@ -834,15 +800,6 @@ class Handsfree {
   loadCorePlugins () {
     Object.keys(corePlugins).forEach(name => {
       this.use(name, corePlugins[name])
-    })    
-  }
-
-  /**
-   * Loads all the core plugins (see #6)
-   */
-  loadCoreGestures () {
-    Object.keys(coreGestures).forEach(name => {
-      this.useGesture(coreGestures[name])
     })    
   }
 
