@@ -3,7 +3,7 @@ export default {
   "name": "spock",
   "algorithm": "fingerpose",
   "models": "hands",
-  "tags": ["core"],
+  "tags": ["gestureDemo"],
   "confidence": "7.5",
   "description": [
     [
@@ -97,5 +97,4 @@ export default {
       0.7647058823529411
     ]
   ],
-  "enabled": false
 }

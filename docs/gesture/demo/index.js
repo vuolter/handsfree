@@ -14,7 +14,7 @@ import gestureFist from './gesture/hands/fist.js'
 import gestureThumbUp from './gesture/hands/thumbUp.js'
 import gestureThumbDown from './gesture/hands/thumbDown.js'
 
-const coreGestures = {
+const demoGestures = {
   love: gestureLove,
   horns: gestureHorns,
   pointRight: gesturePointRight,
@@ -54,9 +54,10 @@ export default {
     const checkHandsfree = () => {
       if (this.$root.handsfree) {
         // Add gestures
-        Object.keys(coreGestures).forEach(name => {
-          this.$root.handsfree.useGesture(coreGestures[name])
-        })    
+        Object.keys(demoGestures).forEach(name => {
+          this.$root.handsfree.useGesture(demoGestures[name])
+        })
+        this.$root.handsfree.enableGestures('gestureDemo')
     
         // Emoji detector
         this.$root.handsfree.use('gestureEmojiDetector', ({hands, handpose}) => {
@@ -105,6 +106,11 @@ export default {
     }
 
     checkHandsfree()
+  },
+
+  destroyed () {
+    this.$root.handsfree.plugin.gestureEmojiDetector.disable()
+    this.$root.handsfree.disableGestures('gestureDemo')
   },
 
   methods: {

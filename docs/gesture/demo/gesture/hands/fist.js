@@ -3,7 +3,7 @@ export default {
   "name": "fist",
   "algorithm": "fingerpose",
   "models": "hands",
-  "tags": ["core"],
+  "tags": ["gestureDemo"],
   "confidence": "7.5",
   "description": [
     [
@@ -109,5 +109,4 @@ export default {
       1
     ]
   ],
-  "enabled": false
 }

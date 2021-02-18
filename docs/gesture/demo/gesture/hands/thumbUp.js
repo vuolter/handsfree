@@ -3,7 +3,7 @@ export default {
   "name": "thumbUp",
   "algorithm": "fingerpose",
   "models": "hands",
-  "tags": ["core"],
+  "tags": ["gestureDemo"],
   "confidence": "7.5",
   "description": [
     [
@@ -96,5 +96,4 @@ export default {
       2
     ]
   ],
-  "enabled": false
 }
