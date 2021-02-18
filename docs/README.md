@@ -54,10 +54,6 @@ handsfree.start()
   </div>
   <hr style="margin: 20px auto">
   <div class="text-center">
-    <p><a href="https://github.com/sponsors/midiblocks">Become a sponsor 💜</a></p>
-  </div>
-  <hr style="margin: 20px auto">
-  <div class="text-center">
     <strong>Special thanks to:</strong> <a href="https://studioforcreativeinquiry.org/">The STUDIO for Creative Inquiry</a>, <a href="https://glitch.com">Glitch.com</a>, <a href="https://research.google/teams/brain/pair/">Google PAIR</a>, and you!
   </div>
 </blockquote>
@@ -121,7 +117,7 @@ handsfree<span class="token punctuation">.</span><span class="token function">st
 
 ## Quickstart Workflow
 
-The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/q96txF5Wf5) if you get stuck!
+The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/JeevWjTEdu) if you get stuck!
 
 ```js
 // Let's enable face tracking with the default Face Pointer
@@ -182,17 +178,6 @@ handsfree.plugin.logger.onFrame = (data) => {
   console.log(handsfree.model.pose?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
-
-
-<blockquote>
-  <div class="text-center">
-    <p>Thanks to all of <a href="https://github.com/midiblocks/handsfree#thanks-to-the-handsfreejsorg-github-sponsors">our GitHub Sponsors</a>, including:</p>
-  </div>
-  <hr style="margin: 20px auto">
-  <div class="text-center">
-    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=48 title="@nsthorat"></a>
-  </div>
-</blockquote>
 
 
 

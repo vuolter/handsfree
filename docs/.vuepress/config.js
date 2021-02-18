@@ -227,8 +227,7 @@ module.exports = {
         path: '/community/',
         children: [
           ['https://github.com/midiblocks/handsfree', 'GitHub'],
-          ['https://github.com/sponsors/midiblocks', '💜 Become a sponsor'],
-          ['https://discord.gg/q96txF5Wf5', 'Discord'],
+          ['https://discord.gg/JeevWjTEdu', 'Discord'],
           ['https://twitter.com/midiblocks', 'Twitter'],
           ['https://www.getrevue.co/profile/midiblocks', '📧 Newsletter']
         ]

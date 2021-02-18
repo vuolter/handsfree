@@ -316,6 +316,6 @@ Anytime something happens within Handsfree.js, a class is added to the `document
 
 So that about covers the basics! I know that might have been overwhelming, but one of my New Year Resolutions is to write more and so I'll be releasing smaller, more focused tutorials about once a week covering one specific topic at a time.
 
-I start my 2nd residency at the [STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org/) this month where I'll be exploring new ways to apply Handsfree.js. It's my full time thing so please leave me a comment below or [stop by my Discord](https://discord.gg/q96txF5Wf5) so that I can help you integrate Handsfree.js in new and creative ways. 
+I start my 2nd residency at the [STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org/) this month where I'll be exploring new ways to apply Handsfree.js. It's my full time thing so please leave me a comment below or [stop by my Discord](https://discord.gg/JeevWjTEdu) so that I can help you integrate Handsfree.js in new and creative ways. 
 
 If you'd like to learn a little bit about my story and what inspired me on this path 3 years ago, do check out my [GitHub Sponsors](https://github.com/sponsors/midiblocks). Thank you so much for reading this introduction, I can't wait to see what you do with [Handsfree.js](https://handsfree.js.org) 🖐👀🖐

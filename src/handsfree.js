@@ -15,7 +15,7 @@
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
-  Discord:    https://discord.gg/q96txF5Wf5
+  Discord:    https://discord.gg/JeevWjTEdu
   Newsletter: http://eepurl.com/hhD7S1
 
   /////////////////////////////////////////////////////////////

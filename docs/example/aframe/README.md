@@ -49,7 +49,7 @@
    -->
   <div class="col-6">
     <Window title="Add your example">
-      If you've integrated Handsfree.js with another framework or library I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a href="https://github.com/midiblocks/handsfree/edit/master/docs/example/aframe/README.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+      If you've integrated Handsfree.js with another framework or library I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a href="https://github.com/midiblocks/handsfree/edit/master/docs/example/aframe/README.md">make a pull request</a>, or <a href="https://discord.gg/JeevWjTEdu">find us on Discord</a>.  
     </Window>
   </div>
 </div>

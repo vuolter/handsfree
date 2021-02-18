@@ -20,6 +20,7 @@ This project couldn't have been possible without:
 - Grant from [Glitch.com](https://glitch.com) (Winter 2019)
 - Grant from the School of AI Grant (Fall 2018)
 - Grant from [Google PAIR](https://pair.withgoogle.com/) (Spring 2018)
+- GitHub Sponsors and supporters through Patreon, GoFundMe, social media, and more!
 
 ## Support Handsfree.js.org
 
@@ -28,17 +29,6 @@ Please consider supporting this project 💜 There are several ways to help:
 - [Sponsor the project on GitHub](https://github.com/sponsors/midiblocks)
 - [Make a Pull Request](https://github.com/midiblocks)
 
-
-
-<blockquote>
-  <div class="text-center">
-    <p>Thanks to all of <a href="https://github.com/midiblocks/handsfree#thanks-to-the-handsfreejsorg-github-sponsors">our GitHub Sponsors</a>, including:</p>
-  </div>
-  <hr style="margin: 20px auto">
-  <div class="text-center">
-    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=48></a>
-  </div>
-</blockquote>
 
 ## Changelog
 

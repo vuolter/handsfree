@@ -141,7 +141,7 @@ The following aims to give you a quick overview of how things work. The key take
 
 ## Quickstart Workflow
 
-The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/q96txF5Wf5) if you get stuck!
+The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/JeevWjTEdu) if you get stuck!
 
 ```js
 // Let's enable face tracking with the default Face Pointer
