@@ -180,18 +180,13 @@ handsfree.model.handpose.three.screen
 
 <div class="row align-top">
   <div class="col-6">
-    <Window title="Handsfree Jenga" :maximize="true">
-      <div>
-        <a href="https://handsfree-jenga.glitch.me/"><img alt="Person playing virtual Jenga by pinching and pulling on the blocks in the air with the guide of a Palm Pointer" src="https://media4.giphy.com/media/brC1Ow2v62htVmpfLh/giphy.gif"></a>
-      </div>
-      <p>This experiment led to the palmPointer plugin which was used here to guide the hand on the screen. The pinch gesture used here to "grab" the blocks was then generalized to all fingers, with 3+ events per finger.</p>
-      <div>
-        <ul>
-          <li><a href="https://handsfree-jenga.glitch.me/">Try it on Glitch</a></li>
-          <li><a href="https://glitch.com/edit/#!/handsfree-jenga?path=README.md">See the source</a></li>
-        </ul>
-      </div>
-    </Window>
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Handsfree.js now has <a href="https://twitter.com/hashtag/TensorFlow?src=hash&amp;ref_src=twsrc%5Etfw">#TensorFlow</a> <a href="https://twitter.com/hashtag/Handpose?src=hash&amp;ref_src=twsrc%5Etfw">#Handpose</a>:<br><br>- 21 3D landmarks (only 1 hand for now)<br>- A fingertip raycaster for pointing at things<br>- No plugins yet but will have some basic gestures added soon<br><br>Basic documentation + demos: <a href="https://t.co/LH0qYbOG4G">https://t.co/LH0qYbOG4G</a><a href="https://twitter.com/hashtag/MadeWithTFJS?src=hash&amp;ref_src=twsrc%5Etfw">#MadeWithTFJS</a> <a href="https://twitter.com/hashtag/WebXR?src=hash&amp;ref_src=twsrc%5Etfw">#WebXR</a> <a href="https://t.co/qT0lWgtN7P">pic.twitter.com/qT0lWgtN7P</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1347287684272717824?ref_src=twsrc%5Etfw">January 7, 2021</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I made Handsfree Jenga 🧱👌<br><br>It&#39;s kinda buggy still but this demos how to use Hand Pointers to interact w/ physics in a Three.js scene <a href="https://twitter.com/hashtag/MadeWithTFJS?src=hash&amp;ref_src=twsrc%5Etfw">#MadeWithTFJS</a><br><br>Try it: <a href="https://t.co/ACuamUga0r">https://t.co/ACuamUga0r</a><br>Handsfree.js hook: <a href="https://t.co/UybmDLnVFE">https://t.co/UybmDLnVFE</a><br>Docs: <a href="https://t.co/WpNd3kLp8r">https://t.co/WpNd3kLp8r</a> <a href="https://t.co/bEdi5Gm5z7">pic.twitter.com/bEdi5Gm5z7</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1334667133779755008?ref_src=twsrc%5Etfw">December 4, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Some progress on getting 2 hands tracked with <a href="https://twitter.com/hashtag/Handpose?src=hash&amp;ref_src=twsrc%5Etfw">#Handpose</a>!<br><br>Since it can&#39;t detect 2 hands yet what I do is:<br>- Check for a hand<br>- Draw a rectangle over the hand<br>- Check for a hand again...since 1st hand is covered it&#39;ll now detect 2nd<br><br>Kinda slow still but getting there 🖐👁👄👁🖐 <a href="https://t.co/xcdo14Txwn">pic.twitter.com/xcdo14Txwn</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1336953212176224256?ref_src=twsrc%5Etfw">December 10, 2020</a></blockquote>  
   </div>
   <div class="col-6">
     <Window title="Add your project">
@@ -219,6 +214,13 @@ export default {
         handpose: true
       }
     }
+  },
+
+  // Render tweets
+  mounted () {
+    const $script = document.createElement('SCRIPT')
+    $script.src = 'https://platform.twitter.com/widgets.js'
+    document.body.appendChild($script)
   },
 
   methods: {
