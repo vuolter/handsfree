@@ -178,7 +178,7 @@ handsfree.plugin.logger.onFrame = (data) => {
   console.log(handsfree.model.pose?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
-
+<!-- 
 ## Examples
 
 <div class="row align-top">
@@ -193,6 +193,15 @@ handsfree.plugin.logger.onFrame = (data) => {
   </div>
   <div class="col-6">
     <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I made Handsfree Jenga 🧱👌<br><br>It&#39;s kinda buggy still but this demos how to use Hand Pointers to interact w/ physics in a Three.js scene <a href="https://twitter.com/hashtag/MadeWithTFJS?src=hash&amp;ref_src=twsrc%5Etfw">#MadeWithTFJS</a><br><br>Try it: <a href="https://t.co/ACuamUga0r">https://t.co/ACuamUga0r</a><br>Handsfree.js hook: <a href="https://t.co/UybmDLnVFE">https://t.co/UybmDLnVFE</a><br>Docs: <a href="https://t.co/WpNd3kLp8r">https://t.co/WpNd3kLp8r</a> <a href="https://t.co/bEdi5Gm5z7">pic.twitter.com/bEdi5Gm5z7</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1334667133779755008?ref_src=twsrc%5Etfw">December 4, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">The Handsfree.js repo can itself be loaded as an unpacked Chrome Extensions: <a href="https://t.co/8RFl3yR0uA">https://t.co/8RFl3yR0uA</a><br><br>So if you&#39;d like to go that route, all the heavy work is already done for you. Additionally, with WebSockets and Robot.js, you can control your desktop too! <a href="https://t.co/m7Xunc0pfq">pic.twitter.com/m7Xunc0pfq</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1357799020521902080?ref_src=twsrc%5Etfw">February 5, 2021</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">This newer rewrite does less out the box but will be way more extensible<br><br>You can use it with Robot.js or other desktop automation libraries to control your desktop/devices. Here&#39;s an older demo of that (will share code to this soon) <a href="https://t.co/ShoAwHGGHu">pic.twitter.com/ShoAwHGGHu</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1326763862457274368?ref_src=twsrc%5Etfw">November 12, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s a 30sec video w positioning &amp; smoothing<br><br>On the right is my Chrome Dev Tools opened to the <a href="https://twitter.com/hashtag/WebXR?src=hash&amp;ref_src=twsrc%5Etfw">#WebXR</a> tab that comes with the Mozilla Emulator Extension with the new Handsfree button 🖐👀🖐<br><br>Thanks to <a href="https://twitter.com/i0nif?ref_src=twsrc%5Etfw">@i0nif</a> for the enthusiastic idea &amp; vision! Repo + docs + more after holidays <a href="https://t.co/rdV9MIjUBk">pic.twitter.com/rdV9MIjUBk</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1342356735814553600?ref_src=twsrc%5Etfw">December 25, 2020</a></blockquote>
   </div>
   <div class="col-6">
     <Window title="Flappy Pose" :maximize="true">
@@ -210,16 +219,7 @@ handsfree.plugin.logger.onFrame = (data) => {
       </section>
     </Window>
   </div>
-  <div class="col-6">
-    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">The Handsfree.js repo can itself be loaded as an unpacked Chrome Extensions: <a href="https://t.co/8RFl3yR0uA">https://t.co/8RFl3yR0uA</a><br><br>So if you&#39;d like to go that route, all the heavy work is already done for you. Additionally, with WebSockets and Robot.js, you can control your desktop too! <a href="https://t.co/m7Xunc0pfq">pic.twitter.com/m7Xunc0pfq</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1357799020521902080?ref_src=twsrc%5Etfw">February 5, 2021</a></blockquote>
-  </div>
-  <div class="col-6">
-    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">This newer rewrite does less out the box but will be way more extensible<br><br>You can use it with Robot.js or other desktop automation libraries to control your desktop/devices. Here&#39;s an older demo of that (will share code to this soon) <a href="https://t.co/ShoAwHGGHu">pic.twitter.com/ShoAwHGGHu</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1326763862457274368?ref_src=twsrc%5Etfw">November 12, 2020</a></blockquote>
-  </div>
-  <div class="col-6">
-    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s a 30sec video w positioning &amp; smoothing<br><br>On the right is my Chrome Dev Tools opened to the <a href="https://twitter.com/hashtag/WebXR?src=hash&amp;ref_src=twsrc%5Etfw">#WebXR</a> tab that comes with the Mozilla Emulator Extension with the new Handsfree button 🖐👀🖐<br><br>Thanks to <a href="https://twitter.com/i0nif?ref_src=twsrc%5Etfw">@i0nif</a> for the enthusiastic idea &amp; vision! Repo + docs + more after holidays <a href="https://t.co/rdV9MIjUBk">pic.twitter.com/rdV9MIjUBk</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1342356735814553600?ref_src=twsrc%5Etfw">December 25, 2020</a></blockquote>
-  </div>
-</div>
+</div> -->
 
 
 <!-- Code -->
@@ -251,9 +251,9 @@ export default {
 
   // Render tweets
   mounted () {
-    const $script = document.createElement('SCRIPT')
-    $script.src = 'https://platform.twitter.com/widgets.js'
-    document.body.appendChild($script)
+    // const $script = document.createElement('script')
+    // $script.src = 'https://platform.twitter.com/widgets.js'
+    // document.body.appendChild($script)
   },
 
   methods: {

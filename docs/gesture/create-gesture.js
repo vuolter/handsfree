@@ -3,7 +3,7 @@
  * @see /create-gesture/
  */
 let countdown = 3
-import {drawConnectors, drawLandmarks} from '../../.vuepress/public/handsfreejs/@mediapipe/drawing_utils.js'
+import {drawConnectors, drawLandmarks} from '../.vuepress/public/handsfreejs/@mediapipe/drawing_utils.js'
 
 // @see '../.vuepress/public/handsfreejs/@mediapipe/hands.js'
 const HAND_CONNECTIONS = [[0,1], [1,2], [2,3], [3,4], [0,5], [5,6], [6,7], [7,8], [5,9], [9,10], [10,11], [11,12], [9,13], [13,14], [14,15], [15,16], [13,17], [0,17], [17,18], [18,19], [19,20]]
@@ -110,8 +110,6 @@ export default {
           })
           this.$root.handsfree.use('displayCurrentGesture', this.displayCurrentGesture)
 
-          this.$root.handsfree.enableGestures('core')
-          
           if (this.recordedShapes.length) {
             this.renderRecording()
           }
@@ -127,7 +125,6 @@ export default {
   destroyed () {
     this.$root.handsfree.plugin.displayShape.disable()
     this.$root.handsfree.plugin.recordShapes.disable()
-    this.$root.handsfree.disableGestures('core')
   },
 
   methods: {
