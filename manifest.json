@@ -60,6 +60,12 @@
       "matches": ["https://stadia.google.com/*"],
       "js": ["/extension/sites/stadia.google.com/stadia.js"],
       "run_at": "document_end"
+    },
+
+    {
+      "matches": ["https://teropa.info/musicmouse/*"],
+      "js": ["/extension/sites/musicmouse/musicmouse.js"],
+      "run_at": "document_end"
     }
   ],
 
