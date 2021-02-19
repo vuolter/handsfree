@@ -179,7 +179,47 @@ handsfree.plugin.logger.onFrame = (data) => {
 }
 ```
 
+## Examples
 
+<div class="row align-top">
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I remixed <a href="https://twitter.com/notwaldorf?ref_src=twsrc%5Etfw">@notwaldorf</a>&#39;s Piano Genie so that you can jam out with your fingers through a webcam 🖐🎹🖐<br><br>Try it on <a href="https://twitter.com/glitch?ref_src=twsrc%5Etfw">@Glitch</a>: <a href="https://t.co/CvrOboC5tV">https://t.co/CvrOboC5tV</a><br><br>Or see the source: <a href="https://t.co/ffWG92OEm2">https://t.co/ffWG92OEm2</a><br><br>Remixed by simply using the &quot;Pincher Plugin&quot; of Handsfree.js! <a href="https://twitter.com/hashtag/MediaPipe?src=hash&amp;ref_src=twsrc%5Etfw">#MediaPipe</a> <a href="https://twitter.com/hashtag/MadeWithTFJS?src=hash&amp;ref_src=twsrc%5Etfw">#MadeWithTFJS</a> <a href="https://t.co/lblUgzNl7N">pic.twitter.com/lblUgzNl7N</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1359382512938541057?ref_src=twsrc%5Etfw">February 10, 2021</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Day 2 of <a href="https://twitter.com/hashtag/100DaysHandsfree?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysHandsfree</a><br><br>On recommendation I&#39;ve started handsfree-ifying <a href="https://twitter.com/daviddotli?ref_src=twsrc%5Etfw">@daviddotli</a> Blob Opera 🎶 Only works with 1 pinch at a time but it works really well!<br><br>If you&#39;d like to see how I did it, it was just 39 smooth lines of JavaScript: <a href="https://t.co/ho39dwQiqB">https://t.co/ho39dwQiqB</a> <a href="https://t.co/qdoWZD1gJg">pic.twitter.com/qdoWZD1gJg</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1352434377871872006?ref_src=twsrc%5Etfw">January 22, 2021</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Been trying to figure out a way to safely sandbox webcam but also render it w/ green wireframes on top of pages<br><br>My solution was to run webcam in a headless Browser Background Script, render it + wireframes onto canvas, then use Picture in Picture API to &quot;pop it outside&quot; browser! <a href="https://t.co/dZDStQ6BFq">pic.twitter.com/dZDStQ6BFq</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1344466561222889472?ref_src=twsrc%5Etfw">December 31, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I made Handsfree Jenga 🧱👌<br><br>It&#39;s kinda buggy still but this demos how to use Hand Pointers to interact w/ physics in a Three.js scene <a href="https://twitter.com/hashtag/MadeWithTFJS?src=hash&amp;ref_src=twsrc%5Etfw">#MadeWithTFJS</a><br><br>Try it: <a href="https://t.co/ACuamUga0r">https://t.co/ACuamUga0r</a><br>Handsfree.js hook: <a href="https://t.co/UybmDLnVFE">https://t.co/UybmDLnVFE</a><br>Docs: <a href="https://t.co/WpNd3kLp8r">https://t.co/WpNd3kLp8r</a> <a href="https://t.co/bEdi5Gm5z7">pic.twitter.com/bEdi5Gm5z7</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1334667133779755008?ref_src=twsrc%5Etfw">December 4, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <Window title="Flappy Pose" :maximize="true">
+      <section>
+        <div>
+          <router-link to="/ref/plugin/pinchScroll/"><img alt="Person playing Flappy Bird by flapping their arms. Flappy Bird is a game where you must flap the birds wings to fly or dodge barriers" src="https://media3.giphy.com/media/gUHHKdnuOW4OGOXcrI/giphy.gif"></router-link>
+        </div>
+        <p>In this game, the goal is to flap your arms to get the bird to fly around dodging obstacles. Made with an older version of Handsfree, but the API is very similar!</p>
+        <div>
+          <ul>
+            <li><a href="https://flappy-pose.glitch.me/">Try it on Glitch</a></li>
+            <li><a href="https://glitch.com/edit/#!/flappy-pose?path=src%2Fflap.js%3A32%3A4">See the source</a></li>
+          </ul>
+        </div>
+      </section>
+    </Window>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">The Handsfree.js repo can itself be loaded as an unpacked Chrome Extensions: <a href="https://t.co/8RFl3yR0uA">https://t.co/8RFl3yR0uA</a><br><br>So if you&#39;d like to go that route, all the heavy work is already done for you. Additionally, with WebSockets and Robot.js, you can control your desktop too! <a href="https://t.co/m7Xunc0pfq">pic.twitter.com/m7Xunc0pfq</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1357799020521902080?ref_src=twsrc%5Etfw">February 5, 2021</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">This newer rewrite does less out the box but will be way more extensible<br><br>You can use it with Robot.js or other desktop automation libraries to control your desktop/devices. Here&#39;s an older demo of that (will share code to this soon) <a href="https://t.co/ShoAwHGGHu">pic.twitter.com/ShoAwHGGHu</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1326763862457274368?ref_src=twsrc%5Etfw">November 12, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s a 30sec video w positioning &amp; smoothing<br><br>On the right is my Chrome Dev Tools opened to the <a href="https://twitter.com/hashtag/WebXR?src=hash&amp;ref_src=twsrc%5Etfw">#WebXR</a> tab that comes with the Mozilla Emulator Extension with the new Handsfree button 🖐👀🖐<br><br>Thanks to <a href="https://twitter.com/i0nif?ref_src=twsrc%5Etfw">@i0nif</a> for the enthusiastic idea &amp; vision! Repo + docs + more after holidays <a href="https://t.co/rdV9MIjUBk">pic.twitter.com/rdV9MIjUBk</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1342356735814553600?ref_src=twsrc%5Etfw">December 25, 2020</a></blockquote>
+  </div>
+</div>
 
 
 <!-- Code -->
@@ -206,6 +246,14 @@ export default {
         installing: ['CDN', 'NPM']
       }
     }
+  },
+
+
+  // Render tweets
+  mounted () {
+    const $script = document.createElement('SCRIPT')
+    $script.src = 'https://platform.twitter.com/widgets.js'
+    document.body.appendChild($script)
   },
 
   methods: {

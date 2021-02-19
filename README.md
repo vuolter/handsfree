@@ -417,33 +417,10 @@ I'd like to also thank the following people and projects:
 <br>
 <br>
 
-# Thanks to the Handsfree.js.org GitHub Sponsors
-
-Starting a large project [and movement](https://handsfree.js.org/about#master-plan) is so much fun but it's also a bit daunting 😅 I'd like to thank the following for [supporting this project](https://github.com/sponsors/midiblocks):
-
-- <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=48> @nsthorat</a>
----
-I'd also like to thank:
-- [@DavidNTompkins](https://github.com/DavidNTompkins)
-- [@digitalcoleman](https://github.com/digitalcoleman)
-- [@joewilbert](https://github.com/joewilbert)
-- [@sindresorhus](https://github.com/sindresorhus)
-- And everyone else!
-
-<br>
-<br>
-<br>
-
----
-
-<br>
-<br>
-<br>
-
 # Special Thanks
 
 - [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way. Also for inviting me back for a multi-month residency in Spring 2021!
 - [@AnilDash](https://twitter.com/anildash) for supporting the project during Winter 2018 out of the blue and the opportunities to share my project on [Glitch.com](https://glitch.com/@ozramos)
 - [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58) in support of this project
 - [@jessscon](https://twitter.com/jessscon) and [Google PAIR](https://research.google/teams/brain/pair/) for the very early support that made starting this project possible
-- Everyone who's supported me on Patreon, GoFundMe, and through [Twitter](https://twitter.com/midiblocks) and everywhere else over the years
+- Everyone who's previously supported the project through GitHub Sponsors, Patreon, GoFundMe, and through [Twitter](https://twitter.com/midiblocks) and everywhere else over the years
