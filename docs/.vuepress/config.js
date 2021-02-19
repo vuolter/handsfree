@@ -96,12 +96,9 @@ module.exports = {
         ]
       },
       {
-        title: '🖖 Gestures',
+        title: '🖖 Create Gestures',
         collapsable: true,
-        path: '/gesture/',
-        children: [
-          ['/gesture/create/', 'Create Gesture']
-        ]
+        path: '/gesture/'
       },
       {
         title: '🎮 Examples',
@@ -125,6 +122,7 @@ module.exports = {
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
           ['/guide/updating-configs.md', '🎭 Updating and switching models'],
+          ['/guide/working-with-gestures/', '🖖 Working with gestures'],
           {
             title: '📰 Blogs & Articles',
             collapsable: false,
