@@ -37,7 +37,7 @@ module.exports = {
     
     ['meta', {property: 'twitter:card', content: 'summary_large_image'}],
     ['meta', {property: 'twitter:image', content: 'https://i.imgur.com/A9g8rfp.jpg'}],
-    ['meta', {property: 'twitter:site', content: '@Midiblocks'}],
+    ['meta', {property: 'twitter:site', content: '@Midiblocks'}]
   ],
 
   alias: {
@@ -122,7 +122,7 @@ module.exports = {
         children: [
           ['/guide/the-loop.md', '🔌 Plugins and the main loop'],
           ['/guide/updating-configs.md', '🎭 Updating and switching models'],
-          ['/guide/working-with-gestures/', '🖖 Working with gestures'],
+          // ['/guide/working-with-gestures/', '🖖 Working with gestures'],
           {
             title: '📰 Blogs & Articles',
             collapsable: false,

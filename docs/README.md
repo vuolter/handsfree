@@ -178,7 +178,7 @@ handsfree.plugin.logger.onFrame = (data) => {
   console.log(handsfree.model.pose?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
-
+<!-- 
 ## Examples
 
 <div class="row align-top">
@@ -219,12 +219,12 @@ handsfree.plugin.logger.onFrame = (data) => {
       </section>
     </Window>
   </div>
-</div>
+</div> -->
 
 
 <!-- Code -->
 <script>
-  export default {
+export default {
   data () {
     return {
       demoOpts: {
@@ -251,9 +251,9 @@ handsfree.plugin.logger.onFrame = (data) => {
 
   // Render tweets
   mounted () {
-    const $script = document.createElement('SCRIPT')
-    $script.src = 'https://platform.twitter.com/widgets.js'
-    document.body.appendChild($script)
+    // const $script = document.createElement('script')
+    // $script.src = 'https://platform.twitter.com/widgets.js'
+    // document.body.appendChild($script)
   },
 
   methods: {
