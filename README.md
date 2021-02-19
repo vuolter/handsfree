@@ -319,7 +319,7 @@ npm login
 npm publish
 
 # Deploy documentation to handsfree.js.org
-npm deploy.sh
+deploy.sh
 ```
 
 ## Dev Notes
