@@ -11,11 +11,11 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.3.0
+                8.4.0
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
-  Discord:    https://discord.gg/q96txF5Wf5
+  Discord:    https://discord.gg/JeevWjTEdu
   Newsletter: http://eepurl.com/hhD7S1
 
   /////////////////////////////////////////////////////////////
@@ -37,7 +37,6 @@
 import HandsModel from './model/hands'
 import FacemeshModel from './model/facemesh'
 import PoseModel from './model/pose'
-import HolisticModel from './model/holistic'
 import HandposeModel from './model/handpose'
 import WebojiModel from './model/weboji'
 import PluginBase from './Plugin/base.js'
@@ -57,22 +56,6 @@ import pluginPinchScroll  from './plugin/hands/pinchScroll'
 import pluginPinchers  from './plugin/hands/pinchers'
 import pluginPalmPointers  from './plugin/hands/palmPointers'
 
-// Gesture Definitions
-import gestureLove from './gesture/hands/love.js'
-import gestureHorns from './gesture/hands/horns.js'
-import gesturePointRight from './gesture/hands/pointRight.js'
-import gesturePointLeft from './gesture/hands/pointLeft.js'
-import gesturePointUp from './gesture/hands/pointUp.js'
-import gesturePointDown from './gesture/hands/pointDown.js'
-import gestureSpock from './gesture/hands/spock.js'
-import gestureCallMe from './gesture/hands/callMe.js'
-import gestureOk from './gesture/hands/ok.js'
-import gestureStop from './gesture/hands/stop.js'
-import gestureVictory from './gesture/hands/victory.js'
-import gestureFist from './gesture/hands/fist.js'
-import gestureThumbUp from './gesture/hands/thumbUp.js'
-import gestureThumbDown from './gesture/hands/thumbDown.js'
-
 const corePlugins = {
   facePointer: pluginFacePointer,
   faceClick: pluginFaceClick,
@@ -80,23 +63,6 @@ const corePlugins = {
   pinchScroll: pluginPinchScroll,
   pinchers: pluginPinchers,
   palmPointers: pluginPalmPointers,
-}
-
-const coreGestures = {
-  love: gestureLove,
-  horns: gestureHorns,
-  pointRight: gesturePointRight,
-  pointLeft: gesturePointLeft,
-  pointUp: gesturePointUp,
-  pointDown: gesturePointDown,
-  spock: gestureSpock,
-  callMe: gestureCallMe,
-  ok: gestureOk,
-  stop: gestureStop,
-  victory: gestureVictory,
-  fist: gestureFist,
-  thumbUp: gestureThumbUp,
-  thumbDown: gestureThumbDown,
 }
 
 
@@ -131,7 +97,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.3.0'
+    this.version = '8.4.0'
     this.data = {}
 
     // Dependency management
@@ -144,8 +110,7 @@ class Handsfree {
       isWarmingUp: false,
       hands: false,
       pose: false,
-      facemesh: false,
-      holistic: false
+      facemesh: false
     }
 
     // Plugins
@@ -167,7 +132,6 @@ class Handsfree {
     this.setupDebugger()
     this.prepareModels()
     this.loadCorePlugins()
-    this.loadCoreGestures()
 
     // Start tracking when all models are loaded
     this.hasAddedBodyClass = false
@@ -206,14 +170,12 @@ class Handsfree {
       hands: {},
       facemesh: {},
       pose: {},
-      holistic: {},
       handpose: {}
     }
     this.model.weboji = new WebojiModel(this, this.config.weboji)
     this.model.hands = new HandsModel(this, this.config.hands)
     this.model.pose = new PoseModel(this, this.config.pose)
     this.model.facemesh = new FacemeshModel(this, this.config.facemesh)
-    this.model.holistic = new HolisticModel(this, this.config.holistic)
     this.model.handpose = new HandposeModel(this, this.config.handpose)
   }
 
@@ -245,9 +207,6 @@ class Handsfree {
     }
     if (typeof config.pose === 'boolean') {
       config.pose = {enabled: config.pose}
-    }
-    if (typeof config.holistic === 'boolean') {
-      config.holistic = {enabled: config.holistic}
     }
     if (typeof config.handpose === 'boolean') {
       config.handpose = {enabled: config.handpose}
@@ -282,7 +241,7 @@ class Handsfree {
     this.isUpdating = true
 
     // Run enable/disable methods on changed models
-    ;['hands', 'facemesh', 'pose', 'holistic', 'handpose', 'weboji'].forEach(model => {
+    ;['hands', 'facemesh', 'pose', 'handpose', 'weboji'].forEach(model => {
       let wasEnabled = this.model[model].enabled
       this.config[model] = this.model[model].config = merge({}, this.model[model].config, config[model])
 
@@ -441,7 +400,7 @@ class Handsfree {
     // Render video behind everything else
     // - Note: Weboji uses its own camera
     if (this.isDebugging) {
-      const isUsingCamera = ['hands', 'pose', 'holistic', 'handpose', 'facemesh'].find(model => {
+      const isUsingCamera = ['hands', 'pose', 'handpose', 'facemesh'].find(model => {
         if (this.model[model].enabled) {
           return model
         }
@@ -844,15 +803,6 @@ class Handsfree {
     })    
   }
 
-  /**
-   * Loads all the core plugins (see #6)
-   */
-  loadCoreGestures () {
-    Object.keys(coreGestures).forEach(name => {
-      this.useGesture(coreGestures[name])
-    })    
-  }
-
 
 /* //////////////////////// #7 DEBUGGER ////////////////////////
 
@@ -903,7 +853,7 @@ class Handsfree {
     }
 
     // The video canvas is used to display the video
-    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'holistic', 'handpose'].forEach(model => {
+    ;['video', 'weboji', 'facemesh', 'pose', 'hands', 'handpose'].forEach(model => {
       this.debug.$canvas[model] = {}
       this.debug.context[model] = {}
       

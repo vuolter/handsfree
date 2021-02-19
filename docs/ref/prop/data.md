@@ -7,10 +7,10 @@ Usually you'll only want to access this property directly when you need it outsi
 ## Example
 
 ```js
-const handsfree = new Handsfree({weboji: true, handpose: true, holistic: true})
+const handsfree = new Handsfree({weboji: true, handpose: true, hands: true})
 
 document.addEventListener('someEvent', (event) => {
-  console.log(handsfree.data.weboji, handsfree.data.handpose, handsfree.data.holistic)
+  console.log(handsfree.data.weboji, handsfree.data.handpose, handsfree.data.hands)
 })
 ```
 
@@ -18,7 +18,6 @@ document.addEventListener('someEvent', (event) => {
 
 - [Available data on the Weboji model](/ref/model/weboji/#data)
 - [Available data on the Handpose model](/ref/model/handpose/#data)
-- [Available data on the Holistic model](/ref/model/holistic/#data)
 - [Available data on the Hands model](/ref/model/hands/#data)
 - [Available data on the Facemesh model](/ref/model/facemesh/#data)
 - [Available data on the Pose model](/ref/model/pose/#data)

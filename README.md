@@ -65,8 +65,8 @@ This option is great if you don't have or need a server, or if you're prototypin
 ```html
 <head>
   <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.3.0/build/lib/assets/handsfree.css" />
-  <script src="https://unpkg.com/handsfree@8.3.0/build/lib/handsfree.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.4.0/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.4.0/build/lib/handsfree.js"></script>
 </head>
 
 <body>
@@ -103,7 +103,7 @@ handsfree.start()
 
 ## Hosting the models yourself
 
-The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.3.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
+The above will load models, some over 10Mb, from the [Unpkg CDN](https://unpkg.com/browse/handsfree@8.4.0/build/lib/assets). If you'd rather host these yourself (for example, to use offline) then you can eject the models from the npm package into your project's public folder:
 
 ```bash
 # Move the models into your project's public directory
@@ -141,7 +141,7 @@ The following aims to give you a quick overview of how things work. The key take
 
 ## Quickstart Workflow
 
-The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/q96txF5Wf5) if you get stuck!
+The following workflow demonstrates how to use all features of Handsfree.js. Check out the [Guides](/guides/) and [References](/ref/) to dive deeper, and feel free to post on the [Google Groups](https://groups.google.com/g/handsfreejs) or [Discord](https://discord.gg/JeevWjTEdu) if you get stuck!
 
 ```js
 // Let's enable face tracking with the default Face Pointer
@@ -178,8 +178,8 @@ handsfree.use('handTrackingSwitcher', {weboji} => {
 handsfree.update({
   // Disable weboji which is currently running
   weboji: false,
-  // Start the holistic model
-  holistic: true,
+  // Start the pose model
+  pose: true,
 
   // This is also how you configure (or pre-configure) a bunch of plugins at once
   plugin: {
@@ -199,7 +199,7 @@ handsfree.enablePlugins('music')
 
 // Overwrite our logger to display the original model APIs
 handsfree.plugin.logger.onFrame = (data) => {
-  console.log(handsfree.model.holistic?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
+  console.log(handsfree.model.pose?.api, handsfree.model.weboji?.api, handsfree.model.pose?.api)
 }
 ```
 
@@ -319,7 +319,7 @@ npm login
 npm publish
 
 # Deploy documentation to handsfree.js.org
-npm deploy.sh
+deploy.sh
 ```
 
 ## Dev Notes
@@ -417,32 +417,10 @@ I'd like to also thank the following people and projects:
 <br>
 <br>
 
-# Thanks to the Handsfree.js.org GitHub Sponsors
-
-Starting a large project [and movement](https://handsfree.js.org/about#master-plan) is so much fun but it's also a bit daunting 😅 I'd like to thank the following for [supporting this project](https://github.com/sponsors/midiblocks):
-
-- <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=48> @nsthorat</a>
----
-I'd also like to thank:
-- [@DavidNTompkins](https://github.com/DavidNTompkins)
-- [@digitalcoleman](https://github.com/digitalcoleman)
-- [@joewilbert](https://github.com/joewilbert)
-- And everyone else!
-
-<br>
-<br>
-<br>
-
----
-
-<br>
-<br>
-<br>
-
 # Special Thanks
 
 - [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way. Also for inviting me back for a multi-month residency in Spring 2021!
 - [@AnilDash](https://twitter.com/anildash) for supporting the project during Winter 2018 out of the blue and the opportunities to share my project on [Glitch.com](https://glitch.com/@ozramos)
 - [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58) in support of this project
 - [@jessscon](https://twitter.com/jessscon) and [Google PAIR](https://research.google/teams/brain/pair/) for the very early support that made starting this project possible
-- Everyone who's supported me on Patreon, GoFundMe, and through [Twitter](https://twitter.com/midiblocks) and everywhere else over the years
+- Everyone who's previously supported the project through GitHub Sponsors, Patreon, GoFundMe, and through [Twitter](https://twitter.com/midiblocks) and everywhere else over the years

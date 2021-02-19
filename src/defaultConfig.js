@@ -9,7 +9,7 @@ export default {
   autostart: false,
   
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.3.0/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.4.0/build/lib/assets',
   
   // This will load everything but the models. This is useful when you want to use run inference
   // on another device or context but run the plugins on the current device
@@ -36,12 +36,6 @@ export default {
       },
       handpose: {
         // The canvas element to hold the skeletons and keypoints for hand model
-        $el: null,
-        width: 1280,
-        height: 720
-      },
-      holistic: {
-        // The canvas element to hold the skeletons and keypoints for holistic model
         $el: null,
         width: 1280,
         height: 720
@@ -164,26 +158,6 @@ export default {
     // Minimum confidence [0 - 1] for a person detection to be considered detected
     minDetectionConfidence: 0.5,
 
-    // Minimum confidence [0 - 1] for the pose tracker to be considered detected
-    // Higher values are more robust at the expense of higher latency
-    minTrackingConfidence: 0.5
-  },
-
-  // Holistic model
-  holistic: {
-    enabled: false,
-    
-    // Outputs only the top 25 pose landmarks if true,
-    // otherwise shows all 33 full body pose landmarks
-    // - Note: Setting this to true may result in better accuracy 
-    upperBodyOnly: true,
-
-    // Helps reduce jitter over multiple frames if true
-    smoothLandmarks: true,
-
-    // Minimum confidence [0 - 1] for a person detection to be considered detected
-    minDetectionConfidence: 0.5,
-        
     // Minimum confidence [0 - 1] for the pose tracker to be considered detected
     // Higher values are more robust at the expense of higher latency
     minTrackingConfidence: 0.5

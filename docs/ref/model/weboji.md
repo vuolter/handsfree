@@ -226,33 +226,32 @@ handsfree = new Handsfree({
 
 <div class="row align-top">
   <div class="col-6">
-    <Window title='Playing "Into the Breach" handsfree' :maximize="true">
-      <section>
-        <div>
-          <a href="https://github.com/MIDIBlocks/midiblocks-web"><img alt="Person playing Into the Breach with face gestures" src="https://media3.giphy.com/media/eABiZprIEtouRZIc75/giphy.gif"></a>
-        </div>
-        <p>This example uses the <a href="https://midiblocks.com">Midiblocks Platform</a> to map head movements to control the desktop mouse with the <router-link to="/ref/plugin/facePointer/">facePointer plugin</router-link> and trigger native mouse clicks with the <router-link to="/ref/plugin/faceClick/">faceClick plugin</router-link>.</p>
-        <div>
-          <ul>
-            <li><a href="https://midiblocks.com">Try the Midiblocks web demo</a></li>
-            <li><a href="https://github.com/midiblocks/midiblocks-web">See the Midiblocks source</a></li>
-          </ul>
-        </div>
-      </section>
-    </Window>
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">The Handsfree.js repo can itself be loaded as an unpacked Chrome Extensions: <a href="https://t.co/8RFl3yR0uA">https://t.co/8RFl3yR0uA</a><br><br>So if you&#39;d like to go that route, all the heavy work is already done for you. Additionally, with WebSockets and Robot.js, you can control your desktop too! <a href="https://t.co/m7Xunc0pfq">pic.twitter.com/m7Xunc0pfq</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1357799020521902080?ref_src=twsrc%5Etfw">February 5, 2021</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">This newer rewrite does less out the box but will be way more extensible<br><br>You can use it with Robot.js or other desktop automation libraries to control your desktop/devices. Here&#39;s an older demo of that (will share code to this soon) <a href="https://t.co/ShoAwHGGHu">pic.twitter.com/ShoAwHGGHu</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1326763862457274368?ref_src=twsrc%5Etfw">November 12, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s a 30sec video w positioning &amp; smoothing<br><br>On the right is my Chrome Dev Tools opened to the <a href="https://twitter.com/hashtag/WebXR?src=hash&amp;ref_src=twsrc%5Etfw">#WebXR</a> tab that comes with the Mozilla Emulator Extension with the new Handsfree button 🖐👀🖐<br><br>Thanks to <a href="https://twitter.com/i0nif?ref_src=twsrc%5Etfw">@i0nif</a> for the enthusiastic idea &amp; vision! Repo + docs + more after holidays <a href="https://t.co/rdV9MIjUBk">pic.twitter.com/rdV9MIjUBk</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1342356735814553600?ref_src=twsrc%5Etfw">December 25, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Working on a boilerplate for &quot;looking around&quot; an A-Frame handsfree without a VR headset<br><br>Going to release this tonight along with a tutorial! Since Handsfree.js is built in a way to support Hot Reload, one idea is to help you work on your 3D projects and look around while coding! <a href="https://t.co/NlIMKxgqWT">pic.twitter.com/NlIMKxgqWT</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1341118933206646784?ref_src=twsrc%5Etfw">December 21, 2020</a></blockquote>
+  </div>
+  <div class="col-6">
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Handsfree projector w/ funky angles, test #1 🙌<br><br>Goal is to see what happens when the surface you want to point at is different than where the webcam is<br><br>This is the first step in my implementation of this paper but with projection mapping instead of AR: <a href="https://t.co/bflVqmW2RJ">https://t.co/bflVqmW2RJ</a> <a href="https://t.co/YgmYGRETB3">pic.twitter.com/YgmYGRETB3</a></p>&mdash; Oz Ramos (@MIDIBlocks) <a href="https://twitter.com/MIDIBlocks/status/1334767867938525184?ref_src=twsrc%5Etfw">December 4, 2020</a></blockquote>
   </div>
   <div class="col-6">
     <Window title="Add your project">
-      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/hands.md">make a pull request</a>, or <a href="https://discord.gg/q96txF5Wf5">find us on Discord</a>.  
+      If you've made something with this model I'd love to showcase it here! DM me <a href="https://twitter.com/midiblocks">on Twitter</a>, <a class="https://github.com/midiblocks/handsfree/edit/master/docs/ref/model/hands.md">make a pull request</a>, or <a href="https://discord.gg/JeevWjTEdu">find us on Discord</a>.  
     </Window>
   </div>
 </div>
 
 ## See also
 
-- Integrations
+- Examples
   - A-Frame
-    - ["Look around" handsfree](/integration/aframe/look-around-handsfree/)
+    - ["Look around" handsfree](/example/aframe/look-around-handsfree/)
 - Plugins
   - [faceClick](/ref/model/faceClick/)
   - [facePointer](/ref/model/facePointer/)
@@ -270,7 +269,6 @@ export default {
         hands: false,
         facemesh: false,
         pose: false,
-        holistic: false,
         handpose: false,
 
         plugin: {
@@ -280,6 +278,13 @@ export default {
         }
       }
     }
+  },
+
+  // Render tweets
+  mounted () {
+    const $script = document.createElement('SCRIPT')
+    $script.src = 'https://platform.twitter.com/widgets.js'
+    document.body.appendChild($script)
   },
 
   methods: {

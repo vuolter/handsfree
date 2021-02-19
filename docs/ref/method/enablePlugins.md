@@ -18,7 +18,7 @@ tags: string | array
 ## Example
 
 ```js
-const handsfree = new Handsfree({holistic: true})
+const handsfree = new Handsfree({hands: true})
 
 // First enable all the browser plugins
 handsfree.enablePlugins('browser')

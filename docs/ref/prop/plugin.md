@@ -10,7 +10,7 @@ This can be used as an alternative to [handsfree.update()](/ref/method/update/) 
 
 
 ```js
-const handsfree = new Handsfree({holistic: true})
+const handsfree = new Handsfree({hands: true})
 
 handsfree.plugin.handPointers.enable()
 ```

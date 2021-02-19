@@ -20,6 +20,7 @@ This project couldn't have been possible without:
 - Grant from [Glitch.com](https://glitch.com) (Winter 2019)
 - Grant from the School of AI Grant (Fall 2018)
 - Grant from [Google PAIR](https://pair.withgoogle.com/) (Spring 2018)
+- GitHub Sponsors and supporters through Patreon, GoFundMe, social media, and more!
 
 ## Support Handsfree.js.org
 
@@ -29,23 +30,13 @@ Please consider supporting this project 💜 There are several ways to help:
 - [Make a Pull Request](https://github.com/midiblocks)
 
 
-
-<blockquote>
-  <div class="text-center">
-    <p>Thanks to all of <a href="https://github.com/midiblocks/handsfree#thanks-to-the-handsfreejsorg-github-sponsors">our GitHub Sponsors</a>, including:</p>
-  </div>
-  <hr style="margin: 20px auto">
-  <div class="text-center">
-    <a href="https://github.com/nsthorat"><img src="https://avatars3.githubusercontent.com/u/1100749?s=460&u=99b5107179ac8a00bff093bd4b67b5898301119b&v=4" height=48></a>
-  </div>
-</blockquote>
-
 ## Changelog
 
 <div class="next-element-is-changelog"></div>
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-02-18 | 8.4.0 | Removes the MediaPipe Holistic model. The holistic model is essentially the same as running [Hands](/ref/model/hands/), [Facemesh](/ref/model/facemesh/), and [Pose](/ref/model/pose/) together, although because the holistic data is structured differently (despite using the same models) it led to a lot of confusion and was incompatible with plugins.
 | 2020-02-06 | 8.3.0 | Adds basic gesture support through the [Gesture Creator](/create-gesture/). This is still mostly undocumented
 | 2020-01-28 | 8.2.6 | Adds `handsfree.data.hands.landmarks` and `handsfree.data.hands.landmarksVisible` to [MediaPipe Hands](/ref/model/hands/), which contain the landmarks for each hand in specific indexes:<br>`.landmarks[0] === Left Hand, Person #1`<br>`.landmarks[1] === Right Hand, Person #1`<br>`.landmarks[2] === Left Hand, Person #2`<br>`.landmarks[3] === Right Hand, Person #2`
 | 2020-01-27 | 8.2.4 | Improved the [pinchScroll plugin](/ref/plugin/pinchScroll/) so that it continuously scrolls (instead of having to release and pinch again); `.handsfree-started` is added to body of a [client install](http://localhost:8080/ref/prop/config.html#isclient) (useful in Browser Extensions); merges the [Handsfree Browser Extension](/extension/) to improve iteration feedback cycle (not documented yet); disabling the last active model turns off the camera; fixes a few [Weboji](/ref/model/weboji/) bugs that prevented it from working with other models
