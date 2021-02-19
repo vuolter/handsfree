@@ -125,7 +125,6 @@ export default {
   destroyed () {
     this.$root.handsfree.plugin.displayShape.disable()
     this.$root.handsfree.plugin.recordShapes.disable()
-    this.$root.handsfree.disableGestures('core')
   },
 
   methods: {
