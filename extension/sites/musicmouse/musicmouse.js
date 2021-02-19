@@ -36,11 +36,31 @@ handsfree.use('musicmouse', {
         movementY: (hands.pointer[1].y - this.last.y) / this.moveFriction
       }))
     }
-    
-    // Pinch with right hand
+
+    // Update movement deltas
     if (hands.pointer[1]?.isVisible) {
       this.last.x = hands.pointer[1].x
       this.last.y = hands.pointer[1].y
+    }
+
+    // Change Treatment
+    if (hands.pinchState[0][0] === 'start') {
+      document.dispatchEvent(new KeyboardEvent('keydown', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        altKey: true,
+        code: 'Digit1'
+      }))
+    }
+    if (hands.pinchState[0][1] === 'start') {
+      document.dispatchEvent(new KeyboardEvent('keydown', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        altKey: true,
+        code: 'Digit2'
+      }))
     }
   }
 })
