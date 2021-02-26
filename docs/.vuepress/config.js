@@ -105,6 +105,7 @@ module.exports = {
         collapsable: true,
         path: '/example/',
         children: [
+          ['/example/video-instead-of-webcam/', 'Using a video source instead of the webcam'],
           {
             title: 'A-Frame',
             path: '/example/aframe/',
