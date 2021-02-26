@@ -9,9 +9,9 @@
   <div class="col-6">
     <Window title="Demo">
         <div>
-          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-weboji" text-off="Run models on video" text-on="Stop Pose" :opts="demoOpts" :hide-icon="true" />
-          <button class="handsfree-show-when-started-without-weboji handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
-          <button class="handsfree-show-when-started-without-weboji handsfree-hide-when-loading" @click="startDemo">Run models on video</button>
+          <HandsfreeToggle class="full-width handsfree-hide-when-started-without-hands" text-off="Run models on video" text-on="Stop running models on video" :opts="demoOpts" :hide-icon="true" />
+          <button class="handsfree-show-when-started-without-hands handsfree-show-when-loading" disabled><Fa-Spinner spin /> Loading...</button>
+          <button class="handsfree-show-when-started-without-hands handsfree-hide-when-loading" @click="startDemo">Run models on video</button>
         </div>
       </Window>
   </div>

@@ -1,7 +1,7 @@
 <template lang="pug">
 div.block-children
   button.handsfree-show-when-stopped.handsfree-hide-when-loading(@click='start')
-    Fa-Video
+    Fa-Video(v-if='!hideIcon')
     span {{textOff}}
   button.handsfree-show-when-loading(disabled)
     Fa-Spinner(:spin='true')
@@ -18,7 +18,7 @@ div.block-children
 export default {
   name: 'HandsfreeToggle',
 
-  props: ['textOff', 'textOn', 'opts'],
+  props: ['textOff', 'textOn', 'opts', 'hideIcon'],
 
   methods: {
     start () {
