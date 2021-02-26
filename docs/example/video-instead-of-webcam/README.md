@@ -2,7 +2,7 @@
 
 <div class="row align-top">
   <div class="col-6">
-    <video style="width: 100%" controls muted autoplay loop>
+    <video id="demo-video" style="width: 100%" controls muted autoplay loop>
       <source src="/video/hand-shape-demo-video.mp4"></source>
     </video>
   </div>
@@ -18,20 +18,35 @@
 </div>
 
 
-Depending on your application you may sometimes want to run the models on a pre-recorded video or livestream. To do that, set the `setup.video.$el` config to the `<video>` element containing:
+Depending on your application you may sometimes want to run the models on a pre-recorded video or livestream. To do that, set the `setup.video.$el` config to the `<video>` element containing your video source:
 
 ```js
+// During instantiation
 handsfree = new Handsfree({
   hands: true,
   setup: {
     video: {
-      // This element must exist on the page with a [src=""] attribute or <source></source> object pointing to a video
+      // This element must contain a [src=""] attribute or <source /> with one
+      $el: document.querySelector('#my-video')
+    }
+  }
+})
+
+handsfree.start()
+```
+
+You can also switch to a video element if you were previously using the webcam with:
+
+```js
+// After instantiation
+handsfree.update({
+  setup: {
+    video: {
       $el: document.querySelector('#my-video')
     }
   }
 })
 ```
-
 
 
 <script>
@@ -40,13 +55,22 @@ export default {
     demoOpts: {
       autostart: true,
 
-      weboji: true,
-      hands: false,
+      weboji: false,
+      hands: true,
       pose: false,
       handpose: false,
-      facemesh: false
+      facemesh: false,
+
+      setup: {video: {$el: null}}
     }
   }),
+
+  /**
+   * Set the video source
+   */
+  mounted () {
+    this.demoOpts.setup.video.$el = document.querySelector('#demo-video')
+  },
 
   methods: {
     startDemo () {

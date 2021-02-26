@@ -241,6 +241,12 @@ class Handsfree {
     this.config = this.cleanConfig(config, this.config)
     this.isUpdating = true
 
+    // Update video
+    this.isUsingWebcam = !this.config.setup.video.$el.currentSrc
+    this.debug.$video = this.config.setup.video.$el
+    this.debug.$video.width = this.config.setup.video.width
+    this.debug.$video.height = this.config.setup.video.height
+
     // Run enable/disable methods on changed models
     ;['hands', 'facemesh', 'pose', 'handpose', 'weboji'].forEach(model => {
       let wasEnabled = this.model[model].enabled
@@ -788,7 +794,7 @@ class Handsfree {
         } else {
           this.debug.stream = this.debug.$video.srcObject
           this.debug.$video.play()
-          this.emit('gotUserMedia', stream)
+          this.emit('gotUserMedia', this.debug.stream)
           callback && callback()
           this.debug.isGettingStream = false
         }
@@ -854,7 +860,8 @@ class Handsfree {
 
     // Use an existing element and see if a source is set
     } else {
-      this.isUsingWebcam = !!this.config.setup.video.$el.currentSrc
+      this.config.setup.video.$el.classList.add('handsfree-video')
+      this.isUsingWebcam = !this.config.setup.video.$el.currentSrc
     }
 
     this.debug.$video = this.config.setup.video.$el
