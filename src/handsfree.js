@@ -755,7 +755,7 @@ class Handsfree {
     // Start getting the stream and call callback after
     if (!this.debug.stream && !this.debug.isGettingStream) {
       // Use the weboji stream if already active
-      if (this.model.weboji?.api?.get_videoStream) {
+      if (this.isUsingWebcam && this.model.weboji?.api?.get_videoStream) {
         this.debug.$video = this.model.weboji.api.get_video()
         this.debug.$video.srcObject = this.debug.stream = this.model.weboji.api.get_videoStream()
         this.emit('gotUserMedia', this.debug.stream)

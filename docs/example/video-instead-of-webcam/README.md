@@ -17,7 +17,6 @@
   </div>
 </div>
 
-
 Depending on your application you may sometimes want to run the models on a pre-recorded video or livestream. To do that, set the `setup.video.$el` config to the `<video>` element containing your video source:
 
 ```js
