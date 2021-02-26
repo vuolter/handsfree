@@ -137,6 +137,7 @@ class Handsfree {
     this.hasAddedBodyClass = false
     this.isUpdating = false
     this.numModelsLoaded = 0
+    this.isUsingWebcam = true
     
     this.on('modelReady', () => {
       let numActiveModels = 0
@@ -754,32 +755,43 @@ class Handsfree {
         this.emit('gotUserMedia', this.debug.stream)
         callback && callback()
 
-      // Create a new media stream
+      // Get or create a new media stream
       } else {
-        this.debug.isGettingStream = true
-        navigator.mediaDevices
-          .getUserMedia({
-            audio: false,
-            video: {
-              facingMode: 'user',
-              width: this.debug.$video.width,
-              height: this.debug.$video.height
-            }
-          })
-          .then((stream) => {
-            this.debug.$video.srcObject = this.debug.stream = stream
-            this.debug.$video.onloadedmetadata = () => {
-              this.debug.$video.play()
-              this.emit('gotUserMedia', stream)
-              callback && callback()
-            }
-          })
-          .catch((err) => {
-            console.error(`Error getting user media: ${err}`)
-          })
-          .finally(() => {
-            this.debug.isGettingStream = false
-          })
+        // Create a media stream (webcam)
+        if (this.isUsingWebcam) {
+          this.debug.isGettingStream = true
+          navigator.mediaDevices
+            .getUserMedia({
+              audio: false,
+              video: {
+                facingMode: 'user',
+                width: this.debug.$video.width,
+                height: this.debug.$video.height
+              }
+            })
+            .then((stream) => {
+              this.debug.$video.srcObject = this.debug.stream = stream
+              this.debug.$video.onloadedmetadata = () => {
+                this.debug.$video.play()
+                this.emit('gotUserMedia', stream)
+                callback && callback()
+              }
+            })
+            .catch((err) => {
+              console.error(`Error getting user media: ${err}`)
+            })
+            .finally(() => {
+              this.debug.isGettingStream = false
+            })
+
+        // Use a video source
+        } else {
+          this.debug.stream = this.debug.$video.srcObject
+          this.debug.$video.play()
+          this.emit('gotUserMedia', stream)
+          callback && callback()
+          this.debug.isGettingStream = false
+        }
       }
 
     // If a media stream is getting gotten then run the callback once the media stream is ready
@@ -838,7 +850,13 @@ class Handsfree {
       $video.classList.add('handsfree-video')
       $video.setAttribute('id', `handsfree-video-${this.id}`)
       this.config.setup.video.$el = $video
+      this.isUsingWebcam = true
+
+    // Use an existing element and see if a source is set
+    } else {
+      this.isUsingWebcam = !!this.config.setup.video.$el.currentSrc
     }
+
     this.debug.$video = this.config.setup.video.$el
     this.debug.$video.width = this.config.setup.video.width
     this.debug.$video.height = this.config.setup.video.height
