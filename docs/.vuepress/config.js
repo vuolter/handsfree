@@ -86,7 +86,7 @@ module.exports = {
       {
         title: '📦 Models',
         path: '/ref/model/',
-        collapsable: true,
+        collapsable: false,
         children: [
           ['/ref/model/hands.md', '🖐 Hands (2D)'],
           ['/ref/model/handpose.md', '🖐 Handpose (3D)'],
@@ -109,7 +109,7 @@ module.exports = {
           {
             title: 'A-Frame',
             path: '/example/aframe/',
-            collapsable: true,
+            collapsable: false,
             children: [
               ['/example/aframe/look-around-handsfree.md', '"Look around" handsdfree']
             ]
