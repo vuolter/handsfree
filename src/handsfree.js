@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.4.1
+                8.4.2
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -97,7 +97,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.4.1'
+    this.version = '8.4.2'
     this.data = {}
 
     // Dependency management
@@ -137,7 +137,6 @@ class Handsfree {
     this.hasAddedBodyClass = false
     this.isUpdating = false
     this.numModelsLoaded = 0
-    this.isUsingWebcam = true
     
     this.on('modelReady', () => {
       let numActiveModels = 0
@@ -857,17 +856,17 @@ class Handsfree {
       $video.setAttribute('id', `handsfree-video-${this.id}`)
       this.config.setup.video.$el = $video
       this.isUsingWebcam = true
+      this.debug.$video = this.config.setup.video.$el
+      this.debug.$wrap.appendChild(this.debug.$video)
 
     // Use an existing element and see if a source is set
     } else {
-      this.config.setup.video.$el.classList.add('handsfree-video')
-      this.isUsingWebcam = !this.config.setup.video.$el.currentSrc
+      this.debug.$video = this.config.setup.video.$el
+      this.isUsingWebcam = false
     }
 
-    this.debug.$video = this.config.setup.video.$el
     this.debug.$video.width = this.config.setup.video.width
     this.debug.$video.height = this.config.setup.video.height
-    this.debug.$wrap.appendChild(this.debug.$video)
 
     // Context 2D canvases
     this.debug.$canvas = {}
