@@ -18,7 +18,7 @@
   <div class="columns">
     <div>
       <video crossOrigin="anonymous" id="demo-video" style="width: 100%; height: auto" controls muted autoplay loop>
-        <source src="https://media.giphy.com/media/j2rqdDZHd2IZPYuCMI/giphy.mp4"></source>
+        <source src="https://media.giphy.com/media/fuqOHTeelZdChAkx2s/giphy.mp4"></source>
       </video>
     </div>
     <div id="debugger-holder"></div>
@@ -30,7 +30,10 @@
   <script>
     const handsfree = new Handsfree({
       showDebug: true,
-      hands: true,
+      hands: {
+        enabled: true,
+        maxNumHands: 2
+      },
 
       setup: {
         // use a video instead of webcam
