@@ -2,8 +2,8 @@
 
 <div class="row align-top">
   <div class="col-6">
-    <video id="demo-video" style="width: 100% !important; height: auto !important" controls muted autoplay loop>
-      <source src="/video/hand-shape-demo-video.mp4"></source>
+    <video id="demo-video" crossOrigin="anonymous" style="width: 100% !important; height: auto !important" controls muted autoplay loop>
+      <source src="https://media.giphy.com/media/fuqOHTeelZdChAkx2s/giphy.mp4"></source>
     </video>
   </div>
   <div class="col-6">
