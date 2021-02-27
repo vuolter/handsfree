@@ -36,6 +36,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-02-26 | 8.4.2 | Adds ability to [use a video or stream instead of a webcam](/example/video-instead-of-webcam/)
 | 2020-02-18 | 8.4.0 | Removes the MediaPipe Holistic model. The holistic model is essentially the same as running [Hands](/ref/model/hands/), [Facemesh](/ref/model/facemesh/), and [Pose](/ref/model/pose/) together, although because the holistic data is structured differently (despite using the same models) it led to a lot of confusion and was incompatible with plugins.
 | 2020-02-06 | 8.3.0 | Adds basic gesture support through the [Gesture Creator](/create-gesture/). This is still mostly undocumented
 | 2020-01-28 | 8.2.6 | Adds `handsfree.data.hands.landmarks` and `handsfree.data.hands.landmarksVisible` to [MediaPipe Hands](/ref/model/hands/), which contain the landmarks for each hand in specific indexes:<br>`.landmarks[0] === Left Hand, Person #1`<br>`.landmarks[1] === Right Hand, Person #1`<br>`.landmarks[2] === Left Hand, Person #2`<br>`.landmarks[3] === Right Hand, Person #2`

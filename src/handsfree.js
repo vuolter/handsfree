@@ -11,7 +11,7 @@
           🧙‍♂️ Presenting 🧙‍♀️
 
               Handsfree.js
-                8.4.0
+                8.4.2
 
   Docs:       https://handsfree.js.org
   Repo:       https://github.com/midiblocks/handsfree
@@ -97,7 +97,7 @@ class Handsfree {
     
     // Assign the instance ID
     this.id = ++id
-    this.version = '8.4.0'
+    this.version = '8.4.2'
     this.data = {}
 
     // Dependency management
@@ -239,6 +239,12 @@ class Handsfree {
   update (config, callback) {
     this.config = this.cleanConfig(config, this.config)
     this.isUpdating = true
+
+    // Update video
+    this.isUsingWebcam = !this.config.setup.video.$el.currentSrc
+    this.debug.$video = this.config.setup.video.$el
+    this.debug.$video.width = this.config.setup.video.width
+    this.debug.$video.height = this.config.setup.video.height
 
     // Run enable/disable methods on changed models
     ;['hands', 'facemesh', 'pose', 'handpose', 'weboji'].forEach(model => {
@@ -748,38 +754,49 @@ class Handsfree {
     // Start getting the stream and call callback after
     if (!this.debug.stream && !this.debug.isGettingStream) {
       // Use the weboji stream if already active
-      if (this.model.weboji?.api?.get_videoStream) {
+      if (this.isUsingWebcam && this.model.weboji?.api?.get_videoStream) {
         this.debug.$video = this.model.weboji.api.get_video()
         this.debug.$video.srcObject = this.debug.stream = this.model.weboji.api.get_videoStream()
         this.emit('gotUserMedia', this.debug.stream)
         callback && callback()
 
-      // Create a new media stream
+      // Get or create a new media stream
       } else {
-        this.debug.isGettingStream = true
-        navigator.mediaDevices
-          .getUserMedia({
-            audio: false,
-            video: {
-              facingMode: 'user',
-              width: this.debug.$video.width,
-              height: this.debug.$video.height
-            }
-          })
-          .then((stream) => {
-            this.debug.$video.srcObject = this.debug.stream = stream
-            this.debug.$video.onloadedmetadata = () => {
-              this.debug.$video.play()
-              this.emit('gotUserMedia', stream)
-              callback && callback()
-            }
-          })
-          .catch((err) => {
-            console.error(`Error getting user media: ${err}`)
-          })
-          .finally(() => {
-            this.debug.isGettingStream = false
-          })
+        // Create a media stream (webcam)
+        if (this.isUsingWebcam) {
+          this.debug.isGettingStream = true
+          navigator.mediaDevices
+            .getUserMedia({
+              audio: false,
+              video: {
+                facingMode: 'user',
+                width: this.debug.$video.width,
+                height: this.debug.$video.height
+              }
+            })
+            .then((stream) => {
+              this.debug.$video.srcObject = this.debug.stream = stream
+              this.debug.$video.onloadedmetadata = () => {
+                this.debug.$video.play()
+                this.emit('gotUserMedia', stream)
+                callback && callback()
+              }
+            })
+            .catch((err) => {
+              console.error(`Error getting user media: ${err}`)
+            })
+            .finally(() => {
+              this.debug.isGettingStream = false
+            })
+
+        // Use a video source
+        } else {
+          this.debug.stream = this.debug.$video.srcObject
+          this.debug.$video.play()
+          this.emit('gotUserMedia', this.debug.stream)
+          callback && callback()
+          this.debug.isGettingStream = false
+        }
       }
 
     // If a media stream is getting gotten then run the callback once the media stream is ready
@@ -838,11 +855,18 @@ class Handsfree {
       $video.classList.add('handsfree-video')
       $video.setAttribute('id', `handsfree-video-${this.id}`)
       this.config.setup.video.$el = $video
+      this.isUsingWebcam = true
+      this.debug.$video = this.config.setup.video.$el
+      this.debug.$wrap.appendChild(this.debug.$video)
+
+    // Use an existing element and see if a source is set
+    } else {
+      this.debug.$video = this.config.setup.video.$el
+      this.isUsingWebcam = false
     }
-    this.debug.$video = this.config.setup.video.$el
+
     this.debug.$video.width = this.config.setup.video.width
     this.debug.$video.height = this.config.setup.video.height
-    this.debug.$wrap.appendChild(this.debug.$video)
 
     // Context 2D canvases
     this.debug.$canvas = {}

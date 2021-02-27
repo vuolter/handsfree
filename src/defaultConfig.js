@@ -9,7 +9,7 @@ export default {
   autostart: false,
   
   // Use CDN by default
-  assetsPath: 'https://unpkg.com/handsfree@8.4.0/build/lib/assets',
+  assetsPath: 'https://unpkg.com/handsfree@8.4.2/build/lib/assets',
   
   // This will load everything but the models. This is useful when you want to use run inference
   // on another device or context but run the plugins on the current device
@@ -53,7 +53,10 @@ export default {
         height: 720
       }
     },
-    // The video source to use. If not present, one will be created to capture webcam
+    // The video source to use. 
+    // - If not present one will be created and use the webcam
+    // - If present without a source then the webcam will be used
+    // - If present with a source then that source will be used instead of the webcam
     video: {
       // The video element to hold the webcam stream
       $el: null,
