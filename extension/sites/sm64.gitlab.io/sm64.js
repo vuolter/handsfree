@@ -16,15 +16,20 @@ const eventMap = {
   released: 'pointerup'
 }
  
-handsfree.use('blobOpera', {
+/**
+ * A custom plugin to use the PointerEvent instead of the traditional MouseEvent's
+ */
+handsfree.use('mario64', {
   onFrame: ({hands}) => {
+    // Bail if no hands
     if (!hands.multiHandLandmarks) return
 
+    // Loop through the pointers for each hand...
     hands.pointer.forEach((pointer, hand) => {
-      //  Only for right hand for now
+      // ...and only use the first (left hand)
       if (hand) return
       
-      // Move
+      // Move the pointer
       const $el = document.elementFromPoint(pointer.x, pointer.y)
       if ($el) {
         // Most of these are not required but need to move onto another task for now so YOLO!
@@ -76,31 +81,8 @@ handsfree.use('blobOpera', {
         }))
       }
 
-      // Pinch
+      // Pinch Marios cheeks
       if ($el && pointer.isVisible && ['start', 'released'].includes(hands.pinchState[hand][0])) {
-        if (hands.pinchState[hand][0] === 'start') {
-          $el.dispatchEvent(
-            new PointerEvent('pointerover', {
-              pointerId: 1,
-              isPrimary: true,
-              button: 0,
-              pointerType: 'mouse',
-              clientX: pointer.x,
-              clientY: pointer.y
-            })
-          )
-          $el.dispatchEvent(
-            new PointerEvent('pointerenter', {
-              pointerId: 1,
-              isPrimary: true,
-              button: 0,
-              pointerType: 'mouse',
-              clientX: pointer.x,
-              clientY: pointer.y
-            })
-          )
-        }
-        
         // Get the event and element to send events to
         const event = eventMap[hands.pinchState[hand][0]]
         $el.dispatchEvent(
