@@ -36,6 +36,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-03-13 | 8.4.4 | Handsfree.js is now transpiled with Babel and works with React, Vue, and other frameworks out of the box
 | 2020-03-07 | 8.4.3 | Fixes filename casing issue that prevented Handsfree.js from building on Linux
 | 2020-02-26 | 8.4.2 | Adds ability to [use a video or stream instead of a webcam](/example/video-instead-of-webcam/)
 | 2020-02-18 | 8.4.0 | Removes the MediaPipe Holistic model. The holistic model is essentially the same as running [Hands](/ref/model/hands/), [Facemesh](/ref/model/facemesh/), and [Pose](/ref/model/pose/) together, although because the holistic data is structured differently (despite using the same models) it led to a lot of confusion and was incompatible with plugins.
