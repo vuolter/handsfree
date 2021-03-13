@@ -1,6 +1,7 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import copy from 'rollup-plugin-copy'
+import {babel} from '@rollup/plugin-babel'
 
 export default [
   /**
@@ -19,6 +20,13 @@ export default [
     },
 
     plugins: [
+      babel({
+        babelHelpers: 'runtime',
+        plugins: [
+          '@babel/plugin-transform-runtime',
+          '@babel/plugin-proposal-optional-chaining'
+        ]
+      }),
       copy({
         targets: [
           {src: 'docs/.vuepress/public/handsfreejs/*', dest: 'build/lib/assets/'}
