@@ -1,8 +1,8 @@
 {
   "name": "handsfree",
-  "version": "8.4.3",
+  "version": "8.4.4",
   "description": "Quickly integrate face, hand, and/or pose tracking to your frontend projects in a snap ✨👌",
-  "main": "src/handsfree.js",
+  "main": "build/lib/handsfree.js",
   "scripts": {
     "start": "vuepress dev docs",
     "build": "npm run build:lib && npm run build:docs && npm run build:extension",
@@ -23,12 +23,16 @@
   },
   "homepage": "https://github.com/midiblocks/handsfree#readme",
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "markdown-it-deflist": "^2.1.0",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",
     "rollup": "^2.32.0",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-copy": "^3.3.0",
     "vuepress": "^1.7.1",
     "vuepress-plugin-font-awesome": "^1.90.6",
