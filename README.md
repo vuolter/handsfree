@@ -17,6 +17,7 @@
     <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
 </div>
 
+
 <br>
 <br>
 <br>
@@ -25,10 +26,17 @@
 <br>
 <br>
 
-<div align="center">
-  <h2>Explore the interactive docs at: <a href="https://handsfree.js.org">Handsfree.js.org</a></h2>
-  <p>Or try it right away with the serverless boilerplates in <code>/boilerplate/</code>!</p>
-</div>
+<h1 style="color: red">💻 Project temporarily on hold</h1>
+Hello! I was recently displaced from my home following a few traumatic events. I wasn't able to raise enough support and so I deleted my socials and am just going to work through this on my own.
+
+It'll take time for me to get back into this project, but it's still very functional. Here are some links:
+- 25+ example videos (some with code): https://labofoz.notion.site/901ff075d8df4bd7b9500d134c22038b?v=f33d13f1c67b458487250992a8501e2c
+- WordPress version of docs: https://handsfree.dev
+- Gesture mapper for hands: https://handsfree.dev/tools/gesture-mapper/
+- The lightweight "offline" docs (what you get when you run `npm start`): https://handsfree.js.org
+
+Thanks for your patience, and also for all the support I have received over the last 3 years of developing this library!
+Oz
 
 <br>
 <br>
