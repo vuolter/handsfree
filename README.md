@@ -17,6 +17,9 @@
     <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
 </div>
 
+https://user-images.githubusercontent.com/52610021/126516474-4c8ef635-f3c6-460d-af11-1be25bd86ee5.mp4
+
+Explore examples: https://labofoz.notion.site/901ff075d8df4bd7b9500d134c22038b?v=f33d13f1c67b458487250992a8501e2c
 
 <br>
 <br>
