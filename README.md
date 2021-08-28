@@ -17,9 +17,6 @@
     <a href="https://github.com/jeeliz/jeelizWeboji"><img width=100 src="https://jeeliz.com/wp-content/uploads/2018/01/LOGO_JEELIZ_BLUE.png"></a>
 </div>
 
-https://user-images.githubusercontent.com/52610021/126516474-4c8ef635-f3c6-460d-af11-1be25bd86ee5.mp4
-
-Explore examples: https://labofoz.notion.site/901ff075d8df4bd7b9500d134c22038b?v=f33d13f1c67b458487250992a8501e2c
 
 <br>
 <br>
@@ -29,17 +26,14 @@ Explore examples: https://labofoz.notion.site/901ff075d8df4bd7b9500d134c22038b?v
 <br>
 <br>
 
-<h1 style="color: red">💻 Project temporarily on hold</h1>
-Hello! I was recently displaced from my home following a few traumatic events. I wasn't able to raise enough support and so I deleted my socials and am just going to work through this on my own.
+<h1 style="color: red">💻 Project Documentation</h1>
+I'm still experimenting with various ways to create documentation. The docs can be found:
 
-It'll take time for me to get back into this project, but it's still very functional. Here are some links:
-- 25+ example videos (some with code): https://labofoz.notion.site/901ff075d8df4bd7b9500d134c22038b?v=f33d13f1c67b458487250992a8501e2c
-- WordPress version of docs: https://handsfree.dev
-- Gesture mapper for hands: https://handsfree.dev/tools/gesture-mapper/
-- The lightweight "offline" docs (what you get when you run `npm start`): https://handsfree.js.org
+- https://handsfree.js.org  - This is the documentation that runs locally, and is the oldest docs
+- https://handsfree.dev - This is the newer site hosted on WordPress, and includes the start of the Handsfree Plugin Repository
+- https://codemedium.com/b1f09b783c034644acc1c873f347d6da - This is the Notion version of the documentation
 
-Thanks for your patience, and also for all the support I have received over the last 3 years of developing this library!
-Oz
+Sorry for the confusion! I'll likely be settling on Notion but am still trying to find the best docs. Thanks!
 
 <br>
 <br>
