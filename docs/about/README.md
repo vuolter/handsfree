@@ -36,6 +36,7 @@ Please consider supporting this project 💜 There are several ways to help:
 
 | Date | Version | Description |
 | ---- | ------- | ----------- |
+| 2020-08-27 | 8.5.1 | MediaPipe Hands now works on mobile 🎉
 | 2020-03-13 | 8.4.4 | Handsfree.js is now transpiled with Babel and works with React, Vue, and other frameworks out of the box
 | 2020-03-07 | 8.4.3 | Fixes filename casing issue that prevented Handsfree.js from building on Linux
 | 2020-02-26 | 8.4.2 | Adds ability to [use a video or stream instead of a webcam](/example/video-instead-of-webcam/)

@@ -4391,7 +4391,7 @@
     // This works both during instantiation or with .update()
     autostart: false,
     // Use CDN by default
-    assetsPath: 'https://unpkg.com/handsfree@8.4.4/build/lib/assets',
+    assetsPath: 'https://unpkg.com/handsfree@8.5.1/build/lib/assets',
     // This will load everything but the models. This is useful when you want to use run inference
     // on another device or context but run the plugins on the current device
     isClient: false,
@@ -9242,7 +9242,7 @@
             🧙‍♂️ Presenting 🧙‍♀️
 
                 Handsfree.js
-                  8.4.4
+                  8.5.1
 
     Docs:       https://handsfree.js.org
     Repo:       https://github.com/midiblocks/handsfree
@@ -9302,7 +9302,7 @@
       this.TweenMax = TweenMax; // Assign the instance ID
 
       this.id = ++id;
-      this.version = '8.4.4';
+      this.version = '8.5.1';
       this.data = {}; // Dependency management
 
       this.dependencies = {
