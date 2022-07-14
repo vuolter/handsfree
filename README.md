@@ -1,12 +1,30 @@
+# ⚠️ IMPORTANT UPDATE: July 13th, 2022
+
+Hi, this is Oz Ramos and I wanted to quickly explain what happened to this project and what I plan to do moving forward.
+
+I started Handsfree.js back in 2018 while homeless in order to help a friend recovering from a stroke at the shelter use the web with face gestures. Overtime and through the support and encouragement of many people (see the "Special Thanks" section below) this project grew to become much more than that. This Spring, I had a severe mental health breakdown from chronic burnout and in an effort to "move on" I deleted my entire body of work. I'm sorry.
+
+I will pin an issue soon to explain what led to the breakdown and what I (and anyone in a similar situation) can do. The documentation is temporarily hosted at https://handsfreejs.netlify.app/ for now until I get everything back in order, although it may take some time for me to do.
+
+Unfortunately, this is an older version of the repo and an even older version of the docs and may not be totally up to date to whatever was the last version I left off at this Spring. Fortunately, most of the work will just involve updating the models.
+
+Please allow for some time for all the links to be restored. In the meantime if you have any issues or would like to discuss any of this with me publicly I will be responding to issues/discussions, and if you'd like to message me privately see my profile for links.
+
+Finally, I will create a list of other resources that you can use.
+If anyone would like to become a collaborator or take over the project, please let me know.
+Oz Ramos/Midifungi
+
+---
+
 <div align="center">
-  <p><a href="https://handsfree.js.org"><img src="https://media2.giphy.com/media/BBcnSU1IJ5tpQbwXDI/giphy.gif" alt="handsfree.js.org" title="handsfree.js.org"></a></p>
+  <p><a href="https://handsfreejs.netlify.app/"><img src="https://media2.giphy.com/media/BBcnSU1IJ5tpQbwXDI/giphy.gif" alt="https://handsfreejs.netlify.app" title="https://handsfreejs.netlify.app"></a></p>
   <p>Quickly integrate face, hand, and/or pose tracking to your frontend projects in a snap ✨👌</p>
   <p>
-    <img class="mr-1" src="https://img.shields.io/github/tag/handsfreejs/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/handsfreejs/handsfree.svg">
-    <img src="https://img.shields.io/github/repo-size/handsfreejs/handsfree.svg">
+    <img class="mr-1" src="https://img.shields.io/github/tag/midiblocks/handsfree.svg"> <img class="mr-1" src="https://img.shields.io/github/last-commit/midiblocks/handsfree.svg">
+    <img src="https://img.shields.io/github/repo-size/midiblocks/handsfree.svg">
   </p>
   <p>
-    <img class="mr-1" src="https://img.shields.io/github/issues-raw/handsfreejs/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/handsfreejs/handsfree.svg">
+    <img class="mr-1" src="https://img.shields.io/github/issues-raw/midiblocks/handsfree.svg"> <img src="https://img.shields.io/github/issues-pr-raw/midiblocks/handsfree.svg">
   </p>
   <p>Powered by:</p>
   <p>
@@ -29,7 +47,7 @@
 <h1 style="color: red">💻 Project Documentation</h1>
 I'm still experimenting with various ways to create documentation. The docs can be found:
 
-- https://handsfree.js.org  - This is the documentation that runs locally, and is the oldest docs
+- ~~https://handsfree.js.org~~ https://handsfreejs.netlify.app  - This is the documentation that runs locally, and is the oldest docs
 - https://handsfree.dev - This is the newer site hosted on WordPress, and includes the start of the Handsfree Plugin Repository
 - https://codemedium.com/b1f09b783c034644acc1c873f347d6da - This is the Notion version of the documentation
 
@@ -385,7 +403,7 @@ However, in addition to the pointers you can add custom handsfree interactions. 
 <br>
 
 <div align="center">
-  <h2>Explore the interactive docs at: <a href="https://handsfree.js.org">Handsfree.js.org</a></h2>
+  <h2>Explore the interactive docs at: <a href="https://https://handsfreejs.netlify.app">https://handsfreejs.netlify.app</a></h2>
   <p>Or try it right away with the serverless boilerplates in <code>/boilerplate/</code>!</p>
 </div>
 
@@ -423,8 +441,12 @@ I'd like to also thank the following people and projects:
 <br>
 
 # Special Thanks
+```
+This is an old repo and this section will be updated soon to more deeply express my gratitude
+```
 
-- [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and for helping me approach projects in a more expressive way. Also for inviting me back for a multi-month residency in Spring 2021!
+- [@Chris Coleman](https://twitter.com/digitalcoleman/) and the [Clinic for Open Source Arts](http://clinicopensourcearts.com/) for hosting me during a residency in Spring 2021 and for a grant in the Summer of 2021!
+- [@Golan](https://twitter.com/golan) and the [The STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org/) for hosting me for a residency during 2019 and 2021 and for helping me approach projects in a more expressive way. Also a thank you for a grant in the Spring of 2022
 - [@AnilDash](https://twitter.com/anildash) for supporting the project during Winter 2018 out of the blue and the opportunities to share my project on [Glitch.com](https://glitch.com/@ozramos)
 - [The School of AI](https://twitter.com/SchoolOfAIOffic) for the [2018 Fellowship](https://www.youtube.com/watch?v=CJDpF4xUieY&t=58) in support of this project
 - [@jessscon](https://twitter.com/jessscon) and [Google PAIR](https://research.google/teams/brain/pair/) for the very early support that made starting this project possible
